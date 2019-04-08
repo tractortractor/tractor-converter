@@ -1,0 +1,3 @@
+ADD_SUBDIRECTORY(volInt)
+ADD_SUBDIRECTORY(alphanum)
+ADD_SUBDIRECTORY(tinyobjloader)

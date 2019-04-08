@@ -1,0 +1,16 @@
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/lib/alphanum)
+
+
+
+SET(ALPHANUM_SOURCES
+  alphanum.cpp
+  )
+
+SET(ALPHANUM_HEADER_FILES
+  alphanum.hpp
+  )
+
+ADD_LIBRARY(alphanum STATIC
+  ${ALPHANUM_SOURCES}
+  ${ALPHANUM_HEADER_FILES}
+  )

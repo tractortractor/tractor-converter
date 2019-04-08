@@ -1,0 +1,16 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<h3>How to convert videos and images to Vangers item preview *.avi.</h3>
+<ol>
+  <li>Download and install latest version of <a href="https://www.gimp.org/">GIMP</a> and <a href="https://ffmpeg.org/">FFmpeg</a>.</li>
+  <li>
+	<ul>
+		<li>Open modes/2d_item_preview/to_preview_avi.bat file in any text editor. Replace value of PATH_TO_GIMP with path to gimp-console executable.</li>
+		<li>Replace value of PATH_TO_FFMPEG with path to ffmpeg executable.</li>
+		<li>Replace value of PATH_TO_INPUT_VIDEOS with path to folder with videos and images to convert.</li>
+	</ul>
+  </li>
+  <li>Make sure that all source videos and images in PATH_TO_INPUT_VIDEOS folder have 340x255 resolution. Only formats supported by ffmpeg must be used for videos and images.</li>
+  <li>Launch modes/2d_item_preview/to_preview_avi.bat.</li>
+  <li>Now modes/2d_item_preview/out_avi contains converted *.avi. You can replace original *.avi in data/resource/video folder of Vangers. You should backup original data before doing so. See docs/common/2d_item_preview folder for tables of *.avi usage.</li>
+</ol>

@@ -1,0 +1,12 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<h3>Как отредактировать *.bmp заставки конца игры.</h3>
+<ol>
+  <li>Откройте modes/2d_end_screen/vangers_pal_to_tga_pal.cfg, modes/2d_end_screen/usage_pal.cfg и modes/2d_end_screen/bmp_to_tga.cfg в любом текстовом редакторе. Замените значение опции source_dir на путь к папке data/resource/video/img Вангеров.</li>
+  <li>Запустите modes/2d_end_screen/get_tga_screens.bat.</li>
+  <li>Теперь папка modes/2d_end_screen/in_tga содержит *.tga изображения заставок, и их можно редактировать или заменять. Смотрите docs/common/2d_end_screen/end_screens.ods. Убедитесь, что все изображения в папке имеют разрешение 800x600, являются 8-битными и не используют RLE сжатие. Последние 16 цветов в палитре из 256 должны быть неиспользуемыми. То есть при конвертации в 8-битное изображение нужно использовать палитру из 240 цветов.</li>
+  <li>Запустите modes/2d_end_screen/add_font_pal_to_screens.bat.</li>
+  <li>Теперь папка modes/2d_end_screen/out_tga содержит *.tga изображения заставок с палитрой текста. Ее можно изменить, отредактировав последние 16 цветов палитры изображения.</li>
+  <li>Запустите modes/2d_end_screen/tga_to_bmp.bat.</li>
+  <li>Теперь папка modes/2d_end_screen/out_bmp содержит отредактированные *.bmp изображения и modes/2d_end_screen/out_pal/vangers/full содержит отредактированные *.pal файлы. Содержимое этих папок нужно скопировать в папку data/resource/video/img Вангеров. Стоит создать резервную копию оригинальных данных перед тем, как это делать.</li>
+</ol>

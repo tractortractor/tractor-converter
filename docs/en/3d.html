@@ -1,0 +1,230 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<h3>How to edit *.m3d/*.a3d</h3>
+<ol>
+  <li>Open modes/3d/m3d_to_obj.cfg file in any text editor. Replace value of source_dir option with your Vangers "data" folder location.</li>
+  <li>Launch modes/3d/m3d_to_obj.bat.</li>
+  <li>Now modes/3d/io_obj folder contains *.obj files of Vangers models. It's time to edit them. See docs/common/3d/3d_models.ods. If you want to edit bounds, wheels or attachment points, see below.</li>
+  <li>Launch modes/3d/obj_to_m3d.bat.</li>
+  <li>Now modes/3d/out_m3d folder contains edited *.m3d/*.a3d models. You can copy contents of this folder to Vangers "data" folder to replace original models with edited ones. You should backup original data before doing so.</li>
+</ol>
+
+<h3>Advanced</h3>
+<ul>
+  <li>
+    <p>*.m3d/*.a3d files consists of multiple models. During *.m3d/*.a3d to *.obj conversion *.obj file is created for each of those models.</p>
+    <ul>
+      <li>
+        <p>*.m3d always have main model and it's bound model.</p>
+        <ul>
+          <li>Main model. Example obj file name: m5_main.obj where "m5" is name of *.m3d file.</li>
+          <li>Bound model. Example obj file name: m5_main_bound.obj where "m5" is name of *.m3d file.</li>
+        </ul>
+        <p>Mechos *.m3d files may have several debris models.</p>
+        <ul>
+          <li>Debris model. Example obj file name: m5_debris_6.obj where "m5" is name of *.m3d file and "6" is debris number.</li>
+          <li>Debris bound model. Example obj file name: m5_debris_bound_6.obj where "m5" is name of *.m3d file and "6" is debris number.</li>
+        </ul>
+        <p>Numbering of debris models must start from 1. Numbers must not be skipped. If there are debris 1 and 3 there must be debris 2. Each debris model requires own bound model.</p>
+      </li>
+      <li>
+        <p>*.a3d have several models. Each model is frame of animation. Example: a2_4.obj where "a2" is name of *.a3d file and "4" is frame number. Numbering must start from 1. Numbers must not be skipped. If there are frames 1 and 3 there must be frame 2.</p>
+      </li>
+    </ul>
+  </li>
+  <li><p>All non-bound models must have 3 vertices per polygon.</p></li>
+  <li><p>Bounding box center of regular model must coincide with origin point. Bounding box is virtual and it's not a bound model. Center of mass model, weapon attachment points, steering and ghost wheels must not be part of the model that is used to calculate bounding box.</p></li>
+  <li>
+    <p>When converting from *.m3d/*.a3d to *.obj, model is scaled using scale_size parameter from configuration files. When converting back to *.m3d/*.a3d, new scale_size is calculated and used to generate models and configuration files.</p>
+    <ul>
+      <li>rmax parameter is distance between farthest vertex and center of the model. Value of rmax of *.m3d/*.a3d is calculated as the highest rmax value found in all non-bound models. Attached weapons are also considered when calculating.</li>
+      <li>If new or edited weapon model will have higher rmax than old weapon models, it won't be rendered properly with old mechos *.m3d files. In this case you must use mechos *.m3d files generated at the same time with new weapon *.m3d file.</li>
+      <li>There is rendering limit for scale_size which depends on zoom and altitude. If, for example, model have scale_size 1 but scale_size limit is 0.5, the model will be rendered with scale_size 0.5. Table below shows scale_size limit under different conditions. Value of rmax which will cause the converter to assign certain scale_size is specified in parentheses.</li>
+      <table border=1>
+        <tr>
+          <th>Altitude (z)\Zoom</th>
+          <th>Max zoom in</th>
+          <th>No zoom</th>
+        </tr>
+          <th>Max (450)</th>
+          <td>0.280273 (34.473579)</td>
+          <td>0.560547 (68.947281)</td>
+        <tr>
+          <th>Jablee (440)</th>
+          <td>0.285156 (35.074188)</td>
+          <td>0.570313 (70.148499)</td>
+        </tr>
+        <tr>
+          <th>Helicopter (354)</th>
+          <td>0.327148 (40.239204)</td>
+          <td>0.654297 (80.478531)</td>
+        </tr>
+        <tr>
+          <th>Border mountain (255)</th>
+          <td>0.375977 (46.245171)</td>
+          <td>0.751953 (92.490219)</td>
+        </tr>
+        <tr>
+          <th>Fish (68)</th>
+          <td>0.466797 (57.416031)</td>
+          <td>0.933594 (114.832062)</td>
+        </tr>
+        <tr>
+          <th>Min (0)</th>
+          <td>0.5 (61.5)</td>
+          <td>1 (123)</td>
+        </tr>
+      </table>
+    </ul>
+  </li>
+  <li>
+    <p>Materials of polygons are used to determine color in the game for those polygons and to mark special polygons.</p>
+    <p>Game uses palette with 256 colors. Each material have multiple colors assigned from dark to light. Last color in the palette is never used so body_green material, for example, have 1 less color.</p>
+    <p>Colors in range from 0 to 127 are different for each world/cycle and are used by landscape.</p>
+    <p>Colors in range from 88 to 119 are changed each second.</p>
+    <p>Colors of material are determined by color offset and color shift.</p>
+    <ul>
+      <li>Color offset specifies index of starting color.</li>
+      <li>
+        <p>Color shift determines number of colors. Exact formula is 1 + 123/2^shift. The result is rounded downward.</p>
+        <table border=1>
+          <tr>
+            <th>Shift</th>
+            <th>Colors per material</th>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>16</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>31</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>62</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>124</td>
+          </tr>
+        </table>
+      </li>
+    </ul>
+    <p>For example, material with offset 32 shift 4 will have colors with indices from 32 to 39.</p>
+    <p>See docs/common/3d/materials_table folder for full lists of materials for all worlds and cycles.</p>
+    <p>Following materials are special. They are assigned to certain polygons only and should not be assigned to any other polygons. * - natural number.</p>
+    <ul>
+      <li>zero_reserved</li>
+      <li>center_of_mass</li>
+      <li>wheel_*, wheel_steer_*, wheel_ghost_*, wheel_steer_ghost_*, wheel_ghost_steer_*</li>
+      <li>attachment_point, attachment_point_*</li>
+      <li>weapon_*</li>
+    </ul>
+  </li>
+  <li>
+    <p>Each *.m3d/*.a3d may have custom set of colors for "body" material. Material of type body_offset_*_shift_* specifies offset and shift for this set of colors.</p>
+    <ul>
+      <li>Specifying multiple sets of colors in the same model is not allowed. For example, if, let's say, body_offset_0_shift_0 material is already used then using, let's suppose, body_offset_1_shift_0 or body_offset_0_shift_1 material will cause an error.</li>
+      <li>Having "body" material and material of type body_offset_*_shift_* in the same model is allowed.</li>
+      <li>Only set of colors of main model is used while generating *.m3d file. Only set of colors of first animated model is used while generating *.a3d file. Using material of type body_offset_*_shift_* in other models is allowed but does not affect colors of the resulting *.m3d/*.a3d file.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Bound model is used for calculating collisions with landscape.</p>
+    <ul>
+      <li>Model must have 4 vertices per polygon.</li>
+      <li>Model should be closed.</li>
+      <li>Assigning regular materials to polygon will not affect bound model in the game.</li>
+      <li>To create new bound model, create cube with 4 polygons per side, move vertices to inscribe regular model into resulting bound model.</li>
+      <li>For bound model of main mechos model there is special recommendation. 4 lower polygons should have all of their vertices at the same z level and should have their material set to "zero_reserved".</li>
+    </ul>
+  </li>
+  <li>
+    <p>Polygons with wheel_* material in mechos models are used to determine where wheels are located and which properties they have.</p>
+    <ul>
+      <li>All mechos wheels' materials must have their number at the end of material name. Example: "wheel_1". Numbering must start from 1. Numbers must not be skipped. If there are wheel_1 and wheel_3 there must be wheel_2. Different wheels must not have the same number.</li>
+      <li>There are two properties which may be assigned to wheel: "steer" and "ghost". Those properties are specified with polygon material name. So steering ghost wheel number 1 will have material name "wheel_steer_ghost_1" or "wheel_ghost_steer_1". All polygons of same wheel must have same set of properties.</li>
+      <li>Steering wheels are affecting ability of mechos to turn so at least one such wheel should be present in any mechos or it will be impossible to turn. While turning in the game all steering wheels of the mechos model are visually turning.</li>
+      <li>Ghost property means that the wheel model will be removed while converting to *.m3d but the mechos will have data about the wheel. In game mechos will behave like there is a wheel.</li>
+      <li>The lowest point of first wheel should match the lowest point of bound model.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Polygons with attachment_point material are part of weapon attachment point model.</p>
+    <ul>
+      <li>This model must never be changed or scaled, but may be moved.</li>
+      <li>During *.obj to *.m3d conversion all polygons with this material are removed.</li>
+    </ul>
+    <ul>
+      <li>
+        <p>While part of weapon model, it indicates where is attachment point of weapon.</p>
+        <ul>
+          <li>Must never be rotated.</li>
+        </ul>
+      </li>
+      <li>
+        <p>While part of mechos model, it indicates where weapon slots are located.</p>
+        <ul>
+          <li>There must be number of the weapon slot at the end of material name. Example: "attachment_point_3".</li>
+          <li>At most there may be only 3 weapon slots.</li>
+          <li>May be rotated only around axis y, the direction of which coincides with direction of forward moving of mechos.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Polygons with weapon_* material in mechos model are showing where weapons will be located with current weapon slot location. They are removed during *.obj to *.m3d conversion and do not affect the final model in any way. They are grouped with corresponding attachment point.</p>
+  </li>
+  <li>
+    <p>During *.m3d/*.a3d to *.obj conversion *.cfg file is generated for each *.m3d/*.a3d file. This configuration file is used while converting back to *.m3d/*.a3d.</p>
+    <ul>
+      <li>
+        <p>You can specify custom volume for each model.</p>
+        <ul>
+          <li><p>Affects generation of center of mass and inertia tensor.</p></li>
+          <li>
+            <p>Used to determine mass.</p>
+            <ul>
+              <li>Affects many calculations.</li>
+              <li>Affects ram power.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><p>You can specify which models will use custom center of mass. More info about center of mass below.</p></li>
+      <li>
+        <p>You can specify custom inertia tensor for each model.</p>
+        <ul>
+          <li>Used in many calculations.</li>
+        </ul>
+      </li>
+    </ul>
+    <p>Those configuration files should not be used in most cases since volume, center of mass and inertia tensor are generated automatically.</p>
+  </li>
+  <li>
+    <p>Polygons with center_of_mass material are part of center of mass model.</p>
+    <ul>
+      <li>This model must never be changed, scaled or rotated. It may be moved.</li>
+      <li>It's generated during *.m3d to *.obj conversion only when extract_center_of_mass option is specified in configuration file.</li>
+      <li>It's used only when corresponding option is specified in *.m3d/*.a3d configuration.</li>
+      <li>It's used to manually specify center of mass which affects generation of inertia tensor. Automatic generation is recommended in most cases.</li>
+    </ul>
+  </li>
+</ul>

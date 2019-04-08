@@ -1,0 +1,15 @@
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/lib/tinyobjloader)
+
+
+
+SET(TINY_OBJ_LOADER_SOURCES
+  tiny_obj_loader.cc
+)
+
+SET(TINY_OBJ_LOADER_HEADER_FILES
+  tiny_obj_loader.h
+)
+
+ADD_LIBRARY(tinyobjloader STATIC
+  ${TINY_OBJ_LOADER_SOURCES}
+  ${TINY_OBJ_LOADER_HEADER_FILES})

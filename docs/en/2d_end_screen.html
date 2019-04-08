@@ -1,0 +1,12 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<h3>How to edit *.bmp end screens.</h3>
+<ol>
+  <li>Open modes/2d_end_screen/vangers_pal_to_tga_pal.cfg, modes/2d_end_screen/usage_pal.cfg and modes/2d_end_screen/bmp_to_tga.cfg files in any text editor. Replace value of source_dir option with your Vangers data/resource/video/img folder location.</li>
+  <li>Launch modes/2d_end_screen/get_tga_screens.bat.</li>
+  <li>Now modes/2d_end_screen/in_tga folder contains *.tga images of end screens. It's time to edit or replace them. See docs/common/2d_end_screen/end_screens.ods. Make sure that all images in this folder are 800x600, 8-bit and not using RLE compression. Last 16 colors in the palette of 256 must not be used. So while converting regular image to 8-bit use 240 color palette.</li>
+  <li>Launch modes/2d_end_screen/add_font_pal_to_screens.bat.</li>
+  <li>Now modes/2d_end_screen/out_tga folder contains *.tga images of end screens with text palette. You can change it by editing last 16 colors of image palette.</li>
+  <li>Launch modes/2d_end_screen/tga_to_bmp.bat.</li>
+  <li>Now modes/2d_end_screen/out_bmp folder contains edited *.bmp images and modes/2d_end_screen/out_pal/vangers/full contains edited *.pal files. Contents of those folders should be copied to data/resource/video/img folder of Vangers. You should backup original data before doing so.</li>
+</ol>
