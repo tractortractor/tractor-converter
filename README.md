@@ -19,6 +19,8 @@ Download the [latest release](https://github.com/tractortractor/tractor-converte
 
 Video guides: https://www.youtube.com/watch?v=ykKCx6cgkqA&list=PL-AfSpdu5KiUcdAZMFrtokJtNxctVKey3
 
+Demo video: https://www.youtube.com/watch?v=T9ZYQcRSpNk&list=PL-AfSpdu5KiUcdAZMFrtokJtNxctVKey3
+
 
 
 Donate
