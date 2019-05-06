@@ -66,7 +66,7 @@ SET(TRACTOR_CONVERTER_HEADER_FILES
   modes/usage_pal/usage_pal.hpp
   modes/remove_not_used_pal/remove_not_used_pal.hpp
   modes/tga_merge_unused_pal/tga_merge_unused_pal.hpp
-  modes/tga_replace_pal/tga_replace_pal.cpp
+  modes/tga_replace_pal/tga_replace_pal.hpp
   modes/extract_tga_pal/extract_tga_pal.hpp
   modes/vangers_pal_to_tga_pal/vangers_pal_to_tga_pal.hpp
   modes/pal_shift_for_vangers_avi/pal_shift_for_vangers_avi.hpp
