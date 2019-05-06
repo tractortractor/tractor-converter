@@ -1140,7 +1140,7 @@ void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
         c3d::color::id_to_shift[model.faces[cur_poly_n].color_id]);
     }
     */
-    // body_color_shift is always 0
+    // color_shift is always 0
     write_var_to_m3d<unsigned int>(c3d::polygon::default_color_shift);
 
     std::vector<double> normalized =
