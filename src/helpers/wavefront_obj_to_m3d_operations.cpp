@@ -1026,6 +1026,99 @@ std::deque<volInt::polyhedron>
 
 
 
+std::vector<double> wavefront_obj_to_m3d_model::get_medium_vert(
+  const volInt::polyhedron &model,
+  std::size_t poly_n)
+{
+  std::vector<double> medium_vert(3, 0.0);
+  // For polygon with zero_reserved color middle point is different.
+  // middle_x is either xmax of M3D or -xmax of M3D.
+  // middle_y is either ymax of M3D or -ymax of M3D.
+  // middle_z for all those polygons is zmin of bound C3D.
+  // In all other polygons middle point is average vertex.
+  if(model.faces[poly_n].color_id ==
+     c3d::color::string_to_id::zero_reserved)
+  {
+    // preserved sign
+    std::vector<double> extreme_abs_coords(3, 0.0);
+    for(const auto vert_ind : model.faces[poly_n].verts)
+    {
+      const std::vector<double> &vert = model.verts[vert_ind];
+      for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+      {
+        if(std::abs(vert[cur_coord]) >
+           std::abs(extreme_abs_coords[cur_coord]))
+        {
+          extreme_abs_coords[cur_coord] = vert[cur_coord];
+        }
+      }
+    }
+    if(std::signbit(extreme_abs_coords[0]))
+    {
+      medium_vert[0] = -xmax;
+    }
+    else
+    {
+      medium_vert[0] = xmax;
+    }
+    if(std::signbit(extreme_abs_coords[1]))
+    {
+      medium_vert[1] = -ymax;
+    }
+    else
+    {
+      medium_vert[1] = ymax;
+    }
+    medium_vert[2] = model.zmin;
+    // TEST
+    /*
+    if(model_name == "m4")
+    {
+      std::cout << "\n" << '\n';
+      std::cout << "m4: " << '\n';
+      std::cout << "poly_n: " << poly_n << '\n';
+      std::size_t cur_vert = 0;
+      for(const auto vert_ind : model.faces[poly_n].verts)
+      {
+        const std::vector<double> &vert = model.verts[vert_ind];
+        std::cout << "vert " << cur_vert;
+        for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+        {
+          std::cout << " " << vert[cur_coord];
+        }
+        std::cout << "\n";
+        ++cur_vert;
+      }
+      std::cout << "medium_vert: ";
+      for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+      {
+        std::cout << " " << medium_vert[cur_coord];
+      }
+      std::cout << "\n";
+      std::cout << "-----------------------";
+    }
+    */
+  }
+  else
+  {
+    for(int vert_n = 0; vert_n < model.faces[poly_n].numVerts; ++vert_n)
+    {
+      for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+      {
+        medium_vert[cur_coord] +=
+          model.verts[model.faces[poly_n].verts[vert_n]][cur_coord];
+      }
+    }
+    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+    {
+      medium_vert[cur_coord] /= model.faces[poly_n].numVerts;
+    }
+  }
+  return medium_vert;
+}
+
+
+
 void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
 {
   write_var_to_m3d<int>(c3d::version_req);
@@ -1152,42 +1245,7 @@ void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
     }
     write_var_to_m3d<unsigned char>(c3d::polygon::default_flat_norm_n_power);
 
-    std::vector<double> medium_vert(3, 0.0);
-    // For polygon with zero_reserved color
-    // middle point is vertex which is most distant from center.
-    if(model.faces[cur_poly_n].color_id ==
-       c3d::color::string_to_id::zero_reserved)
-    {
-      double rmax = 0.0;
-      std::size_t rmax_vert_ind = 0;
-      for(const auto vert_ind : model.faces[cur_poly_n].verts)
-      {
-        const std::vector<double> &vert = model.verts[vert_ind];
-        double cur_vert_length =
-          std::sqrt(vert[0]*vert[0] + vert[1]*vert[1] + vert[2]*vert[2]);
-        if(rmax < cur_vert_length)
-        {
-          rmax = cur_vert_length;
-          rmax_vert_ind = vert_ind;
-        }
-      }
-      medium_vert = model.verts[rmax_vert_ind];
-    }
-    else
-    {
-      for(int vert_n = 0; vert_n < model.faces[cur_poly_n].numVerts; ++vert_n)
-      {
-        for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-        {
-          medium_vert[cur_coord] +=
-            model.verts[model.faces[cur_poly_n].verts[vert_n]][cur_coord];
-        }
-      }
-      for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-      {
-        medium_vert[cur_coord] /= model.faces[cur_poly_n].numVerts;
-      }
-    }
+    std::vector<double> medium_vert = get_medium_vert(model, cur_poly_n);
     std::vector<char> medium_vert_char(3);
     for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
     {

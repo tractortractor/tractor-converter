@@ -205,6 +205,9 @@ private:
     }
   }
 
+  std::vector<double> get_medium_vert(const volInt::polyhedron &model,
+                                      std::size_t poly_n);
+
 
 
   void write_c3d(const volInt::polyhedron &model);
