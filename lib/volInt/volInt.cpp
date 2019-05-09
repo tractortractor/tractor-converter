@@ -54,12 +54,23 @@ namespace volInt{
 
 std::vector<double> normalize(double norm, const std::vector<double> &vec)
 {
+  double vec_length =
+    std::sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]);
+  double s;
+  if(vec_length == 0.0)
+  {
+    s = 0.0;
+  }
+  else
+  {
+    s = norm / vec_length;
+  }
+
   std::vector<double> ret(3, 0.0);
-  double s =
-    norm / std::sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]);
   ret[0] = vec[0] * s;
   ret[1] = vec[1] * s;
   ret[2] = vec[2] * s;
+
   return ret;
 }
 
