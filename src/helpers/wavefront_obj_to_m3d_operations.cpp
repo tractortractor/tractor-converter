@@ -2055,11 +2055,122 @@ std::unordered_map<int, volInt::polyhedron>
 
 
 void wavefront_obj_to_m3d_model::get_xyzmax(
-  const volInt::polyhedron *main_model)
+  const volInt::polyhedron *main_model,
+  const std::unordered_map<int, volInt::polyhedron> *wheels_models)
 {
-  xmax = (main_model->xmax - main_model->xmin) / 2;
-  ymax = (main_model->ymax - main_model->ymin) / 2;
-  zmax = (main_model->zmax - main_model->zmin) / 2;
+  std::vector<double> max_point =
+  {
+    main_model->xmax,
+    main_model->ymax,
+    main_model->zmax,
+  };
+  std::vector<double> min_point =
+  {
+    main_model->xmin,
+    main_model->ymin,
+    main_model->zmin,
+  };
+  // TEST
+  /*
+  if(model_name == "m4")
+  {
+    std::cout << "\n--------------------\n";
+    std::cout << "main model max_point:";
+    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+    {
+      std::cout << " " << max_point[cur_coord];
+    }
+    std::cout << '\n';
+    std::cout << "main model min_point:";
+    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+    {
+      std::cout << " " << min_point[cur_coord];
+    }
+    std::cout << '\n';
+  }
+  */
+
+  if(wheels_models)
+  {
+    for(const int wheel_steer_num : main_model->wheels_steer)
+    {
+      if(main_model->wheels_non_ghost.count(wheel_steer_num))
+      {
+        const volInt::polyhedron &cur_wheel =
+          (*wheels_models).at(wheel_steer_num);
+        std::vector<double> wheel_max_point =
+        {
+          cur_wheel.xmax + cur_wheel.x_off,
+          cur_wheel.ymax + cur_wheel.y_off,
+          cur_wheel.zmax + cur_wheel.z_off,
+        };
+        std::vector<double> wheel_min_point =
+        {
+          cur_wheel.xmin + cur_wheel.x_off,
+          cur_wheel.ymin + cur_wheel.y_off,
+          cur_wheel.zmin + cur_wheel.z_off,
+        };
+
+        // TEST
+        /*
+        if(model_name == "m4")
+        {
+          std::cout << "\n--------------------\n";
+          std::cout << "wheel " << wheel_steer_num << " max_point:";
+          for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+          {
+            std::cout << " " << wheel_max_point[cur_coord];
+          }
+          std::cout << '\n';
+          std::cout << "wheel " << wheel_steer_num << " min_point:";
+          for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+          {
+            std::cout << " " << wheel_min_point[cur_coord];
+          }
+          std::cout << '\n';
+        }
+        */
+
+        for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+        {
+          if(wheel_max_point[cur_coord] > max_point[cur_coord])
+          {
+            // TEST
+            /*
+            if(model_name == "m4")
+            {
+              std::cout << "coord " << cur_coord <<
+                " of max_point overwritten  by wheel " <<
+                wheel_steer_num << '\n';
+              std::cout << "prev_max " << max_point[cur_coord] << '\n';
+              std::cout << "cur_max " << wheel_max_point[cur_coord] << '\n';
+            }
+            */
+            max_point[cur_coord] = wheel_max_point[cur_coord];
+          }
+          if(wheel_min_point[cur_coord] < min_point[cur_coord])
+          {
+            // TEST
+            /*
+            if(model_name == "m4")
+            {
+              std::cout << "coord " << cur_coord <<
+                " of min_point overwritten  by wheel " <<
+                wheel_steer_num << '\n';
+              std::cout << "prev_min " << min_point[cur_coord] << '\n';
+              std::cout << "cur_min " << wheel_min_point[cur_coord] << '\n';
+            }
+            */
+            min_point[cur_coord] = wheel_min_point[cur_coord];
+          }
+        }
+      }
+    }
+  }
+
+  xmax = (max_point[0] - min_point[0]) / 2;
+  ymax = (max_point[1] - min_point[1]) / 2;
+  zmax = (max_point[2] - min_point[2]) / 2;
 }
 
 
@@ -2162,7 +2273,7 @@ void wavefront_obj_to_m3d_model::get_m3d_header_data(
 //  xmax = main_model->xmax;
 //  ymax = main_model->ymax;
 //  zmax = main_model->zmax;
-  get_xyzmax(main_model);
+  get_xyzmax(main_model, wheels_models);
   // rmax must be set in get_m3d_scale_size() function.
 //  rmax = main_model->rmax;
 
