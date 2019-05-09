@@ -121,7 +121,8 @@ std::vector<double> vector_cross_product(
 
 
 const int min_float_precision = 3;
-const double ref_points_distinct_distance = 1.0/std::pow(10, min_float_precision);
+const double ref_points_distinct_distance =
+  1.0/std::pow(10, min_float_precision);
 //const double ref_points_distinct_distance = 1.0e-3;
 const double sqr_ref_points_distinct_distance =
   VOLINT_SQR(ref_points_distinct_distance);
