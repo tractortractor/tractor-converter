@@ -135,16 +135,6 @@ std::vector<double> normalize(double norm, const std::vector<double> &vec)
   ret[1] = vec[1] * s;
   ret[2] = vec[2] * s;
 
-  // TEST
-  /*
-  std::cout << "\n\n";
-  std::cout << "normalize" << '\n';
-  std::cout << "input: " <<
-    vec[0] << ", " << vec[1] << ", " << vec[2] << '\n';
-  std::cout << "s: " << s << '\n';
-  std::cout << "output: " <<
-    ret[0] << ", " << ret[1] << ", " << ret[2] << '\n';
-  */
   return ret;
 }
 
