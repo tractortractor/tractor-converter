@@ -117,6 +117,8 @@ wavefront_obj_to_m3d_model::wavefront_obj_to_m3d_model(
   non_mechos_scale_sizes(non_mechos_scale_sizes_arg)
 {
   model_name = input_file_path_arg.filename().string();
+
+  prm_scale_size = 0.0;
 }
 
 
