@@ -180,27 +180,6 @@ public:
 
 protected:
 
-  std::vector<double> &max_point();
-  const std::vector<double> &const_max_point() const;
-  std::vector<double> &min_point();
-  const std::vector<double> &const_min_point() const;
-
-  double xmax() const;
-  double ymax() const;
-  double zmax() const;
-
-  double xmin() const;
-  double ymin() const;
-  double zmin() const;
-
-  void set_xmax(double new_xmax);
-  void set_ymax(double new_ymax);
-  void set_zmax(double new_zmax);
-
-  void set_xmin(double new_xmin);
-  void set_ymin(double new_ymin);
-  void set_zmin(double new_zmin);
-
   std::string model_name;
 
   std::string m3d_data;
@@ -234,6 +213,28 @@ protected:
   const volInt::polyhedron *weapon_attachment_point;
   const volInt::polyhedron *ghost_wheel_model;
   const volInt::polyhedron *center_of_mass_model;
+
+
+  std::vector<double> &max_point();
+  const std::vector<double> &const_max_point() const;
+  std::vector<double> &min_point();
+  const std::vector<double> &const_min_point() const;
+
+  double xmax() const;
+  double ymax() const;
+  double zmax() const;
+
+  double xmin() const;
+  double ymin() const;
+  double zmin() const;
+
+  void set_xmax(double new_xmax);
+  void set_ymax(double new_ymax);
+  void set_zmax(double new_zmax);
+
+  void set_xmin(double new_xmin);
+  void set_ymin(double new_ymin);
+  void set_zmin(double new_zmin);
 
 // not needed
 //void scale_3d_point(std::vector<double> &point);
