@@ -223,6 +223,50 @@ void normalize_self_to_max_coord(double max_coord,
 
 
 
+std::vector<double> vector_plus(const std::vector<double> &first,
+                                const std::vector<double> &second)
+{
+  std::vector<double> ret(3, 0.0);
+  ret[0] = first[0] + second[0];
+  ret[1] = first[1] + second[1];
+  ret[2] = first[2] + second[2];
+  return ret;
+}
+
+
+
+void vector_plus_self(std::vector<double> &first,
+                      const std::vector<double> &second)
+{
+  first[0] += second[0];
+  first[1] += second[1];
+  first[2] += second[2];
+}
+
+
+
+std::vector<double> vector_minus(const std::vector<double> &first,
+                                 const std::vector<double> &second)
+{
+  std::vector<double> ret(3, 0.0);
+  ret[0] = first[0] - second[0];
+  ret[1] = first[1] - second[1];
+  ret[2] = first[2] - second[2];
+  return ret;
+}
+
+
+
+void vector_minus_self(std::vector<double> &first,
+                       const std::vector<double> &second)
+{
+  first[0] -= second[0];
+  first[1] -= second[1];
+  first[2] -= second[2];
+}
+
+
+
 
 
 wheel_data::wheel_data()
