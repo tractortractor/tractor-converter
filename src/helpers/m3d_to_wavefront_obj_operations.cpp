@@ -1364,11 +1364,13 @@ volInt::polyhedron
     cur_vert[2] *= radius_multiplier;
   }
 
-  for(auto &&cur_poly : cur_ghost_wheel.faces)
-  {
-    cur_poly.color_id = c3d::color::string_to_id::weapon;
-    cur_poly.wheel_weapon_id = wheel_id;
-  }
+// TEST
+// Both variables are set at merge_helper_move_model_into_main() function.
+//  for(auto &&cur_poly : cur_ghost_wheel.faces)
+//  {
+//    cur_poly.color_id = c3d::color::string_to_id::weapon;
+//    cur_poly.wheel_weapon_id = wheel_id;
+//  }
 
   return cur_ghost_wheel;
 }
