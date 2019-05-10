@@ -305,9 +305,14 @@ vangers_model::vangers_model(
   ghost_wheel_model(ghost_wheel_model_arg),
   center_of_mass_model(center_of_mass_model_arg)
 {
+  scale_size = 0.0;
+
   n_wheels = 0;
   n_debris = 0;
   n_models = 0;
+
+  rmax = 0.0;
+
   body_color_offset = 0;
   body_color_shift = 0;
 
