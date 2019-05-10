@@ -109,6 +109,168 @@ std::vector<double> vector_cross_product(const std::vector<double> &first,
 */
 
 
+
+model_extreme_points::model_extreme_points()
+: extreme_points_pair(
+    std::vector<double>(3, -std::numeric_limits<double>::max()),
+    std::vector<double>(3,  std::numeric_limits<double>::max())
+  )
+{
+}
+
+model_extreme_points::model_extreme_points(
+  std::vector<double> &max,
+  std::vector<double> &min)
+: extreme_points_pair(max, min)
+{
+}
+
+model_extreme_points::model_extreme_points(
+  std::vector<double> &&max,
+  std::vector<double> &&min)
+: extreme_points_pair(max, min)
+{
+}
+
+
+
+std::vector<double> &model_extreme_points::max()
+{
+  return extreme_points_pair.first;
+}
+
+const std::vector<double> &model_extreme_points::const_max() const
+{
+  return extreme_points_pair.first;
+}
+
+std::vector<double> &model_extreme_points::min()
+{
+  return extreme_points_pair.second;
+}
+
+const std::vector<double> &model_extreme_points::const_min() const
+{
+  return extreme_points_pair.second;
+}
+
+
+
+double model_extreme_points::xmax() const
+{
+  return const_max()[0];
+}
+
+double model_extreme_points::ymax() const
+{
+  return const_max()[1];
+}
+
+double model_extreme_points::zmax() const
+{
+  return const_max()[2];
+}
+
+
+double model_extreme_points::xmin() const
+{
+  return const_min()[0];
+}
+
+double model_extreme_points::ymin() const
+{
+  return const_min()[1];
+}
+
+double model_extreme_points::zmin() const
+{
+  return const_min()[2];
+}
+
+
+
+void model_extreme_points::set_xmax(double new_xmax)
+{
+  max()[0] = new_xmax;
+}
+
+void model_extreme_points::set_ymax(double new_ymax)
+{
+  max()[1] = new_ymax;
+}
+
+void model_extreme_points::set_zmax(double new_zmax)
+{
+  max()[2] = new_zmax;
+}
+
+
+void model_extreme_points::set_xmin(double new_xmin)
+{
+  min()[0] = new_xmin;
+}
+
+void model_extreme_points::set_ymin(double new_ymin)
+{
+  min()[1] = new_ymin;
+}
+
+void model_extreme_points::set_zmin(double new_zmin)
+{
+  min()[2] = new_zmin;
+}
+
+
+
+void model_extreme_points::get_most_extreme(const model_extreme_points &other)
+{
+  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+  {
+    if(max()[cur_coord] < other.const_max()[cur_coord])
+    {
+      max()[cur_coord] = other.const_max()[cur_coord];
+    }
+    if(min()[cur_coord] > other.const_min()[cur_coord])
+    {
+      min()[cur_coord] = other.const_min()[cur_coord];
+    }
+  }
+}
+
+void model_extreme_points::get_most_extreme(const std::vector<double> &point)
+{
+  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+  {
+    if(max()[cur_coord] < point[cur_coord])
+    {
+      max()[cur_coord] = point[cur_coord];
+    }
+    if(min()[cur_coord] > point[cur_coord])
+    {
+      min()[cur_coord] = point[cur_coord];
+    }
+  }
+}
+
+void model_extreme_points::get_most_extreme(
+  const std::vector<std::vector<double>> &points)
+{
+  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+  {
+    auto result =
+      std::minmax_element(
+        points.begin(), points.end(),
+        [&](std::vector<double> const& a, std::vector<double> const& b)
+        {
+          return a[cur_coord] < b[cur_coord];
+        }
+      );
+    min()[cur_coord] = (*result.first)[cur_coord];
+    max()[cur_coord] = (*result.second)[cur_coord];
+  }
+}
+
+
 /*
 face::face(const face &other)
 : numVerts(other.numVerts),
@@ -142,12 +304,7 @@ polyhedron::polyhedron()
   numFaces(0),
   numVertTotal(0),
   numVertsPerPoly(0),
-  xmax(0.0),
-  ymax(0.0),
-  zmax(0.0),
-  xmin(0.0),
-  ymin(0.0),
-  zmin(0.0),
+  extreme_points(),
   x_off(0.0),
   y_off(0.0),
   z_off(0.0),
@@ -177,12 +334,7 @@ polyhedron::polyhedron(const polyhedron &other)
   numFaces(other.numFaces),
   numVertTotal(other.numVertTotal),
   numVertsPerPoly(other.numVertsPerPoly),
-  xmax(other.xmax),
-  ymax(other.ymax),
-  zmax(other.zmax),
-  xmin(other.xmin),
-  ymin(other.ymin),
-  zmin(other.zmin),
+  extreme_points(other.extreme_points),
   x_off(other.x_off),
   y_off(other.y_off),
   z_off(other.z_off),
@@ -220,12 +372,7 @@ polyhedron::polyhedron(polyhedron &&other)
   numFaces(other.numFaces),
   numVertTotal(other.numVertTotal),
   numVertsPerPoly(other.numVertsPerPoly),
-  xmax(other.xmax),
-  ymax(other.ymax),
-  zmax(other.zmax),
-  xmin(other.xmin),
-  ymin(other.ymin),
-  zmin(other.zmin),
+  extreme_points(other.extreme_points),
   x_off(other.x_off),
   y_off(other.y_off),
   z_off(other.z_off),
@@ -267,12 +414,7 @@ polyhedron::polyhedron(int numVerts_arg,
   numFaces(numFaces_arg),
   numVertTotal(numFaces_arg * verts_per_poly_arg),
   numVertsPerPoly(verts_per_poly_arg),
-  xmax(0.0),
-  ymax(0.0),
-  zmax(0.0),
-  xmin(0.0),
-  ymin(0.0),
-  zmin(0.0),
+  extreme_points(),
   x_off(0.0),
   y_off(0.0),
   z_off(0.0),
@@ -446,48 +588,29 @@ void polyhedron::faces_calc_params()
 
 
 
-std::pair<std::vector<double>, std::vector<double>>
-  polyhedron::get_extreme_points()
+void polyhedron::get_extreme_points()
 {
-  std::vector<double> max_point(3, -std::numeric_limits<double>::max());
-  std::vector<double> min_point(3,  std::numeric_limits<double>::max());
-
-  for(const auto &vert : verts)
-  {
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-    {
-      if(max_point[cur_coord] < vert[cur_coord])
-      {
-        max_point[cur_coord] = vert[cur_coord];
-      }
-      if(min_point[cur_coord] > vert[cur_coord])
-      {
-        min_point[cur_coord] = vert[cur_coord];
-      }
-    }
-  }
-  return {max_point, min_point};
+  extreme_points.get_most_extreme(verts);
 }
 
 
 
 std::vector<double> polyhedron::get_model_center()
 {
-  std::pair<std::vector<double>, std::vector<double>> extreme_points =
-    get_extreme_points();
+  get_extreme_points();
 
   // Getting middle point of model as middle of those extreme points.
   std::vector<double> center_point(3, 0);
 //  std::cout << "\n\nFinding center point." << '\n';
   for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
   {
-//    std::cout << "extreme_points.first[" << cur_coord << "]: " <<
-//                  extreme_points.first[cur_coord] << '\n';
-//    std::cout << "extreme_points.second[" << cur_coord << "]: " <<
-//                  extreme_points.second[cur_coord] << '\n';
+//    std::cout << "extreme_points.max()[" << cur_coord << "]: " <<
+//                  extreme_points.max()[cur_coord] << '\n';
+//    std::cout << "extreme_points.min()[" << cur_coord << "]: " <<
+//                  extreme_points.min()[cur_coord] << '\n';
     center_point[cur_coord] =
-      (extreme_points.first[cur_coord] - extreme_points.second[cur_coord])/2 +
-      extreme_points.second[cur_coord];
+      (extreme_points.max()[cur_coord] - extreme_points.min()[cur_coord]) / 2 +
+      extreme_points.min()[cur_coord];
 //    std::cout << "center_point[" << cur_coord << "]: " <<
 //      center_point[cur_coord] << '\n';
   }
@@ -728,16 +851,7 @@ void polyhedron::calculate_rmax()
 
 void polyhedron::calculate_c3d_properties()
 {
-  std::pair<std::vector<double>, std::vector<double>> extreme_points =
-    get_extreme_points();
-
-  xmax = extreme_points.first[0];
-  ymax = extreme_points.first[1];
-  zmax = extreme_points.first[2];
-
-  xmin = extreme_points.second[0];
-  ymin = extreme_points.second[1];
-  zmin = extreme_points.second[2];
+  get_extreme_points();
 
   calculate_rmax();
 
@@ -819,13 +933,13 @@ void polyhedron::calculate_c3d_properties()
   /*
   std::cout << '\n';
 
-  std::cout << "xmax: " << xmax << '\n';
-  std::cout << "ymax: " << ymax << '\n';
-  std::cout << "zmax: " << zmax << '\n';
+  std::cout << "xmax: " << xmax() << '\n';
+  std::cout << "ymax: " << ymax() << '\n';
+  std::cout << "zmax: " << zmax() << '\n';
 
-  std::cout << "xmin: " << xmin << '\n';
-  std::cout << "ymin: " << ymin << '\n';
-  std::cout << "zmin: " << zmin << '\n';
+  std::cout << "xmin: " << xmin() << '\n';
+  std::cout << "ymin: " << ymin() << '\n';
+  std::cout << "zmin: " << zmin() << '\n';
 
   std::cout << "rmax: " << rmax << '\n';
   std::cout << "volume: " << volume << '\n';
@@ -964,6 +1078,92 @@ void polyhedron::calculate_c3d_properties()
     expected_volume += (p1 * (p3 % p4)) / 6.0f;
   }
   */
+}
+
+
+
+std::vector<double> &polyhedron::max_point()
+{
+  return extreme_points.max();
+}
+
+const std::vector<double> &polyhedron::const_max_point() const
+{
+  return extreme_points.const_max();
+}
+
+std::vector<double> &polyhedron::min_point()
+{
+  return extreme_points.min();
+}
+
+const std::vector<double> &polyhedron::const_min_point() const
+{
+  return extreme_points.const_min();
+}
+
+
+double polyhedron::xmax() const
+{
+  return extreme_points.xmax();
+}
+
+double polyhedron::ymax() const
+{
+  return extreme_points.ymax();
+}
+
+double polyhedron::zmax() const
+{
+  return extreme_points.zmax();
+}
+
+
+double polyhedron::xmin() const
+{
+  return extreme_points.xmin();
+}
+
+double polyhedron::ymin() const
+{
+  return extreme_points.ymin();
+}
+
+double polyhedron::zmin() const
+{
+  return extreme_points.zmin();
+}
+
+
+void polyhedron::set_xmax(double new_xmax)
+{
+  extreme_points.set_xmax(new_xmax);
+}
+
+void polyhedron::set_ymax(double new_ymax)
+{
+  extreme_points.set_ymax(new_ymax);
+}
+
+void polyhedron::set_zmax(double new_zmax)
+{
+  extreme_points.set_zmax(new_zmax);
+}
+
+
+void polyhedron::set_xmin(double new_xmin)
+{
+  extreme_points.set_xmin(new_xmin);
+}
+
+void polyhedron::set_ymin(double new_ymin)
+{
+  extreme_points.set_ymin(new_ymin);
+}
+
+void polyhedron::set_zmin(double new_zmin)
+{
+  extreme_points.set_zmin(new_zmin);
 }
 
 

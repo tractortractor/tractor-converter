@@ -1330,12 +1330,11 @@ volInt::polyhedron
 {
   volInt::polyhedron cur_ghost_wheel = *ghost_wheel_model;
 
-  std::pair<point, point> extreme_points =
-    cur_ghost_wheel.get_extreme_points();
-  double given_width = extreme_points.first[0] - extreme_points.second[0];
+  cur_ghost_wheel.get_extreme_points();
+  double given_width = cur_ghost_wheel.xmax() - cur_ghost_wheel.xmin();
   double width_multiplier = cur_wheel_data[wheel_id].width / given_width;
   double given_radius =
-    (extreme_points.first[2] - extreme_points.second[2]) / 2;
+    (cur_ghost_wheel.zmax() - cur_ghost_wheel.zmin()) / 2;
   double radius_multiplier = cur_wheel_data[wheel_id].radius / given_radius;
 
   // TEST

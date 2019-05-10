@@ -134,6 +134,41 @@ const double density = 1.0;
    ============================================================================
 */
 
+struct model_extreme_points {
+
+  model_extreme_points();
+  model_extreme_points(std::vector<double> &max, std::vector<double> &min);
+  model_extreme_points(std::vector<double> &&max, std::vector<double> &&min);
+
+  std::vector<double> &max();
+  const std::vector<double> &const_max() const;
+  std::vector<double> &min();
+  const std::vector<double> &const_min() const;
+
+  double xmax() const;
+  double ymax() const;
+  double zmax() const;
+
+  double xmin() const;
+  double ymin() const;
+  double zmin() const;
+
+  void set_xmax(double new_xmax);
+  void set_ymax(double new_ymax);
+  void set_zmax(double new_zmax);
+
+  void set_xmin(double new_xmin);
+  void set_ymin(double new_ymin);
+  void set_zmin(double new_zmin);
+
+  void get_most_extreme(const model_extreme_points &other);
+  void get_most_extreme(const std::vector<double> &point);
+  void get_most_extreme(const std::vector<std::vector<double>> &points);
+
+  std::pair<std::vector<double>, std::vector<double>> extreme_points_pair;
+
+};
+
 typedef struct face {
 
 //  face(const face &other);
@@ -171,7 +206,7 @@ typedef struct polyhedron {
   void reverse_polygons_orientation();
   void faces_calc_params(); // Must be called again if model was moved.
 
-  std::pair<std::vector<double>, std::vector<double>> get_extreme_points();
+  void get_extreme_points();
 
 
   std::vector<double> get_model_center();
@@ -185,9 +220,29 @@ typedef struct polyhedron {
   void calculate_rmax();
   void calculate_c3d_properties();
 
+  std::vector<double> &max_point();
+  const std::vector<double> &const_max_point() const;
+  std::vector<double> &min_point();
+  const std::vector<double> &const_min_point() const;
+
+  double xmax() const;
+  double ymax() const;
+  double zmax() const;
+
+  double xmin() const;
+  double ymin() const;
+  double zmin() const;
+
+  void set_xmax(double new_xmax);
+  void set_ymax(double new_ymax);
+  void set_zmax(double new_zmax);
+
+  void set_xmin(double new_xmin);
+  void set_ymin(double new_ymin);
+  void set_zmin(double new_zmin);
+
   int numVerts, numVertNorms, numFaces, numVertTotal, numVertsPerPoly;
-  double xmax, ymax, zmax;
-  double xmin, ymin, zmin;
+  model_extreme_points extreme_points;
   double x_off, y_off, z_off;
   double rmax;
   double volume;

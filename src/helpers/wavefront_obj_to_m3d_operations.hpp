@@ -247,10 +247,14 @@ private:
     volInt::polyhedron &main_model);
 
 
-  void get_xyzmax(
+
+  void get_m3d_extreme_points(
     const volInt::polyhedron *main_model,
     const std::unordered_map<int, volInt::polyhedron> *wheels_models =
       nullptr);
+  void get_a3d_extreme_points(
+    const std::deque<volInt::polyhedron> *models);
+
 
 
   void get_m3d_header_data(

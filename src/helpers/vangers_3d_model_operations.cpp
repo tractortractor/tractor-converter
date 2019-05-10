@@ -335,13 +335,13 @@ void vangers_model::scale_c3d(volInt::polyhedron &c3d_model)
     scale_3d_point(vert_to_change);
   }
 
-  c3d_model.xmax *= scale_size;
-  c3d_model.ymax *= scale_size;
-  c3d_model.zmax *= scale_size;
+  c3d_model.set_xmax(c3d_model.xmax() * scale_size);
+  c3d_model.set_ymax(c3d_model.ymax() * scale_size);
+  c3d_model.set_zmax(c3d_model.zmax() * scale_size);
 
-  c3d_model.xmin *= scale_size;
-  c3d_model.ymin *= scale_size;
-  c3d_model.zmin *= scale_size;
+  c3d_model.set_xmin(c3d_model.xmin() * scale_size);
+  c3d_model.set_ymin(c3d_model.ymin() * scale_size);
+  c3d_model.set_zmin(c3d_model.zmin() * scale_size);
 
   c3d_model.x_off *= scale_size;
   c3d_model.y_off *= scale_size;
@@ -354,6 +354,92 @@ void vangers_model::scale_c3d(volInt::polyhedron &c3d_model)
   scale_3d_point(c3d_model.rcm);
 }
 */
+
+
+
+std::vector<double> &vangers_model::max_point()
+{
+  return extreme_points.max();
+}
+
+const std::vector<double> &vangers_model::const_max_point() const
+{
+  return extreme_points.const_max();
+}
+
+std::vector<double> &vangers_model::min_point()
+{
+  return extreme_points.min();
+}
+
+const std::vector<double> &vangers_model::const_min_point() const
+{
+  return extreme_points.const_min();
+}
+
+
+double vangers_model::xmax() const
+{
+  return extreme_points.xmax();
+}
+
+double vangers_model::ymax() const
+{
+  return extreme_points.ymax();
+}
+
+double vangers_model::zmax() const
+{
+  return extreme_points.zmax();
+}
+
+
+double vangers_model::xmin() const
+{
+  return extreme_points.xmin();
+}
+
+double vangers_model::ymin() const
+{
+  return extreme_points.ymin();
+}
+
+double vangers_model::zmin() const
+{
+  return extreme_points.zmin();
+}
+
+
+void vangers_model::set_xmax(double new_xmax)
+{
+  extreme_points.set_xmax(new_xmax);
+}
+
+void vangers_model::set_ymax(double new_ymax)
+{
+  extreme_points.set_ymax(new_ymax);
+}
+
+void vangers_model::set_zmax(double new_zmax)
+{
+  extreme_points.set_zmax(new_zmax);
+}
+
+
+void vangers_model::set_xmin(double new_xmin)
+{
+  extreme_points.set_xmin(new_xmin);
+}
+
+void vangers_model::set_ymin(double new_ymin)
+{
+  extreme_points.set_ymin(new_ymin);
+}
+
+void vangers_model::set_zmin(double new_zmin)
+{
+  extreme_points.set_zmin(new_zmin);
+}
 
 
 

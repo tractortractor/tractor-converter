@@ -385,8 +385,8 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
 
 
   // TEST
-//cur_main_model.xmax = cur_main_model.ymax = cur_main_model.zmax =  1;
-//cur_main_model.xmin = cur_main_model.ymin = cur_main_model.zmin = -1;
+//cur_main_model.max() = { 1,  1,  1};
+//cur_main_model.min() = {-1, -1, -1};
 
 
 
@@ -1055,21 +1055,21 @@ std::vector<double> wavefront_obj_to_m3d_model::get_medium_vert(
     }
     if(std::signbit(extreme_abs_coords[0]))
     {
-      medium_vert[0] = -xmax;
+      medium_vert[0] = -xmax();
     }
     else
     {
-      medium_vert[0] = xmax;
+      medium_vert[0] = xmax();
     }
     if(std::signbit(extreme_abs_coords[1]))
     {
-      medium_vert[1] = -ymax;
+      medium_vert[1] = -ymax();
     }
     else
     {
-      medium_vert[1] = ymax;
+      medium_vert[1] = ymax();
     }
-    medium_vert[2] = model.zmin;
+    medium_vert[2] = model.zmin();
     // TEST
     /*
     if(model_name == "m4")
@@ -1129,18 +1129,18 @@ void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
   write_var_to_m3d<int>(model.numVertTotal);
 
   write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.xmax * scale_size));
+    round_half_to_even<double, int>(model.xmax() * scale_size));
   write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.ymax * scale_size));
+    round_half_to_even<double, int>(model.ymax() * scale_size));
   write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.zmax * scale_size));
+    round_half_to_even<double, int>(model.zmax() * scale_size));
 
   write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.xmin * scale_size));
+    round_half_to_even<double, int>(model.xmin() * scale_size));
   write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.ymin * scale_size));
+    round_half_to_even<double, int>(model.ymin() * scale_size));
   write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.zmin * scale_size));
+    round_half_to_even<double, int>(model.zmin() * scale_size));
 
   write_var_to_m3d<int>(
     round_half_to_even<double, int>(model.x_off * scale_size));
@@ -1277,9 +1277,9 @@ void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
 
 void wavefront_obj_to_m3d_model::write_m3d_header_data()
 {
-  write_var_to_m3d<int>(round_half_to_even<double, int>(xmax * scale_size));
-  write_var_to_m3d<int>(round_half_to_even<double, int>(ymax * scale_size));
-  write_var_to_m3d<int>(round_half_to_even<double, int>(zmax * scale_size));
+  write_var_to_m3d<int>(round_half_to_even<double, int>(xmax() * scale_size));
+  write_var_to_m3d<int>(round_half_to_even<double, int>(ymax() * scale_size));
+  write_var_to_m3d<int>(round_half_to_even<double, int>(zmax() * scale_size));
   write_var_to_m3d<int>(round_half_to_even<double, int>(rmax * scale_size));
 
   write_var_to_m3d<int>(n_wheels);
@@ -1295,9 +1295,9 @@ void wavefront_obj_to_m3d_model::write_a3d_header_data()
 {
   write_var_to_m3d<int>(n_models);
 
-  write_var_to_m3d<int>(round_half_to_even<double, int>(xmax * scale_size));
-  write_var_to_m3d<int>(round_half_to_even<double, int>(ymax * scale_size));
-  write_var_to_m3d<int>(round_half_to_even<double, int>(zmax * scale_size));
+  write_var_to_m3d<int>(round_half_to_even<double, int>(xmax() * scale_size));
+  write_var_to_m3d<int>(round_half_to_even<double, int>(ymax() * scale_size));
+  write_var_to_m3d<int>(round_half_to_even<double, int>(zmax() * scale_size));
   write_var_to_m3d<int>(round_half_to_even<double, int>(rmax * scale_size));
 
   write_var_to_m3d<int>(body_color_offset);
@@ -2054,37 +2054,27 @@ std::unordered_map<int, volInt::polyhedron>
 
 
 
-void wavefront_obj_to_m3d_model::get_xyzmax(
+void wavefront_obj_to_m3d_model::get_m3d_extreme_points(
   const volInt::polyhedron *main_model,
   const std::unordered_map<int, volInt::polyhedron> *wheels_models)
 {
-  std::vector<double> max_point =
-  {
-    main_model->xmax,
-    main_model->ymax,
-    main_model->zmax,
-  };
-  std::vector<double> min_point =
-  {
-    main_model->xmin,
-    main_model->ymin,
-    main_model->zmin,
-  };
+  extreme_points.get_most_extreme(main_model->extreme_points);
   // TEST
   /*
   if(model_name == "m4")
   {
     std::cout << "\n--------------------\n";
-    std::cout << "main model max_point:";
+    std::cout << "before\n";
+    std::cout << "max_point:";
     for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
     {
-      std::cout << " " << max_point[cur_coord];
+      std::cout << " " << max_point()[cur_coord];
     }
     std::cout << '\n';
-    std::cout << "main model min_point:";
+    std::cout << "min_point:";
     for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
     {
-      std::cout << " " << min_point[cur_coord];
+      std::cout << " " << min_point()[cur_coord];
     }
     std::cout << '\n';
   }
@@ -2098,79 +2088,70 @@ void wavefront_obj_to_m3d_model::get_xyzmax(
       {
         const volInt::polyhedron &cur_wheel =
           (*wheels_models).at(wheel_steer_num);
-        std::vector<double> wheel_max_point =
+        volInt::model_extreme_points cur_wheel_extreme_points =
+          cur_wheel.extreme_points;
+        std::vector<double> wheel_offset =
         {
-          cur_wheel.xmax + cur_wheel.x_off,
-          cur_wheel.ymax + cur_wheel.y_off,
-          cur_wheel.zmax + cur_wheel.z_off,
+          cur_wheel.x_off,
+          cur_wheel.y_off,
+          cur_wheel.z_off,
         };
-        std::vector<double> wheel_min_point =
-        {
-          cur_wheel.xmin + cur_wheel.x_off,
-          cur_wheel.ymin + cur_wheel.y_off,
-          cur_wheel.zmin + cur_wheel.z_off,
-        };
-
-        // TEST
-        /*
-        if(model_name == "m4")
-        {
-          std::cout << "\n--------------------\n";
-          std::cout << "wheel " << wheel_steer_num << " max_point:";
-          for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-          {
-            std::cout << " " << wheel_max_point[cur_coord];
-          }
-          std::cout << '\n';
-          std::cout << "wheel " << wheel_steer_num << " min_point:";
-          for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-          {
-            std::cout << " " << wheel_min_point[cur_coord];
-          }
-          std::cout << '\n';
-        }
-        */
-
-        for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-        {
-          if(wheel_max_point[cur_coord] > max_point[cur_coord])
-          {
-            // TEST
-            /*
-            if(model_name == "m4")
-            {
-              std::cout << "coord " << cur_coord <<
-                " of max_point overwritten  by wheel " <<
-                wheel_steer_num << '\n';
-              std::cout << "prev_max " << max_point[cur_coord] << '\n';
-              std::cout << "cur_max " << wheel_max_point[cur_coord] << '\n';
-            }
-            */
-            max_point[cur_coord] = wheel_max_point[cur_coord];
-          }
-          if(wheel_min_point[cur_coord] < min_point[cur_coord])
-          {
-            // TEST
-            /*
-            if(model_name == "m4")
-            {
-              std::cout << "coord " << cur_coord <<
-                " of min_point overwritten  by wheel " <<
-                wheel_steer_num << '\n';
-              std::cout << "prev_min " << min_point[cur_coord] << '\n';
-              std::cout << "cur_min " << wheel_min_point[cur_coord] << '\n';
-            }
-            */
-            min_point[cur_coord] = wheel_min_point[cur_coord];
-          }
-        }
+        vector_plus_self(cur_wheel_extreme_points.max(),
+                         wheel_offset);
+        vector_plus_self(cur_wheel_extreme_points.min(),
+                         wheel_offset);
+        extreme_points.get_most_extreme(cur_wheel_extreme_points);
       }
     }
   }
+  // TEST
+  /*
+  if(model_name == "m4")
+  {
+    std::cout << "\n--------------------\n";
+    std::cout << "after\n";
+    std::cout << "max_point:";
+    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+    {
+      std::cout << " " << max_point()[cur_coord];
+    }
+    std::cout << '\n';
+    std::cout << "min_point:";
+    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+    {
+      std::cout << " " << min_point()[cur_coord];
+    }
+    std::cout << '\n';
+  }
+  */
+}
 
-  xmax = (max_point[0] - min_point[0]) / 2;
-  ymax = (max_point[1] - min_point[1]) / 2;
-  zmax = (max_point[2] - min_point[2]) / 2;
+void wavefront_obj_to_m3d_model::get_a3d_extreme_points(
+  const std::deque<volInt::polyhedron> *models)
+{
+  for(const auto &model : *models)
+  {
+    extreme_points.get_most_extreme(model.extreme_points);
+  }
+  // TEST
+  /*
+  if(model_name == "a1")
+  {
+    std::cout << "\n--------------------\n";
+    std::cout << "max_point:";
+    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+    {
+      std::cout << " " << max_point()[cur_coord];
+    }
+    std::cout << '\n';
+    std::cout << "min_point:";
+    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+    {
+      std::cout << " " << min_point()[cur_coord];
+    }
+    std::cout << '\n';
+  }
+  */
 }
 
 
@@ -2273,7 +2254,7 @@ void wavefront_obj_to_m3d_model::get_m3d_header_data(
 //  xmax = main_model->xmax;
 //  ymax = main_model->ymax;
 //  zmax = main_model->zmax;
-  get_xyzmax(main_model, wheels_models);
+  get_m3d_extreme_points(main_model, wheels_models);
   // rmax must be set in get_m3d_scale_size() function.
 //  rmax = main_model->rmax;
 
@@ -2374,7 +2355,7 @@ void wavefront_obj_to_m3d_model::get_a3d_header_data(
 //  xmax = (*models)[0].xmax;
 //  ymax = (*models)[0].ymax;
 //  zmax = (*models)[0].zmax;
-  get_xyzmax(&(*models).at(0));
+  get_a3d_extreme_points(models);
   // rmax must be set in get_a3d_scale_size() function.
 //  rmax = (*models)[0].rmax;
 

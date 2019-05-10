@@ -180,6 +180,27 @@ public:
 
 protected:
 
+  std::vector<double> &max_point();
+  const std::vector<double> &const_max_point() const;
+  std::vector<double> &min_point();
+  const std::vector<double> &const_min_point() const;
+
+  double xmax() const;
+  double ymax() const;
+  double zmax() const;
+
+  double xmin() const;
+  double ymin() const;
+  double zmin() const;
+
+  void set_xmax(double new_xmax);
+  void set_ymax(double new_ymax);
+  void set_zmax(double new_zmax);
+
+  void set_xmin(double new_xmin);
+  void set_ymin(double new_ymin);
+  void set_zmin(double new_zmin);
+
   std::string model_name;
 
   std::string m3d_data;
@@ -199,9 +220,7 @@ protected:
   int n_debris;
   int n_models;
 
-  double xmax;
-  double ymax;
-  double zmax;
+  volInt::model_extreme_points extreme_points;
   double rmax;
 
   int body_color_offset;
