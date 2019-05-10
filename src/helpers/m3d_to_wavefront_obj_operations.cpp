@@ -78,6 +78,8 @@ m3d_to_wavefront_obj_model::m3d_to_wavefront_obj_model(
 
   // +1 because "vn" instead of "v"
   expected_medium_normal_size = 1 + expected_medium_vertex_size;
+
+  non_steer_ghost_wheels_num = 0;
 }
 
 
