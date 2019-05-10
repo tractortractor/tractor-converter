@@ -141,9 +141,9 @@ struct model_extreme_points {
   model_extreme_points(std::vector<double> &&max, std::vector<double> &&min);
 
   std::vector<double> &max();
-  const std::vector<double> &const_max() const;
+  const std::vector<double> &max() const;
   std::vector<double> &min();
-  const std::vector<double> &const_min() const;
+  const std::vector<double> &min() const;
 
   double xmax() const;
   double ymax() const;
@@ -220,10 +220,13 @@ typedef struct polyhedron {
   void calculate_rmax();
   void calculate_c3d_properties();
 
+  std::pair<std::vector<double>, std::vector<double>> &extreme_points_pair();
+  const std::pair<std::vector<double>, std::vector<double>> &
+    extreme_points_pair() const;
   std::vector<double> &max_point();
-  const std::vector<double> &const_max_point() const;
+  const std::vector<double> &max_point() const;
   std::vector<double> &min_point();
-  const std::vector<double> &const_min_point() const;
+  const std::vector<double> &min_point() const;
 
   double xmax() const;
   double ymax() const;

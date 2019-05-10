@@ -215,10 +215,13 @@ protected:
   const volInt::polyhedron *center_of_mass_model;
 
 
+  std::pair<std::vector<double>, std::vector<double>> &extreme_points_pair();
+  const std::pair<std::vector<double>, std::vector<double>> &
+    extreme_points_pair() const;
   std::vector<double> &max_point();
-  const std::vector<double> &const_max_point() const;
+  const std::vector<double> &max_point() const;
   std::vector<double> &min_point();
-  const std::vector<double> &const_min_point() const;
+  const std::vector<double> &min_point() const;
 
   double xmax() const;
   double ymax() const;

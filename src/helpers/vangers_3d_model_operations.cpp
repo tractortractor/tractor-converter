@@ -361,15 +361,26 @@ void vangers_model::scale_c3d(volInt::polyhedron &c3d_model)
 */
 
 
+std::pair<std::vector<double>, std::vector<double>> &
+  vangers_model::extreme_points_pair()
+{
+  return extreme_points.extreme_points_pair;
+}
+
+const std::pair<std::vector<double>, std::vector<double>> &
+  vangers_model::extreme_points_pair() const
+{
+  return extreme_points.extreme_points_pair;
+}
 
 std::vector<double> &vangers_model::max_point()
 {
   return extreme_points.max();
 }
 
-const std::vector<double> &vangers_model::const_max_point() const
+const std::vector<double> &vangers_model::max_point() const
 {
-  return extreme_points.const_max();
+  return extreme_points.max();
 }
 
 std::vector<double> &vangers_model::min_point()
@@ -377,9 +388,9 @@ std::vector<double> &vangers_model::min_point()
   return extreme_points.min();
 }
 
-const std::vector<double> &vangers_model::const_min_point() const
+const std::vector<double> &vangers_model::min_point() const
 {
-  return extreme_points.const_min();
+  return extreme_points.min();
 }
 
 

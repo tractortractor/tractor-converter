@@ -139,7 +139,7 @@ std::vector<double> &model_extreme_points::max()
   return extreme_points_pair.first;
 }
 
-const std::vector<double> &model_extreme_points::const_max() const
+const std::vector<double> &model_extreme_points::max() const
 {
   return extreme_points_pair.first;
 }
@@ -149,7 +149,7 @@ std::vector<double> &model_extreme_points::min()
   return extreme_points_pair.second;
 }
 
-const std::vector<double> &model_extreme_points::const_min() const
+const std::vector<double> &model_extreme_points::min() const
 {
   return extreme_points_pair.second;
 }
@@ -158,33 +158,33 @@ const std::vector<double> &model_extreme_points::const_min() const
 
 double model_extreme_points::xmax() const
 {
-  return const_max()[0];
+  return max()[0];
 }
 
 double model_extreme_points::ymax() const
 {
-  return const_max()[1];
+  return max()[1];
 }
 
 double model_extreme_points::zmax() const
 {
-  return const_max()[2];
+  return max()[2];
 }
 
 
 double model_extreme_points::xmin() const
 {
-  return const_min()[0];
+  return min()[0];
 }
 
 double model_extreme_points::ymin() const
 {
-  return const_min()[1];
+  return min()[1];
 }
 
 double model_extreme_points::zmin() const
 {
-  return const_min()[2];
+  return min()[2];
 }
 
 
@@ -226,13 +226,13 @@ void model_extreme_points::get_most_extreme(const model_extreme_points &other)
 {
   for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
   {
-    if(max()[cur_coord] < other.const_max()[cur_coord])
+    if(max()[cur_coord] < other.max()[cur_coord])
     {
-      max()[cur_coord] = other.const_max()[cur_coord];
+      max()[cur_coord] = other.max()[cur_coord];
     }
-    if(min()[cur_coord] > other.const_min()[cur_coord])
+    if(min()[cur_coord] > other.min()[cur_coord])
     {
-      min()[cur_coord] = other.const_min()[cur_coord];
+      min()[cur_coord] = other.min()[cur_coord];
     }
   }
 }
@@ -1082,14 +1082,26 @@ void polyhedron::calculate_c3d_properties()
 
 
 
+std::pair<std::vector<double>, std::vector<double>> &
+  polyhedron::extreme_points_pair()
+{
+  return extreme_points.extreme_points_pair;
+}
+
+const std::pair<std::vector<double>, std::vector<double>> &
+  polyhedron::extreme_points_pair() const
+{
+  return extreme_points.extreme_points_pair;
+}
+
 std::vector<double> &polyhedron::max_point()
 {
   return extreme_points.max();
 }
 
-const std::vector<double> &polyhedron::const_max_point() const
+const std::vector<double> &polyhedron::max_point() const
 {
-  return extreme_points.const_max();
+  return extreme_points.max();
 }
 
 std::vector<double> &polyhedron::min_point()
@@ -1097,9 +1109,9 @@ std::vector<double> &polyhedron::min_point()
   return extreme_points.min();
 }
 
-const std::vector<double> &polyhedron::const_min_point() const
+const std::vector<double> &polyhedron::min_point() const
 {
-  return extreme_points.const_min();
+  return extreme_points.min();
 }
 
 
