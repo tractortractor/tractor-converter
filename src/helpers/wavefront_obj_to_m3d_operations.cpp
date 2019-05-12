@@ -1480,20 +1480,16 @@ std::pair<point, point> wavefront_obj_to_m3d_model::get_compare_points(
   const volInt::polyhedron *reference_model)
 {
 
-  point two_rel_to_one =
-    volInt::vector_minus((*cur_ref_verts[1]),
-                         (*cur_ref_verts[0]));
+  point two_rel_to_one = vector_minus((*cur_ref_verts[1]),
+                                      (*cur_ref_verts[0]));
 
-  point three_rel_to_one =
-    volInt::vector_minus((*cur_ref_verts[2]),
-                         (*cur_ref_verts[0]));
+  point three_rel_to_one = vector_minus((*cur_ref_verts[2]),
+                                        (*cur_ref_verts[0]));
 
   point two_compare_point =
-    volInt::vector_minus(two_rel_to_one,
-                         reference_model->ref_vert_two_rel_to_one);
+    vector_minus(two_rel_to_one, reference_model->ref_vert_two_rel_to_one);
   point three_compare_point =
-    volInt::vector_minus(three_rel_to_one,
-                         reference_model->ref_vert_three_rel_to_one);
+    vector_minus(three_rel_to_one, reference_model->ref_vert_three_rel_to_one);
 
   // TEST
   /*
@@ -1538,28 +1534,22 @@ std::pair<point, point> wavefront_obj_to_m3d_model::get_compare_points(
   std::vector<point*> ref_model_ref_verts)
 {
 
-  point two_rel_to_one =
-    volInt::vector_minus((*cur_ref_verts[1]),
-                         (*cur_ref_verts[0]));
+  point two_rel_to_one = vector_minus((*cur_ref_verts[1]),
+                                      (*cur_ref_verts[0]));
 
-  point three_rel_to_one =
-    volInt::vector_minus((*cur_ref_verts[2]),
-                         (*cur_ref_verts[0]));
+  point three_rel_to_one = vector_minus((*cur_ref_verts[2]),
+                                        (*cur_ref_verts[0]));
 
-  point ref_model_two_rel_to_one =
-    volInt::vector_minus((*ref_model_ref_verts[1]),
-                         (*ref_model_ref_verts[0]));
+  point ref_model_two_rel_to_one = vector_minus((*ref_model_ref_verts[1]),
+                                                (*ref_model_ref_verts[0]));
 
-  point ref_model_three_rel_to_one =
-    volInt::vector_minus((*ref_model_ref_verts[2]),
-                         (*ref_model_ref_verts[0]));
+  point ref_model_three_rel_to_one = vector_minus((*ref_model_ref_verts[2]),
+                                                  (*ref_model_ref_verts[0]));
 
-  point two_compare_point =
-    volInt::vector_minus(two_rel_to_one,
-                         ref_model_two_rel_to_one);
-  point three_compare_point =
-    volInt::vector_minus(three_rel_to_one,
-                         ref_model_three_rel_to_one);
+  point two_compare_point = vector_minus(two_rel_to_one,
+                                         ref_model_two_rel_to_one);
+  point three_compare_point = vector_minus(three_rel_to_one,
+                                           ref_model_three_rel_to_one);
 
   // TEST
   /*
@@ -1639,8 +1629,8 @@ void wavefront_obj_to_m3d_model::get_custom_rcm(volInt::polyhedron &model)
     }
   }
 
-  model.rcm = volInt::vector_minus(*cur_rcm_verts[0],
-                                   *center_of_mass_model->ref_vert_one);
+  model.rcm = vector_minus(*cur_rcm_verts[0],
+                           *center_of_mass_model->ref_vert_one);
 
   model.rcm_overwritten = true;
 
@@ -1700,9 +1690,8 @@ void wavefront_obj_to_m3d_model::get_attachment_point(
     }
   }
 
-  point offset =
-    volInt::vector_minus(*cur_attachment_verts[0],
-                         *weapon_attachment_point->ref_vert_one);
+  point offset = vector_minus(*cur_attachment_verts[0],
+                              *weapon_attachment_point->ref_vert_one);
   model.x_off = offset[0];
   model.y_off = offset[1];
   model.z_off = offset[2];
@@ -1797,9 +1786,8 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
       weapon_slots_existence |= (1 << cur_slot);
       cur_weapon_slot_data[cur_slot].exists = true;
 
-      point two_rel_to_one =
-        volInt::vector_minus((*cur_weapon_verts[cur_slot][1]),
-                             (*cur_weapon_verts[cur_slot][0]));
+      point two_rel_to_one = vector_minus((*cur_weapon_verts[cur_slot][1]),
+                                          (*cur_weapon_verts[cur_slot][0]));
 
       // If y coordinate of points 2 and 3 relative to 1 is the same
       // in orig model and current model
@@ -1878,8 +1866,8 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
       }
 
       cur_weapon_slot_data[cur_slot].R_slots =
-        volInt::vector_minus((*cur_weapon_verts[cur_slot][0]),
-                             ref_verts_rotated[0]);
+        vector_minus((*cur_weapon_verts[cur_slot][0]),
+                     ref_verts_rotated[0]);
     }
   }
 }

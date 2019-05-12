@@ -1498,7 +1498,7 @@ void m3d_to_wavefront_obj_model::merge_helper_move_model_into_main(
     std::vector<double> weapon_offset =
       {model_to_move.x_off, model_to_move.y_off, model_to_move.z_off};
     rotate_3d_point_by_axis(weapon_offset, new_angle, rotation_axis::y);
-    new_position = volInt::vector_minus(new_position, weapon_offset);
+    vector_minus_self(new_position, weapon_offset);
 
     merge_model_color_id = c3d::color::string_to_id::weapon;
   }
@@ -1667,7 +1667,7 @@ void m3d_to_wavefront_obj_model::move_weapon_model(
   std::vector<double> weapon_offset =
     {weapon_model.x_off, weapon_model.y_off, weapon_model.z_off};
   rotate_3d_point_by_axis(weapon_offset, new_angle, rotation_axis::y);
-  new_position = volInt::vector_minus(new_position, weapon_offset);
+  vector_minus_self(new_position, weapon_offset);
 
   // Changing color_id for model.
   set_color_id(weapon_model, c3d::color::string_to_id::weapon, weapon_num);
