@@ -105,9 +105,9 @@ INT round_half_to_even(FLOAT num)
 
 
 
-void get_extreme_coord(double &cur_extreme,
-                       double radius,
-                       point offset = {0.0, 0.0, 0.0});
+void get_extreme_radius(double &cur_extreme,
+                        double radius,
+                        point offset = {0.0, 0.0, 0.0});
 
 
 
@@ -272,9 +272,9 @@ private:
     const std::deque<volInt::polyhedron> &debris_models,
     const std::deque<volInt::polyhedron> &debris_bound_models);
 
-  void get_scale_helper_get_extreme_coordinate(
+  void get_scale_helper_get_extreme_radius(
     volInt::polyhedron *model,
-    double &extreme_coordinate,
+    double &extreme_radius,
     const point offset = {0.0, 0.0, 0.0});
   void get_m3d_scale_size(
     volInt::polyhedron *main_model,

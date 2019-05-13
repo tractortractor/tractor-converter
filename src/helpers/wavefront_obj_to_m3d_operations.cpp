@@ -7,7 +7,7 @@ namespace helpers{
 
 
 
-void get_extreme_coord(double &cur_extreme, double radius, point offset)
+void get_extreme_radius(double &cur_extreme, double radius, point offset)
 {
   double offset_radius =
     std::sqrt(offset[0]*offset[0] + offset[1]*offset[1] + offset[2]*offset[2]);
@@ -2479,13 +2479,13 @@ void wavefront_obj_to_m3d_model::get_debris_data(
 
 
 
-void wavefront_obj_to_m3d_model::get_scale_helper_get_extreme_coordinate(
+void wavefront_obj_to_m3d_model::get_scale_helper_get_extreme_radius(
   volInt::polyhedron *model,
-  double &extreme_coordinate,
+  double &extreme_radius,
   const point offset)
 {
   model->calculate_rmax();
-  get_extreme_coord(extreme_coordinate, model->rmax, offset);
+  get_extreme_radius(extreme_radius, model->rmax, offset);
 }
 
 
@@ -2497,27 +2497,27 @@ void wavefront_obj_to_m3d_model::get_m3d_scale_size(
   std::deque<volInt::polyhedron> *debris_models,
   std::deque<volInt::polyhedron> *debris_bound_models)
 {
-  double extreme_coordinate = 0.0;
+  double extreme_radius = 0.0;
 
-  get_scale_helper_get_extreme_coordinate(main_model, extreme_coordinate);
-//get_scale_helper_get_extreme_coordinate(main_bound_model,
-//                                        extreme_coordinate);
+  get_scale_helper_get_extreme_radius(main_model, extreme_radius);
+//get_scale_helper_get_extreme_radius(main_bound_model,
+//                                    extreme_radius);
   if(wheels_models)
   {
     for(const int wheel_steer_num : main_model->wheels_steer)
     {
       if(main_model->wheels_non_ghost.count(wheel_steer_num))
       {
-        get_scale_helper_get_extreme_coordinate(
+        get_scale_helper_get_extreme_radius(
           &wheels_models->at(wheel_steer_num),
-          extreme_coordinate,
+          extreme_radius,
           cur_wheel_data[wheel_steer_num].r);
       }
     }
 //  for(const auto &model : *wheels_models)
 //  {
-//    get_scale_helper_get_extreme_coordinate(&model.second,
-//                                            extreme_coordinate);
+//    get_scale_helper_get_extreme_radius(&model.second,
+//                                        extreme_radius);
 //  }
   }
 
@@ -2537,33 +2537,33 @@ void wavefront_obj_to_m3d_model::get_m3d_scale_size(
     {
       if(slot_data.exists)
       {
-        get_extreme_coord(extreme_coordinate,
-                          max_weapons_radius,
-                          slot_data.R_slots);
+        get_extreme_radius(extreme_radius,
+                           max_weapons_radius,
+                           slot_data.R_slots);
 /*
         double max_slot_distance =
           std::sqrt(
             slot_data.R_slots[0]*slot_data.R_slots[0] +
             slot_data.R_slots[1]*slot_data.R_slots[1] +
             slot_data.R_slots[2]*slot_data.R_slots[2]);
-        get_extreme_coord(extreme_coordinate, max_slot_distance);
+        get_extreme_radius(extreme_radius, max_slot_distance);
 */
 /*
         for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
         {
-          get_extreme_coord(
-            extreme_coordinate,
+          get_extreme_radius(
+            extreme_radius,
             slot_data.R_slots[cur_coord] + max_weapons_radius);
-          get_extreme_coord(
-            extreme_coordinate,
+          get_extreme_radius(
+            extreme_radius,
             slot_data.R_slots[cur_coord] - max_weapons_radius);
           // TEST
           if(boost::filesystem::path(main_model->wavefront_obj_path)
                .stem().string() ==
              "m5_main")
           {
-            std::cout << "extreme_coordinate: " <<
-              extreme_coordinate << '\n';
+            std::cout << "extreme_radius: " <<
+              extreme_radius << '\n';
             std::cout << "slot_data.R_slots[" << cur_coord << "]: " <<
               slot_data.R_slots[cur_coord] << '\n';
             std::cout << "max_weapons_radius: " <<
@@ -2584,25 +2584,25 @@ void wavefront_obj_to_m3d_model::get_m3d_scale_size(
   {
     for(auto &model : *debris_models)
     {
-      get_scale_helper_get_extreme_coordinate(&model, extreme_coordinate);
+      get_scale_helper_get_extreme_radius(&model, extreme_radius);
     }
 //  for(const auto &model : *debris_bound_models)
 //  {
-//    get_scale_helper_get_extreme_coordinate(&model, extreme_coordinate);
+//    get_scale_helper_get_extreme_radius(&model, extreme_radius);
 //  }
   }
 
-  rmax = extreme_coordinate;
-  scale_size = c3d::scaling_max_extreme_coordinate / extreme_coordinate;
+  rmax = extreme_radius;
+  scale_size = c3d::scaling_max_extreme_radius / extreme_radius;
 
   if(non_mechos_scale_sizes)
   {
     (*non_mechos_scale_sizes)[model_name] =
-      extreme_coordinate / c3d::scaling_max_extreme_coordinate;
+      extreme_radius / c3d::scaling_max_extreme_radius;
   }
   else
   {
-    prm_scale_size = extreme_coordinate / c3d::scaling_max_extreme_coordinate;
+    prm_scale_size = extreme_radius / c3d::scaling_max_extreme_radius;
   }
 }
 
@@ -2611,18 +2611,18 @@ void wavefront_obj_to_m3d_model::get_m3d_scale_size(
 void wavefront_obj_to_m3d_model::get_a3d_scale_size(
   std::deque<volInt::polyhedron> *models)
 {
-  double extreme_coordinate = 0.0;
+  double extreme_radius = 0.0;
 
   for(auto &model : *models)
   {
-    get_scale_helper_get_extreme_coordinate(&model, extreme_coordinate);
+    get_scale_helper_get_extreme_radius(&model, extreme_radius);
   }
 
-  rmax = extreme_coordinate;
-  scale_size = c3d::scaling_max_extreme_coordinate / extreme_coordinate;
+  rmax = extreme_radius;
+  scale_size = c3d::scaling_max_extreme_radius / extreme_radius;
 
   (*non_mechos_scale_sizes)[model_name] =
-    extreme_coordinate / c3d::scaling_max_extreme_coordinate;
+    extreme_radius / c3d::scaling_max_extreme_radius;
 }
 
 

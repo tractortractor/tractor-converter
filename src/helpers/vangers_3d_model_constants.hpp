@@ -16,7 +16,7 @@ namespace tractor_converter{
 
 namespace c3d{
 
-  const int scaling_max_extreme_coordinate = 123;
+  const int scaling_max_extreme_radius = 123;
   const double normalize_val = 123.0;
 
   enum c3d_type
