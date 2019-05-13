@@ -169,6 +169,24 @@ struct model_extreme_points {
 
 };
 
+struct model_offset {
+
+  model_offset();
+  model_offset(const std::vector<double> &offset_point_arg);
+  model_offset(std::vector<double> &&offset_point_arg);
+
+  double x_off() const;
+  double y_off() const;
+  double z_off() const;
+
+  void set_x_off(double new_x_off);
+  void set_y_off(double new_y_off);
+  void set_z_off(double new_z_off);
+
+  std::vector<double> offset_point;
+
+};
+
 typedef struct face {
 
 //  face(const face &other);
@@ -244,9 +262,22 @@ typedef struct polyhedron {
   void set_ymin(double new_ymin);
   void set_zmin(double new_zmin);
 
+
+  std::vector<double> &offset_point();
+  const std::vector<double> &offset_point() const;
+
+  double x_off() const;
+  double y_off() const;
+  double z_off() const;
+
+  void set_x_off(double new_x_off);
+  void set_y_off(double new_y_off);
+  void set_z_off(double new_z_off);
+
+
   int numVerts, numVertNorms, numFaces, numVertTotal, numVertsPerPoly;
   model_extreme_points extreme_points;
-  double x_off, y_off, z_off;
+  model_offset offset;
   double rmax;
   double volume;
   std::vector<double> rcm;

@@ -271,6 +271,54 @@ void model_extreme_points::get_most_extreme(
 }
 
 
+
+model_offset::model_offset()
+: offset_point(3, 0.0)
+{
+}
+
+model_offset::model_offset(const std::vector<double> &offset_point_arg)
+: offset_point(offset_point_arg)
+{
+}
+
+model_offset::model_offset(std::vector<double> &&offset_point_arg)
+: offset_point(offset_point_arg)
+{
+}
+
+double model_offset::x_off() const
+{
+  return offset_point[0];
+}
+
+double model_offset::y_off() const
+{
+  return offset_point[1];
+}
+
+double model_offset::z_off() const
+{
+  return offset_point[2];
+}
+
+void model_offset::set_x_off(double new_x_off)
+{
+  offset_point[0] = new_x_off;
+}
+
+void model_offset::set_y_off(double new_y_off)
+{
+  offset_point[1] = new_y_off;
+}
+
+void model_offset::set_z_off(double new_z_off)
+{
+  offset_point[2] = new_z_off;
+}
+
+
+
 /*
 face::face(const face &other)
 : numVerts(other.numVerts),
@@ -305,9 +353,7 @@ polyhedron::polyhedron()
   numVertTotal(0),
   numVertsPerPoly(0),
   extreme_points(),
-  x_off(0.0),
-  y_off(0.0),
-  z_off(0.0),
+  offset(),
   rmax(0.0),
   volume(0.0),
   rcm(3, 0.0),
@@ -335,9 +381,7 @@ polyhedron::polyhedron(const polyhedron &other)
   numVertTotal(other.numVertTotal),
   numVertsPerPoly(other.numVertsPerPoly),
   extreme_points(other.extreme_points),
-  x_off(other.x_off),
-  y_off(other.y_off),
-  z_off(other.z_off),
+  offset(other.offset),
   rmax(other.rmax),
   volume(other.volume),
   rcm(other.rcm),
@@ -373,9 +417,7 @@ polyhedron::polyhedron(polyhedron &&other)
   numVertTotal(other.numVertTotal),
   numVertsPerPoly(other.numVertsPerPoly),
   extreme_points(other.extreme_points),
-  x_off(other.x_off),
-  y_off(other.y_off),
-  z_off(other.z_off),
+  offset(other.offset),
   rmax(other.rmax),
   volume(other.volume),
   rcm(other.rcm),
@@ -415,9 +457,7 @@ polyhedron::polyhedron(int numVerts_arg,
   numVertTotal(numFaces_arg * verts_per_poly_arg),
   numVertsPerPoly(verts_per_poly_arg),
   extreme_points(),
-  x_off(0.0),
-  y_off(0.0),
-  z_off(0.0),
+  offset(),
   rmax(0.0),
   volume(0.0),
   rcm(3, 0.0),
@@ -1176,6 +1216,50 @@ void polyhedron::set_ymin(double new_ymin)
 void polyhedron::set_zmin(double new_zmin)
 {
   extreme_points.set_zmin(new_zmin);
+}
+
+
+
+std::vector<double> &polyhedron::offset_point()
+{
+  return offset.offset_point;
+}
+
+const std::vector<double> &polyhedron::offset_point() const
+{
+  return offset.offset_point;
+}
+
+
+double polyhedron::x_off() const
+{
+  return offset.x_off();
+}
+
+double polyhedron::y_off() const
+{
+  return offset.y_off();
+}
+
+double polyhedron::z_off() const
+{
+  return offset.z_off();
+}
+
+
+void polyhedron::set_x_off(double new_x_off)
+{
+  offset.set_x_off(new_x_off);
+}
+
+void polyhedron::set_y_off(double new_y_off)
+{
+  offset.set_y_off(new_y_off);
+}
+
+void polyhedron::set_z_off(double new_z_off)
+{
+  offset.set_z_off(new_z_off);
 }
 
 

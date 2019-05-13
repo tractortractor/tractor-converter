@@ -219,13 +219,9 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
 
   if(weapon_attachment_point)
   {
-    point weapon_offset =
-      {
-        main_models[wavefront_obj::main_obj_name].x_off,
-        main_models[wavefront_obj::main_obj_name].y_off,
-        main_models[wavefront_obj::main_obj_name].z_off,
-      };
-    add_attachment_point_to_models_map(main_models, weapon_offset);
+    add_attachment_point_to_models_map(
+      main_models,
+      main_models[wavefront_obj::main_obj_name].offset_point());
   }
   if(center_of_mass_model)
   {
@@ -475,9 +471,9 @@ volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
                                norm_num,
                                poly_num,
                                expected_vertices_per_poly);
-  cur_model.x_off = x_off;
-  cur_model.y_off = y_off;
-  cur_model.z_off = z_off;
+  cur_model.set_x_off(x_off);
+  cur_model.set_y_off(y_off);
+  cur_model.set_z_off(z_off);
 
   cur_model.volume = volume;
   cur_model.rcm = rcm;
@@ -1495,8 +1491,7 @@ void m3d_to_wavefront_obj_model::merge_helper_move_model_into_main(
         data_in_slots[i] -> model -> z_off);
     data_in_slots[i] -> model -> draw_child(R_slots[i] - off,A_c2p,A_p2c);
     */
-    std::vector<double> weapon_offset =
-      {model_to_move.x_off, model_to_move.y_off, model_to_move.z_off};
+    std::vector<double> weapon_offset = model_to_move.offset_point();
     rotate_3d_point_by_axis(weapon_offset, new_angle, rotation_axis::y);
     vector_minus_self(new_position, weapon_offset);
 
@@ -1643,8 +1638,7 @@ void m3d_to_wavefront_obj_model::merge_model_with_center_of_mass(
 void m3d_to_wavefront_obj_model::merge_model_with_weapon_attachment_point(
   volInt::polyhedron &main_model) const
 {
-  std::vector<double> attachment_point =
-    {main_model.x_off, main_model.y_off, main_model.z_off};
+  std::vector<double> attachment_point = main_model.offset_point();
 
   volInt::polyhedron temp_attachment_point_model = *weapon_attachment_point;
   merge_helper_move_model_into_main(
@@ -1664,8 +1658,7 @@ void m3d_to_wavefront_obj_model::move_weapon_model(
   int weapon_num,
   volInt::polyhedron &weapon_model) const
 {
-  std::vector<double> weapon_offset =
-    {weapon_model.x_off, weapon_model.y_off, weapon_model.z_off};
+  std::vector<double> weapon_offset = weapon_model.offset_point();
   rotate_3d_point_by_axis(weapon_offset, new_angle, rotation_axis::y);
   vector_minus_self(new_position, weapon_offset);
 

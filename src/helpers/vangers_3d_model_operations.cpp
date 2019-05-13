@@ -348,9 +348,9 @@ void vangers_model::scale_c3d(volInt::polyhedron &c3d_model)
   c3d_model.set_ymin(c3d_model.ymin() * scale_size);
   c3d_model.set_zmin(c3d_model.zmin() * scale_size);
 
-  c3d_model.x_off *= scale_size;
-  c3d_model.y_off *= scale_size;
-  c3d_model.z_off *= scale_size;
+  c3d_model.set_x_off(c3d_model.x_off() * scale_size);
+  c3d_model.set_y_off(c3d_model.y_off() * scale_size);
+  c3d_model.set_z_off(c3d_model.z_off() * scale_size);
 
   c3d_model.rmax *= scale_size;
 

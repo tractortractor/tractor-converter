@@ -29,9 +29,9 @@ double get_weapons_bound_sphere_radius(
   {
     for(const auto &vert : weapon_model.second.verts)
     {
-      double x_coord = vert[0] - weapon_model.second.x_off;
-      double y_coord = vert[1] - weapon_model.second.y_off;
-      double z_coord = vert[2] - weapon_model.second.z_off;
+      double x_coord = vert[0] - weapon_model.second.x_off();
+      double y_coord = vert[1] - weapon_model.second.y_off();
+      double z_coord = vert[2] - weapon_model.second.z_off();
       double cur_vert_length =
         std::sqrt(x_coord*x_coord + y_coord*y_coord + z_coord*z_coord);
       if(max_radius < cur_vert_length)
@@ -377,9 +377,9 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
   // TEST
 //std::cout << '\n';
 //std::cout << "model_name: " << model_name << '\n';
-//std::cout << "x_off: " << cur_main_model.x_off << '\n';
-//std::cout << "y_off: " << cur_main_model.y_off << '\n';
-//std::cout << "z_off: " << cur_main_model.z_off << '\n';
+//std::cout << "x_off: " << cur_main_model.x_off() << '\n';
+//std::cout << "y_off: " << cur_main_model.y_off() << '\n';
+//std::cout << "z_off: " << cur_main_model.z_off() << '\n';
 //save_volInt_as_wavefront_obj(
 //  cur_main_model,
 //  output_dir_path.parent_path() / (model_name + "_test.obj"),
@@ -1145,11 +1145,11 @@ void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
     round_half_to_even<double, int>(model.zmin() * scale_size));
 
   write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.x_off * scale_size));
+    round_half_to_even<double, int>(model.x_off() * scale_size));
   write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.y_off * scale_size));
+    round_half_to_even<double, int>(model.y_off() * scale_size));
   write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.z_off * scale_size));
+    round_half_to_even<double, int>(model.z_off() * scale_size));
 
   write_var_to_m3d<int>(
     round_half_to_even<double, int>(model.rmax * scale_size));
@@ -1690,11 +1690,8 @@ void wavefront_obj_to_m3d_model::get_attachment_point(
     }
   }
 
-  point offset = vector_minus(*cur_attachment_verts[0],
-                              *weapon_attachment_point->ref_vert_one);
-  model.x_off = offset[0];
-  model.y_off = offset[1];
-  model.z_off = offset[2];
+  model.offset_point() = vector_minus(*cur_attachment_verts[0],
+                                      *weapon_attachment_point->ref_vert_one);
 }
 
 
@@ -2029,9 +2026,7 @@ std::unordered_map<int, volInt::polyhedron>
       // Moving coordinate system to wheel center.
       // So center of wheel model will have coordinates: 0, 0, 0.
       point wheel_center = cur_wheel_model.get_model_center();
-      cur_wheel_model.x_off = wheel_center[0];
-      cur_wheel_model.y_off = wheel_center[1];
-      cur_wheel_model.z_off = wheel_center[2];
+      cur_wheel_model.offset_point() = wheel_center;
       cur_wheel_model.move_coord_system_to_point(wheel_center);
       // Must be called since model was moved.
       cur_wheel_model.faces_calc_params();
@@ -2080,16 +2075,10 @@ void wavefront_obj_to_m3d_model::get_m3d_extreme_points(
           (*wheels_models).at(wheel_steer_num);
         volInt::model_extreme_points cur_wheel_extreme_points =
           cur_wheel.extreme_points;
-        std::vector<double> wheel_offset =
-        {
-          cur_wheel.x_off,
-          cur_wheel.y_off,
-          cur_wheel.z_off,
-        };
         vector_plus_self(cur_wheel_extreme_points.max(),
-                         wheel_offset);
+                         cur_wheel.offset_point());
         vector_plus_self(cur_wheel_extreme_points.min(),
-                         wheel_offset);
+                         cur_wheel.offset_point());
         extreme_points.get_most_extreme(cur_wheel_extreme_points);
       }
     }
