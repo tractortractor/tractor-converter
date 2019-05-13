@@ -116,7 +116,7 @@ void rotate_c3d_by_axis(volInt::polyhedron &c3d_model,
 
 
 
-std::vector<double> normalize(double norm, const std::vector<double> &vec)
+std::vector<double> vector_scale(double norm, const std::vector<double> &vec)
 {
   double vec_length =
     std::sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]);
@@ -140,7 +140,7 @@ std::vector<double> normalize(double norm, const std::vector<double> &vec)
 
 
 
-void normalize_self(double norm, std::vector<double> &vec)
+void vector_scale_self(double norm, std::vector<double> &vec)
 {
   double vec_length =
     std::sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]);
@@ -163,8 +163,8 @@ void normalize_self(double norm, std::vector<double> &vec)
 
 // not needed
 /*
-std::vector<double> normalize_to_max_coord(double max_coord,
-                                           const std::vector<double> &vec)
+std::vector<double> vector_scale_to_max_coord(double max_coord,
+                                              const std::vector<double> &vec)
 {
   std::vector<double> ret(3, 0.0);
 
@@ -186,7 +186,7 @@ std::vector<double> normalize_to_max_coord(double max_coord,
   ret[2] = vec[2] * s;
 
   std::cout << "\n\n";
-  std::cout << "normalize_to_max_coord" << '\n';
+  std::cout << "vector_scale_to_max_coord" << '\n';
   std::cout << "max_coord: " << max_coord << '\n';
   std::cout << "input: " <<
     vec[0] << ", " << vec[1] << ", " << vec[2] << '\n';
@@ -199,8 +199,8 @@ std::vector<double> normalize_to_max_coord(double max_coord,
 
 
 
-void normalize_self_to_max_coord(double max_coord,
-                                 std::vector<double> &vec)
+void vector_scale_self_to_max_coord(double max_coord,
+                                    std::vector<double> &vec)
 {
   double extreme_norm = std::abs(vec[0]);
   double el_1_abs = std::abs(vec[1]);

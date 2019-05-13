@@ -52,7 +52,7 @@ namespace volInt{
 
 
 
-std::vector<double> normalize(double norm, const std::vector<double> &vec)
+std::vector<double> vector_scale(double norm, const std::vector<double> &vec)
 {
   double vec_length =
     std::sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]);
@@ -1013,7 +1013,7 @@ void polyhedron::calculate_c3d_properties()
       flat_normal[0] = U[1] * V[2] - U[2] * V[1];
       flat_normal[1] = U[2] * V[0] - U[0] * V[2];
       flat_normal[2] = U[0] * V[1] - U[1] * V[0];
-      flat_normal = normalize(1.0, flat_normal);
+      flat_normal = vector_scale(1.0, flat_normal);
 
       std::cout << "expected flat_normal poly " << cur_poly << ": " <<
         flat_normal[0] << ", " <<

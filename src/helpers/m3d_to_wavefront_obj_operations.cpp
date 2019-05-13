@@ -559,8 +559,8 @@ volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
         raw_bytes_to_num<char>(m3d_data, cur_norm_data_pos);
       cur_norm_data_pos += c3d::normal::coord_size;
     }
-    normalize_self(wavefront_obj::normalize_val,
-                   cur_model.vertNorms[cur_normal]);
+    vector_scale_self(wavefront_obj::vector_scale_val,
+                      cur_model.vertNorms[cur_normal]);
     cur_norm_data_pos += c3d::normal::size_no_coords;
   }
 

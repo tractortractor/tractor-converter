@@ -81,7 +81,7 @@ namespace exception{
 
 
 
-std::vector<double> normalize(double norm, const std::vector<double> &vec);
+std::vector<double> vector_scale(double norm, const std::vector<double> &vec);
 
 std::vector<double> vector_minus(
   const std::vector<double> &first,

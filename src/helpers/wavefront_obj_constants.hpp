@@ -16,7 +16,7 @@ namespace wavefront_obj{
   const std::string attachment_point_obj_name = "attachment_point";
   const std::string center_of_mass_obj_name = "center_of_mass";
 
-  const double normalize_val = 1.0;
+  const double vector_scale_val = 1.0;
 
 
   // 2 "g " + 2 newline

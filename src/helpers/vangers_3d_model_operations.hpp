@@ -85,14 +85,16 @@ void rotate_c3d_by_axis(
   double angle,
   rotation_axis axis);
 
-std::vector<double> normalize(double norm, const std::vector<double> &vec);
-void normalize_self(double norm, std::vector<double> &vec);
+std::vector<double> vector_scale(double norm, const std::vector<double> &vec);
+void vector_scale_self(double norm, std::vector<double> &vec);
 
 // not needed
-//std::vector<double> normalize_to_max_coord(double max_coord,
-//                                           const std::vector<double> &vec);
-//void normalize_self_to_max_coord(double max_coord,
-//                                 const std::vector<double> &vec);
+//std::vector<double> vector_scale_to_max_coord(
+//  double max_coord,
+//  const std::vector<double> &vec);
+//void vector_scale_self_to_max_coord(
+//  double max_coord,
+//  const std::vector<double> &vec);
 
 std::vector<double> vector_plus(const std::vector<double> &first,
                                 const std::vector<double> &second);

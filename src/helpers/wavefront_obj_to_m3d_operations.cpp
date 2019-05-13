@@ -1196,7 +1196,7 @@ void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
   for(int cur_norm = 0; cur_norm < model.numVertNorms; ++cur_norm)
   {
     std::vector<double> normalized =
-      normalize(c3d::normalize_val, model.vertNorms[cur_norm]);
+      vector_scale(c3d::vector_scale_val, model.vertNorms[cur_norm]);
     for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
     {
       write_var_to_m3d<char>(
@@ -1239,7 +1239,7 @@ void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
     write_var_to_m3d<unsigned int>(c3d::polygon::default_color_shift);
 
     std::vector<double> normalized =
-      normalize(c3d::normalize_val, model.faces[cur_poly_n].norm);
+      vector_scale(c3d::vector_scale_val, model.faces[cur_poly_n].norm);
     for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
     {
       write_var_to_m3d<char>(
