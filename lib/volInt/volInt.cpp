@@ -311,6 +311,23 @@ void vector_divide_self(std::vector<double> &vec,
 
 
 
+double vector_length(const std::vector<double> &vec)
+{
+  return std::sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]);
+}
+
+
+
+double vector_length_between(
+  const std::vector<double> &first,
+  const std::vector<double> &second)
+{
+  std::vector<double> tmp_vec = vector_minus(first, second);
+  return vector_length(tmp_vec);
+}
+
+
+
 double vector_dot_product(const std::vector<double> &first,
                           const std::vector<double> &second)
 {

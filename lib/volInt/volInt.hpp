@@ -122,6 +122,12 @@ std::vector<double> vector_divide(const std::vector<double> &vec,
 void vector_divide_self(std::vector<double> &vec,
                         double num);
 
+double vector_length(const std::vector<double> &vec);
+
+double vector_length_between(
+  const std::vector<double> &first,
+  const std::vector<double> &second);
+
 double vector_dot_product(
   const std::vector<double> &first,
   const std::vector<double> &second);
