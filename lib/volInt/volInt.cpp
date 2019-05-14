@@ -267,6 +267,50 @@ void vector_multiply_self(std::vector<double> &vec,
 
 
 
+std::vector<double> vector_divide(const std::vector<double> &first,
+                                  const std::vector<double> &second)
+{
+  std::vector<double> ret(3, 0.0);
+  ret[0] = first[0] / second[0];
+  ret[1] = first[1] / second[1];
+  ret[2] = first[2] / second[2];
+  return ret;
+}
+
+
+
+void vector_divide_self(std::vector<double> &first,
+                        const std::vector<double> &second)
+{
+  first[0] /= second[0];
+  first[1] /= second[1];
+  first[2] /= second[2];
+}
+
+
+
+std::vector<double> vector_divide(const std::vector<double> &vec,
+                                  double num)
+{
+  std::vector<double> ret(3, 0.0);
+  ret[0] = vec[0] / num;
+  ret[1] = vec[1] / num;
+  ret[2] = vec[2] / num;
+  return ret;
+}
+
+
+
+void vector_divide_self(std::vector<double> &vec,
+                        double num)
+{
+  vec[0] /= num;
+  vec[1] /= num;
+  vec[2] /= num;
+}
+
+
+
 double vector_dot_product(const std::vector<double> &first,
                           const std::vector<double> &second)
 {
