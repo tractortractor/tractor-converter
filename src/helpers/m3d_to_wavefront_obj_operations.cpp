@@ -559,8 +559,8 @@ volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
         raw_bytes_to_num<char>(m3d_data, cur_norm_data_pos);
       cur_norm_data_pos += c3d::normal::coord_size;
     }
-    vector_scale_self(wavefront_obj::vector_scale_val,
-                      cur_model.vertNorms[cur_normal]);
+    volInt::vector_scale_self(wavefront_obj::vector_scale_val,
+                              cur_model.vertNorms[cur_normal]);
     cur_norm_data_pos += c3d::normal::size_no_coords;
   }
 
@@ -1080,7 +1080,8 @@ void
 
     model.move_model_to_point(
       wheel_vertices,
-      vector_minus(cur_wheel_data[wheel_non_ghost_num].r, wheel_center));
+      volInt::vector_minus(cur_wheel_data[wheel_non_ghost_num].r,
+                           wheel_center));
   }
 }
 
@@ -1408,7 +1409,7 @@ void m3d_to_wavefront_obj_model::merge_helper_move_model_into_main(
     */
     std::vector<double> weapon_offset = model_to_move.offset_point();
     rotate_3d_point_by_axis(weapon_offset, new_angle, rotation_axis::y);
-    vector_minus_self(new_position, weapon_offset);
+    volInt::vector_minus_self(new_position, weapon_offset);
 
     merge_model_color_id = c3d::color::string_to_id::weapon;
   }
@@ -1575,7 +1576,7 @@ void m3d_to_wavefront_obj_model::move_weapon_model(
 {
   std::vector<double> weapon_offset = weapon_model.offset_point();
   rotate_3d_point_by_axis(weapon_offset, new_angle, rotation_axis::y);
-  vector_minus_self(new_position, weapon_offset);
+  volInt::vector_minus_self(new_position, weapon_offset);
 
   // Changing color_id for model.
   set_color_id(weapon_model, c3d::color::string_to_id::weapon, weapon_num);

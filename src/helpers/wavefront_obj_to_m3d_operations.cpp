@@ -1195,12 +1195,13 @@ void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
 
   for(int cur_norm = 0; cur_norm < model.numVertNorms; ++cur_norm)
   {
-    std::vector<double> normalized =
-      vector_scale(c3d::vector_scale_val, model.vertNorms[cur_norm]);
+    std::vector<double> scaled =
+      volInt::vector_scale(c3d::vector_scale_val,
+                           model.vertNorms[cur_norm]);
     for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
     {
       write_var_to_m3d<char>(
-        round_half_to_even<double, char>(normalized[cur_coord]));
+        round_half_to_even<double, char>(scaled[cur_coord]));
     }
     write_var_to_m3d<unsigned char>(c3d::normal::default_n_power);
     write_var_to_m3d<int>(c3d::normal::default_sort_info);
@@ -1238,12 +1239,13 @@ void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
     // color_shift is always 0
     write_var_to_m3d<unsigned int>(c3d::polygon::default_color_shift);
 
-    std::vector<double> normalized =
-      vector_scale(c3d::vector_scale_val, model.faces[cur_poly_n].norm);
+    std::vector<double> scaled =
+      volInt::vector_scale(c3d::vector_scale_val,
+                           model.faces[cur_poly_n].norm);
     for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
     {
       write_var_to_m3d<char>(
-        round_half_to_even<double, char>(normalized[cur_coord]));
+        round_half_to_even<double, char>(scaled[cur_coord]));
     }
     write_var_to_m3d<unsigned char>(c3d::polygon::default_flat_norm_n_power);
 
@@ -1480,16 +1482,18 @@ std::pair<point, point> wavefront_obj_to_m3d_model::get_compare_points(
   const volInt::polyhedron *reference_model)
 {
 
-  point two_rel_to_one = vector_minus((*cur_ref_verts[1]),
-                                      (*cur_ref_verts[0]));
+  point two_rel_to_one = volInt::vector_minus((*cur_ref_verts[1]),
+                                              (*cur_ref_verts[0]));
 
-  point three_rel_to_one = vector_minus((*cur_ref_verts[2]),
-                                        (*cur_ref_verts[0]));
+  point three_rel_to_one = volInt::vector_minus((*cur_ref_verts[2]),
+                                                (*cur_ref_verts[0]));
 
   point two_compare_point =
-    vector_minus(two_rel_to_one, reference_model->ref_vert_two_rel_to_one);
+    volInt::vector_minus(two_rel_to_one,
+                         reference_model->ref_vert_two_rel_to_one);
   point three_compare_point =
-    vector_minus(three_rel_to_one, reference_model->ref_vert_three_rel_to_one);
+    volInt::vector_minus(three_rel_to_one,
+                         reference_model->ref_vert_three_rel_to_one);
 
   // TEST
   /*
@@ -1534,22 +1538,22 @@ std::pair<point, point> wavefront_obj_to_m3d_model::get_compare_points(
   std::vector<point*> ref_model_ref_verts)
 {
 
-  point two_rel_to_one = vector_minus((*cur_ref_verts[1]),
-                                      (*cur_ref_verts[0]));
+  point two_rel_to_one =
+    volInt::vector_minus((*cur_ref_verts[1]), (*cur_ref_verts[0]));
 
-  point three_rel_to_one = vector_minus((*cur_ref_verts[2]),
-                                        (*cur_ref_verts[0]));
+  point three_rel_to_one =
+    volInt::vector_minus((*cur_ref_verts[2]), (*cur_ref_verts[0]));
 
-  point ref_model_two_rel_to_one = vector_minus((*ref_model_ref_verts[1]),
-                                                (*ref_model_ref_verts[0]));
+  point ref_model_two_rel_to_one =
+    volInt::vector_minus((*ref_model_ref_verts[1]), (*ref_model_ref_verts[0]));
 
-  point ref_model_three_rel_to_one = vector_minus((*ref_model_ref_verts[2]),
-                                                  (*ref_model_ref_verts[0]));
+  point ref_model_three_rel_to_one =
+    volInt::vector_minus((*ref_model_ref_verts[2]), (*ref_model_ref_verts[0]));
 
-  point two_compare_point = vector_minus(two_rel_to_one,
-                                         ref_model_two_rel_to_one);
-  point three_compare_point = vector_minus(three_rel_to_one,
-                                           ref_model_three_rel_to_one);
+  point two_compare_point =
+    volInt::vector_minus(two_rel_to_one, ref_model_two_rel_to_one);
+  point three_compare_point =
+    volInt::vector_minus(three_rel_to_one, ref_model_three_rel_to_one);
 
   // TEST
   /*
@@ -1629,8 +1633,8 @@ void wavefront_obj_to_m3d_model::get_custom_rcm(volInt::polyhedron &model)
     }
   }
 
-  model.rcm = vector_minus(*cur_rcm_verts[0],
-                           *center_of_mass_model->ref_vert_one);
+  model.rcm = volInt::vector_minus(*cur_rcm_verts[0],
+                                   *center_of_mass_model->ref_vert_one);
 
   model.rcm_overwritten = true;
 
@@ -1690,8 +1694,9 @@ void wavefront_obj_to_m3d_model::get_attachment_point(
     }
   }
 
-  model.offset_point() = vector_minus(*cur_attachment_verts[0],
-                                      *weapon_attachment_point->ref_vert_one);
+  model.offset_point() =
+    volInt::vector_minus(*cur_attachment_verts[0],
+                         *weapon_attachment_point->ref_vert_one);
 }
 
 
@@ -1783,8 +1788,9 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
       weapon_slots_existence |= (1 << cur_slot);
       cur_weapon_slot_data[cur_slot].exists = true;
 
-      point two_rel_to_one = vector_minus((*cur_weapon_verts[cur_slot][1]),
-                                          (*cur_weapon_verts[cur_slot][0]));
+      point two_rel_to_one =
+        volInt::vector_minus((*cur_weapon_verts[cur_slot][1]),
+                             (*cur_weapon_verts[cur_slot][0]));
 
       // If y coordinate of points 2 and 3 relative to 1 is the same
       // in orig model and current model
@@ -1863,8 +1869,8 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
       }
 
       cur_weapon_slot_data[cur_slot].R_slots =
-        vector_minus((*cur_weapon_verts[cur_slot][0]),
-                     ref_verts_rotated[0]);
+        volInt::vector_minus((*cur_weapon_verts[cur_slot][0]),
+                             ref_verts_rotated[0]);
     }
   }
 }
@@ -2075,10 +2081,10 @@ void wavefront_obj_to_m3d_model::get_m3d_extreme_points(
           (*wheels_models).at(wheel_steer_num);
         volInt::model_extreme_points cur_wheel_extreme_points =
           cur_wheel.extreme_points;
-        vector_plus_self(cur_wheel_extreme_points.max(),
-                         cur_wheel.offset_point());
-        vector_plus_self(cur_wheel_extreme_points.min(),
-                         cur_wheel.offset_point());
+        volInt::vector_plus_self(cur_wheel_extreme_points.max(),
+                                 cur_wheel.offset_point());
+        volInt::vector_plus_self(cur_wheel_extreme_points.min(),
+                                 cur_wheel.offset_point());
         extreme_points.get_most_extreme(cur_wheel_extreme_points);
       }
     }

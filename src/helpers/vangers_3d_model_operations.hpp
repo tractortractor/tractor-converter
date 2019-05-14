@@ -85,25 +85,6 @@ void rotate_c3d_by_axis(
   double angle,
   rotation_axis axis);
 
-std::vector<double> vector_scale(double norm, const std::vector<double> &vec);
-void vector_scale_self(double norm, std::vector<double> &vec);
-
-// not needed
-//std::vector<double> vector_scale_to_max_coord(
-//  double max_coord,
-//  const std::vector<double> &vec);
-//void vector_scale_self_to_max_coord(
-//  double max_coord,
-//  const std::vector<double> &vec);
-
-std::vector<double> vector_plus(const std::vector<double> &first,
-                                const std::vector<double> &second);
-void vector_plus_self(std::vector<double> &first,
-                      const std::vector<double> &second);
-std::vector<double> vector_minus(const std::vector<double> &first,
-                                 const std::vector<double> &second);
-void vector_minus_self(std::vector<double> &first,
-                       const std::vector<double> &second);
 
 
 const std::vector<std::string> vangers_3d_tree_folders

@@ -74,6 +74,113 @@ std::vector<double> vector_scale(double norm, const std::vector<double> &vec)
   return ret;
 }
 
+
+
+void vector_scale_self(double norm, std::vector<double> &vec)
+{
+  double vec_length =
+    std::sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]);
+  double s;
+  if(vec_length == 0.0)
+  {
+    s = 0.0;
+  }
+  else
+  {
+    s = norm / vec_length;
+  }
+
+  vec[0] *= s;
+  vec[1] *= s;
+  vec[2] *= s;
+}
+
+
+
+// not needed
+/*
+std::vector<double> vector_scale_to_max_coord(double max_coord,
+                                              const std::vector<double> &vec)
+{
+  std::vector<double> ret(3, 0.0);
+
+  double extreme_norm = std::abs(vec[0]);
+  double el_1_abs = std::abs(vec[1]);
+  if(el_1_abs > extreme_norm)
+  {
+    extreme_norm = el_1_abs;
+  }
+  double el_2_abs = std::abs(vec[2]);
+  if(el_2_abs > extreme_norm)
+  {
+    extreme_norm = el_2_abs;
+  }
+  double s = max_coord / extreme_norm;
+
+  ret[0] = vec[0] * s;
+  ret[1] = vec[1] * s;
+  ret[2] = vec[2] * s;
+
+  std::cout << "\n\n";
+  std::cout << "vector_scale_to_max_coord" << '\n';
+  std::cout << "max_coord: " << max_coord << '\n';
+  std::cout << "input: " <<
+    vec[0] << ", " << vec[1] << ", " << vec[2] << '\n';
+  std::cout << "s: " << s << '\n';
+  std::cout << "output: " <<
+    ret[0] << ", " << ret[1] << ", " << ret[2] << '\n';
+
+  return ret;
+}
+
+
+
+void vector_scale_self_to_max_coord(double max_coord,
+                                    std::vector<double> &vec)
+{
+  double extreme_norm = std::abs(vec[0]);
+  double el_1_abs = std::abs(vec[1]);
+  if(el_1_abs > extreme_norm)
+  {
+    extreme_norm = el_1_abs;
+  }
+  double el_2_abs = std::abs(vec[2]);
+  if(el_2_abs > extreme_norm)
+  {
+    extreme_norm = el_2_abs;
+  }
+  double s = max_coord / extreme_norm;
+
+  vec[0] *= s;
+  vec[1] *= s;
+  vec[2] *= s;
+}
+*/
+
+
+
+std::vector<double> vector_plus(const std::vector<double> &first,
+                                const std::vector<double> &second)
+{
+  std::vector<double> ret(3, 0.0);
+  ret[0] = first[0] + second[0];
+  ret[1] = first[1] + second[1];
+  ret[2] = first[2] + second[2];
+  return ret;
+}
+
+
+
+void vector_plus_self(std::vector<double> &first,
+                      const std::vector<double> &second)
+{
+  first[0] += second[0];
+  first[1] += second[1];
+  first[2] += second[2];
+}
+
+
+
 std::vector<double> vector_minus(const std::vector<double> &first,
                                  const std::vector<double> &second)
 {
@@ -82,6 +189,16 @@ std::vector<double> vector_minus(const std::vector<double> &first,
   ret[1] = first[1] - second[1];
   ret[2] = first[2] - second[2];
   return ret;
+}
+
+
+
+void vector_minus_self(std::vector<double> &first,
+                       const std::vector<double> &second)
+{
+  first[0] -= second[0];
+  first[1] -= second[1];
+  first[2] -= second[2];
 }
 
 double vector_dot_product(const std::vector<double> &first,
