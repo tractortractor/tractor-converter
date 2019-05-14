@@ -1613,17 +1613,18 @@ void wavefront_obj_to_m3d_model::get_custom_rcm(volInt::polyhedron &model)
       center_of_mass_model);
 
 
+
   // If all coordinates of points 2 and 3 relative to 1 are the same
   // in orig model and current model then model wasn't rotated or changed.
   // compare_points.first is difference between 2nd reference points.
   // compare_points.second is difference between 3rd ones.
   // Throwing exception if difference is not zero.
-  for(std::size_t cur_coord = 0 ; cur_coord < 3; ++cur_coord)
+  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
   {
     if(!(std::abs(compare_points.first[cur_coord]) <
-           volInt::ref_points_distinct_distance &&
-         std::abs(compare_points.second[cur_coord]) <
-           volInt::ref_points_distinct_distance))
+         volInt::ref_points_distinct_distance &&
+       std::abs(compare_points.second[cur_coord]) <
+         volInt::ref_points_distinct_distance))
     {
       throw std::runtime_error(
         input_file_name_error + " file " +
