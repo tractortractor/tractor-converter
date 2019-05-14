@@ -120,29 +120,19 @@ private:
 
 
 
-  std::vector<volInt::face*> mark_wheels_helper_get_polygons(
-    volInt::polyhedron &main_model) const;
-
   void mark_wheels_helper_check_poly_in_group(
     const volInt::face *cur_poly,
-    const std::vector<std::vector<volInt::face*>> &wheels_groups,
+    const std::vector<std::vector<const volInt::face*>> &wheels_groups,
     bool &cur_poly_in_group,
     std::size_t &cur_poly_group_num) const;
 
-  std::vector<double> mark_helper_get_non_steering_wheel_center(
-    const volInt::polyhedron &model,
-    const std::vector<volInt::face*> &model_polygons) const;
-
   void mark_wheels_helper_get_wheels(
-    const std::vector<volInt::face*> &polygons,
+    const std::vector<const volInt::face*> &polygons,
     volInt::polyhedron &main_model,
-    std::vector<std::vector<volInt::face*>> &end_wheels_groups,
+    std::vector<std::vector<const volInt::face*>> &end_wheels_groups,
     std::vector<std::vector<double>> &wheels_centers) const;
 
-  void mark_helper_move_non_steering_wheel_to_center(
-    const std::vector<double> &start_pos,
-    const std::vector<double> &end_pos,
-    const std::vector<volInt::face*> &polygons,
+  void mark_helper_move_non_steering_wheels_to_center(
     volInt::polyhedron &model) const;
 
   void mark_wheels(

@@ -834,25 +834,10 @@ std::vector<volInt::polyhedron>
 
 
 
-std::vector<volInt::face*>
-  m3d_to_wavefront_obj_model::mark_wheels_helper_get_polygons(
-    volInt::polyhedron &main_model) const
-{
-  std::vector<volInt::face*> non_steering_wheels_polygons;
-  non_steering_wheels_polygons.reserve(main_model.numFaces);
-  for(int cur_poly = 0; cur_poly < main_model.numFaces; ++cur_poly)
-  {
-    if(main_model.faces[cur_poly].color_id == c3d::color::string_to_id::wheel)
-    {
-      non_steering_wheels_polygons.push_back(&main_model.faces[cur_poly]);
-    }
-  }
-  return non_steering_wheels_polygons;
-}
 
 void m3d_to_wavefront_obj_model::mark_wheels_helper_check_poly_in_group(
   const volInt::face *cur_poly,
-  const std::vector<std::vector<volInt::face*>> &wheels_groups,
+  const std::vector<std::vector<const volInt::face*>> &wheels_groups,
   bool &cur_poly_in_group,
   std::size_t &cur_poly_group_num) const
 {
@@ -876,66 +861,17 @@ void m3d_to_wavefront_obj_model::mark_wheels_helper_check_poly_in_group(
   }
 }
 
-std::vector<double>
-  m3d_to_wavefront_obj_model::mark_helper_get_non_steering_wheel_center(
-    const volInt::polyhedron &model,
-    const std::vector<volInt::face*> &model_polygons) const
-{
-  std::vector<double> max_point(3, -std::numeric_limits<double>::max());
-  std::vector<double> min_point(3,  std::numeric_limits<double>::max());
-
-  // Getting extreme points.
-  for(auto model_polygon : model_polygons)
-  {
-    for(auto vert_num : model_polygon->verts)
-    {
-      for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-      {
-        if(model.verts[vert_num][cur_coord] > max_point[cur_coord])
-        {
-          max_point[cur_coord] = model.verts[vert_num][cur_coord];
-        }
-        if(model.verts[vert_num][cur_coord] < min_point[cur_coord])
-        {
-          min_point[cur_coord] = model.verts[vert_num][cur_coord];
-        }
-      }
-    }
-  }
-
-  // Getting middle point of model as middle of those extreme points.
-  std::vector<double> center_point(3, 0);
-  // TEST
-//std::cout << "\n\nFinding center point." << '\n';
-  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-  {
-    // TEST
-//  std::cout << "max_point[" << cur_coord << "]: " <<
-//    max_point[cur_coord] << '\n';
-//  std::cout << "min_point[" << cur_coord << "]: " <<
-//    min_point[cur_coord] << '\n';
-    center_point[cur_coord] =
-      (max_point[cur_coord] - min_point[cur_coord])/2 + min_point[cur_coord];
-    // TEST
-//  std::cout << "center_point[" << cur_coord << "]: " <<
-//    center_point[cur_coord] << '\n';
-  }
-  // TEST
-//std::cout << "\n\n";
-  return center_point;
-}
-
 
 
 void m3d_to_wavefront_obj_model::mark_wheels_helper_get_wheels(
-  const std::vector<volInt::face*> &polygons,
+  const std::vector<const volInt::face*> &polygons,
   volInt::polyhedron &main_model,
-  std::vector<std::vector<volInt::face*>> &end_wheels_groups,
+  std::vector<std::vector<const volInt::face*>> &end_wheels_groups,
   std::vector<std::vector<double>> &wheels_centers) const
 {
   // Creating groups of polygons for each non-steering wheel.
   // wheels_groups contains addresses of polygons in polygons.
-  std::vector<std::vector<volInt::face*>> wheels_groups;
+  std::vector<std::vector<const volInt::face*>> wheels_groups;
   std::size_t polygons_size = polygons.size();
   wheels_groups.reserve(polygons_size);
 //polygons;
@@ -946,7 +882,7 @@ void m3d_to_wavefront_obj_model::mark_wheels_helper_get_wheels(
       cur_poly_num < polygons_size;
       ++cur_poly_num)
   {
-    volInt::face *cur_poly = polygons[cur_poly_num];
+    const volInt::face *cur_poly = polygons[cur_poly_num];
 
     bool cur_poly_isolated = true;
 
@@ -963,7 +899,7 @@ void m3d_to_wavefront_obj_model::mark_wheels_helper_get_wheels(
         poly_to_compare_num < polygons_size;
         ++poly_to_compare_num)
     {
-      volInt::face *poly_to_compare = polygons[poly_to_compare_num];
+      const volInt::face *poly_to_compare = polygons[poly_to_compare_num];
       // Skipping all operations if cur_poly is poly_to_compare.
       if(cur_poly_num == poly_to_compare_num)
       {
@@ -1052,7 +988,7 @@ void m3d_to_wavefront_obj_model::mark_wheels_helper_get_wheels(
         cur_poly_in_group = true;
         cur_poly_group_num = last_wheels_group_num;
 
-        wheels_groups.push_back(std::vector<volInt::face*>());
+        wheels_groups.push_back(std::vector<const volInt::face*>());
         wheels_groups[last_wheels_group_num].reserve(polygons_size);
         wheels_groups[last_wheels_group_num].push_back(cur_poly);
         wheels_groups[last_wheels_group_num].push_back(poly_to_compare);
@@ -1067,7 +1003,7 @@ void m3d_to_wavefront_obj_model::mark_wheels_helper_get_wheels(
     {
       // TEST
 //    std::cout << "case 5" << '\n';
-      wheels_groups.push_back(std::vector<volInt::face*>(1, cur_poly));
+      wheels_groups.push_back(std::vector<const volInt::face*>(1, cur_poly));
 
       ++non_empty_groups_num;
     }
@@ -1122,8 +1058,7 @@ void m3d_to_wavefront_obj_model::mark_wheels_helper_get_wheels(
   for(std::size_t cur_group = 0; cur_group < non_empty_groups_num; ++cur_group)
   {
     wheels_centers.push_back(
-      mark_helper_get_non_steering_wheel_center(
-        main_model, end_wheels_groups[cur_group]));
+      main_model.get_model_center(end_wheels_groups[cur_group]));
   }
   // TEST
 //std::cout << "\n\n\n";
@@ -1131,42 +1066,21 @@ void m3d_to_wavefront_obj_model::mark_wheels_helper_get_wheels(
 
 
 
-void m3d_to_wavefront_obj_model::mark_helper_move_non_steering_wheel_to_center(
-  const std::vector<double> &start_pos,
-  const std::vector<double> &end_pos,
-  const std::vector<volInt::face*> &polygons,
-  volInt::polyhedron &model) const
+void
+  m3d_to_wavefront_obj_model::mark_helper_move_non_steering_wheels_to_center(
+    volInt::polyhedron &model) const
 {
-  std::vector<double> move_by(3, 0.0);
-  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+  for(const auto wheel_non_ghost_num : model.wheels_non_ghost)
   {
-    // TEST
-//  std::cout << "end_pos[" << cur_coord << "]: " <<
-//    end_pos[cur_coord] << '\n';
-//  std::cout << "start_pos[" << cur_coord << "]: " <<
-//    start_pos[cur_coord] << '\n';
-    move_by[cur_coord] = end_pos[cur_coord] - start_pos[cur_coord];
-    // TEST
-//  std::cout << "move_by[" << cur_coord << "]: " <<
-//    move_by[cur_coord] << '\n';
-//  std::cout << "\n\n";
-  }
+    std::vector<const std::vector<double>*> wheel_vertices =
+      model.get_vertices_by_ids(c3d::color::string_to_id::wheel,
+                                wheel_non_ghost_num);
+    const std::vector<double> wheel_center =
+      model.get_model_center(wheel_vertices);
 
-  std::unordered_set<int> vertices_to_modify_ids;
-  for(auto polygon : polygons)
-  {
-    for(auto poly_vertex : polygon->verts)
-    {
-      vertices_to_modify_ids.insert(poly_vertex);
-    }
-  }
-
-  for(auto vertex_to_modify_id : vertices_to_modify_ids)
-  {
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-    {
-      model.verts[vertex_to_modify_id][cur_coord] += move_by[cur_coord];
-    }
+    model.move_model_to_point(
+      wheel_vertices,
+      vector_minus(cur_wheel_data[wheel_non_ghost_num].r, wheel_center));
   }
 }
 
@@ -1191,12 +1105,12 @@ void m3d_to_wavefront_obj_model::mark_wheels(
     }
   }
 
-  // creating groups of non-steering wheels polygons
-  std::vector<volInt::face*> non_steering_wheels_polygons =
-    mark_wheels_helper_get_polygons(main_model);
+  // Creating groups of non-steering wheels polygons.
+  std::vector<const volInt::face*> non_steering_wheels_polygons =
+    main_model.get_polygons_by_color(c3d::color::string_to_id::wheel);
 
 
-  std::vector<std::vector<volInt::face*>> wheels_groups;
+  std::vector<std::vector<const volInt::face*>> wheels_groups;
   std::vector<std::vector<double>> wheels_centers;
 
   mark_wheels_helper_get_wheels(non_steering_wheels_polygons,
@@ -1262,20 +1176,21 @@ void m3d_to_wavefront_obj_model::mark_wheels(
 //    wheels_centers[closest_model_wheel_num][1] << "; " <<
 //    wheels_centers[closest_model_wheel_num][2] << '\n';
 //  std::cout << "closest_distance: " << std::sqrt(closest_distance) << '\n';
-    for(auto &&cur_poly : wheels_groups[model_wheel_center_num])
+    for(auto cur_poly : wheels_groups[model_wheel_center_num])
     {
-      cur_poly->wheel_weapon_id = closest_wheel_data_num;
+      // Assuming that volInt::face* points to polygon of non-const main_model.
+      const_cast<volInt::face*>(cur_poly)->wheel_weapon_id =
+        closest_wheel_data_num;
     }
 
-    mark_helper_move_non_steering_wheel_to_center(
-      wheels_centers[model_wheel_center_num],
-      cur_wheel_data[closest_wheel_data_num].r,
-      wheels_groups[model_wheel_center_num],
-      main_model);
-
     cur_wheel_data[closest_wheel_data_num].ghost = 0;
+    // Note that insert() won't create duplicates
+    // since wheels_non_ghost is std::unordered_set.
     main_model.wheels_non_ghost.insert(closest_wheel_data_num);
   }
+
+  mark_helper_move_non_steering_wheels_to_center(main_model);
+
   // Needed to properly calculate volume
   // right after moving non-steering wheels.
   // Not really used but useful for debugging.

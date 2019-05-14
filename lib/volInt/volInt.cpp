@@ -272,6 +272,26 @@ void model_extreme_points::get_most_extreme(
 
 
 
+void model_extreme_points::get_most_extreme(
+  const std::vector<const std::vector<double>*> &points)
+{
+  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+  {
+    auto result =
+      std::minmax_element(
+        points.begin(), points.end(),
+        [&](const std::vector<double> *a, const std::vector<double> *b)
+        {
+          return (*a)[cur_coord] < (*b)[cur_coord];
+        }
+      );
+    min()[cur_coord] = (*(*result.first))[cur_coord];
+    max()[cur_coord] = (*(*result.second))[cur_coord];
+  }
+}
+
+
+
 model_offset::model_offset()
 : offset_point(3, 0.0)
 {
@@ -635,22 +655,38 @@ void polyhedron::get_extreme_points()
 
 
 
-std::vector<double> polyhedron::get_model_center()
+model_extreme_points polyhedron::get_extreme_points(
+  const std::vector<const volInt::face*> &polygons_arg) const
 {
-  get_extreme_points();
+  model_extreme_points tmp_extreme_points;
 
-  // Getting middle point of model as middle of those extreme points.
+  std::vector<const std::vector<double>*> tmp_verts =
+    get_vertices_by_polygons(polygons_arg);
+
+  tmp_extreme_points.get_most_extreme(tmp_verts);
+
+  return tmp_extreme_points;
+}
+
+
+
+
+
+std::vector<double> polyhedron::get_model_center(
+  const model_extreme_points &extreme_points_arg)
+{
+  // Getting middle point of model as middle of extreme points.
   std::vector<double> center_point(3, 0);
-//  std::cout << "\n\nFinding center point." << '\n';
   for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
   {
-//    std::cout << "extreme_points.max()[" << cur_coord << "]: " <<
-//                  extreme_points.max()[cur_coord] << '\n';
-//    std::cout << "extreme_points.min()[" << cur_coord << "]: " <<
-//                  extreme_points.min()[cur_coord] << '\n';
+//    std::cout << "extreme_points_arg.max()[" << cur_coord << "]: " <<
+//                  extreme_points_arg.max()[cur_coord] << '\n';
+//    std::cout << "extreme_points_arg.min()[" << cur_coord << "]: " <<
+//                  extreme_points_arg.min()[cur_coord] << '\n';
     center_point[cur_coord] =
-      (extreme_points.max()[cur_coord] - extreme_points.min()[cur_coord]) / 2 +
-      extreme_points.min()[cur_coord];
+      (extreme_points_arg.max()[cur_coord] -
+        extreme_points_arg.min()[cur_coord]) / 2 +
+      extreme_points_arg.min()[cur_coord];
 //    std::cout << "center_point[" << cur_coord << "]: " <<
 //      center_point[cur_coord] << '\n';
   }
@@ -660,7 +696,123 @@ std::vector<double> polyhedron::get_model_center()
 
 
 
-void polyhedron::move_model_to_point(const std::vector<double> &point_coords)
+std::vector<double> polyhedron::get_model_center()
+{
+  get_extreme_points();
+  return get_model_center(extreme_points);
+}
+
+
+
+std::vector<double> polyhedron::get_model_center(
+  const std::vector<const std::vector<double>*> &vertices) const
+{
+  model_extreme_points tmp_extreme_points;
+  tmp_extreme_points.get_most_extreme(vertices);
+  return get_model_center(tmp_extreme_points);
+}
+
+
+
+std::vector<double> polyhedron::get_model_center(
+  const std::vector<const volInt::face*> &polygons_arg) const
+{
+  model_extreme_points tmp_extreme_points = get_extreme_points(polygons_arg);
+  return get_model_center(tmp_extreme_points);
+}
+
+
+
+
+
+std::vector<const volInt::face*> polyhedron::get_polygons_by_color(
+  unsigned int color_id_arg) const
+{
+  std::vector<const volInt::face*> tmp_polygons;
+  tmp_polygons.reserve(numFaces);
+  for(int cur_poly = 0; cur_poly < numFaces; ++cur_poly)
+  {
+    if(faces[cur_poly].color_id == color_id_arg)
+    {
+      tmp_polygons.push_back(&faces[cur_poly]);
+    }
+  }
+  return tmp_polygons;
+}
+
+
+
+std::vector<const volInt::face*> polyhedron::get_polygons_by_ids(
+  unsigned int color_id_arg,
+  int wheel_weapon_id_arg) const
+{
+  std::vector<const volInt::face*> tmp_polygons;
+  tmp_polygons.reserve(numFaces);
+  for(int cur_poly = 0; cur_poly < numFaces; ++cur_poly)
+  {
+    if(faces[cur_poly].color_id        == color_id_arg &&
+       faces[cur_poly].wheel_weapon_id == wheel_weapon_id_arg)
+    {
+      tmp_polygons.push_back(&faces[cur_poly]);
+    }
+  }
+  return tmp_polygons;
+}
+
+
+
+
+
+std::vector<const std::vector<double>*> polyhedron::get_vertices_by_polygons(
+    const std::vector<const volInt::face*> &polygons_arg) const
+{
+  std::vector<const std::vector<double>*> tmp_verts;
+
+  // Getting vertices of specified polygons without duplicates.
+  std::unordered_set<int> tmp_verts_ids;
+  for(const auto polygon : polygons_arg)
+  {
+    for(auto vert_num : polygon->verts)
+    {
+      tmp_verts_ids.insert(vert_num);
+    }
+  }
+
+  tmp_verts.reserve(tmp_verts_ids.size());
+  for(auto tmp_vert_id : tmp_verts_ids)
+  {
+    tmp_verts.push_back(&verts[tmp_vert_id]);
+  }
+
+  return tmp_verts;
+}
+
+
+
+std::vector<const std::vector<double>*> polyhedron::get_vertices_by_color(
+  unsigned int color_id) const
+{
+  std::vector<const volInt::face*> tmp_polygons =
+    get_polygons_by_color(color_id);
+  return get_vertices_by_polygons(tmp_polygons);
+}
+
+
+
+std::vector<const std::vector<double>*> polyhedron::get_vertices_by_ids(
+  unsigned int color_id,
+  int wheel_weapon_id) const
+{
+  std::vector<const volInt::face*> tmp_polygons =
+    get_polygons_by_ids(color_id, wheel_weapon_id);
+  return get_vertices_by_polygons(tmp_polygons);
+}
+
+
+
+
+
+void polyhedron::move_model_to_point(const std::vector<double> &point_arg)
 {
   for(auto &&model_vert : verts)
   {
@@ -668,9 +820,59 @@ void polyhedron::move_model_to_point(const std::vector<double> &point_coords)
     {
 //      std::cout << "before model_vert[" << cur_coord << "]" <<
 //        model_vert[cur_coord] << '\n';
-//      std::cout << "point_coords[" << cur_coord << "]" <<
-//        point_coords[cur_coord] << '\n';
-      model_vert[cur_coord] += point_coords[cur_coord];
+//      std::cout << "point_arg[" << cur_coord << "]" <<
+//        point_arg[cur_coord] << '\n';
+      model_vert[cur_coord] += point_arg[cur_coord];
+//      std::cout << "after model_vert[" << cur_coord << "]" <<
+//        model_vert[cur_coord] << '\n';
+//      std::cout << "\n\n";
+    }
+  }
+}
+
+
+
+void polyhedron::move_model_to_point(
+  std::vector<const std::vector<double>*> verts_arg,
+  const std::vector<double> &point_arg)
+{
+  for(auto vert_ptr : verts_arg)
+  {
+    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+    {
+      // Cast from constant pointer to non-constant pointer
+      // to modify non-constant "this".
+      (*const_cast<std::vector<double>*>(vert_ptr))[cur_coord] +=
+        point_arg[cur_coord];
+    }
+  }
+}
+
+
+
+void polyhedron::move_model_to_point(
+  std::vector<const volInt::face*> polygons_arg,
+  const std::vector<double> &point_arg)
+{
+  std::vector<const std::vector<double>*> tmp_verts =
+    get_vertices_by_polygons(polygons_arg);
+  move_model_to_point(tmp_verts, point_arg);
+}
+
+
+
+void polyhedron::move_coord_system_to_point(
+  const std::vector<double> &point_arg)
+{
+  for(auto &&model_vert : verts)
+  {
+    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+    {
+//      std::cout << "before model_vert[" << cur_coord << "]" <<
+//        model_vert[cur_coord] << '\n';
+//      std::cout << "point_arg[" << cur_coord << "]" <<
+//        point_arg[cur_coord] << '\n';
+      model_vert[cur_coord] -= point_arg[cur_coord];
 //      std::cout << "after model_vert[" << cur_coord << "]" <<
 //        model_vert[cur_coord] << '\n';
 //      std::cout << "\n\n";
@@ -681,25 +883,31 @@ void polyhedron::move_model_to_point(const std::vector<double> &point_coords)
 
 
 void polyhedron::move_coord_system_to_point(
-  const std::vector<double> &point_coords)
+  std::vector<const std::vector<double>*> verts_arg,
+  const std::vector<double> &point_arg)
 {
-  for(auto &&model_vert : verts)
+  for(auto vert_ptr : verts_arg)
   {
     for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
     {
-//      std::cout << "before model_vert[" << cur_coord << "]" <<
-//        model_vert[cur_coord] << '\n';
-//      std::cout << "point_coords[" << cur_coord << "]" <<
-//        point_coords[cur_coord] << '\n';
-      model_vert[cur_coord] -= point_coords[cur_coord];
-//      std::cout << "after model_vert[" << cur_coord << "]" <<
-//        model_vert[cur_coord] << '\n';
-//      std::cout << "\n\n";
+      // Cast from constant pointer to non-constant pointer
+      // to modify non-constant "this".
+      (*const_cast<std::vector<double>*>(vert_ptr))[cur_coord] -=
+        point_arg[cur_coord];
     }
   }
 }
 
 
+
+void polyhedron::move_coord_system_to_point(
+  std::vector<const volInt::face*> polygons_arg,
+  const std::vector<double> &point_arg)
+{
+  std::vector<const std::vector<double>*> tmp_verts =
+    get_vertices_by_polygons(polygons_arg);
+  move_coord_system_to_point(tmp_verts, point_arg);
+}
 
 
 

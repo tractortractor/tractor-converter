@@ -164,6 +164,7 @@ struct model_extreme_points {
   void get_most_extreme(const model_extreme_points &other);
   void get_most_extreme(const std::vector<double> &point);
   void get_most_extreme(const std::vector<std::vector<double>> &points);
+  void get_most_extreme(const std::vector<const std::vector<double>*> &points);
 
   std::pair<std::vector<double>, std::vector<double>> extreme_points_pair;
 
@@ -225,11 +226,49 @@ typedef struct polyhedron {
   void faces_calc_params(); // Must be called again if model was moved.
 
   void get_extreme_points();
+  model_extreme_points get_extreme_points(
+    const std::vector<const volInt::face*> &polygons) const;
 
 
+  static std::vector<double> get_model_center(
+    const model_extreme_points &extreme_points);
   std::vector<double> get_model_center();
-  void move_model_to_point(const std::vector<double> &point_coords);
-  void move_coord_system_to_point(const std::vector<double> &point_coords);
+  std::vector<double> get_model_center(
+    const std::vector<const std::vector<double>*> &vertices) const;
+  std::vector<double> get_model_center(
+    const std::vector<const volInt::face*> &polygons) const;
+
+  std::vector<const volInt::face*>
+    get_polygons_by_color(unsigned int color_id) const;
+  std::vector<const volInt::face*> get_polygons_by_ids(
+    unsigned int color_id,
+    int wheel_weapon_id) const;
+
+  std::vector<const std::vector<double>*> get_vertices_by_polygons(
+    const std::vector<const volInt::face*> &model_polygons) const;
+
+  std::vector<const std::vector<double>*> get_vertices_by_color(
+    unsigned int color_id) const;
+  std::vector<const std::vector<double>*> get_vertices_by_ids(
+    unsigned int color_id,
+    int wheel_weapon_id) const;
+
+  void move_model_to_point(const std::vector<double> &point);
+  void move_model_to_point(
+    std::vector<const std::vector<double>*> vertices,
+    const std::vector<double> &point);
+  void move_model_to_point(
+    std::vector<const volInt::face*> polygons,
+    const std::vector<double> &point);
+
+  void move_coord_system_to_point(const std::vector<double> &point);
+  void move_coord_system_to_point(
+    std::vector<const std::vector<double>*> vertices,
+    const std::vector<double> &point);
+  void move_coord_system_to_point(
+    std::vector<const volInt::face*> polygons,
+    const std::vector<double> &point);
+
 
 
   bool find_ref_points();
