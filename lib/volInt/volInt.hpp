@@ -101,6 +101,15 @@ std::vector<double> vector_minus(const std::vector<double> &first,
 void vector_minus_self(std::vector<double> &first,
                        const std::vector<double> &second);
 
+std::vector<double> vector_multiply(const std::vector<double> &first,
+                                    const std::vector<double> &second);
+void vector_multiply_self(std::vector<double> &first,
+                          const std::vector<double> &second);
+std::vector<double> vector_multiply(const std::vector<double> &vec,
+                                    double num);
+void vector_multiply_self(std::vector<double> &vec,
+                          double num);
+
 double vector_dot_product(
   const std::vector<double> &first,
   const std::vector<double> &second);
