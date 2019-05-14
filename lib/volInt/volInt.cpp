@@ -348,6 +348,17 @@ std::vector<double> vector_cross_product(const std::vector<double> &first,
 
 
 
+void matrix_multiply_self(
+  std::vector<std::vector<double>> &mat,
+  double num)
+{
+  vector_multiply_self(mat[0], num);
+  vector_multiply_self(mat[1], num);
+  vector_multiply_self(mat[2], num);
+}
+
+
+
 /*
    ============================================================================
    data structures

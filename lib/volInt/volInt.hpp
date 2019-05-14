@@ -136,6 +136,10 @@ std::vector<double> vector_cross_product(
   const std::vector<double> &first,
   const std::vector<double> &second);
 
+void matrix_multiply_self(
+  std::vector<std::vector<double>> &mat,
+  double num);
+
 /*
    ============================================================================
    macros
