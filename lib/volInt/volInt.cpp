@@ -159,6 +159,15 @@ void vector_scale_self_to_max_coord(double max_coord,
 
 
 
+void vector_make_zero(std::vector<double> &vec)
+{
+  vec[0] = 0.0;
+  vec[1] = 0.0;
+  vec[2] = 0.0;
+}
+
+
+
 std::vector<double> vector_invert(const std::vector<double> &vec)
 {
   std::vector<double> ret(3, 0.0);

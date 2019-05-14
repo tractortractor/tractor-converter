@@ -92,6 +92,8 @@ void vector_scale_self(double norm, std::vector<double> &vec);
 //  double max_coord,
 //  const std::vector<double> &vec);
 
+void vector_make_zero(std::vector<double> &vec);
+
 std::vector<double> vector_invert(const std::vector<double> &vec);
 void vector_invert_self(std::vector<double> &vec);
 
