@@ -793,10 +793,7 @@ void polyhedron::invertVertNorms()
 {
   for(auto &&vertNorm : vertNorms)
   {
-    for(auto &&vertNorm_el : vertNorm)
-    {
-      vertNorm_el = -vertNorm_el;
-    }
+    vector_invert_self(vertNorm);
   }
 }
 
