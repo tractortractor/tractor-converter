@@ -1102,17 +1102,7 @@ void polyhedron::move_coord_system_to_point(
 {
   for(auto &&model_vert : verts)
   {
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-    {
-//      std::cout << "before model_vert[" << cur_coord << "]" <<
-//        model_vert[cur_coord] << '\n';
-//      std::cout << "point_arg[" << cur_coord << "]" <<
-//        point_arg[cur_coord] << '\n';
-      model_vert[cur_coord] -= point_arg[cur_coord];
-//      std::cout << "after model_vert[" << cur_coord << "]" <<
-//        model_vert[cur_coord] << '\n';
-//      std::cout << "\n\n";
-    }
+    vector_minus_self(model_vert, point_arg);
   }
 }
 
@@ -1124,13 +1114,9 @@ void polyhedron::move_coord_system_to_point(
 {
   for(auto vert_ptr : verts_arg)
   {
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-    {
-      // Cast from constant pointer to non-constant pointer
-      // to modify non-constant "this".
-      (*const_cast<std::vector<double>*>(vert_ptr))[cur_coord] -=
-        point_arg[cur_coord];
-    }
+    // Cast from constant pointer to non-constant pointer
+    // to modify non-constant "this".
+    vector_minus_self(*const_cast<std::vector<double>*>(vert_ptr), point_arg);
   }
 }
 
