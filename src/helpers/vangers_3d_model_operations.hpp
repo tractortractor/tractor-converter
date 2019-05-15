@@ -38,52 +38,10 @@ typedef std::vector<double> point;
 
 
 
-/*
-// VANGERS SOURCE
-// how angle conversions works in vangers code
-#define M_PI      3.14159265358979323846
-
-Pi_len = 11
-const int  Pi    = 1 << Pi_len;
-2048
-
-#define GTOR(x) (double(x)*(M_PI/double(Pi)))
-#define RTOG(x) (round(x*(double(Pi)/M_PI)))
-*/
-
-#ifndef M_PI
-  #define M_PI 3.14159265358979323846
-#endif
-//const double M_PI = 3.14159265358979323846;
-const int sicher_angle_Pi = 2048; // "1 << Pi_len" where "Pi_len = 11".
-
-enum rotation_axis{x, y, z};
-
-
-
 const int sprintf_float_per_file_cfg_format_precision = 6;
 
 const std::string sprintf_float_per_file_cfg_format =
   "%." + std::to_string(sprintf_float_per_file_cfg_format_precision) + "g";
-
-
-
-double sicher_angle_to_radians(int sicher_angle);
-int radians_to_sicher_angle(double radians);
-
-void rotate_3d_point_by_axis(
-  std::vector<double> &point,
-  double angle_sin,
-  double angle_cos,
-  rotation_axis axis);
-void rotate_3d_point_by_axis(
-  std::vector<double> &point,
-  double angle,
-  rotation_axis axis);
-void rotate_c3d_by_axis(
-  volInt::polyhedron &c3d_model,
-  double angle,
-  rotation_axis axis);
 
 
 

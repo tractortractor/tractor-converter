@@ -1407,7 +1407,9 @@ void m3d_to_wavefront_obj_model::merge_helper_move_model_into_main(
     data_in_slots[i] -> model -> draw_child(R_slots[i] - off,A_c2p,A_p2c);
     */
     std::vector<double> weapon_offset = model_to_move.offset_point();
-    rotate_3d_point_by_axis(weapon_offset, new_angle, rotation_axis::y);
+    volInt::rotate_point_by_axis(weapon_offset,
+                                 new_angle,
+                                 volInt::rotation_axis::y);
     volInt::vector_minus_self(new_position, weapon_offset);
 
     merge_model_color_id = c3d::color::string_to_id::weapon;
@@ -1426,7 +1428,7 @@ void m3d_to_wavefront_obj_model::merge_helper_move_model_into_main(
 
 
   // Changing model_to_move's y angle.
-  rotate_c3d_by_axis(model_to_move, new_angle, rotation_axis::y);
+  model_to_move.rotate_by_axis(new_angle, volInt::rotation_axis::y);
 
 
 
@@ -1574,7 +1576,9 @@ void m3d_to_wavefront_obj_model::move_weapon_model(
   volInt::polyhedron &weapon_model) const
 {
   std::vector<double> weapon_offset = weapon_model.offset_point();
-  rotate_3d_point_by_axis(weapon_offset, new_angle, rotation_axis::y);
+  volInt::rotate_point_by_axis(weapon_offset,
+                               new_angle,
+                               volInt::rotation_axis::y);
   volInt::vector_minus_self(new_position, weapon_offset);
 
   // Changing color_id for model.
@@ -1583,7 +1587,7 @@ void m3d_to_wavefront_obj_model::move_weapon_model(
 
 
   // Changing weapon_model's y angle.
-  rotate_c3d_by_axis(weapon_model, new_angle, rotation_axis::y);
+  weapon_model.rotate_by_axis(new_angle, volInt::rotation_axis::y);
 
 
 
@@ -1746,7 +1750,7 @@ void m3d_to_wavefront_obj_model::read_m3d_weapon_slots()
       }
 
       cur_weapon_slot_data[cur_weapon_slot].location_angle_of_slots =
-        sicher_angle_to_radians(
+        volInt::sicher_angle_to_radians(
           raw_bytes_to_num<int>(
             m3d_data,
             m3d_data_cur_pos +

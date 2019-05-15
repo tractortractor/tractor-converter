@@ -52,6 +52,110 @@ namespace volInt{
 
 
 
+/*
+// VANGERS SOURCE
+// how angle conversions works in vangers code
+#define M_PI      3.14159265358979323846
+
+Pi_len = 11
+const int  Pi    = 1 << Pi_len;
+2048
+
+#define GTOR(x) (double(x)*(M_PI/double(Pi)))
+#define RTOG(x) (round(x*(double(Pi)/M_PI)))
+*/
+
+double sicher_angle_to_radians(int sicher_angle)
+{
+  return static_cast<double>(sicher_angle) *
+         (M_PI/static_cast<double>(sicher_angle_Pi));
+}
+
+int radians_to_sicher_angle(double radians)
+{
+  return std::round(radians*(static_cast<double>(sicher_angle_Pi)/M_PI));
+}
+
+
+
+/*
+// VANGERS SOURCE
+// how rotation works in vangers source
+inline Vector Vector::operator* (const DBM& m) const
+{
+  return
+    Vector(
+      round(m.a[0]*x + m.a[1]*y + m.a[2]*z),
+      round(m.a[3]*x + m.a[4]*y + m.a[5]*z),
+      round(m.a[6]*x + m.a[7]*y + m.a[8]*z));
+}
+
+inline DBM::DBM(int angle,int axis)
+{
+//------ Calculate Matrix for ROTATE point an angle ------
+  double calpha = Cos(angle);
+  double salpha = Sin(angle);
+  switch(axis){
+    case Z_AXIS:
+      a[0]   =  calpha; a[1]   = -salpha; a[2]   = 0;
+      a[3]   =  salpha; a[4]   = calpha;  a[5]   = 0;
+      a[6]   = 0;    a[7]   = 0;      a[8]   = 1;
+      break;
+    case X_AXIS:
+      a[0]   =  1;    a[1]   =  0;      a[2]   = 0;
+      a[3]   =  0;    a[4]   =  calpha; a[5]   = -salpha;
+      a[6]   =  0;    a[7]   =  salpha; a[8]   = calpha;
+      break;
+    case Y_AXIS:
+      a[0]   = calpha;  a[1]   =  0;      a[2]   = salpha;
+      a[3]   = 0;    a[4]   =  1;      a[5]   = 0;
+      a[6]   = -salpha; a[7]   =  0;      a[8]   = calpha;
+      break;
+    }
+}
+*/
+
+void rotate_point_by_axis(
+  std::vector<double> &point_arg,
+  double angle_sin,
+  double angle_cos,
+  rotation_axis axis)
+{
+  std::vector<double> point_orig = point_arg;
+  if(axis == rotation_axis::x)
+  {
+    point_arg[1] = angle_cos * point_orig[1] - angle_sin * point_orig[2];
+    point_arg[2] = angle_sin * point_orig[1] + angle_cos * point_orig[2];
+  }
+  if(axis == rotation_axis::y)
+  {
+    point_arg[0] =  angle_cos * point_orig[0] + angle_sin * point_orig[2];
+    point_arg[2] = -angle_sin * point_orig[0] + angle_cos * point_orig[2];
+  }
+  if(axis == rotation_axis::z)
+  {
+    point_arg[0] = angle_cos * point_orig[0] - angle_sin * point_orig[1];
+    point_arg[1] = angle_sin * point_orig[0] + angle_cos * point_orig[1];
+  }
+}
+
+void rotate_point_by_axis(std::vector<double> &point_arg,
+                             double angle,
+                             rotation_axis axis)
+{
+  if(angle == 0.0)
+  {
+    return;
+  }
+  double angle_sin = std::sin(angle);
+  double angle_cos = std::cos(angle);
+  rotate_point_by_axis(point_arg, angle_sin, angle_cos, axis);
+}
+
+
+
+
+
 std::vector<double> vector_scale(double norm, const std::vector<double> &vec)
 {
   double vec_length =
@@ -1129,6 +1233,26 @@ void polyhedron::move_coord_system_to_point(
   std::vector<const std::vector<double>*> tmp_verts =
     get_vertices_by_polygons(polygons_arg);
   move_coord_system_to_point(tmp_verts, point_arg);
+}
+
+
+
+void polyhedron::rotate_by_axis(double angle, rotation_axis axis)
+{
+  if(angle == 0.0)
+  {
+    return;
+  }
+  double angle_sin = std::sin(angle);
+  double angle_cos = std::cos(angle);
+  for(auto &&vert_to_change : verts)
+  {
+    rotate_point_by_axis(vert_to_change, angle_sin, angle_cos, axis);
+  }
+  for(auto &&vert_norm_to_change : vertNorms)
+  {
+    rotate_point_by_axis(vert_norm_to_change, angle_sin, angle_cos, axis);
+  }
 }
 
 

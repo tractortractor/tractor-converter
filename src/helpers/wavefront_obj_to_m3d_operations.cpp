@@ -1337,7 +1337,7 @@ void wavefront_obj_to_m3d_model::write_m3d_weapon_slots()
       cur_weapon_slot_data[i].location_angle_of_slots << '\n';
     std::cout <<
       "cur_weapon_slot_data[" << i << "].location_angle_of_slots:" <<
-      radians_to_sicher_angle(
+      volInt::radians_to_sicher_angle(
         cur_weapon_slot_data[i].location_angle_of_slots) <<
       '\n';
     */
@@ -1349,7 +1349,7 @@ void wavefront_obj_to_m3d_model::write_m3d_weapon_slots()
           cur_weapon_slot_data[i].R_slots[cur_coord] * scale_size));
     }
     write_var_to_m3d<int>(
-      radians_to_sicher_angle(
+      volInt::radians_to_sicher_angle(
         cur_weapon_slot_data[i].location_angle_of_slots));
   }
 }
@@ -1796,10 +1796,10 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
       };
       for(auto &&ref_vert : ref_verts_rotated)
       {
-        rotate_3d_point_by_axis(
+        volInt::rotate_point_by_axis(
           ref_vert,
           cur_weapon_slot_data[cur_slot].location_angle_of_slots,
-          rotation_axis::y);
+          volInt::rotation_axis::y);
       }
 
       std::vector<point*> ref_verts_rotated_ptr

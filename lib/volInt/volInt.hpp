@@ -81,6 +81,25 @@ namespace exception{
 
 
 
+enum rotation_axis{x, y, z};
+
+
+
+double sicher_angle_to_radians(int sicher_angle);
+int radians_to_sicher_angle(double radians);
+
+void rotate_point_by_axis(
+  std::vector<double> &point,
+  double angle_sin,
+  double angle_cos,
+  rotation_axis axis);
+void rotate_point_by_axis(
+  std::vector<double> &point,
+  double angle,
+  rotation_axis axis);
+
+
+
 std::vector<double> vector_scale(double norm, const std::vector<double> &vec);
 void vector_scale_self(double norm, std::vector<double> &vec);
 
@@ -164,6 +183,27 @@ void matrix_multiply_self(
 #define VOLINT_X 0
 #define VOLINT_Y 1
 #define VOLINT_Z 2
+
+
+
+/*
+// VANGERS SOURCE
+// how angle conversions works in vangers code
+#define M_PI      3.14159265358979323846
+
+Pi_len = 11
+const int  Pi    = 1 << Pi_len;
+2048
+
+#define GTOR(x) (double(x)*(M_PI/double(Pi)))
+#define RTOG(x) (round(x*(double(Pi)/M_PI)))
+*/
+
+#ifndef M_PI
+  #define M_PI 3.14159265358979323846
+#endif
+//const double M_PI = 3.14159265358979323846;
+const int sicher_angle_Pi = 2048; // "1 << Pi_len" where "Pi_len = 11".
 
 
 
@@ -317,6 +357,7 @@ typedef struct polyhedron {
     std::vector<const volInt::face*> polygons,
     const std::vector<double> &point);
 
+  void rotate_by_axis(double angle, rotation_axis axis);
 
 
   bool find_ref_points();
