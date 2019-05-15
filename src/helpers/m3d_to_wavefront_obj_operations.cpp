@@ -1153,13 +1153,9 @@ void m3d_to_wavefront_obj_model::mark_wheels(
     {
       if(!cur_wheel_data[cur_wheel_num].steer)
       {
-        double distance = 0.0;
-        for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-        {
-          distance +=
-            std::pow(wheels_centers[model_wheel_center_num][cur_coord] -
-                     cur_wheel_data[cur_wheel_num].r[cur_coord], 2);
-        }
+        double distance =
+          volInt::vector_length_between(wheels_centers[model_wheel_center_num],
+                                        cur_wheel_data[cur_wheel_num].r);
         if(distance < closest_distance)
         {
           closest_wheel_data_num = cur_wheel_num;

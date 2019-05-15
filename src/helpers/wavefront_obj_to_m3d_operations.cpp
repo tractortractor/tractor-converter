@@ -29,11 +29,9 @@ double get_weapons_bound_sphere_radius(
   {
     for(const auto &vert : weapon_model.second.verts)
     {
-      double x_coord = vert[0] - weapon_model.second.x_off();
-      double y_coord = vert[1] - weapon_model.second.y_off();
-      double z_coord = vert[2] - weapon_model.second.z_off();
       double cur_vert_length =
-        std::sqrt(x_coord*x_coord + y_coord*y_coord + z_coord*z_coord);
+        volInt::vector_length_between(vert,
+                                      weapon_model.second.offset_point());
       if(max_radius < cur_vert_length)
       {
         max_radius = cur_vert_length;

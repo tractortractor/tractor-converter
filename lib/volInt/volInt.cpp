@@ -1308,8 +1308,7 @@ void polyhedron::calculate_rmax()
 
   for(const auto &vert : verts)
   {
-    double cur_vert_length =
-      std::sqrt(vert[0] * vert[0] + vert[1] * vert[1] + vert[2] * vert[2]);
+    double cur_vert_length = vector_length(vert);
     if(rmax < cur_vert_length)
     {
       rmax = cur_vert_length;
