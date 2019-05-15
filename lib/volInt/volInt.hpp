@@ -213,6 +213,8 @@ struct model_extreme_points {
   void get_most_extreme(const std::vector<std::vector<double>> &points);
   void get_most_extreme(const std::vector<const std::vector<double>*> &points);
 
+  std::vector<double> get_center();
+
   std::pair<std::vector<double>, std::vector<double>> extreme_points_pair;
 
 };
@@ -277,8 +279,6 @@ typedef struct polyhedron {
     const std::vector<const volInt::face*> &polygons) const;
 
 
-  static std::vector<double> get_model_center(
-    const model_extreme_points &extreme_points);
   std::vector<double> get_model_center();
   std::vector<double> get_model_center(
     const std::vector<const std::vector<double>*> &vertices) const;

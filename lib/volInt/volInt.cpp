@@ -558,6 +558,17 @@ void model_extreme_points::get_most_extreme(
 
 
 
+std::vector<double> model_extreme_points::get_center()
+{
+  // Getting middle point of model as middle of extreme points.
+  std::vector<double> box_lengths = vector_minus(max(), min());
+  std::vector<double> box_half_lengths = vector_divide(box_lengths, 2);
+  std::vector<double> center_point = vector_plus(box_half_lengths, min());
+  return center_point;
+}
+
+
+
 model_offset::model_offset()
 : offset_point(3, 0.0)
 {
@@ -938,34 +949,10 @@ model_extreme_points polyhedron::get_extreme_points(
 
 
 
-std::vector<double> polyhedron::get_model_center(
-  const model_extreme_points &extreme_points_arg)
-{
-  // Getting middle point of model as middle of extreme points.
-  std::vector<double> center_point(3, 0);
-  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-  {
-//    std::cout << "extreme_points_arg.max()[" << cur_coord << "]: " <<
-//                  extreme_points_arg.max()[cur_coord] << '\n';
-//    std::cout << "extreme_points_arg.min()[" << cur_coord << "]: " <<
-//                  extreme_points_arg.min()[cur_coord] << '\n';
-    center_point[cur_coord] =
-      (extreme_points_arg.max()[cur_coord] -
-        extreme_points_arg.min()[cur_coord]) / 2 +
-      extreme_points_arg.min()[cur_coord];
-//    std::cout << "center_point[" << cur_coord << "]: " <<
-//      center_point[cur_coord] << '\n';
-  }
-//  std::cout << "\n\n";
-  return center_point;
-}
-
-
-
 std::vector<double> polyhedron::get_model_center()
 {
   get_extreme_points();
-  return get_model_center(extreme_points);
+  return extreme_points.get_center();
 }
 
 
@@ -975,7 +962,7 @@ std::vector<double> polyhedron::get_model_center(
 {
   model_extreme_points tmp_extreme_points;
   tmp_extreme_points.get_most_extreme(vertices);
-  return get_model_center(tmp_extreme_points);
+  return tmp_extreme_points.get_center();
 }
 
 
@@ -984,7 +971,7 @@ std::vector<double> polyhedron::get_model_center(
   const std::vector<const volInt::face*> &polygons_arg) const
 {
   model_extreme_points tmp_extreme_points = get_extreme_points(polygons_arg);
-  return get_model_center(tmp_extreme_points);
+  return tmp_extreme_points.get_center();
 }
 
 
