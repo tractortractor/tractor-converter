@@ -244,17 +244,11 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
   std::cout << "model:" << model_name << '\n';
   std::cout << "scale_size: " << scale_size << '\n';
 
-  for(auto &&coord : cur_main_model.rcm)
-  {
-    coord *= scale_size;
-  }
+  volInt::vector_multiply_self(cur_main_model.rcm, scale_size);
 
   for(auto &&vert : cur_main_model.verts)
   {
-    for(auto &&coord : vert)
-    {
-      coord *= scale_size;
-    }
+    volInt::vector_multiply_self(vert, scale_size);
   }
 //std::cout << model_name << " main mechos models after scaling." << '\n';
   cur_main_model.faces_calc_params();
@@ -499,17 +493,11 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
   std::cout << "model:" << model_name << '\n';
   std::cout << "scale_size: " << scale_size << '\n';
 
-  for(auto &&coord : cur_main_model.rcm)
-  {
-    coord *= scale_size;
-  }
+  volInt::vector_multiply_self(cur_main_model.rcm, scale_size);
 
   for(auto &&vert : cur_main_model.verts)
   {
-    for(auto &&coord : vert)
-    {
-      coord *= scale_size;
-    }
+    volInt::vector_multiply_self(vert, scale_size);
   }
 //std::cout << model_name << " main mechos models after scaling." << '\n';
   cur_main_model.faces_calc_params();
@@ -1311,11 +1299,8 @@ void wavefront_obj_to_m3d_model::write_m3d_wheels_data(
   for(int i = 0; i < n_wheels; i++)
   {
     write_var_to_m3d<int>(cur_wheel_data[i].steer);
-//  write_vec_var_to_m3d<double>(cur_wheel_data[i].r);
-    for(auto r_coord : cur_wheel_data[i].r)
-    {
-      write_var_to_m3d<double>(r_coord * scale_size);
-    }
+    volInt::vector_multiply_self(cur_wheel_data[i].r, scale_size);
+    write_vec_var_to_m3d<double>(cur_wheel_data[i].r);
     write_var_to_m3d<int>(cur_wheel_data[i].width * scale_size);
     write_var_to_m3d<int>(cur_wheel_data[i].radius * scale_size);
     write_var_to_m3d<int>(cur_wheel_data[i].bound_index);

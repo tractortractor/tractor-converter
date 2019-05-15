@@ -174,10 +174,7 @@ vangers_model::vangers_model(
 /*
 void vangers_model::scale_3d_point(std::vector<double> &point)
 {
-  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-  {
-    point[cur_coord] *= scale_size;
-  }
+  volInt::vector_multiply_self(point, scale_size);
 }
 
 
@@ -189,17 +186,11 @@ void vangers_model::scale_c3d(volInt::polyhedron &c3d_model)
     scale_3d_point(vert_to_change);
   }
 
-  c3d_model.set_xmax(c3d_model.xmax() * scale_size);
-  c3d_model.set_ymax(c3d_model.ymax() * scale_size);
-  c3d_model.set_zmax(c3d_model.zmax() * scale_size);
+  volInt::vector_multiply_self(c3d_model.max_point(), scale_size);
 
-  c3d_model.set_xmin(c3d_model.xmin() * scale_size);
-  c3d_model.set_ymin(c3d_model.ymin() * scale_size);
-  c3d_model.set_zmin(c3d_model.zmin() * scale_size);
+  volInt::vector_multiply_self(c3d_model.min(), scale_size);
 
-  c3d_model.set_x_off(c3d_model.x_off() * scale_size);
-  c3d_model.set_y_off(c3d_model.y_off() * scale_size);
-  c3d_model.set_z_off(c3d_model.z_off() * scale_size);
+  volInt::vector_multiply_self(c3d_model.offset_point(), scale_size);
 
   c3d_model.rmax *= scale_size;
 

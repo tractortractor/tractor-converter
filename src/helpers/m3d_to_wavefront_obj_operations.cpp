@@ -1264,13 +1264,16 @@ volInt::polyhedron
     radius_multiplier << '\n';
   */
 
-
+  std::vector<double> multiplier =
+    {
+      width_multiplier,
+      radius_multiplier,
+      radius_multiplier,
+    };
 
   for(auto &&cur_vert : cur_ghost_wheel.verts)
   {
-    cur_vert[0] *= width_multiplier;
-    cur_vert[1] *= radius_multiplier;
-    cur_vert[2] *= radius_multiplier;
+    volInt::vector_multiply_self(cur_vert, multiplier);
   }
 
 // TEST
