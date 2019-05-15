@@ -1094,10 +1094,7 @@ std::vector<double> wavefront_obj_to_m3d_model::get_medium_vert(
       volInt::vector_plus_self(medium_vert,
                                model.verts[model.faces[poly_n].verts[vert_n]]);
     }
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-    {
-      medium_vert[cur_coord] /= model.faces[poly_n].numVerts;
-    }
+    volInt::vector_divide_self(medium_vert, model.faces[poly_n].numVerts);
   }
   return medium_vert;
 }
