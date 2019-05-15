@@ -1147,14 +1147,7 @@ void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
 
   std::vector<std::vector<double>> scaled_J = model.J;
   double J_scale = std::pow(scale_size, 5);
-  for(auto &&scaled_J_row : scaled_J)
-  {
-    for(auto &&scaled_J_el : scaled_J_row)
-    {
-      scaled_J_el *= J_scale;
-    }
-  }
-
+  volInt::matrix_multiply_self(scaled_J, J_scale);
   write_nest_vec_var_to_m3d<double>(scaled_J);
 //write_nest_vec_var_to_m3d<double>(model.J);
 
