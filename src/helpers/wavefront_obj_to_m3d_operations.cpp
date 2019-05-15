@@ -1000,7 +1000,7 @@ std::deque<volInt::polyhedron>
     {
       models_to_return.push_back(read_obj(cur_path, cur_c3d_type));
     }
-    // Expected. Stopping the loop when next file in the list is not found. 
+    // Expected. Stopping the loop when next file in the list is not found.
     catch(exception::file_not_found &)
     {
       break;
