@@ -2376,13 +2376,10 @@ void wavefront_obj_to_m3d_model::get_wheels_data(
   cur_wheel_data = std::vector<wheel_data>(n_wheels);
 
   // Getting extreme points of wheels to get wheel data.
-  // first is max. second is min.
-  std::unordered_map<int, std::pair<point, point>> wheels_extreme_points;
+  std::unordered_map<int, volInt::model_extreme_points> wheels_extreme_points;
   for(std::size_t wheel_n = 0; wheel_n < n_wheels; ++wheel_n)
   {
-    wheels_extreme_points[wheel_n] =
-      {point(3, -std::numeric_limits<double>::max()),
-       point(3,  std::numeric_limits<double>::max())};
+    wheels_extreme_points[wheel_n] = volInt::model_extreme_points();
   }
 
   for(const auto &cur_poly : main_model.faces)
@@ -2390,27 +2387,10 @@ void wavefront_obj_to_m3d_model::get_wheels_data(
     if(cur_poly.color_id == c3d::color::string_to_id::wheel &&
        main_model.wheels.count(cur_poly.wheel_weapon_id))
     {
-      point& extreme_point_max =
-        wheels_extreme_points[cur_poly.wheel_weapon_id].first;
-      point& extreme_point_min =
-        wheels_extreme_points[cur_poly.wheel_weapon_id].second;
       for(const auto cur_vert_ind : cur_poly.verts)
       {
-        for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-        {
-          if(extreme_point_max[cur_coord] <
-             main_model.verts[cur_vert_ind][cur_coord])
-          {
-            extreme_point_max[cur_coord] =
-              main_model.verts[cur_vert_ind][cur_coord];
-          }
-          if(extreme_point_min[cur_coord] >
-             main_model.verts[cur_vert_ind][cur_coord])
-          {
-            extreme_point_min[cur_coord] =
-              main_model.verts[cur_vert_ind][cur_coord];
-          }
-        }
+        wheels_extreme_points[cur_poly.wheel_weapon_id].
+          get_most_extreme(main_model.verts[cur_vert_ind]);
       }
     }
   }
@@ -2418,8 +2398,6 @@ void wavefront_obj_to_m3d_model::get_wheels_data(
   // Getting wheel data using extreme coords.
   for(std::size_t wheel_n = 0; wheel_n < n_wheels; ++wheel_n)
   {
-    const point &max_extreme_point = wheels_extreme_points[wheel_n].first;
-    const point &min_extreme_point = wheels_extreme_points[wheel_n].second;
 
     if(main_model.wheels_steer.count(wheel_n))
     {
@@ -2430,16 +2408,13 @@ void wavefront_obj_to_m3d_model::get_wheels_data(
       cur_wheel_data[wheel_n].steer = 0;
     }
 
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-    {
-      cur_wheel_data[wheel_n].r[cur_coord] =
-        (max_extreme_point[cur_coord] - min_extreme_point[cur_coord]) / 2 +
-        min_extreme_point[cur_coord];
-    }
+    cur_wheel_data[wheel_n].r = wheels_extreme_points[wheel_n].get_center();
     cur_wheel_data[wheel_n].width =
-      max_extreme_point[0] - min_extreme_point[0];
+      wheels_extreme_points[wheel_n].xmax() -
+      wheels_extreme_points[wheel_n].xmin();
     cur_wheel_data[wheel_n].radius =
-      (max_extreme_point[2] - min_extreme_point[2]) / 2;
+      wheels_extreme_points[wheel_n].zmax() -
+      wheels_extreme_points[wheel_n].zmin() / 2;
 
     // TEST
     /*
