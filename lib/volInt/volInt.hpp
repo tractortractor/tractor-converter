@@ -184,7 +184,8 @@ const double density = 1.0;
 struct model_extreme_points {
 
   model_extreme_points();
-  model_extreme_points(std::vector<double> &max, std::vector<double> &min);
+  model_extreme_points(const std::vector<double> &max,
+                       const std::vector<double> &min);
   model_extreme_points(std::vector<double> &&max, std::vector<double> &&min);
 
   std::vector<double> &max();

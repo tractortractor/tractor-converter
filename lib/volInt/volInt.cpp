@@ -385,8 +385,8 @@ model_extreme_points::model_extreme_points()
 }
 
 model_extreme_points::model_extreme_points(
-  std::vector<double> &max,
-  std::vector<double> &min)
+  const std::vector<double> &max,
+  const std::vector<double> &min)
 : extreme_points_pair(max, min)
 {
 }
