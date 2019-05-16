@@ -34,6 +34,7 @@ namespace helpers{
 
 
 
+typedef long double scaled_float;
 typedef std::vector<double> point;
 
 
@@ -183,6 +184,65 @@ protected:
 // not needed
 //void scale_3d_point(std::vector<double> &point);
 //void scale_c3d(volInt::polyhedron &c3d_model);
+
+
+  // Returning long double in case T is long double.
+  template <typename T>
+  scaled_float scale(T var, double exp = 1.0)
+  {
+    return var * std::pow(scale_size, exp);
+  }
+
+  // If T is integer, the result will be truncated.
+  template <typename T>
+  T scale_trunc(T var, double exp = 1.0)
+  {
+    return var * std::pow(scale_size, exp);
+  }
+
+
+  template <typename T>
+  std::vector<scaled_float> scale_vec(
+    const std::vector<T> &vec, double exp = 1.0)
+  {
+    std::vector<scaled_float> dest_vec;
+    std::transform(vec.begin(), vec.end(),
+                   std::back_inserter(dest_vec),
+                   [&](T var){ return scale<T>(var, exp); });
+    return dest_vec;
+  }
+
+  template <typename T>
+  void scale_vec_trunc(
+    std::vector<T> &vec, double exp = 1.0)
+  {
+    std::transform(vec.begin(), vec.end(),
+                   vec.begin(),
+                   [&](T var){ return scale_trunc<T>(var, exp); });
+  }
+
+
+  template <typename T>
+  std::vector<std::vector<scaled_float>> scale_nest_vec(
+    const std::vector<std::vector<T>> &nest_vec, double exp = 1.0)
+  {
+    std::vector<std::vector<scaled_float>> dest_nest_vec;
+    std::transform(
+      nest_vec.begin(), nest_vec.end(),
+      std::back_inserter(dest_nest_vec),
+      [&](const std::vector<T> &vec){ return scale_vec<T>(vec, exp); });
+    return dest_nest_vec;
+  }
+
+  template <typename T>
+  void scale_nest_vec_trunc(
+    std::vector<std::vector<T>> &nest_vec, double exp = 1.0)
+  {
+    std::for_each(
+      nest_vec.begin(), nest_vec.end(),
+      [&](std::vector<T> &vec){ scale_vec_trunc<T>(vec, exp); });
+  }
+
 };
 
 
