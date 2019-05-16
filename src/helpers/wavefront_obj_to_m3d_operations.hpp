@@ -206,29 +206,114 @@ private:
     const std::string &prefix,
     c3d::c3d_type cur_c3d_type);
 
-  template<typename T>
-  void write_var_to_m3d(T var)
+
+
+  template<typename SOURCE, typename DESTINATION>
+  void write_var_to_m3d(SOURCE var)
   {
-    helpers::num_to_raw_bytes<T>(var, m3d_data, m3d_data_cur_pos);
-    m3d_data_cur_pos += sizeof(T);
+    num_to_raw_bytes<DESTINATION>(var, m3d_data, m3d_data_cur_pos);
+    m3d_data_cur_pos += sizeof(DESTINATION);
   }
 
-  template<typename T>
-  void write_vec_var_to_m3d(std::vector<T> var)
+  template<typename SOURCE, typename DESTINATION>
+  void write_var_to_m3d_rounded(SOURCE var)
   {
-    helpers::vec_num_to_raw_bytes<T>(var, m3d_data, m3d_data_cur_pos);
-    m3d_data_cur_pos += sizeof(T) * var.size();
+    write_var_to_m3d<DESTINATION, DESTINATION>(
+      round_half_to_even<SOURCE, DESTINATION>(var));
   }
 
-  template<typename T>
-  void write_nest_vec_var_to_m3d(std::vector<std::vector<T>> var)
+  template<typename SOURCE, typename DESTINATION>
+  void write_var_to_m3d_scaled(SOURCE var, double exp = 1.0)
   {
-    helpers::nest_vec_num_to_raw_bytes<T>(var, m3d_data, m3d_data_cur_pos);
-    for(const auto &vec : var)
+    write_var_to_m3d<SOURCE, DESTINATION>(scale_trunc<SOURCE>(var, exp));
+  }
+
+  template<typename SOURCE, typename DESTINATION>
+  void write_var_to_m3d_scaled_rounded(SOURCE var, double exp = 1.0)
+  {
+    write_var_to_m3d_rounded<scaled_float, DESTINATION>(
+      scale<SOURCE>(var, exp));
+  }
+
+
+  template<typename SOURCE, typename DESTINATION>
+  void write_vec_var_to_m3d(const std::vector<SOURCE> &vec_src)
+  {
+    std::vector<DESTINATION> vec_dest(vec_src.begin(), vec_src.end());
+    vec_num_to_raw_bytes<DESTINATION>(vec_dest, m3d_data, m3d_data_cur_pos);
+    m3d_data_cur_pos += sizeof(DESTINATION) * vec_dest.size();
+  }
+
+  template<typename SOURCE, typename DESTINATION>
+  void write_vec_var_to_m3d_rounded(const std::vector<SOURCE> &vec)
+  {
+    write_vec_var_to_m3d<DESTINATION, DESTINATION>(
+      round_half_to_even_vec<SOURCE, DESTINATION>(vec));
+  }
+
+  template<typename SOURCE, typename DESTINATION>
+  void write_vec_var_to_m3d_scaled(std::vector<SOURCE> vec, double exp = 1.0)
+  {
+    scale_vec_trunc<SOURCE>(vec, exp);
+    write_vec_var_to_m3d<SOURCE, DESTINATION>(vec);
+  }
+
+  template<typename SOURCE, typename DESTINATION>
+  void write_vec_var_to_m3d_scaled_rounded(
+    const std::vector<SOURCE> &vec, double exp = 1.0)
+  {
+    write_vec_var_to_m3d_rounded<scaled_float, DESTINATION>(
+      scale_vec<SOURCE>(vec, exp));
+  }
+
+
+  template<typename SOURCE, typename DESTINATION>
+  void write_nest_vec_var_to_m3d(
+    const std::vector<std::vector<SOURCE>> &nest_vec_src)
+  {
+    std::vector<std::vector<DESTINATION>> nest_vec_dest;
+    std::transform(
+      nest_vec_src.begin(), nest_vec_src.end(),
+      std::back_inserter(nest_vec_dest),
+      [](const std::vector<SOURCE> &vec_src)
+        {
+          return std::vector<DESTINATION>(vec_src.begin(), vec_src.end());
+        }
+    );
+    nest_vec_num_to_raw_bytes<DESTINATION>(nest_vec_dest,
+                                           m3d_data,
+                                           m3d_data_cur_pos);
+    for(const auto &vec_dest : nest_vec_dest)
     {
-      m3d_data_cur_pos += sizeof(T) * vec.size();
+      m3d_data_cur_pos += sizeof(DESTINATION) * vec_dest.size();
     }
   }
+
+  template<typename SOURCE, typename DESTINATION>
+  void write_nest_vec_var_to_m3d_rounded(
+    const std::vector<std::vector<SOURCE>> &nest_vec)
+  {
+    write_nest_vec_var_to_m3d<DESTINATION, DESTINATION>(
+      round_half_to_even_nest_vec<SOURCE, DESTINATION>(nest_vec));
+  }
+
+  template<typename SOURCE, typename DESTINATION>
+  void write_nest_vec_var_to_m3d_scaled(
+    std::vector<std::vector<SOURCE>> nest_vec, double exp = 1.0)
+  {
+    scale_nest_vec_trunc<SOURCE>(nest_vec, exp);
+    write_nest_vec_var_to_m3d<SOURCE, DESTINATION>(nest_vec);
+  }
+
+  template<typename SOURCE, typename DESTINATION>
+  void write_nest_vec_var_to_m3d_scaled_rounded(
+    const std::vector<std::vector<SOURCE>> &nest_vec, double exp = 1.0)
+  {
+    write_nest_vec_var_to_m3d_rounded<scaled_float, DESTINATION>(
+      scale_nest_vec<SOURCE>(nest_vec, exp));
+  }
+
+
 
   std::vector<double> get_medium_vert(const volInt::polyhedron &model,
                                       std::size_t poly_n);
