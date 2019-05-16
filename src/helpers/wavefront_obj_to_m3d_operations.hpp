@@ -105,6 +105,31 @@ INT round_half_to_even(FLOAT num)
 
 
 
+template <typename FLOAT, typename INT>
+std::vector<INT> round_half_to_even_vec(const std::vector<FLOAT> &vec)
+{
+  std::vector<INT> dest_vec;
+  std::transform(vec.begin(), vec.end(),
+                 std::back_inserter(dest_vec),
+                 round_half_to_even<FLOAT, INT>);
+  return dest_vec;
+}
+
+
+
+template <typename FLOAT, typename INT>
+std::vector<std::vector<INT>> round_half_to_even_nest_vec(
+  const std::vector<std::vector<FLOAT>> &nest_vec)
+{
+  std::vector<std::vector<INT>> dest_nest_vec;
+  std::transform(nest_vec.begin(), nest_vec.end(),
+                 std::back_inserter(dest_nest_vec),
+                 round_half_to_even_vec<FLOAT, INT>);
+  return dest_nest_vec;
+}
+
+
+
 void get_extreme_radius(double &cur_extreme,
                         double radius,
                         point offset = {0.0, 0.0, 0.0});
