@@ -27,6 +27,52 @@ T raw_bytes_to_num(const std::string &bytes, std::size_t pos_to_read)
   return num;
 }
 
+template<typename T>
+std::vector<T> raw_bytes_to_vec_num(
+  const std::string &bytes, std::size_t pos_to_read, std::size_t count_el)
+{
+  std::vector<T> vec(count_el);
+  for(auto &&num : vec)
+  {
+    num = raw_bytes_to_num<T>(bytes, pos_to_read);
+    pos_to_read += sizeof(T);
+  }
+  return vec;
+}
+
+template<typename T>
+std::vector<std::vector<T>> raw_bytes_to_nest_vec_num(
+  const std::string &bytes,
+  std::size_t pos_to_read,
+  const std::vector<std::size_t> &count_map)
+{
+  std::size_t count_map_size = count_map.size();
+  std::vector<std::vector<T>> nest_vec(count_map_size);
+  for(std::size_t cur_el = 0; cur_el < count_map_size; ++cur_el)
+  {
+    nest_vec[cur_el] =
+      raw_bytes_to_vec_num<T>(bytes, pos_to_read, count_map[cur_el]);
+    pos_to_read += sizeof(T) * count_map[cur_el];
+  }
+  return nest_vec;
+}
+
+template<typename T>
+std::vector<std::vector<T>> raw_bytes_to_nest_vec_num(
+  const std::string &bytes,
+  std::size_t pos_to_read,
+  std::size_t count_vec,
+  std::size_t count_el)
+{
+  std::vector<std::vector<T>> nest_vec(count_vec);
+  for(auto &&vec : nest_vec)
+  {
+    vec = raw_bytes_to_vec_num<T>(bytes, pos_to_read, count_el);
+    pos_to_read += sizeof(T) * count_el;
+  }
+  return nest_vec;
+}
+
 
 
 template<typename T>
