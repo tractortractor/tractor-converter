@@ -103,6 +103,111 @@ private:
 
 
 
+  template<typename SOURCE, typename DESTINATION>
+  DESTINATION read_var_from_m3d()
+  {
+    DESTINATION var = raw_bytes_to_num<SOURCE>(m3d_data, m3d_data_cur_pos);
+    m3d_data_cur_pos += sizeof(SOURCE);
+    return var;
+  }
+
+  // The program must always read floating point numbers in corresponding type.
+  // There should be no need for read_var_from_m3d_rounded<>().
+  template<typename SOURCE, typename DESTINATION>
+  DESTINATION read_var_from_m3d_scaled(double exp = 1.0)
+  {
+    return scale_trunc<DESTINATION>(
+             read_var_from_m3d<SOURCE, DESTINATION>(), exp);
+  }
+
+
+  template<typename SOURCE, typename DESTINATION>
+  std::vector<DESTINATION> read_vec_var_from_m3d(std::size_t count)
+  {
+    std::vector<SOURCE> vec_src =
+      raw_bytes_to_vec_num<SOURCE>(m3d_data, m3d_data_cur_pos, count);
+    std::vector<DESTINATION> vec_dest(vec_src.begin(), vec_src.end());
+    m3d_data_cur_pos += sizeof(SOURCE) * count;
+    return vec_dest;
+  }
+
+  template<typename SOURCE, typename DESTINATION>
+  std::vector<DESTINATION> read_vec_var_from_m3d_scaled(
+    std::size_t count, double exp = 1.0)
+  {
+    std::vector<DESTINATION> vec =
+      read_vec_var_from_m3d<SOURCE, DESTINATION>(count);
+    scale_vec_trunc<DESTINATION>(vec, exp);
+    return vec;
+  }
+
+
+  template<typename SOURCE, typename DESTINATION>
+  std::vector<std::vector<DESTINATION>> read_nest_vec_var_from_m3d(
+    const std::vector<std::size_t> &count_map)
+  {
+    std::vector<std::vector<SOURCE>> nest_vec_src =
+      raw_bytes_to_nest_vec_num<SOURCE>(m3d_data, m3d_data_cur_pos, count_map);
+    std::vector<std::vector<DESTINATION>> nest_vec_dest;
+    std::transform(
+      nest_vec_src.begin(), nest_vec_src.end(),
+      std::back_inserter(nest_vec_dest),
+      [](const std::vector<SOURCE> &vec_src)
+        {
+          return std::vector<DESTINATION>(vec_src.begin(), vec_src.end());
+        }
+    );
+    for(const auto count : count_map)
+    {
+      m3d_data_cur_pos += sizeof(SOURCE) * count;
+    }
+    return nest_vec_dest;
+  }
+
+  template<typename SOURCE, typename DESTINATION>
+  std::vector<std::vector<DESTINATION>> read_nest_vec_var_from_m3d_scaled(
+    const std::vector<std::size_t> &count_map, double exp = 1.0)
+  {
+    std::vector<std::vector<DESTINATION>> nest_vec =
+      read_nest_vec_var_from_m3d<SOURCE, DESTINATION>(count_map);
+    scale_nest_vec_trunc<DESTINATION>(nest_vec, exp);
+    return nest_vec;
+  }
+
+
+  template<typename SOURCE, typename DESTINATION>
+  std::vector<std::vector<DESTINATION>> read_nest_vec_var_from_m3d(
+    std::size_t count_vec, std::size_t count_el)
+  {
+    std::vector<std::vector<SOURCE>> nest_vec_src =
+      raw_bytes_to_nest_vec_num<SOURCE>(m3d_data,
+                                        m3d_data_cur_pos,
+                                        count_vec,
+                                        count_el);
+    std::vector<std::vector<DESTINATION>> nest_vec_dest;
+    std::transform(
+      nest_vec_src.begin(), nest_vec_src.end(),
+      std::back_inserter(nest_vec_dest),
+      [](const std::vector<SOURCE> &vec_src)
+        {
+          return std::vector<DESTINATION>(vec_src.begin(), vec_src.end());
+        }
+    );
+    m3d_data_cur_pos += sizeof(SOURCE) * count_vec * count_el;
+    return nest_vec_dest;
+  }
+
+  template<typename SOURCE, typename DESTINATION>
+  std::vector<std::vector<DESTINATION>> read_nest_vec_var_from_m3d_scaled(
+    std::size_t count_vec, std::size_t count_el, double exp = 1.0)
+  {
+    std::vector<std::vector<DESTINATION>> nest_vec =
+      read_nest_vec_var_from_m3d<SOURCE, DESTINATION>(count_vec, count_el);
+    scale_nest_vec_trunc<DESTINATION>(nest_vec, exp);
+    return nest_vec;
+  }
+
+
 
   volInt::polyhedron read_c3d(c3d::c3d_type cur_c3d_type);
   void save_c3d_as_wavefront_obj(
