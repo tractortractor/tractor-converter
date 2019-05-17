@@ -215,10 +215,10 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 
   boost::filesystem::path file_to_save = output_dir_path;
   file_to_save.append(model_name + ".m3d", boost::filesystem::path::codecvt());
-  helpers::save_file(file_to_save,
-                     m3d_data,
-                     TRACTOR_CONVERTER_BINARY,
-                     output_file_name_error);
+  save_file(file_to_save,
+            m3d_data,
+            TRACTOR_CONVERTER_BINARY,
+            output_file_name_error);
 
 
 
@@ -354,10 +354,10 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
 
   boost::filesystem::path file_to_save = output_dir_path;
   file_to_save.append(model_name + ".m3d", boost::filesystem::path::codecvt());
-  helpers::save_file(file_to_save,
-                     m3d_data,
-                     TRACTOR_CONVERTER_BINARY,
-                     output_file_name_error);
+  save_file(file_to_save,
+            m3d_data,
+            TRACTOR_CONVERTER_BINARY,
+            output_file_name_error);
 
 
 
@@ -428,10 +428,10 @@ void wavefront_obj_to_m3d_model::animated_wavefront_objs_to_a3d()
 
   boost::filesystem::path file_to_save = output_dir_path;
   file_to_save.append(model_name + ".a3d", boost::filesystem::path::codecvt());
-  helpers::save_file(file_to_save,
-                     m3d_data,
-                     TRACTOR_CONVERTER_BINARY,
-                     output_file_name_error);
+  save_file(file_to_save,
+            m3d_data,
+            TRACTOR_CONVERTER_BINARY,
+            output_file_name_error);
   // TEST
 //std::cout << '\n';
 //std::cout << "scale_size of model: " << input_file_path <<
@@ -480,10 +480,10 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
 
   boost::filesystem::path file_to_save = output_dir_path;
   file_to_save.append(model_name + ".m3d", boost::filesystem::path::codecvt());
-  helpers::save_file(file_to_save,
-                     m3d_data,
-                     TRACTOR_CONVERTER_BINARY,
-                     output_file_name_error);
+  save_file(file_to_save,
+            m3d_data,
+            TRACTOR_CONVERTER_BINARY,
+            output_file_name_error);
 
 
 
