@@ -206,7 +206,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 //  std::cout << "weapon_slots_existence:" << weapon_slots_existence << '\n';
 
 
-  write_var_to_m3d<int>(weapon_slots_existence);
+  write_var_to_m3d<int, int>(weapon_slots_existence);
   if(weapon_slots_existence)
   {
     write_m3d_weapon_slots();
@@ -348,7 +348,7 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
   write_c3d(cur_main_model);
   write_m3d_header_data();
   write_c3d(cur_main_bound_model);
-  write_var_to_m3d<int>(weapon_slots_existence);
+  write_var_to_m3d<int, int>(weapon_slots_existence);
 
 
 
@@ -474,7 +474,7 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
   write_c3d(cur_main_model);
   write_m3d_header_data();
   write_c3d(cur_main_bound_model);
-  write_var_to_m3d<int>(weapon_slots_existence);
+  write_var_to_m3d<int, int>(weapon_slots_existence);
 
 
 
@@ -1103,133 +1103,60 @@ std::vector<double> wavefront_obj_to_m3d_model::get_medium_vert(
 
 void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
 {
-  write_var_to_m3d<int>(c3d::version_req);
+  write_var_to_m3d<int, int>(c3d::version_req);
 
-  write_var_to_m3d<int>(model.numVerts);
-  write_var_to_m3d<int>(model.numVertNorms);
-  write_var_to_m3d<int>(model.numFaces);
-  write_var_to_m3d<int>(model.numVertTotal);
+  write_var_to_m3d<int, int>(model.numVerts);
+  write_var_to_m3d<int, int>(model.numVertNorms);
+  write_var_to_m3d<int, int>(model.numFaces);
+  write_var_to_m3d<int, int>(model.numVertTotal);
 
-  write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.xmax() * scale_size));
-  write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.ymax() * scale_size));
-  write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.zmax() * scale_size));
+  write_vec_var_to_m3d_scaled_rounded<double, int>(model.max_point());
+  write_vec_var_to_m3d_scaled_rounded<double, int>(model.min_point());
+  write_vec_var_to_m3d_scaled_rounded<double, int>(model.offset_point());
+  write_var_to_m3d_scaled_rounded<double, int>(model.rmax);
 
-  write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.xmin() * scale_size));
-  write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.ymin() * scale_size));
-  write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.zmin() * scale_size));
+  write_var_to_m3d<int, int>(c3d::default_phi_psi_tetta);
+  write_var_to_m3d<int, int>(c3d::default_phi_psi_tetta);
+  write_var_to_m3d<int, int>(c3d::default_phi_psi_tetta);
 
-  write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.x_off() * scale_size));
-  write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.y_off() * scale_size));
-  write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.z_off() * scale_size));
-
-  write_var_to_m3d<int>(
-    round_half_to_even<double, int>(model.rmax * scale_size));
-
-  write_var_to_m3d<int>(c3d::default_phi_psi_tetta);
-  write_var_to_m3d<int>(c3d::default_phi_psi_tetta);
-  write_var_to_m3d<int>(c3d::default_phi_psi_tetta);
-
-  write_var_to_m3d<double>(model.volume * std::pow(scale_size, 3));
-
-  for(auto rcm_coord : model.rcm)
-  {
-    write_var_to_m3d<double>(rcm_coord * scale_size);
-  }
-
-  std::vector<std::vector<double>> scaled_J = model.J;
-  double J_scale = std::pow(scale_size, 5);
-  volInt::matrix_multiply_self(scaled_J, J_scale);
-  write_nest_vec_var_to_m3d<double>(scaled_J);
-//write_nest_vec_var_to_m3d<double>(model.J);
+  write_var_to_m3d_scaled<double, double>(model.volume, 3.0);
+  write_vec_var_to_m3d_scaled<double, double>(model.rcm);
+  write_nest_vec_var_to_m3d_scaled<double, double>(model.J, 5.0);
 
   for(int cur_vert = 0; cur_vert < model.numVerts; ++cur_vert)
   {
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-    {
-      write_var_to_m3d<float>(model.verts[cur_vert][cur_coord] * scale_size);
-    }
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-    {
-      write_var_to_m3d<char>(
-        round_half_to_even<double, char>(
-          model.verts[cur_vert][cur_coord] * scale_size));
-    }
-    write_var_to_m3d<int>(c3d::vertex::default_sort_info);
+    write_vec_var_to_m3d_scaled<double, float>(model.verts[cur_vert]);
+    write_vec_var_to_m3d_scaled_rounded<double, char>(model.verts[cur_vert]);
+    write_var_to_m3d<int, int>(c3d::vertex::default_sort_info);
   }
 
   for(int cur_norm = 0; cur_norm < model.numVertNorms; ++cur_norm)
   {
-    std::vector<double> scaled =
-      volInt::vector_scale(c3d::vector_scale_val,
-                           model.vertNorms[cur_norm]);
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-    {
-      write_var_to_m3d<char>(
-        round_half_to_even<double, char>(scaled[cur_coord]));
-    }
-    write_var_to_m3d<unsigned char>(c3d::normal::default_n_power);
-    write_var_to_m3d<int>(c3d::normal::default_sort_info);
+    write_vec_var_to_m3d_rounded<double, char>(
+      volInt::vector_scale(c3d::vector_scale_val, model.vertNorms[cur_norm]));
+    write_var_to_m3d<unsigned char, unsigned char>(
+      c3d::normal::default_n_power);
+    write_var_to_m3d<int, int>(c3d::normal::default_sort_info);
   }
 
   for(int cur_poly_n = 0; cur_poly_n < model.numFaces; ++cur_poly_n)
   {
-    write_var_to_m3d<int>(model.faces[cur_poly_n].numVerts);
-    write_var_to_m3d<int>(c3d::polygon::default_sort_info);
-    write_var_to_m3d<unsigned int>(model.faces[cur_poly_n].color_id);
-
-    // TEST
-    /*
-    if(model_name == "m4")
-    {
-      std::cout << "m4: " << '\n';
-      std::cout << "cur_poly_n: " << cur_poly_n << '\n';
-      std::cout << "color_id: " << model.faces[cur_poly_n].color_id << '\n';
-      std::cout << "color_shift: " <<
-        c3d::color::id_to_shift[model.faces[cur_poly_n].color_id] << '\n';
-    }
-    */
-
-    /*
-    if(model.faces[cur_poly_n].color_id == c3d::color::string_to_id::body)
-    {
-      write_var_to_m3d<unsigned int>(body_color_shift);
-    }
-    else
-    {
-      write_var_to_m3d<unsigned int>(
-        c3d::color::id_to_shift[model.faces[cur_poly_n].color_id]);
-    }
-    */
+    write_var_to_m3d<int, int>(model.faces[cur_poly_n].numVerts);
+    write_var_to_m3d<int, int>(c3d::polygon::default_sort_info);
+    write_var_to_m3d<unsigned int, unsigned int>(
+      model.faces[cur_poly_n].color_id);
     // color_shift is always 0
-    write_var_to_m3d<unsigned int>(c3d::polygon::default_color_shift);
+    write_var_to_m3d<unsigned int, unsigned int>(
+      c3d::polygon::default_color_shift);
 
-    std::vector<double> scaled =
+    write_vec_var_to_m3d_rounded<double, char>(
       volInt::vector_scale(c3d::vector_scale_val,
-                           model.faces[cur_poly_n].norm);
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-    {
-      write_var_to_m3d<char>(
-        round_half_to_even<double, char>(scaled[cur_coord]));
-    }
-    write_var_to_m3d<unsigned char>(c3d::polygon::default_flat_norm_n_power);
+                           model.faces[cur_poly_n].norm));
+    write_var_to_m3d<unsigned char, unsigned char>(
+      c3d::polygon::default_flat_norm_n_power);
 
     std::vector<double> medium_vert = get_medium_vert(model, cur_poly_n);
-    std::vector<char> medium_vert_char(3);
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-    {
-      medium_vert_char[cur_coord] =
-        round_half_to_even<double, char>(medium_vert[cur_coord] * scale_size);
-    }
-    write_vec_var_to_m3d<char>(medium_vert_char);
+    write_vec_var_to_m3d_scaled_rounded<double, char>(medium_vert);
 
 //  for(std::size_t vert_n = 0;
 //      vert_n < model.faces[cur_poly_n].numVerts;
@@ -1239,8 +1166,8 @@ void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
         vert_n != -1;
         --vert_n)
     {
-      write_var_to_m3d<int>(model.faces[cur_poly_n].verts[vert_n]);
-      write_var_to_m3d<int>(model.faces[cur_poly_n].vertNorms[vert_n]);
+      write_var_to_m3d<int, int>(model.faces[cur_poly_n].verts[vert_n]);
+      write_var_to_m3d<int, int>(model.faces[cur_poly_n].vertNorms[vert_n]);
     }
   }
 
@@ -1254,31 +1181,23 @@ void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
 
 void wavefront_obj_to_m3d_model::write_m3d_header_data()
 {
-  write_var_to_m3d<int>(round_half_to_even<double, int>(xmax() * scale_size));
-  write_var_to_m3d<int>(round_half_to_even<double, int>(ymax() * scale_size));
-  write_var_to_m3d<int>(round_half_to_even<double, int>(zmax() * scale_size));
-  write_var_to_m3d<int>(round_half_to_even<double, int>(rmax * scale_size));
-
-  write_var_to_m3d<int>(n_wheels);
-  write_var_to_m3d<int>(n_debris);
-
-  write_var_to_m3d<int>(body_color_offset);
-  write_var_to_m3d<int>(body_color_shift);
+  write_vec_var_to_m3d_scaled_rounded<double, int>(max_point());
+  write_var_to_m3d_scaled_rounded<double, int>(rmax);
+  write_var_to_m3d<int, int>(n_wheels);
+  write_var_to_m3d<int, int>(n_debris);
+  write_var_to_m3d<int, int>(body_color_offset);
+  write_var_to_m3d<int, int>(body_color_shift);
 }
 
 
 
 void wavefront_obj_to_m3d_model::write_a3d_header_data()
 {
-  write_var_to_m3d<int>(n_models);
-
-  write_var_to_m3d<int>(round_half_to_even<double, int>(xmax() * scale_size));
-  write_var_to_m3d<int>(round_half_to_even<double, int>(ymax() * scale_size));
-  write_var_to_m3d<int>(round_half_to_even<double, int>(zmax() * scale_size));
-  write_var_to_m3d<int>(round_half_to_even<double, int>(rmax * scale_size));
-
-  write_var_to_m3d<int>(body_color_offset);
-  write_var_to_m3d<int>(body_color_shift);
+  write_var_to_m3d<int, int>(n_models);
+  write_vec_var_to_m3d_scaled_rounded<double, int>(max_point());
+  write_var_to_m3d_scaled_rounded<double, int>(rmax);
+  write_var_to_m3d<int, int>(body_color_offset);
+  write_var_to_m3d<int, int>(body_color_shift);
 }
 
 
@@ -1288,12 +1207,11 @@ void wavefront_obj_to_m3d_model::write_m3d_wheels_data(
 {
   for(int i = 0; i < n_wheels; i++)
   {
-    write_var_to_m3d<int>(cur_wheel_data[i].steer);
-    volInt::vector_multiply_self(cur_wheel_data[i].r, scale_size);
-    write_vec_var_to_m3d<double>(cur_wheel_data[i].r);
-    write_var_to_m3d<int>(cur_wheel_data[i].width * scale_size);
-    write_var_to_m3d<int>(cur_wheel_data[i].radius * scale_size);
-    write_var_to_m3d<int>(cur_wheel_data[i].bound_index);
+    write_var_to_m3d<int, int>(cur_wheel_data[i].steer);
+    write_vec_var_to_m3d_scaled<double, double>(cur_wheel_data[i].r);
+    write_var_to_m3d_scaled_rounded<double, int>(cur_wheel_data[i].width);
+    write_var_to_m3d_scaled_rounded<double, int>(cur_wheel_data[i].radius);
+    write_var_to_m3d<int, int>(cur_wheel_data[i].bound_index);
     if(cur_wheel_data[i].steer)
     {
       write_c3d(wheels_models[i]);
@@ -1320,35 +1238,9 @@ void wavefront_obj_to_m3d_model::write_m3d_weapon_slots()
 {
   for(std::size_t i = 0; i < m3d::weapon_slot::max_slots; i++)
   {
-
-    // TEST
-    /*
-    std::cout <<
-      "cur_weapon_slot_data[" << i << "].R_slots[0]" <<
-      cur_weapon_slot_data[i].R_slots[0] << '\n';
-    std::cout <<
-      "cur_weapon_slot_data[" << i << "].R_slots[1]" <<
-      cur_weapon_slot_data[i].R_slots[1] << '\n';
-    std::cout <<
-      "cur_weapon_slot_data[" << i << "].R_slots[2]" <<
-      cur_weapon_slot_data[i].R_slots[2] << '\n';
-    std::cout <<
-      "cur_weapon_slot_data[" << i << "].location_angle_of_slots:" <<
-      cur_weapon_slot_data[i].location_angle_of_slots << '\n';
-    std::cout <<
-      "cur_weapon_slot_data[" << i << "].location_angle_of_slots:" <<
-      volInt::radians_to_sicher_angle(
-        cur_weapon_slot_data[i].location_angle_of_slots) <<
-      '\n';
-    */
-
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-    {
-      write_var_to_m3d<int>(
-        round_half_to_even<double, int>(
-          cur_weapon_slot_data[i].R_slots[cur_coord] * scale_size));
-    }
-    write_var_to_m3d<int>(
+    write_vec_var_to_m3d_scaled_rounded<double, int>(
+      cur_weapon_slot_data[i].R_slots);
+    write_var_to_m3d<int, int>(
       volInt::radians_to_sicher_angle(
         cur_weapon_slot_data[i].location_angle_of_slots));
   }
