@@ -316,9 +316,20 @@ private:
 
 
   std::vector<double> get_medium_vert(const volInt::polyhedron &model,
-                                      std::size_t poly_n);
+                                      const volInt::face &poly);
 
+  void write_vertex(const std::vector<double> &vert);
+  void write_vertices(const volInt::polyhedron &model);
 
+  void write_normal(const std::vector<double> &norm,
+                    bool sort_info_exists);
+  void write_normals(const volInt::polyhedron &model);
+
+  void write_polygon(const volInt::polyhedron &model,
+                     const volInt::face &poly);
+  void write_polygons(const volInt::polyhedron &model);
+
+  void write_sorted_polygon_indices(const volInt::polyhedron &model);
 
   void write_c3d(const volInt::polyhedron &model);
 

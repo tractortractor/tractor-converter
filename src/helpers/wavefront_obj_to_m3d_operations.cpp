@@ -1016,7 +1016,7 @@ std::deque<volInt::polyhedron>
 
 std::vector<double> wavefront_obj_to_m3d_model::get_medium_vert(
   const volInt::polyhedron &model,
-  std::size_t poly_n)
+  const volInt::face &poly)
 {
   std::vector<double> medium_vert(3, 0.0);
   // For polygon with zero_reserved color middle point is different.
@@ -1024,12 +1024,12 @@ std::vector<double> wavefront_obj_to_m3d_model::get_medium_vert(
   // middle_y is either ymax of M3D or -ymax of M3D.
   // middle_z for all those polygons is zmin of bound C3D.
   // In all other polygons middle point is average vertex.
-  if(model.faces[poly_n].color_id ==
+  if(poly.color_id ==
      c3d::color::string_to_id::zero_reserved)
   {
     // preserved sign
     std::vector<double> extreme_abs_coords(3, 0.0);
-    for(const auto vert_ind : model.faces[poly_n].verts)
+    for(const auto vert_ind : poly.verts)
     {
       const std::vector<double> &vert = model.verts[vert_ind];
       for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
@@ -1066,7 +1066,7 @@ std::vector<double> wavefront_obj_to_m3d_model::get_medium_vert(
       std::cout << "m4: " << '\n';
       std::cout << "poly_n: " << poly_n << '\n';
       std::size_t cur_vert = 0;
-      for(const auto vert_ind : model.faces[poly_n].verts)
+      for(const auto vert_ind : poly.verts)
       {
         const std::vector<double> &vert = model.verts[vert_ind];
         std::cout << "vert " << cur_vert;
@@ -1089,16 +1089,119 @@ std::vector<double> wavefront_obj_to_m3d_model::get_medium_vert(
   }
   else
   {
-    for(int vert_n = 0; vert_n < model.faces[poly_n].numVerts; ++vert_n)
+    for(int vert_n = 0; vert_n < poly.numVerts; ++vert_n)
     {
-      volInt::vector_plus_self(medium_vert,
-                               model.verts[model.faces[poly_n].verts[vert_n]]);
+      volInt::vector_plus_self(medium_vert, model.verts[poly.verts[vert_n]]);
     }
-    volInt::vector_divide_self(medium_vert, model.faces[poly_n].numVerts);
+    volInt::vector_divide_self(medium_vert, poly.numVerts);
   }
   return medium_vert;
 }
 
+
+void wavefront_obj_to_m3d_model::write_vertex(const std::vector<double> &vert)
+{
+  write_vec_var_to_m3d_scaled<double, float>(vert);
+  write_vec_var_to_m3d_scaled_rounded<double, char>(vert);
+  write_var_to_m3d<int, int>(c3d::vertex::default_sort_info);
+}
+
+void wavefront_obj_to_m3d_model::write_vertices(
+  const volInt::polyhedron &model)
+{
+  for(int cur_vert = 0; cur_vert < model.numVerts; ++cur_vert)
+  {
+    write_vertex(model.verts[cur_vert]);
+  }
+}
+
+
+void wavefront_obj_to_m3d_model::write_normal(
+  const std::vector<double> &norm,
+  bool sort_info_exists = TRACTOR_CONVERTER_NORMAL_SORT_INFO_EXISTS)
+{
+  write_vec_var_to_m3d_rounded<double, char>(
+    volInt::vector_scale(c3d::vector_scale_val, norm));
+  write_var_to_m3d<unsigned char, unsigned char>(
+    c3d::normal::default_n_power);
+  if(sort_info_exists == TRACTOR_CONVERTER_NORMAL_SORT_INFO_EXISTS)
+  {
+    write_var_to_m3d<int, int>(c3d::normal::default_sort_info);
+  }
+}
+
+void wavefront_obj_to_m3d_model::write_normals(const volInt::polyhedron &model)
+{
+  for(int cur_norm = 0; cur_norm < model.numVertNorms; ++cur_norm)
+  {
+    write_normal(model.vertNorms[cur_norm]);
+  }
+}
+
+
+void wavefront_obj_to_m3d_model::write_polygon(
+  const volInt::polyhedron &model,
+  const volInt::face &poly)
+{
+  write_var_to_m3d<int, int>(poly.numVerts);
+  write_var_to_m3d<int, int>(c3d::polygon::default_sort_info);
+  write_var_to_m3d<unsigned int, unsigned int>(poly.color_id);
+  // color_shift is always 0
+  write_var_to_m3d<unsigned int, unsigned int>(
+    c3d::polygon::default_color_shift);
+
+  write_normal(poly.norm, TRACTOR_CONVERTER_NORMAL_SORT_INFO_ABSENT);
+
+  std::vector<double> medium_vert = get_medium_vert(model, poly);
+  write_vec_var_to_m3d_scaled_rounded<double, char>(medium_vert);
+
+//  for(std::size_t vert_n = 0;
+//      vert_n < poly.numVerts;
+//      ++vert_n)
+  // Note the reverse order of vertices.
+  for(int vert_n = poly.numVerts - 1;
+      vert_n != -1;
+      --vert_n)
+  {
+    write_var_to_m3d<int, int>(poly.verts[vert_n]);
+    write_var_to_m3d<int, int>(poly.vertNorms[vert_n]);
+  }
+}
+
+void wavefront_obj_to_m3d_model::write_polygons(
+  const volInt::polyhedron &model)
+{
+  for(int cur_poly_n = 0; cur_poly_n < model.numFaces; ++cur_poly_n)
+  {
+    write_polygon(model, model.faces[cur_poly_n]);
+  }
+}
+
+
+/*
+// VANGERS SOURCE
+#ifndef COMPACT_3D
+  int poly_ind;
+  for(i = 0;i < 3;i++){
+    sorted_variable_polygons[i] = HEAP_ALLOC(num_poly,VariablePolygon*);
+    for(j = 0;j < num_poly;j++){
+      buf > poly_ind;
+      sorted_variable_polygons[i][j] = &variable_polygons[poly_ind];
+      }
+    }
+#else
+  //buf.set(3*num_poly*sizeof(VariablePolygon*),XB_CUR);
+  buf.set(3*num_poly*4,XB_CUR);
+#endif
+*/
+void wavefront_obj_to_m3d_model::write_sorted_polygon_indices(
+  const volInt::polyhedron &model)
+{
+  std::size_t skipped_sorted_bytes_n =
+    model.numFaces * c3d::polygon_sort_info::size;
+  std::memset(&m3d_data[m3d_data_cur_pos], 0, skipped_sorted_bytes_n);
+  m3d_data_cur_pos += skipped_sorted_bytes_n;
+}
 
 
 void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
@@ -1123,58 +1226,11 @@ void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
   write_vec_var_to_m3d_scaled<double, double>(model.rcm);
   write_nest_vec_var_to_m3d_scaled<double, double>(model.J, 5.0);
 
-  for(int cur_vert = 0; cur_vert < model.numVerts; ++cur_vert)
-  {
-    write_vec_var_to_m3d_scaled<double, float>(model.verts[cur_vert]);
-    write_vec_var_to_m3d_scaled_rounded<double, char>(model.verts[cur_vert]);
-    write_var_to_m3d<int, int>(c3d::vertex::default_sort_info);
-  }
+  write_vertices(model);
+  write_normals(model);
+  write_polygons(model);
 
-  for(int cur_norm = 0; cur_norm < model.numVertNorms; ++cur_norm)
-  {
-    write_vec_var_to_m3d_rounded<double, char>(
-      volInt::vector_scale(c3d::vector_scale_val, model.vertNorms[cur_norm]));
-    write_var_to_m3d<unsigned char, unsigned char>(
-      c3d::normal::default_n_power);
-    write_var_to_m3d<int, int>(c3d::normal::default_sort_info);
-  }
-
-  for(int cur_poly_n = 0; cur_poly_n < model.numFaces; ++cur_poly_n)
-  {
-    write_var_to_m3d<int, int>(model.faces[cur_poly_n].numVerts);
-    write_var_to_m3d<int, int>(c3d::polygon::default_sort_info);
-    write_var_to_m3d<unsigned int, unsigned int>(
-      model.faces[cur_poly_n].color_id);
-    // color_shift is always 0
-    write_var_to_m3d<unsigned int, unsigned int>(
-      c3d::polygon::default_color_shift);
-
-    write_vec_var_to_m3d_rounded<double, char>(
-      volInt::vector_scale(c3d::vector_scale_val,
-                           model.faces[cur_poly_n].norm));
-    write_var_to_m3d<unsigned char, unsigned char>(
-      c3d::polygon::default_flat_norm_n_power);
-
-    std::vector<double> medium_vert = get_medium_vert(model, cur_poly_n);
-    write_vec_var_to_m3d_scaled_rounded<double, char>(medium_vert);
-
-//  for(std::size_t vert_n = 0;
-//      vert_n < model.faces[cur_poly_n].numVerts;
-//      ++vert_n)
-    // Note the reverse order of vertices.
-    for(int vert_n = model.faces[cur_poly_n].numVerts - 1;
-        vert_n != -1;
-        --vert_n)
-    {
-      write_var_to_m3d<int, int>(model.faces[cur_poly_n].verts[vert_n]);
-      write_var_to_m3d<int, int>(model.faces[cur_poly_n].vertNorms[vert_n]);
-    }
-  }
-
-  std::size_t skipped_sorted_bytes_n =
-    model.numFaces * c3d::polygon_sort_info::size;
-  std::memset(&m3d_data[m3d_data_cur_pos], 0, skipped_sorted_bytes_n);
-  m3d_data_cur_pos += skipped_sorted_bytes_n;
+  write_sorted_polygon_indices(model);
 }
 
 
