@@ -1218,9 +1218,7 @@ void wavefront_obj_to_m3d_model::write_c3d(const volInt::polyhedron &model)
   write_vec_var_to_m3d_scaled_rounded<double, int>(model.offset_point());
   write_var_to_m3d_scaled_rounded<double, int>(model.rmax);
 
-  write_var_to_m3d<int, int>(c3d::default_phi_psi_tetta);
-  write_var_to_m3d<int, int>(c3d::default_phi_psi_tetta);
-  write_var_to_m3d<int, int>(c3d::default_phi_psi_tetta);
+  write_vec_var_to_m3d<int, int>(c3d::default_phi_psi_tetta);
 
   write_var_to_m3d_scaled<double, double>(model.volume, 3.0);
   write_vec_var_to_m3d_scaled<double, double>(model.rcm);

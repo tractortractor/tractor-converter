@@ -27,7 +27,7 @@ namespace c3d{
 
   const int version_req = 8;
 
-  const int default_phi_psi_tetta = 83;
+  const std::vector<int> default_phi_psi_tetta = std::vector<int>(3, 83);
 
   const std::size_t regular_model_vertices_per_polygon = 3;
   const std::size_t bound_model_vertices_per_polygon = 4;
