@@ -1256,47 +1256,71 @@ void wavefront_obj_to_m3d_model::write_a3d_header_data()
 
 
 
+void wavefront_obj_to_m3d_model::write_m3d_wheel_data(
+  std::unordered_map<int, volInt::polyhedron> &wheels_models,
+  std::size_t wheel_id)
+{
+  write_var_to_m3d<int, int>(cur_wheel_data[wheel_id].steer);
+  write_vec_var_to_m3d_scaled<double, double>(cur_wheel_data[wheel_id].r);
+  write_var_to_m3d_scaled_rounded<double, int>(
+    cur_wheel_data[wheel_id].width);
+  write_var_to_m3d_scaled_rounded<double, int>(
+    cur_wheel_data[wheel_id].radius);
+  write_var_to_m3d<int, int>(cur_wheel_data[wheel_id].bound_index);
+  if(cur_wheel_data[wheel_id].steer)
+  {
+    write_c3d(wheels_models[wheel_id]);
+  }
+}
+
 void wavefront_obj_to_m3d_model::write_m3d_wheels_data(
   std::unordered_map<int, volInt::polyhedron> &wheels_models)
 {
-  for(int i = 0; i < n_wheels; i++)
+  for(int wheel_id = 0; wheel_id < n_wheels; ++wheel_id)
   {
-    write_var_to_m3d<int, int>(cur_wheel_data[i].steer);
-    write_vec_var_to_m3d_scaled<double, double>(cur_wheel_data[i].r);
-    write_var_to_m3d_scaled_rounded<double, int>(cur_wheel_data[i].width);
-    write_var_to_m3d_scaled_rounded<double, int>(cur_wheel_data[i].radius);
-    write_var_to_m3d<int, int>(cur_wheel_data[i].bound_index);
-    if(cur_wheel_data[i].steer)
-    {
-      write_c3d(wheels_models[i]);
-    }
+    write_m3d_wheel_data(wheels_models, wheel_id);
   }
 }
 
 
 
 void wavefront_obj_to_m3d_model::write_m3d_debris_data(
+  volInt::polyhedron &debris_model,
+  volInt::polyhedron &debris_bound_model)
+{
+  write_c3d(debris_model);
+  write_c3d(debris_bound_model);
+}
+
+void wavefront_obj_to_m3d_model::write_m3d_debris_data(
   std::deque<volInt::polyhedron> &debris_models,
   std::deque<volInt::polyhedron> &debris_bound_models)
 {
-  for(int i = 0; i < n_debris; i++)
+  for(int debris_num = 0; debris_num < n_debris; ++debris_num)
   {
-    write_c3d(debris_models[i]);
-    write_c3d(debris_bound_models[i]);
+    write_m3d_debris_data(debris_models[debris_num],
+                          debris_bound_models[debris_num]);
   }
 }
 
 
 
+void wavefront_obj_to_m3d_model::write_m3d_weapon_slot(std::size_t slot_id)
+{
+  write_vec_var_to_m3d_scaled_rounded<double, int>(
+    cur_weapon_slot_data[slot_id].R_slots);
+  write_var_to_m3d<int, int>(
+    volInt::radians_to_sicher_angle(
+      cur_weapon_slot_data[slot_id].location_angle_of_slots));
+}
+
 void wavefront_obj_to_m3d_model::write_m3d_weapon_slots()
 {
-  for(std::size_t i = 0; i < m3d::weapon_slot::max_slots; i++)
+  for(std::size_t slot_id = 0;
+      slot_id < m3d::weapon_slot::max_slots;
+      ++slot_id)
   {
-    write_vec_var_to_m3d_scaled_rounded<double, int>(
-      cur_weapon_slot_data[i].R_slots);
-    write_var_to_m3d<int, int>(
-      volInt::radians_to_sicher_angle(
-        cur_weapon_slot_data[i].location_angle_of_slots));
+    write_m3d_weapon_slot(slot_id);
   }
 }
 

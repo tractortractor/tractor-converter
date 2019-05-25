@@ -334,11 +334,21 @@ private:
   void write_c3d(const volInt::polyhedron &model);
 
   void write_m3d_header_data();
+
+  void write_m3d_wheel_data(
+    std::unordered_map<int, volInt::polyhedron> &wheels_models,
+    std::size_t wheel_id);
   void write_m3d_wheels_data(
     std::unordered_map<int, volInt::polyhedron> &wheels_models);
+
+  void write_m3d_debris_data(
+    volInt::polyhedron &debris_model,
+    volInt::polyhedron &debris_bound_model);
   void write_m3d_debris_data(
     std::deque<volInt::polyhedron> &debris_models,
     std::deque<volInt::polyhedron> &debris_bound_models);
+
+  void write_m3d_weapon_slot(std::size_t slot_id);
   void write_m3d_weapon_slots();
 
   void write_a3d_header_data();
