@@ -120,7 +120,12 @@ void m3d_to_wavefront_obj_model::mechos_m3d_to_wavefront_objs()
     save_m3d_debris_data(debris_models, debris_bound_models);
   }
   c3d_to_wavefront_obj("_main_bound", c3d::c3d_type::bound);
-  read_m3d_weapon_slots();
+
+  weapon_slots_existence = read_var_from_m3d<int, int>();
+  if(weapon_slots_existence)
+  {
+    read_m3d_weapon_slots();
+  }
 
 
   if(n_wheels || weapon_slots_existence)
@@ -257,7 +262,7 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
   */
   c3d_to_wavefront_obj("_main_bound", c3d::c3d_type::bound);
 
-  read_m3d_weapon_slots();
+  weapon_slots_existence = read_var_from_m3d<int, int>();
   if(weapon_slots_existence)
   {
     throw std::runtime_error(
@@ -377,7 +382,7 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
 
   c3d_to_wavefront_obj("_main_bound", c3d::c3d_type::bound);
 
-  read_m3d_weapon_slots();
+  weapon_slots_existence = read_var_from_m3d<int, int>();
   if(weapon_slots_existence)
   {
     throw std::runtime_error(
@@ -394,14 +399,17 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
 volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
   c3d::c3d_type cur_c3d_type)
 {
-  int expected_vertices_per_poly =
-    (cur_c3d_type == c3d::c3d_type::regular ?
-       c3d::regular_model_vertices_per_polygon :
-       c3d::bound_model_vertices_per_polygon);
+  int expected_vertices_per_poly;
+  if(cur_c3d_type == c3d::c3d_type::regular)
+  {
+    expected_vertices_per_poly = c3d::regular_model_vertices_per_polygon;
+  }
+  else
+  {
+    expected_vertices_per_poly = c3d::bound_model_vertices_per_polygon;
+  }
 
-  int version = raw_bytes_to_num<int>(
-    m3d_data,
-    m3d_data_cur_pos + c3d::header::version_pos);
+  int version = read_var_from_m3d<int, int>();
 
   if(version != c3d::version_req)
   {
@@ -409,169 +417,73 @@ volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
       input_file_name_error + " file " +
       input_file_path.string() + " have unexpected c3d_version " +
       std::to_string(version) + " at position " +
-      std::to_string(m3d_data_cur_pos + c3d::header::version_pos) +
+      std::to_string(m3d_data_cur_pos - sizeof(int)) +
       ". Expected " + std::to_string(c3d::version_req) + ".");
   }
 
-  int vert_num =
-    raw_bytes_to_num<int>(m3d_data,
-                          m3d_data_cur_pos + c3d::header::num_vert_pos);
-  int norm_num =
-    raw_bytes_to_num<int>(m3d_data,
-                          m3d_data_cur_pos + c3d::header::num_norm_pos);
-  int poly_num =
-    raw_bytes_to_num<int>(m3d_data,
-                          m3d_data_cur_pos + c3d::header::num_poly_pos);
+  int numVerts = read_var_from_m3d<int, int>();
+  int numVertNorms = read_var_from_m3d<int, int>();
+  int numFaces = read_var_from_m3d<int, int>();
+  int discarded_numVertTotal = read_var_from_m3d<int, int>();
 
-  double x_off =
-    raw_bytes_to_num<int>(
-      m3d_data,
-      m3d_data_cur_pos + c3d::header::x_off_pos) *
-    scale_size;
-  double y_off =
-    raw_bytes_to_num<int>(
-      m3d_data,
-      m3d_data_cur_pos + c3d::header::y_off_pos) *
-    scale_size;
-  double z_off =
-    raw_bytes_to_num<int>(
-      m3d_data,
-      m3d_data_cur_pos + c3d::header::z_off_pos) *
-    scale_size;
+  volInt::model_extreme_points discarded_extreme_points;
+  discarded_extreme_points.max() =
+    read_vec_var_from_m3d_scaled<int, double>(3);
+  discarded_extreme_points.min() =
+    read_vec_var_from_m3d_scaled<int, double>(3);
 
-  double volume =
-    raw_bytes_to_num<double>(
-      m3d_data,
-      m3d_data_cur_pos + c3d::header::volume_pos) *
-    std::pow(scale_size, 3);
-  point rcm(3, 0.0);
-  std::size_t cur_rcm_pos = m3d_data_cur_pos + c3d::header::rcm_pos;
-  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-  {
-    rcm[cur_coord] =
-      raw_bytes_to_num<double>(m3d_data, cur_rcm_pos) * scale_size;
-    cur_rcm_pos += sizeof(double);
-  }
-  std::vector<point> J(3, point(3, 0.0));
-  std::size_t cur_J_pos = m3d_data_cur_pos + c3d::header::J_pos;
-  double J_scale = std::pow(scale_size, 5);
-  for(std::size_t cur_row = 0; cur_row < 3; ++cur_row)
-  {
-    for(std::size_t cur_el = 0; cur_el < 3; ++cur_el)
-    {
-      J[cur_row][cur_el] =
-        raw_bytes_to_num<double>(m3d_data, cur_J_pos) * J_scale;
-      cur_J_pos += sizeof(double);
-    }
-  }
+  volInt::model_offset offset_point(
+    read_vec_var_from_m3d_scaled<int, double>(3));
+
+  double discarded_rmax = read_var_from_m3d_scaled<int, double>();
+
+  std::vector<int> discarded_phi_psi_tetta =
+    read_vec_var_from_m3d<int, int>(3);
+
+  double volume = read_var_from_m3d_scaled<double, double>(3.0);
+  std::vector<double> rcm = read_vec_var_from_m3d_scaled<double, double>(3);
+  std::vector<std::vector<double>> J =
+    read_nest_vec_var_from_m3d_scaled<double, double>(3, 3, 5.0);
 
 
 
-  volInt::polyhedron cur_model(vert_num,
-                               norm_num,
-                               poly_num,
+  volInt::polyhedron cur_model(numVerts,
+                               numVertNorms,
+                               numFaces,
                                expected_vertices_per_poly);
-  cur_model.set_x_off(x_off);
-  cur_model.set_y_off(y_off);
-  cur_model.set_z_off(z_off);
-
+  cur_model.offset = offset_point;
   cur_model.volume = volume;
   cur_model.rcm = rcm;
   cur_model.J = J;
 
 
 
-  std::size_t cur_vertex_data_pos = m3d_data_cur_pos + c3d::data_pos;
-
-  std::size_t norm_data_pos =
-    cur_vertex_data_pos + vert_num * c3d::vertex::size;
-  std::size_t cur_norm_data_pos = norm_data_pos;
-
-  std::size_t poly_pos = norm_data_pos + norm_num * c3d::normal::size;
-  std::size_t cur_poly_pos = poly_pos;
-
-
-
-  // TEST
-  /*
-  std::cout << "version_pos: " << c3d::version_pos << '\n';
-  std::cout << "num_vert_pos: " << c3d::num_vert_pos << '\n';
-  std::cout << "num_norm_pos: " << c3d::num_norm_pos << '\n';
-  std::cout << "num_poly_pos: " << c3d::num_poly_pos << '\n';
-  std::cout << "num_vert_total_pos: " << c3d::num_vert_total_pos << '\n';
-
-  std::cout << "xmax_pos: " << c3d::xmax_pos << '\n';
-  std::cout << "ymax_pos: " << c3d::ymax_pos << '\n';
-  std::cout << "zmax_pos: " << c3d::zmax_pos << '\n';
-  
-  std::cout << "xmin_pos: " << c3d::xmin_pos << '\n';
-  std::cout << "ymin_pos: " << c3d::ymin_pos << '\n';
-  std::cout << "zmin_pos: " << c3d::zmin_pos << '\n';
-  
-  std::cout << "x_off_pos: " << c3d::x_off_pos << '\n';
-  std::cout << "y_off_pos: " << c3d::y_off_pos << '\n';
-  std::cout << "z_off_pos: " << c3d::z_off_pos << '\n';
-  
-  std::cout << "rmax_pos: " << c3d::rmax_pos << '\n';
-
-
-  std::cout << "phi_pos: " << c3d::phi_pos << '\n';
-  std::cout << "psi_pos: " << c3d::psi_pos << '\n';
-  std::cout << "tetta_pos: " << c3d::tetta_pos << '\n';
-
-  std::cout << "volume_pos: " << c3d::volume_pos << '\n';
-  std::cout << "rcm_pos: " << c3d::rcm_pos << '\n';
-  std::cout << "J_pos: " << c3d::J_pos << '\n';
-
-
-
-  std::cout << "cur_vertex_data_pos: " << cur_vertex_data_pos << '\n';
-  std::cout << "cur_norm_data_pos: " << cur_norm_data_pos << '\n';
-  std::cout << "cur_poly_pos: " << cur_poly_pos << '\n';
-
-  std::cout << "vert_num: " << vert_num << '\n';
-  std::cout << "c3d::vertex::size: " << c3d::vertex::size << '\n';
-  std::cout << "norm_num: " << norm_num << '\n';
-  std::cout << "c3d::normal::size: " << c3d::normal::size << '\n';
-  std::cout << "poly_num: " << poly_num << '\n';
-  */
-
-
-
-  for(std::size_t cur_vertex = 0; cur_vertex < vert_num; ++cur_vertex)
+  for(int cur_vertex = 0; cur_vertex < numVerts; ++cur_vertex)
   {
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-    {
-      cur_model.verts[cur_vertex][cur_coord] =
-        raw_bytes_to_num<float>(m3d_data, cur_vertex_data_pos) * scale_size;
-      cur_vertex_data_pos += c3d::vertex::full_coord_size;
-    }
-    cur_vertex_data_pos += c3d::vertex::size_no_full_coords;
+    cur_model.verts[cur_vertex] =
+      read_vec_var_from_m3d_scaled<float, double>(3);
+    std::vector<double> discarded_less_preciese_vert =
+      read_vec_var_from_m3d_scaled<char, double>(3);
+    int discarded_sort_info = read_var_from_m3d<int, int>();
   }
 
 
 
-  for(std::size_t cur_normal = 0; cur_normal < norm_num; ++cur_normal)
+  for(int cur_normal = 0; cur_normal < numVertNorms; ++cur_normal)
   {
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-    {
-      cur_model.vertNorms[cur_normal][cur_coord] =
-        raw_bytes_to_num<char>(m3d_data, cur_norm_data_pos);
-      cur_norm_data_pos += c3d::normal::coord_size;
-    }
-    volInt::vector_scale_self(wavefront_obj::vector_scale_val,
-                              cur_model.vertNorms[cur_normal]);
-    cur_norm_data_pos += c3d::normal::size_no_coords;
+    cur_model.vertNorms[cur_normal] =
+      volInt::vector_scale(wavefront_obj::vector_scale_val,
+                           read_vec_var_from_m3d<char, double>(3));
+    unsigned char discarded_n_power =
+      read_var_from_m3d<unsigned char, unsigned char>();
+    int discarded_sort_info = read_var_from_m3d<int, int>();
   }
 
 
 
-  for(std::size_t cur_poly = 0; cur_poly < poly_num; ++cur_poly)
+  for(int cur_poly = 0; cur_poly < numFaces; ++cur_poly)
   {
-    int poly_vert_num =
-      raw_bytes_to_num<int>(m3d_data,
-                            cur_poly_pos + c3d::polygon::vertex_num_rel_pos);
-
+    int poly_vert_num = read_var_from_m3d<int, int>();
     if(expected_vertices_per_poly != poly_vert_num)
     {
       throw std::runtime_error(
@@ -579,76 +491,60 @@ volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
         " file " + input_file_path.string() +
         " polygon " + std::to_string(cur_poly) +
         " at position " +
-        std::to_string(cur_poly_pos + c3d::polygon::vertex_num_rel_pos) +
+        std::to_string(m3d_data_cur_pos - sizeof(int)) +
         " have unexpected number of vertices " +
         std::to_string(poly_vert_num) +
         ". Expected " + std::to_string(expected_vertices_per_poly) + ".");
     }
 
-
+    int discarded_sort_info = read_var_from_m3d<int, int>();
 
     cur_model.faces[cur_poly].color_id =
-      raw_bytes_to_num<unsigned int>(
-        m3d_data,
-        cur_poly_pos + c3d::polygon::color_id_rel_pos);
-//  cur_model.faces[cur_poly].color_shift =
-//    raw_bytes_to_num<unsigned int>(
-//      m3d_data, cur_poly_pos + c3d::polygon::color_shift_rel_pos);
-    unsigned int color_shift =
-      raw_bytes_to_num<unsigned int>(
-        m3d_data,
-        cur_poly_pos + c3d::polygon::color_shift_rel_pos);
-    if(color_shift)
-    {
-/*
-      throw std::runtime_error(
-        input_file_name_error + " file " +
-        input_file_path.string() +
-        ". polygon " + std::to_string(cur_poly) +
-        " have non-zero color_shift " + std::to_string(color_shift) +
-        ". It is assumed that color_shift of any polygon is always 0.");
-*/
-      std::cout << "\n\n" <<
-        input_file_name_error << " file " <<
-        input_file_path.string() <<
-        ". polygon " << std::to_string(cur_poly) <<
-        " at position " +
-        std::to_string(cur_poly_pos + c3d::polygon::color_shift_rel_pos) +
-        " have non-zero color_shift " << std::to_string(color_shift) <<
-        ". It is assumed that color_shift of any polygon is always 0." << '\n';
-    }
-
+      read_var_from_m3d<unsigned int, unsigned int>();
     if(cur_model.faces[cur_poly].color_id >=
        c3d::color::string_to_id::max_colors_ids)
     {
       cur_model.faces[cur_poly].color_id = c3d::color::string_to_id::body;
     }
 
+    unsigned int color_shift = read_var_from_m3d<unsigned int, unsigned int>();
+    if(color_shift)
+    {
+      std::cout << "\n\n" <<
+        input_file_name_error << " file " <<
+        input_file_path.string() <<
+        ". polygon " << std::to_string(cur_poly) <<
+        " at position " +
+        std::to_string(m3d_data_cur_pos - sizeof(unsigned int)) +
+        " have non-zero color_shift " << std::to_string(color_shift) <<
+        ". It is assumed that color_shift of any polygon is always 0." << '\n';
+    }
 
-    cur_poly_pos += c3d::polygon::vert_norm_ind_arr_rel_pos;
-//  for(std::size_t cur_poly_vertex = 0;
-//      cur_poly_vertex < poly_vert_num;
-//      ++cur_poly_vertex)
+
+    std::vector<double> discarded_flat_normal =
+      volInt::vector_scale(wavefront_obj::vector_scale_val,
+                           read_vec_var_from_m3d<char, double>(3));
+    unsigned char discarded_flat_normal_n_power =
+      read_var_from_m3d<unsigned char, unsigned char>();
+
+
+    std::vector<double> discarded_medium_vert =
+      read_vec_var_from_m3d_scaled<char, double>(3);
+
+
     // Note the reverse order of vertices.
     for(int cur_poly_vertex = poly_vert_num - 1;
         cur_poly_vertex != -1;
         --cur_poly_vertex)
     {
-      int vert_ind = raw_bytes_to_num<int>(m3d_data, cur_poly_pos);
-      cur_poly_pos += c3d::polygon::vert_ind_size;
-      int norm_ind = raw_bytes_to_num<int>(m3d_data, cur_poly_pos);
-      cur_poly_pos += c3d::polygon::norm_ind_size;
-
-      cur_model.faces[cur_poly].verts[cur_poly_vertex] = vert_ind;
-      cur_model.faces[cur_poly].vertNorms[cur_poly_vertex] = norm_ind;
+      cur_model.faces[cur_poly].verts[cur_poly_vertex] =
+        read_var_from_m3d<int, int>();
+      cur_model.faces[cur_poly].vertNorms[cur_poly_vertex] =
+        read_var_from_m3d<int, int>();
     }
   }
 
-  m3d_data_cur_pos = cur_poly_pos + poly_num * c3d::polygon_sort_info::size;
-
-  // TEST
-//std::cout << "End of reading c3d. m3d_data_cur_pos: " <<
-//  m3d_data_cur_pos << '\n';
+  m3d_data_cur_pos += numFaces * c3d::polygon_sort_info::size;
 
   // If volume is negative, vertices have wrong order.
   // They must be reversed again in this case.
@@ -716,54 +612,29 @@ void m3d_to_wavefront_obj_model::c3d_to_wavefront_obj(
 
 void m3d_to_wavefront_obj_model::read_m3d_header_data()
 {
-  n_wheels =
-    raw_bytes_to_num<int>(
-      m3d_data,
-      m3d_data_cur_pos + m3d::header::n_wheels_pos);
-  n_debris =
-    raw_bytes_to_num<int>(
-      m3d_data,
-      m3d_data_cur_pos + m3d::header::n_debris_pos);
-  body_color_offset =
-    raw_bytes_to_num<int>(
-      m3d_data,
-      m3d_data_cur_pos + m3d::header::body_color_offset_pos);
-  body_color_shift =
-    raw_bytes_to_num<int>(
-      m3d_data,
-      m3d_data_cur_pos + m3d::header::body_color_shift_pos);
+  std::vector<double> discarded_max_point =
+    read_vec_var_from_m3d_scaled<int, double>(3);
+  double discarded_rmax = read_var_from_m3d_scaled<int, double>();
 
-  m3d_data_cur_pos += m3d::header::size;
-  // TEST
-  /*
-  std::cout << "End of read_m3d_header_data. m3d_data_cur_pos: " <<
-    m3d_data_cur_pos << '\n';
-
-  std::cout << "n_wheels: " << n_wheels << '\n';
-  std::cout << "n_debris: " << n_debris << '\n';
-  std::cout << "body_color_offset: " << body_color_offset << '\n';
-  std::cout << "body_color_shift: " << body_color_shift << '\n';
-  */
+  n_wheels = read_var_from_m3d<int, int>();
+  n_debris = read_var_from_m3d<int, int>();
+  body_color_offset = read_var_from_m3d<int, int>();
+  body_color_shift = read_var_from_m3d<int, int>();
 }
 
 
 
 void m3d_to_wavefront_obj_model::read_a3d_header_data()
 {
-  n_models =
-    raw_bytes_to_num<int>(
-      m3d_data,
-      m3d_data_cur_pos + a3d::header::n_models_pos);
-  body_color_offset =
-    raw_bytes_to_num<int>(
-      m3d_data,
-      m3d_data_cur_pos + a3d::header::body_color_offset_pos);
-  body_color_shift =
-    raw_bytes_to_num<int>(
-      m3d_data,
-      m3d_data_cur_pos + a3d::header::body_color_shift_pos);
+  n_models = read_var_from_m3d<int, int>();
 
-  m3d_data_cur_pos += a3d::header::size;
+  std::vector<double> discarded_max_point =
+    read_vec_var_from_m3d_scaled<int, double>(3);
+  double discarded_rmax =
+    read_var_from_m3d_scaled<int, double>();
+
+  body_color_offset = read_var_from_m3d<int, int>();
+  body_color_shift = read_var_from_m3d<int, int>();
 }
 
 
@@ -777,57 +648,22 @@ std::vector<volInt::polyhedron>
   cur_wheel_data = std::vector<wheel_data>(n_wheels);
   for(std::size_t cur_wheel_num = 0; cur_wheel_num < n_wheels; ++cur_wheel_num)
   {
-    cur_wheel_data[cur_wheel_num].steer =
-      raw_bytes_to_num<int>(
-        m3d_data,
-        m3d_data_cur_pos + m3d::wheel::steer_pos);
-
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-    {
-      cur_wheel_data[cur_wheel_num].r[cur_coord] =
-        raw_bytes_to_num<double>(
-          m3d_data,
-          m3d_data_cur_pos + m3d::wheel::r_pos + cur_coord*sizeof(double)) *
-        scale_size;
-    }
-
+    cur_wheel_data[cur_wheel_num].steer = read_var_from_m3d<int, int>();
+    cur_wheel_data[cur_wheel_num].r =
+      read_vec_var_from_m3d_scaled<double, double>(3);
     cur_wheel_data[cur_wheel_num].width =
-      raw_bytes_to_num<int>(
-        m3d_data,
-        m3d_data_cur_pos + m3d::wheel::width_pos) *
-      scale_size;
+      read_var_from_m3d_scaled<int, double>();
     cur_wheel_data[cur_wheel_num].radius =
-      raw_bytes_to_num<int>(
-        m3d_data,
-        m3d_data_cur_pos + m3d::wheel::radius_pos) *
-      scale_size;
-    cur_wheel_data[cur_wheel_num].bound_index =
-      raw_bytes_to_num<int>(
-        m3d_data,
-        m3d_data_cur_pos + m3d::wheel::bound_index_pos);
-
-    m3d_data_cur_pos += m3d::wheel::size;
-
-    // TEST
-//  std::cout << "End of reading wheel " << cur_wheel_num <<
-//    ". m3d_data_cur_pos: " << m3d_data_cur_pos << '\n';
+      read_var_from_m3d_scaled<int, double>();
+    cur_wheel_data[cur_wheel_num].bound_index = read_var_from_m3d<int, int>();
 
     if(cur_wheel_data[cur_wheel_num].steer)
     {
       wheel_models.push_back(read_c3d(c3d::c3d_type::regular));
       cur_wheel_data[cur_wheel_num].wheel_model_index =
         wheel_models.size() - 1;
-      // TEST
-//      std::cout << "-----------------------------" << '\n';
-//      std::cout << "Volume of wheel " <<
-//        cur_wheel_num << " of " << input_file_path.string() << '\n';
-//      std::cout <<
-//        wheel_models.at(cur_wheel_num).check_volume() << '\n';
     }
   }
-  // TEST
-//std::cout << "End of reading wheels. m3d_data_cur_pos: " <<
-//  m3d_data_cur_pos << '\n';
   return wheel_models;
 }
 
@@ -1675,30 +1511,13 @@ void m3d_to_wavefront_obj_model::read_m3d_debris_data(
     debris_models[cur_debris][wavefront_obj::main_obj_name] =
       read_c3d(c3d::c3d_type::regular);
     debris_bound_models.push_back(read_c3d(c3d::c3d_type::bound));
-    // TEST
-//    std::cout << "-----------------------------" << '\n';
-//    std::cout << "Volume of debris " << cur_debris <<
-//      " of " << input_file_path.string() << '\n';
-//    std::cout <<
-//      debris_models.at(cur_debris).at(wavefront_obj::main_obj_name).
-//        check_volume() << '\n';
-    // TEST
-//    std::cout << "-----------------------------" << '\n';
-//    std::cout << "Volume of bound debris " << cur_debris <<
-//      " of " << input_file_path.string() << '\n';
-//    std::cout << debris_bound_models.at(cur_debris).check_volume() << '\n';
-
     if(center_of_mass_model)
     {
       add_center_of_mass_to_models_map(
         debris_models[cur_debris],
         debris_models[cur_debris][wavefront_obj::main_obj_name].rcm);
-//    merge_model_with_center_of_mass(debris_model);
     }
   }
-  // TEST
-//std::cout << "End of reading debris. m3d_data_cur_pos: " <<
-//  m3d_data_cur_pos << '\n';
 }
 
 
@@ -1723,52 +1542,23 @@ void m3d_to_wavefront_obj_model::save_m3d_debris_data(
 
 void m3d_to_wavefront_obj_model::read_m3d_weapon_slots()
 {
-  weapon_slots_existence =
-    raw_bytes_to_num<int>(
-      m3d_data,
-      m3d_data_cur_pos + m3d::weapon_slot::slots_existence_pos);
-
-  m3d_data_cur_pos += m3d::weapon_slot::slots_existence_size;
-
-  if(weapon_slots_existence)
+  cur_weapon_slot_data =
+    std::vector<weapon_slot_data>(m3d::weapon_slot::max_slots);
+  for(std::size_t cur_weapon_slot = 0;
+      cur_weapon_slot < m3d::weapon_slot::max_slots;
+      ++cur_weapon_slot)
   {
-    cur_weapon_slot_data =
-      std::vector<weapon_slot_data>(m3d::weapon_slot::max_slots);
-    for(std::size_t cur_weapon_slot = 0;
-        cur_weapon_slot < m3d::weapon_slot::max_slots;
-        ++cur_weapon_slot)
-    {
-      for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
-      {
-        cur_weapon_slot_data[cur_weapon_slot].R_slots[cur_coord] =
-          raw_bytes_to_num<int>(
-            m3d_data,
-            m3d_data_cur_pos +
-              m3d::weapon_slot::R_slots_rel_pos +
-              cur_coord*sizeof(int)) *
-          scale_size;
-      }
-
-      cur_weapon_slot_data[cur_weapon_slot].location_angle_of_slots =
-        volInt::sicher_angle_to_radians(
-          raw_bytes_to_num<int>(
-            m3d_data,
-            m3d_data_cur_pos +
-              m3d::weapon_slot::location_angle_of_slots_rel_pos));
-      m3d_data_cur_pos += m3d::weapon_slot::slot_data_size;
-
-      // In weapon_slots_existence only rightmost 3 bits are important.
-      // Each bit corresponds to weapon slot from right to left.
-      // Example: rightmost bits are "001".
-      // In this case weapon 1 exists, weapon 2 and 3 does not exist.
-      cur_weapon_slot_data[cur_weapon_slot].exists =
-        ((1 << cur_weapon_slot) & weapon_slots_existence);
-    }
+    cur_weapon_slot_data[cur_weapon_slot].R_slots =
+      read_vec_var_from_m3d_scaled<int, double>(3);
+    cur_weapon_slot_data[cur_weapon_slot].location_angle_of_slots =
+      volInt::sicher_angle_to_radians(read_var_from_m3d<int, int>());
+    // In weapon_slots_existence only rightmost 3 bits are important.
+    // Each bit corresponds to weapon slot from right to left.
+    // Example: rightmost bits are "001".
+    // In this case weapon 1 exists, weapon 2 and 3 does not exist.
+    cur_weapon_slot_data[cur_weapon_slot].exists =
+      ((1 << cur_weapon_slot) & weapon_slots_existence);
   }
-
-  // TEST
-//std::cout << "End of read_m3d_weapon_slots. m3d_data_cur_pos: " <<
-//  m3d_data_cur_pos << '\n';
 }
 
 
