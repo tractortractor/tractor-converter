@@ -396,6 +396,126 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
 
 
 
+
+
+std::vector<double> m3d_to_wavefront_obj_model::read_vertex()
+{
+  std::vector<double> vert =
+    read_vec_var_from_m3d_scaled<float, double>(3);
+  std::vector<double> discarded_less_preciese_vert =
+    read_vec_var_from_m3d_scaled<char, double>(3);
+  int discarded_sort_info = read_var_from_m3d<int, int>();
+  return vert;
+}
+
+void m3d_to_wavefront_obj_model::read_vertices(volInt::polyhedron &model)
+{
+  for(int cur_vertex = 0; cur_vertex < model.numVerts; ++cur_vertex)
+  {
+    model.verts[cur_vertex] = read_vertex();
+  }
+}
+
+
+
+std::vector<double> m3d_to_wavefront_obj_model::read_normal(
+  bool sort_info_exists = TRACTOR_CONVERTER_NORMAL_SORT_INFO_EXISTS)
+{
+  std::vector<double> norm =
+    volInt::vector_scale(wavefront_obj::vector_scale_val,
+                         read_vec_var_from_m3d<char, double>(3));
+  unsigned char discarded_n_power =
+    read_var_from_m3d<unsigned char, unsigned char>();
+  if(sort_info_exists == TRACTOR_CONVERTER_NORMAL_SORT_INFO_EXISTS)
+  {
+    int discarded_sort_info = read_var_from_m3d<int, int>();
+  }
+  return norm;
+}
+
+void m3d_to_wavefront_obj_model::read_normals(volInt::polyhedron &model)
+{
+  for(int cur_normal = 0; cur_normal < model.numVertNorms; ++cur_normal)
+  {
+    model.vertNorms[cur_normal] = read_normal();
+  }
+}
+
+
+volInt::face m3d_to_wavefront_obj_model::read_polygon(
+  const volInt::polyhedron &model, std::size_t cur_poly)
+{
+  int numVerts = read_var_from_m3d<int, int>();
+  if(model.numVertsPerPoly != numVerts)
+  {
+    throw std::runtime_error(
+      "In " + input_file_name_error +
+      " file " + input_file_path.string() +
+      " polygon " + std::to_string(cur_poly) +
+      " at position " +
+      std::to_string(m3d_data_cur_pos - sizeof(int)) +
+      " have unexpected number of vertices " +
+      std::to_string(numVerts) +
+      ". Expected " + std::to_string(model.numVertsPerPoly) + ".");
+  }
+  volInt::face poly(numVerts);
+
+  int discarded_sort_info = read_var_from_m3d<int, int>();
+
+  poly.color_id = read_var_from_m3d<unsigned int, unsigned int>();
+  if(poly.color_id >= c3d::color::string_to_id::max_colors_ids)
+  {
+    poly.color_id = c3d::color::string_to_id::body;
+  }
+
+  unsigned int color_shift = read_var_from_m3d<unsigned int, unsigned int>();
+  if(color_shift)
+  {
+    std::cout << "\n\n" <<
+      input_file_name_error << " file " <<
+      input_file_path.string() <<
+      ". polygon " << std::to_string(cur_poly) <<
+      " at position " +
+      std::to_string(m3d_data_cur_pos - sizeof(unsigned int)) +
+      " have non-zero color_shift " << std::to_string(color_shift) <<
+      ". It is assumed that color_shift of any polygon is always 0." << '\n';
+  }
+
+
+  std::vector<double> discarded_flat_normal =
+    read_normal(TRACTOR_CONVERTER_NORMAL_SORT_INFO_ABSENT);
+  std::vector<double> discarded_medium_vert =
+    read_vec_var_from_m3d_scaled<char, double>(3);
+
+  // Note the reverse order of vertices.
+  for(int cur_poly_vertex = numVerts - 1;
+      cur_poly_vertex != -1;
+      --cur_poly_vertex)
+  {
+    poly.verts[cur_poly_vertex] = read_var_from_m3d<int, int>();
+    poly.vertNorms[cur_poly_vertex] = read_var_from_m3d<int, int>();
+  }
+
+  return poly;
+}
+
+void m3d_to_wavefront_obj_model::read_polygons(volInt::polyhedron &model)
+{
+  for(int cur_poly = 0; cur_poly < model.numFaces; ++cur_poly)
+  {
+    model.faces[cur_poly] = read_polygon(model, cur_poly);
+  }
+}
+
+
+void m3d_to_wavefront_obj_model::read_sorted_polygon_indices(
+  volInt::polyhedron &model)
+{
+    m3d_data_cur_pos += model.numFaces * c3d::polygon_sort_info::size;
+}
+
+
+
 volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
   c3d::c3d_type cur_c3d_type)
 {
@@ -458,93 +578,11 @@ volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
 
 
 
-  for(int cur_vertex = 0; cur_vertex < numVerts; ++cur_vertex)
-  {
-    cur_model.verts[cur_vertex] =
-      read_vec_var_from_m3d_scaled<float, double>(3);
-    std::vector<double> discarded_less_preciese_vert =
-      read_vec_var_from_m3d_scaled<char, double>(3);
-    int discarded_sort_info = read_var_from_m3d<int, int>();
-  }
+  read_vertices(cur_model);
+  read_normals(cur_model);
+  read_polygons(cur_model);
 
-
-
-  for(int cur_normal = 0; cur_normal < numVertNorms; ++cur_normal)
-  {
-    cur_model.vertNorms[cur_normal] =
-      volInt::vector_scale(wavefront_obj::vector_scale_val,
-                           read_vec_var_from_m3d<char, double>(3));
-    unsigned char discarded_n_power =
-      read_var_from_m3d<unsigned char, unsigned char>();
-    int discarded_sort_info = read_var_from_m3d<int, int>();
-  }
-
-
-
-  for(int cur_poly = 0; cur_poly < numFaces; ++cur_poly)
-  {
-    int poly_vert_num = read_var_from_m3d<int, int>();
-    if(expected_vertices_per_poly != poly_vert_num)
-    {
-      throw std::runtime_error(
-        "In " + input_file_name_error +
-        " file " + input_file_path.string() +
-        " polygon " + std::to_string(cur_poly) +
-        " at position " +
-        std::to_string(m3d_data_cur_pos - sizeof(int)) +
-        " have unexpected number of vertices " +
-        std::to_string(poly_vert_num) +
-        ". Expected " + std::to_string(expected_vertices_per_poly) + ".");
-    }
-
-    int discarded_sort_info = read_var_from_m3d<int, int>();
-
-    cur_model.faces[cur_poly].color_id =
-      read_var_from_m3d<unsigned int, unsigned int>();
-    if(cur_model.faces[cur_poly].color_id >=
-       c3d::color::string_to_id::max_colors_ids)
-    {
-      cur_model.faces[cur_poly].color_id = c3d::color::string_to_id::body;
-    }
-
-    unsigned int color_shift = read_var_from_m3d<unsigned int, unsigned int>();
-    if(color_shift)
-    {
-      std::cout << "\n\n" <<
-        input_file_name_error << " file " <<
-        input_file_path.string() <<
-        ". polygon " << std::to_string(cur_poly) <<
-        " at position " +
-        std::to_string(m3d_data_cur_pos - sizeof(unsigned int)) +
-        " have non-zero color_shift " << std::to_string(color_shift) <<
-        ". It is assumed that color_shift of any polygon is always 0." << '\n';
-    }
-
-
-    std::vector<double> discarded_flat_normal =
-      volInt::vector_scale(wavefront_obj::vector_scale_val,
-                           read_vec_var_from_m3d<char, double>(3));
-    unsigned char discarded_flat_normal_n_power =
-      read_var_from_m3d<unsigned char, unsigned char>();
-
-
-    std::vector<double> discarded_medium_vert =
-      read_vec_var_from_m3d_scaled<char, double>(3);
-
-
-    // Note the reverse order of vertices.
-    for(int cur_poly_vertex = poly_vert_num - 1;
-        cur_poly_vertex != -1;
-        --cur_poly_vertex)
-    {
-      cur_model.faces[cur_poly].verts[cur_poly_vertex] =
-        read_var_from_m3d<int, int>();
-      cur_model.faces[cur_poly].vertNorms[cur_poly_vertex] =
-        read_var_from_m3d<int, int>();
-    }
-  }
-
-  m3d_data_cur_pos += numFaces * c3d::polygon_sort_info::size;
+  read_sorted_polygon_indices(cur_model);
 
   // If volume is negative, vertices have wrong order.
   // They must be reversed again in this case.

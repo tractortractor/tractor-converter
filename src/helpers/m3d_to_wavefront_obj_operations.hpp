@@ -209,7 +209,21 @@ private:
 
 
 
+  std::vector<double> read_vertex();
+  void read_vertices(volInt::polyhedron &model);
+
+  std::vector<double> read_normal(bool sort_info_exists);
+  void read_normals(volInt::polyhedron &model);
+
+  volInt::face read_polygon(const volInt::polyhedron &model,
+                            std::size_t cur_poly);
+  void read_polygons(volInt::polyhedron &model);
+
+  void read_sorted_polygon_indices(volInt::polyhedron &model);
+
   volInt::polyhedron read_c3d(c3d::c3d_type cur_c3d_type);
+
+
   void save_c3d_as_wavefront_obj(
     std::unordered_map<std::string, volInt::polyhedron> &c3d_models,
     const std::string &output_file_prefix);
