@@ -677,6 +677,25 @@ void m3d_to_wavefront_obj_model::read_a3d_header_data()
 
 
 
+void m3d_to_wavefront_obj_model::read_m3d_wheel_data(
+  std::vector<volInt::polyhedron> &wheel_models, std::size_t wheel_id)
+{
+  cur_wheel_data[wheel_id].steer = read_var_from_m3d<int, int>();
+  cur_wheel_data[wheel_id].r =
+    read_vec_var_from_m3d_scaled<double, double>(3);
+  cur_wheel_data[wheel_id].width =
+    read_var_from_m3d_scaled<int, double>();
+  cur_wheel_data[wheel_id].radius =
+    read_var_from_m3d_scaled<int, double>();
+  cur_wheel_data[wheel_id].bound_index = read_var_from_m3d<int, int>();
+
+  if(cur_wheel_data[wheel_id].steer)
+  {
+    wheel_models.push_back(read_c3d(c3d::c3d_type::regular));
+    cur_wheel_data[wheel_id].wheel_model_index = wheel_models.size() - 1;
+  }
+}
+
 std::vector<volInt::polyhedron>
   m3d_to_wavefront_obj_model::read_m3d_wheels_data()
 {
@@ -684,23 +703,9 @@ std::vector<volInt::polyhedron>
   wheel_models.reserve(n_wheels);
 
   cur_wheel_data = std::vector<wheel_data>(n_wheels);
-  for(std::size_t cur_wheel_num = 0; cur_wheel_num < n_wheels; ++cur_wheel_num)
+  for(int cur_wheel_num = 0; cur_wheel_num < n_wheels; ++cur_wheel_num)
   {
-    cur_wheel_data[cur_wheel_num].steer = read_var_from_m3d<int, int>();
-    cur_wheel_data[cur_wheel_num].r =
-      read_vec_var_from_m3d_scaled<double, double>(3);
-    cur_wheel_data[cur_wheel_num].width =
-      read_var_from_m3d_scaled<int, double>();
-    cur_wheel_data[cur_wheel_num].radius =
-      read_var_from_m3d_scaled<int, double>();
-    cur_wheel_data[cur_wheel_num].bound_index = read_var_from_m3d<int, int>();
-
-    if(cur_wheel_data[cur_wheel_num].steer)
-    {
-      wheel_models.push_back(read_c3d(c3d::c3d_type::regular));
-      cur_wheel_data[cur_wheel_num].wheel_model_index =
-        wheel_models.size() - 1;
-    }
+    read_m3d_wheel_data(wheel_models, cur_wheel_num);
   }
   return wheel_models;
 }
@@ -1531,6 +1536,23 @@ void m3d_to_wavefront_obj_model::add_center_of_mass_to_models_map(
 void m3d_to_wavefront_obj_model::read_m3d_debris_data(
   std::vector<std::unordered_map<std::string, volInt::polyhedron>>
     &debris_models,
+  std::vector<volInt::polyhedron> &debris_bound_models,
+  std::size_t debris_num)
+{
+  debris_models[debris_num][wavefront_obj::main_obj_name] =
+    read_c3d(c3d::c3d_type::regular);
+  debris_bound_models.push_back(read_c3d(c3d::c3d_type::bound));
+  if(center_of_mass_model)
+  {
+    add_center_of_mass_to_models_map(
+      debris_models[debris_num],
+      debris_models[debris_num][wavefront_obj::main_obj_name].rcm);
+  }
+}
+
+void m3d_to_wavefront_obj_model::read_m3d_debris_data(
+  std::vector<std::unordered_map<std::string, volInt::polyhedron>>
+    &debris_models,
   std::vector<volInt::polyhedron> &debris_bound_models)
 {
   debris_models.assign(n_debris,
@@ -1543,18 +1565,16 @@ void m3d_to_wavefront_obj_model::read_m3d_debris_data(
     debris_models_to_reserve += 1;
   }
   debris_bound_models.reserve(n_debris);
-  for(std::size_t cur_debris = 0; cur_debris < n_debris; ++cur_debris)
+  for(int debris_num = 0; debris_num < n_debris; ++debris_num)
   {
-    debris_models[cur_debris].reserve(debris_models_to_reserve);
-    debris_models[cur_debris][wavefront_obj::main_obj_name] =
-      read_c3d(c3d::c3d_type::regular);
-    debris_bound_models.push_back(read_c3d(c3d::c3d_type::bound));
-    if(center_of_mass_model)
-    {
-      add_center_of_mass_to_models_map(
-        debris_models[cur_debris],
-        debris_models[cur_debris][wavefront_obj::main_obj_name].rcm);
-    }
+    debris_models[debris_num].reserve(debris_models_to_reserve);
+  }
+
+  for(int debris_num = 0; debris_num < n_debris; ++debris_num)
+  {
+    read_m3d_debris_data(debris_models,
+                         debris_bound_models,
+                         debris_num);
   }
 }
 
@@ -1578,24 +1598,29 @@ void m3d_to_wavefront_obj_model::save_m3d_debris_data(
 
 
 
+void m3d_to_wavefront_obj_model::read_m3d_weapon_slot(std::size_t slot_id)
+{
+  cur_weapon_slot_data[slot_id].R_slots =
+    read_vec_var_from_m3d_scaled<int, double>(3);
+  cur_weapon_slot_data[slot_id].location_angle_of_slots =
+    volInt::sicher_angle_to_radians(read_var_from_m3d<int, int>());
+  // In weapon_slots_existence only rightmost 3 bits are important.
+  // Each bit corresponds to weapon slot from right to left.
+  // Example: rightmost bits are "001".
+  // In this case weapon 1 exists, weapon 2 and 3 does not exist.
+  cur_weapon_slot_data[slot_id].exists =
+    ((1 << slot_id) & weapon_slots_existence);
+}
+
 void m3d_to_wavefront_obj_model::read_m3d_weapon_slots()
 {
   cur_weapon_slot_data =
     std::vector<weapon_slot_data>(m3d::weapon_slot::max_slots);
-  for(std::size_t cur_weapon_slot = 0;
-      cur_weapon_slot < m3d::weapon_slot::max_slots;
-      ++cur_weapon_slot)
+  for(std::size_t slot_id = 0;
+      slot_id < m3d::weapon_slot::max_slots;
+      ++slot_id)
   {
-    cur_weapon_slot_data[cur_weapon_slot].R_slots =
-      read_vec_var_from_m3d_scaled<int, double>(3);
-    cur_weapon_slot_data[cur_weapon_slot].location_angle_of_slots =
-      volInt::sicher_angle_to_radians(read_var_from_m3d<int, int>());
-    // In weapon_slots_existence only rightmost 3 bits are important.
-    // Each bit corresponds to weapon slot from right to left.
-    // Example: rightmost bits are "001".
-    // In this case weapon 1 exists, weapon 2 and 3 does not exist.
-    cur_weapon_slot_data[cur_weapon_slot].exists =
-      ((1 << cur_weapon_slot) & weapon_slots_existence);
+    read_m3d_weapon_slot(slot_id);
   }
 }
 

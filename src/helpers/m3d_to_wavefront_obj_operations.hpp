@@ -234,6 +234,10 @@ private:
                             c3d::c3d_type cur_c3d_type);
   void read_m3d_header_data();
   void read_a3d_header_data();
+
+
+  void read_m3d_wheel_data(
+    std::vector<volInt::polyhedron> &wheel_models, std::size_t wheel_id);
   std::vector<volInt::polyhedron> read_m3d_wheels_data();
 
 
@@ -318,12 +322,22 @@ private:
   void read_m3d_debris_data(
     std::vector<std::unordered_map<std::string, volInt::polyhedron>>
       &debris_models,
+    std::vector<volInt::polyhedron> &debris_bound_models,
+    std::size_t debris_num);
+  void read_m3d_debris_data(
+    std::vector<std::unordered_map<std::string, volInt::polyhedron>>
+      &debris_models,
     std::vector<volInt::polyhedron> &debris_bound_models);
   void save_m3d_debris_data(
     std::vector<std::unordered_map<std::string, volInt::polyhedron>>
       &debris_models,
     std::vector<volInt::polyhedron> &debris_bound_models);
+
+  void read_m3d_weapon_slot(std::size_t slot_id);
   void read_m3d_weapon_slots();
+
+
+
   void save_file_cfg_m3d(
     volInt::polyhedron &main_model,
     std::vector<std::unordered_map<std::string, volInt::polyhedron>>
