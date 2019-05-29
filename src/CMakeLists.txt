@@ -55,6 +55,7 @@ SET(TRACTOR_CONVERTER_SOURCES
   helpers/file_operations.cpp
   helpers/check_option.cpp
   helpers/raw_num_operations.cpp
+  helpers/bitflag.cpp
   helpers/hex.cpp
 
   main/main.cpp
@@ -93,6 +94,7 @@ SET(TRACTOR_CONVERTER_HEADER_FILES
   helpers/file_operations.hpp
   helpers/check_option.hpp
   helpers/raw_num_operations.hpp
+  helpers/bitflag.hpp
   helpers/hex.hpp
 
   helpers/vangers_3d_model_constants.hpp
