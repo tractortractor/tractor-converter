@@ -58,12 +58,13 @@ m3d_to_wavefront_obj_model::m3d_to_wavefront_obj_model(
 
   scale_size = scale_size_arg;
 
-  m3d_data = read_file(input_file_path,
-                       TRACTOR_CONVERTER_BINARY,
-                       0,
-                       0,
-                       TRACTOR_CONVERTER_FILE_READ_ALL,
-                       input_file_name_error);
+  m3d_data =
+    read_file(input_file_path,
+              file_flag::binary | file_flag::read_all,
+              0,
+              0,
+              read_all_dummy_size,
+              input_file_name_error);
   m3d_data_cur_pos = 0;
 
   float_precision_objs_string =
@@ -1826,7 +1827,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
   file_to_save.append(model_name + ".cfg", boost::filesystem::path::codecvt());
   save_file(file_to_save,
             conf_data_to_save,
-            TRACTOR_CONVERTER_NON_BINARY,
+            file_flag::none,
             output_file_name_error);
 }
 
@@ -1935,7 +1936,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
   file_to_save.append(model_name + ".cfg", boost::filesystem::path::codecvt());
   save_file(file_to_save,
             conf_data_to_save,
-            TRACTOR_CONVERTER_NON_BINARY,
+            file_flag::none,
             output_file_name_error);
 }
 
@@ -1951,12 +1952,13 @@ std::unordered_map<std::string, double> read_scales_and_copy_game_lst(
 {
   std::unordered_map<std::string, double> scale_sizes;
 
-  std::string game_lst_data = read_file(lst_filepath,
-                                        TRACTOR_CONVERTER_BINARY,
-                                        0,
-                                        0,
-                                        TRACTOR_CONVERTER_FILE_READ_ALL,
-                                        input_file_name_error);
+  std::string game_lst_data =
+    read_file(lst_filepath,
+              file_flag::binary | file_flag::read_all,
+              0,
+              0,
+              read_all_dummy_size,
+              input_file_name_error);
 
   sicher_cfg_reader cur_cfg_reader(std::move(game_lst_data),
                                    0,
@@ -1998,7 +2000,7 @@ std::unordered_map<std::string, double> read_scales_and_copy_game_lst(
   file_to_save /= lst_filepath.filename();
   save_file(file_to_save,
             cur_cfg_reader.str(),
-            TRACTOR_CONVERTER_BINARY,
+            file_flag::binary,
             output_file_name_error);
 
   return scale_sizes;
@@ -2010,12 +2012,13 @@ double read_scale_and_copy_prm(
   const std::string &input_file_name_error,
   const std::string &output_file_name_error)
 {
-  std::string prm_data = read_file(prm_filepath,
-                                   TRACTOR_CONVERTER_BINARY,
-                                   0,
-                                   0,
-                                   TRACTOR_CONVERTER_FILE_READ_ALL,
-                                   input_file_name_error);
+  std::string prm_data =
+    read_file(prm_filepath,
+              file_flag::binary | file_flag::read_all,
+              0,
+              0,
+              read_all_dummy_size,
+              input_file_name_error);
 
   sicher_cfg_reader cur_cfg_reader(std::move(prm_data),
                                    0,
@@ -2037,7 +2040,7 @@ double read_scale_and_copy_prm(
   }
   save_file(file_to_save,
             cur_cfg_reader.str(),
-            TRACTOR_CONVERTER_BINARY,
+            file_flag::binary,
             output_file_name_error);
 
   return scale_size;

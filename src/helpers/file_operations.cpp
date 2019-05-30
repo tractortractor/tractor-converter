@@ -8,7 +8,7 @@ namespace helpers{
 
 
 std::string read_file(boost::filesystem::ifstream &file,
-                      const bool binary,
+                      const bitflag<file_flag> flags,
                       const int start_byte_string_num,
                       const int start_byte_file_num,
                       const int bytes_to_read_num_arg,
@@ -21,9 +21,9 @@ std::string read_file(boost::filesystem::ifstream &file,
   std::streamoff expected_file_size = file.tellg();
   file.seekg(0, std::ios::beg);
 
-  if(binary == TRACTOR_CONVERTER_BINARY)
+  if(flags & file_flag::binary)
   {
-    if(bytes_to_read_num_arg == TRACTOR_CONVERTER_FILE_READ_ALL)
+    if(flags & file_flag::read_all)
     {
       bytes_to_read_num = expected_file_size;
     }
@@ -59,14 +59,14 @@ std::string read_file(boost::filesystem::ifstream &file,
 }
 
 std::string read_file(const std::string &path_string,
-                      const bool binary,
+                      const bitflag<file_flag> flags,
                       const int start_byte_string_num,
                       const int start_byte_file_num,
                       const int bytes_to_read_num_arg,
                       const std::string &file_name_error)
 {
   std::ios_base::openmode mode = std::ios_base::in;
-  if(binary == TRACTOR_CONVERTER_BINARY)
+  if(flags & file_flag::binary)
   {
     mode |= std::ios_base::binary;
   }
@@ -78,7 +78,7 @@ std::string read_file(const std::string &path_string,
   }
 
   return read_file(file,
-                   binary,
+                   flags,
                    start_byte_string_num,
                    start_byte_file_num,
                    bytes_to_read_num_arg,
@@ -86,14 +86,14 @@ std::string read_file(const std::string &path_string,
 }
 
 std::string read_file(const boost::filesystem::path &path,
-                      const bool binary,
+                      const bitflag<file_flag> flags,
                       const int start_byte_string_num,
                       const int start_byte_file_num,
                       const int bytes_to_read_num_arg,
                       const std::string &file_name_error)
 {
   std::ios_base::openmode mode = std::ios_base::in;
-  if(binary == TRACTOR_CONVERTER_BINARY)
+  if(flags & file_flag::binary)
   {
     mode |= std::ios_base::binary;
   }
@@ -105,7 +105,7 @@ std::string read_file(const boost::filesystem::path &path,
   }
 
   return read_file(file,
-                   binary,
+                   flags,
                    start_byte_string_num,
                    start_byte_file_num,
                    bytes_to_read_num_arg,
@@ -119,16 +119,16 @@ std::string read_file(const boost::filesystem::path &path,
 
 void write_to_file(boost::filesystem::ofstream &file,
                    const std::string &bytes_to_write,
-                   const bool binary,
+                   const bitflag<file_flag> flags,
                    const int start_byte_string_num,
                    const int start_byte_file_num,
                    const int bytes_to_write_num_arg,
                    const std::string &file_name_error)
 {
-  if(binary == TRACTOR_CONVERTER_BINARY)
+  if(flags & file_flag::binary)
   {
     std::size_t bytes_to_write_num;
-    if(bytes_to_write_num_arg == TRACTOR_CONVERTER_FILE_WRITE_ALL)
+    if(flags & file_flag::write_all)
     {
       bytes_to_write_num = bytes_to_write.size() - start_byte_string_num;
     }
@@ -150,19 +150,18 @@ void write_to_file(boost::filesystem::ofstream &file,
 
 void write_to_file(const std::string &path_string,
                    const std::string &bytes_to_write,
-                   const bool overwrite,
-                   const bool binary,                   
+                   const bitflag<file_flag> flags,
                    const int start_byte_string_num,
                    const int start_byte_file_num,
                    const int bytes_to_write_num_arg,
                    const std::string &file_name_error)
 {
   std::ios_base::openmode mode = std::ios_base::out;
-  if(overwrite == TRACTOR_CONVERTER_FILE_INSERT)
+  if(!(flags & file_flag::overwrite))
   {
      mode |= std::ios_base::in;
   }
-  if(binary == TRACTOR_CONVERTER_BINARY)
+  if(flags & file_flag::binary)
   {
     mode |= std::ios_base::binary;
   }
@@ -175,7 +174,7 @@ void write_to_file(const std::string &path_string,
 
   write_to_file(file,
                 bytes_to_write,
-                binary,
+                flags,
                 start_byte_string_num,
                 start_byte_file_num,
                 bytes_to_write_num_arg,
@@ -184,19 +183,18 @@ void write_to_file(const std::string &path_string,
 
 void write_to_file(const boost::filesystem::path &path,
                    const std::string &bytes_to_write,
-                   const bool overwrite,
-                   const bool binary,
+                   const bitflag<file_flag> flags,
                    const int start_byte_string_num,
                    const int start_byte_file_num,
                    const int bytes_to_write_num_arg,
                    const std::string &file_name_error)
 {
   std::ios_base::openmode mode = std::ios_base::out;
-  if(overwrite == TRACTOR_CONVERTER_FILE_INSERT)
+  if(!(flags & file_flag::overwrite))
   {
      mode |= std::ios_base::in;
   }
-  if(binary == TRACTOR_CONVERTER_BINARY)
+  if(flags & file_flag::binary)
   {
     mode |= std::ios_base::binary;
   }
@@ -209,7 +207,7 @@ void write_to_file(const boost::filesystem::path &path,
 
   write_to_file(file,
                 bytes_to_write,
-                binary,
+                flags,
                 start_byte_string_num,
                 start_byte_file_num,
                 bytes_to_write_num_arg,
@@ -220,11 +218,11 @@ void write_to_file(const boost::filesystem::path &path,
 
 void save_file(const std::string &path_string,
                const std::string &bytes_to_write,
-               bool binary,
+               const bitflag<file_flag> flags,
                const std::string &file_name_error)
 {
   std::ios_base::openmode mode = std::ios_base::out;
-  if(binary == TRACTOR_CONVERTER_BINARY)
+  if(flags & file_flag::binary)
   {
     mode |= std::ios_base::binary;
   }
@@ -238,20 +236,20 @@ void save_file(const std::string &path_string,
 
   write_to_file(file,
                 bytes_to_write,
-                binary,
+                flags | file_flag::write_all,
                 0,
                 0,
-                TRACTOR_CONVERTER_FILE_WRITE_ALL,
+                write_all_dummy_size,
                 file_name_error);
 }
 
 void save_file(const boost::filesystem::path &path,
                const std::string &bytes_to_write,
-               bool binary,
+               const bitflag<file_flag> flags,
                const std::string &file_name_error)
 {
   std::ios_base::openmode mode = std::ios_base::out;
-  if(binary == TRACTOR_CONVERTER_BINARY)
+  if(flags & file_flag::binary)
   {
     mode |= std::ios_base::binary;
   }
@@ -264,10 +262,10 @@ void save_file(const boost::filesystem::path &path,
 
   write_to_file(file,
                 bytes_to_write,
-                binary,
+                flags | file_flag::write_all,
                 0,
                 0,
-                TRACTOR_CONVERTER_FILE_WRITE_ALL,
+                write_all_dummy_size,
                 file_name_error);
 }
 

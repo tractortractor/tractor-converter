@@ -38,12 +38,13 @@ void tga_replace_pal_mode(
         // original palette is smaller than default 768.
         std::size_t original_start_of_image = tga_default_pal_size;
         std::string bytes =
-          helpers::read_file(file.path(),
-                             TRACTOR_CONVERTER_BINARY,
-                             original_start_of_image,
-                             0,
-                             TRACTOR_CONVERTER_FILE_READ_ALL,
-                             "source_dir");
+          helpers::read_file(
+            file.path(),
+            helpers::file_flag::binary | helpers::file_flag::read_all,
+            original_start_of_image,
+            0,
+            helpers::read_all_dummy_size,
+            "source_dir");
 
         helpers::tga tga_image(bytes,
                                original_start_of_image,
@@ -53,12 +54,13 @@ void tga_replace_pal_mode(
         new_pal_file.append(file.path().stem().string() + ".pal",
                             boost::filesystem::path::codecvt());
         std::string new_pal =
-          helpers::read_file(new_pal_file,
-                             TRACTOR_CONVERTER_BINARY,
-                             0,
-                             0,
-                             TRACTOR_CONVERTER_FILE_READ_ALL,
-                             "pal_dir");
+          helpers::read_file(
+            new_pal_file,
+            helpers::file_flag::binary | helpers::file_flag::read_all,
+            0,
+            0,
+            helpers::read_all_dummy_size,
+            "pal_dir");
 
 
 
@@ -95,20 +97,19 @@ void tga_replace_pal_mode(
         boost::filesystem::path file_to_save = output_dir;
         file_to_save.append(file.path().stem().string() + ".tga",
                             boost::filesystem::path::codecvt());
-//      helpers::save_file(file_to_save, bytes, "output_dir");
         std::size_t size_of_file_to_write =
           tga_header_size +
           tga_image.ID_field_length +
           tga_default_pal_size +
           tga_image.raw_bitmap_size;
-        helpers::write_to_file(file_to_save,
-                               bytes,
-                               TRACTOR_CONVERTER_FILE_OVERWRITE,
-                               TRACTOR_CONVERTER_BINARY,
-                               new_start_of_image,
-                               0,
-                               size_of_file_to_write,
-                               "output_dir");
+        helpers::write_to_file(
+          file_to_save,
+          bytes,
+          helpers::file_flag::overwrite | helpers::file_flag::binary,
+          new_start_of_image,
+          0,
+          size_of_file_to_write,
+          "output_dir");
       }
     }
   }

@@ -292,12 +292,13 @@ volInt::polyhedron raw_obj_to_volInt_model(
   c3d::c3d_type type,
   int default_color_id)
 {
-  std::string obj_data = read_file(input_file_path_arg,
-                                   TRACTOR_CONVERTER_NON_BINARY,
-                                   0,
-                                   0,
-                                   TRACTOR_CONVERTER_FILE_READ_ALL,
-                                   input_file_name_error);
+  std::string obj_data =
+    read_file(input_file_path_arg,
+              file_flag::read_all,
+              0,
+              0,
+              read_all_dummy_size,
+              input_file_name_error);
 
 
   // Reading *.obj file with tiny_obj_loader
@@ -873,7 +874,7 @@ void save_volInt_as_wavefront_obj(
 
   save_file(output_path,
             obj_data,
-            TRACTOR_CONVERTER_NON_BINARY,
+            file_flag::none,
             output_file_name_error);
 }
 

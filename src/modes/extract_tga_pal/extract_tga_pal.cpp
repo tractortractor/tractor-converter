@@ -32,12 +32,13 @@ void extract_tga_pal_mode(const boost::program_options::variables_map options)
          file.path().extension().string() == ".tga")
       {
         std::string bytes =
-          helpers::read_file(file.path(),
-                             TRACTOR_CONVERTER_BINARY,
-                             0,
-                             0,
-                             TRACTOR_CONVERTER_FILE_READ_ALL,
-                             "source_dir");
+          helpers::read_file(
+            file.path(),
+            helpers::file_flag::binary | helpers::file_flag::read_all,
+            0,
+            0,
+            helpers::read_all_dummy_size,
+            "source_dir");
 
 
 
@@ -59,14 +60,14 @@ void extract_tga_pal_mode(const boost::program_options::variables_map options)
         boost::filesystem::path file_to_save = output_dir;
         file_to_save.append(file.path().stem().string() + ".pal",
                             boost::filesystem::path::codecvt());
-        helpers::write_to_file(file_to_save,
-                               bytes,
-                               TRACTOR_CONVERTER_FILE_OVERWRITE,
-                               TRACTOR_CONVERTER_BINARY,
-                               tga_image.pal_start_pos,
-                               0,
-                               tga_default_pal_size,
-                               "output_dir");
+        helpers::write_to_file(
+          file_to_save,
+          bytes,
+          helpers::file_flag::overwrite | helpers::file_flag::binary,
+          tga_image.pal_start_pos,
+          0,
+          tga_default_pal_size,
+          "output_dir");
       }
     }
   }

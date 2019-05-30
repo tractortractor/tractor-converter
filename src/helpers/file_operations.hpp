@@ -2,6 +2,7 @@
 #define TRACTOR_CONVERTER_FILE_OPERATIONS_H
 
 #include "defines.hpp"
+#include "bitflag.hpp"
 
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
@@ -10,15 +11,6 @@
 #include <stdexcept>
 
 #include <string>
-
-#define TRACTOR_CONVERTER_FILE_READ_ALL -1
-#define TRACTOR_CONVERTER_FILE_WRITE_ALL -1
-
-#define TRACTOR_CONVERTER_FILE_OVERWRITE true
-#define TRACTOR_CONVERTER_FILE_INSERT false
-
-#define TRACTOR_CONVERTER_BINARY true
-#define TRACTOR_CONVERTER_NON_BINARY false
 
 namespace tractor_converter{
 namespace helpers{
@@ -44,24 +36,38 @@ namespace exception{
 
 
 
+const int write_all_dummy_size = -1;
+const int read_all_dummy_size = -1;
+
+enum class file_flag
+{
+  none = 0,
+  read_all = 1,
+  write_all = 2,
+  overwrite = 3,
+  binary = 4,
+};
+
+
+
 const std::size_t read_buffer_size = 4096;
 
 
 
 std::string read_file(boost::filesystem::ifstream &file,
-                      const bool binary,
+                      const bitflag<file_flag> flags,
                       const int start_byte_string_num,
                       const int start_byte_file_num,
                       const int bytes_to_read_num_arg,
                       const std::string &file_name_error);
 std::string read_file(const std::string &path_string,
-                      const bool binary,
+                      const bitflag<file_flag> flags,
                       const int start_byte_string_num,
                       const int start_byte_file_num,
                       const int bytes_to_read_num_arg,
                       const std::string &file_name_error);
 std::string read_file(const boost::filesystem::path &path,
-                      const bool binary,
+                      const bitflag<file_flag> flags,
                       const int start_byte_string_num,
                       const int start_byte_file_num,
                       const int bytes_to_read_num_arg,
@@ -72,23 +78,21 @@ std::string read_file(const boost::filesystem::path &path,
 // overwrites part of file instead of appending
 void write_to_file(boost::filesystem::ofstream &file,
                    const std::string &bytes_to_write,
-                   const bool binary,
+                   const bitflag<file_flag> flags,
                    const int start_byte_string_num,
                    const int start_byte_file_num,
                    const int bytes_to_write_num_arg,
                    const std::string &file_name_error);
 void write_to_file(const std::string &path_string,
                    const std::string &bytes_to_write,
-                   const bool overwrite,
-                   const bool binary,
+                   const bitflag<file_flag> flags,
                    const int start_byte_string_num,
                    const int start_byte_file_num,
                    const int bytes_to_write_num_arg,
                    const std::string &file_name_error);
 void write_to_file(const boost::filesystem::path &path,
                    const std::string &bytes_to_write,
-                   const bool overwrite,
-                   const bool binary,
+                   const bitflag<file_flag> flags,
                    const int start_byte_string_num,
                    const int start_byte_file_num,
                    const int bytes_to_write_num_arg,
@@ -96,11 +100,11 @@ void write_to_file(const boost::filesystem::path &path,
 
 void save_file(const std::string &path_string,
                const std::string &bytes_to_write,
-               const bool binary,
+               const bitflag<file_flag> flags,
                const std::string &file_name_error);
 void save_file(const boost::filesystem::path &path,
                const std::string &bytes_to_write,
-               const bool binary,
+               const bitflag<file_flag> flags,
                const std::string &file_name_error);
 
 

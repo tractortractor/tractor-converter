@@ -58,10 +58,10 @@ void compare_bmp_escave_outside_mode(
         std::string bmp_bytes_source =
           helpers::read_file(
             file.path(),
-            TRACTOR_CONVERTER_BINARY,
+            helpers::file_flag::binary | helpers::file_flag::read_all,
             0,
             4,
-            TRACTOR_CONVERTER_FILE_READ_ALL,
+            helpers::read_all_dummy_size,
             "source_dir");
 
         boost::filesystem::path file_to_compare = dir_to_compare;
@@ -71,10 +71,10 @@ void compare_bmp_escave_outside_mode(
         std::string bmp_bytes_to_compare =
           helpers::read_file(
             file_to_compare,
-            TRACTOR_CONVERTER_BINARY,
+            helpers::file_flag::binary | helpers::file_flag::read_all,
             0,
             4,
-            TRACTOR_CONVERTER_FILE_READ_ALL,
+            helpers::read_all_dummy_size,
             "dir_to_compare");
 
         for(std::size_t current_byte_num = 0,
@@ -133,7 +133,7 @@ void compare_bmp_escave_outside_mode(
       }
       helpers::save_file(options["output_file"].as<std::string>(),
                          compare_bytes_map_readable,
-                         TRACTOR_CONVERTER_BINARY,
+                         helpers::file_flag::binary,
                          "output_file");
     }
     // getting machine readable map
@@ -171,7 +171,7 @@ void compare_bmp_escave_outside_mode(
       }
       helpers::save_file(options["output_file"].as<std::string>(),
                          source_compare_bytes_map,
-                         TRACTOR_CONVERTER_BINARY,
+                         helpers::file_flag::binary,
                          "output_file");
     }
 

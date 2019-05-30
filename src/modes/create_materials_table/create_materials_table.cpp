@@ -275,12 +275,13 @@ void create_materials_table_mode(
       if(boost::filesystem::is_regular_file(file.status()) &&
          file.path().extension().string() == ".pal")
       {
-        std::string source_pal = helpers::read_file(file.path(),
-                                                    TRACTOR_CONVERTER_BINARY,
-                                                    0,
-                                                    0,
-                                                    tga_default_pal_size,
-                                                    "source_dir");
+        std::string source_pal =
+          helpers::read_file(file.path(),
+                             helpers::file_flag::binary,
+                             0,
+                             0,
+                             tga_default_pal_size,
+                             "source_dir");
 
 
 
@@ -359,7 +360,7 @@ void create_materials_table_mode(
                             boost::filesystem::path::codecvt());
         helpers::save_file(file_to_save,
                            html_table_file,
-                           TRACTOR_CONVERTER_NON_BINARY,
+                           helpers::file_flag::none,
                            "output_dir");
       }
     }

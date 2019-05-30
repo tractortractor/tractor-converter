@@ -32,19 +32,20 @@ void pal_shift_for_vangers_avi_mode(
       {
         // Reading first half of the palette from file
         // and writing it to second half of the palette of source_pal string.
-        std::string output_pal = helpers::read_file(file.path(),
-                                                    TRACTOR_CONVERTER_BINARY,
-                                                    tga_default_pal_size/2,
-                                                    0,
-                                                    tga_default_pal_size/2,
-                                                    "source_dir");
+        std::string output_pal =
+          helpers::read_file(file.path(),
+                             helpers::file_flag::binary,
+                             tga_default_pal_size/2,
+                             0,
+                             tga_default_pal_size/2,
+                             "source_dir");
 
         boost::filesystem::path file_to_save = output_dir;
         file_to_save.append(file.path().stem().string() + ".pal",
                             boost::filesystem::path::codecvt());
         helpers::save_file(file_to_save,
                            output_pal,
-                           TRACTOR_CONVERTER_BINARY,
+                           helpers::file_flag::binary,
                            "output_dir");
       }
     }

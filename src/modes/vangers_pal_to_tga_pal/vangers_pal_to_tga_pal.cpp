@@ -30,12 +30,13 @@ void vangers_pal_to_tga_pal_mode(
       if(boost::filesystem::is_regular_file(file.status()) &&
          file.path().extension().string() == ".pal")
       {
-        std::string source_pal = helpers::read_file(file.path(),
-                                                    TRACTOR_CONVERTER_BINARY,
-                                                    0,
-                                                    0,
-                                                    tga_default_pal_size,
-                                                    "source_dir");
+        std::string source_pal =
+          helpers::read_file(file.path(),
+                             helpers::file_flag::binary,
+                             0,
+                             0,
+                             tga_default_pal_size,
+                             "source_dir");
         std::string output_pal(tga_default_pal_size, '\0');
 
         for(std::size_t current_pal_byte = 0;
@@ -72,7 +73,7 @@ void vangers_pal_to_tga_pal_mode(
                             boost::filesystem::path::codecvt());
         helpers::save_file(file_to_save,
                            output_pal,
-                           TRACTOR_CONVERTER_BINARY,
+                           helpers::file_flag::binary,
                            "output_dir");
       }
     }

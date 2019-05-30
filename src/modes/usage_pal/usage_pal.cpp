@@ -39,7 +39,7 @@ void usage_pal_mode_save_output_readable(
     "Used colors: " + std::to_string(used_colors));
   helpers::save_file(file,
                      used_bytes_map_readable,
-                     TRACTOR_CONVERTER_BINARY,
+                     helpers::file_flag::binary,
                      file_name_error);
 }
 
@@ -70,7 +70,7 @@ void usage_pal_mode_save_output_not_readable(
   }
   helpers::save_file(file,
                      used_bytes_map,
-                     TRACTOR_CONVERTER_BINARY,
+                     helpers::file_flag::binary,
                      file_name_error);
 }
 
@@ -144,12 +144,14 @@ void usage_pal_mode(const boost::program_options::variables_map options)
         std::string bmp_map;
         // First 4 bytes indicate width and height of BMP file
         // so they are skipped.
-        bmp_map = helpers::read_file(file.path(),
-                                     TRACTOR_CONVERTER_BINARY,
-                                     0,
-                                     4,
-                                     TRACTOR_CONVERTER_FILE_READ_ALL,
-                                     "source_dir");
+        bmp_map =
+          helpers::read_file(
+            file.path(),
+            helpers::file_flag::binary | helpers::file_flag::read_all,
+            0,
+            4,
+            helpers::read_all_dummy_size,
+            "source_dir");
 
         for(char& bmp_byte : bmp_map)
         {

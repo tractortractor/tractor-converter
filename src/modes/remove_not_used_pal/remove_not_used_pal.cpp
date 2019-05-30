@@ -41,23 +41,25 @@ void remove_not_used_pal_mode(
          file.path().extension().string() == ".pal")
       {
         std::string orig_pal =
-          helpers::read_file(file.path(),
-                             TRACTOR_CONVERTER_BINARY,
-                             0,
-                             0,
-                             TRACTOR_CONVERTER_FILE_READ_ALL,
-                             "source_dir");
+          helpers::read_file(
+            file.path(),
+            helpers::file_flag::binary | helpers::file_flag::read_all,
+            0,
+            0,
+            helpers::read_all_dummy_size,
+            "source_dir");
 
         boost::filesystem::path usage_pal_file = usage_pals_dir;
         usage_pal_file.append(file.path().stem().string() + ".pal",
                               boost::filesystem::path::codecvt());
         std::string usage_pal =
-          helpers::read_file(usage_pal_file,
-                             TRACTOR_CONVERTER_BINARY,
-                             0,
-                             0,
-                             TRACTOR_CONVERTER_FILE_READ_ALL,
-                             "usage_pals_dir");
+          helpers::read_file(
+            usage_pal_file,
+            helpers::file_flag::binary | helpers::file_flag::read_all,
+            0,
+            0,
+            helpers::read_all_dummy_size,
+            "usage_pals_dir");
 
 
         std::string pal_used(tga_default_pal_size, '\0');
@@ -88,7 +90,7 @@ void remove_not_used_pal_mode(
                             boost::filesystem::path::codecvt());
         helpers::save_file(file_to_save,
                            pal_used,
-                           TRACTOR_CONVERTER_BINARY,
+                           helpers::file_flag::binary,
                            "output_dir");
 
         boost::filesystem::path file_to_save_unused = output_dir_unused;
@@ -96,7 +98,7 @@ void remove_not_used_pal_mode(
                                    boost::filesystem::path::codecvt());
         helpers::save_file(file_to_save_unused,
                            pal_unused,
-                           TRACTOR_CONVERTER_BINARY,
+                           helpers::file_flag::binary,
                            "output_dir_unused");
       }
     }

@@ -45,10 +45,10 @@ void bmp_to_tga_mode(const boost::program_options::variables_map options)
       palette =
         helpers::read_file(
           options["pal"].as<std::string>(),
-          TRACTOR_CONVERTER_BINARY,
+          helpers::file_flag::binary | helpers::file_flag::read_all,
           0,
           0,
-          TRACTOR_CONVERTER_FILE_READ_ALL,
+          helpers::read_all_dummy_size,
           "pal");
     }
     boost::filesystem::path output_dir =
@@ -63,10 +63,10 @@ void bmp_to_tga_mode(const boost::program_options::variables_map options)
         std::string bytes =
           helpers::read_file(
             file.path(),
-            TRACTOR_CONVERTER_BINARY,
+            helpers::file_flag::binary | helpers::file_flag::read_all,
             tga_default_header_and_pal_size - vangers_bmp_coords_size,
             0,
-            TRACTOR_CONVERTER_FILE_READ_ALL,
+            helpers::read_all_dummy_size,
             "source_dir");
 
         std::string current_coords =
@@ -84,10 +84,10 @@ void bmp_to_tga_mode(const boost::program_options::variables_map options)
           palette =
             helpers::read_file(
               palette_file,
-              TRACTOR_CONVERTER_BINARY,
+              helpers::file_flag::binary | helpers::file_flag::read_all,
               0,
               0,
-              TRACTOR_CONVERTER_FILE_READ_ALL,
+              helpers::read_all_dummy_size,
               "pal_dir");
         }
 
@@ -107,7 +107,7 @@ void bmp_to_tga_mode(const boost::program_options::variables_map options)
           boost::filesystem::path::codecvt());
         helpers::save_file(file_to_save,
                            bytes,
-                           TRACTOR_CONVERTER_BINARY,
+                           helpers::file_flag::binary,
                            "output_dir");
       }
     }

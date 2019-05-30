@@ -37,12 +37,14 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
     boost::filesystem::path output_dir_through_map;
     if(options["items_bmp"].as<bool>())
     {
-      compare_map = helpers::read_file(options["map"].as<std::string>(),
-                                       TRACTOR_CONVERTER_BINARY,
-                                       0,
-                                       0,
-                                       TRACTOR_CONVERTER_FILE_READ_ALL,
-                                       "map");
+      compare_map =
+        helpers::read_file(
+          options["map"].as<std::string>(),
+          helpers::file_flag::binary | helpers::file_flag::read_all,
+          0,
+          0,
+          helpers::read_all_dummy_size,
+          "map");
       output_dir_through_map =
         helpers::get_directory(
           options["output_dir_through_map"].as<std::string>(),
@@ -55,12 +57,13 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
          file.path().extension().string() == ".tga")
       {
         std::string bytes =
-          helpers::read_file(file.path(),
-                             TRACTOR_CONVERTER_BINARY,
-                             0,
-                             0,
-                             TRACTOR_CONVERTER_FILE_READ_ALL,
-                             "source_dir");
+          helpers::read_file(
+            file.path(),
+            helpers::file_flag::binary | helpers::file_flag::read_all,
+            0,
+            0,
+            helpers::read_all_dummy_size,
+            "source_dir");
 
         helpers::tga tga_image(bytes, 0, file.path().string());
 
@@ -178,14 +181,14 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
         boost::filesystem::path file_to_save = output_dir;
         file_to_save.append(file.path().stem().string() + ".bmp",
                             boost::filesystem::path::codecvt());
-        helpers::write_to_file(file_to_save,
-                               bytes,
-                               TRACTOR_CONVERTER_FILE_OVERWRITE,
-                               TRACTOR_CONVERTER_BINARY,
-                               real_start_of_bmp,
-                               0,
-                               vangers_bmp_size,
-                               "output_dir");
+        helpers::write_to_file(
+          file_to_save,
+          bytes,
+          helpers::file_flag::overwrite | helpers::file_flag::binary,
+          real_start_of_bmp,
+          0,
+          vangers_bmp_size,
+          "output_dir");
 
 
 
@@ -214,7 +217,7 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
                                      boost::filesystem::path::codecvt());
           helpers::save_file(file_to_save_mapped,
                              mapped_bytes,
-                             TRACTOR_CONVERTER_BINARY,
+                             helpers::file_flag::binary,
                              "output_dir_through_map");
         }
       }

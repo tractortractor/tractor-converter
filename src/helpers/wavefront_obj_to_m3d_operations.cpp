@@ -217,7 +217,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
   file_to_save.append(model_name + ".m3d", boost::filesystem::path::codecvt());
   save_file(file_to_save,
             m3d_data,
-            TRACTOR_CONVERTER_BINARY,
+            file_flag::binary,
             output_file_name_error);
 
 
@@ -356,7 +356,7 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
   file_to_save.append(model_name + ".m3d", boost::filesystem::path::codecvt());
   save_file(file_to_save,
             m3d_data,
-            TRACTOR_CONVERTER_BINARY,
+            file_flag::binary,
             output_file_name_error);
 
 
@@ -430,7 +430,7 @@ void wavefront_obj_to_m3d_model::animated_wavefront_objs_to_a3d()
   file_to_save.append(model_name + ".a3d", boost::filesystem::path::codecvt());
   save_file(file_to_save,
             m3d_data,
-            TRACTOR_CONVERTER_BINARY,
+            file_flag::binary,
             output_file_name_error);
   // TEST
 //std::cout << '\n';
@@ -482,7 +482,7 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
   file_to_save.append(model_name + ".m3d", boost::filesystem::path::codecvt());
   save_file(file_to_save,
             m3d_data,
-            TRACTOR_CONVERTER_BINARY,
+            file_flag::binary,
             output_file_name_error);
 
 
@@ -2834,13 +2834,13 @@ void create_game_lst(
   std::cout << "game.lst output path: " << where_to_save_arg.string() << '\n';
   */
 
-  std::string orig_game_lst_data = read_file(
-    input_file_path_arg,
-    TRACTOR_CONVERTER_BINARY,
-    0,
-    0,
-    TRACTOR_CONVERTER_FILE_READ_ALL,
-    input_file_name_error_arg);
+  std::string orig_game_lst_data =
+    read_file(input_file_path_arg,
+              file_flag::binary | file_flag::read_all,
+              0,
+              0,
+              read_all_dummy_size,
+              input_file_name_error_arg);
 
   sicher_cfg_writer cur_cfg_writer(
     std::move(orig_game_lst_data),
@@ -2894,7 +2894,7 @@ void create_game_lst(
 
   save_file(where_to_save_arg,
             cur_cfg_writer.out_str(),
-            TRACTOR_CONVERTER_BINARY,
+            file_flag::binary,
             output_file_name_error_arg);
 }
 
@@ -2913,13 +2913,13 @@ void create_prm(
   std::cout << "prm output path: " << where_to_save_arg.string() << '\n';
   */
 
-  std::string orig_prm_data = read_file(
-    input_file_path_arg,
-    TRACTOR_CONVERTER_BINARY,
-    0,
-    0,
-    TRACTOR_CONVERTER_FILE_READ_ALL,
-    input_file_name_error_arg);
+  std::string orig_prm_data =
+    read_file(input_file_path_arg,
+              file_flag::binary | file_flag::read_all,
+              0,
+              0,
+              read_all_dummy_size,
+              input_file_name_error_arg);
 
   sicher_cfg_writer cur_cfg_writer(
     std::move(orig_prm_data),
@@ -2936,7 +2936,7 @@ void create_prm(
 
   save_file(where_to_save_arg,
             cur_cfg_writer.out_str(),
-            TRACTOR_CONVERTER_BINARY,
+            file_flag::binary,
             output_file_name_error_arg);
 }
 
