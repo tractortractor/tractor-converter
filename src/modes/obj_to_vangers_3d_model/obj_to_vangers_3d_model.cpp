@@ -173,6 +173,8 @@ void obj_to_vangers_3d_model_mode(
       center_of_mass_model_ptr = nullptr;
     }
 
+    helpers::bitflag<helpers::obj_to_m3d_flag> obj_to_m3d_flags;
+
 
 
     // Getting list of game directories.
@@ -309,7 +311,8 @@ void obj_to_vangers_3d_model_mode(
               weapon_attachment_point_model_ptr,
               center_of_mass_model_ptr,
               c3d_default_material_id,
-              non_mechos_scale_sizes_ptr);
+              non_mechos_scale_sizes_ptr,
+              obj_to_m3d_flags);
           // TEST
 //        std::cout << '\n' << "weapon m3d" << '\n';
 //        std::cout << "input: " <<
@@ -390,7 +393,8 @@ void obj_to_vangers_3d_model_mode(
             weapon_attachment_point_model_ptr,
             center_of_mass_model_ptr,
             max_weapons_radius,
-            c3d_default_material_id);
+            c3d_default_material_id,
+            obj_to_m3d_flags);
           // TEST
 //        std::cout << '\n' << "mechos m3d" << '\n';
 //        std::cout << "input: " <<
@@ -422,7 +426,8 @@ void obj_to_vangers_3d_model_mode(
             "output_dir",
             center_of_mass_model_ptr,
             c3d_default_material_id,
-            non_mechos_scale_sizes_ptr);
+            non_mechos_scale_sizes_ptr,
+            obj_to_m3d_flags);
           // TEST
 //        std::cout << '\n' << "animated a3d" << '\n';
 //        std::cout << "input: " <<
@@ -454,7 +459,8 @@ void obj_to_vangers_3d_model_mode(
             "output_dir",
             center_of_mass_model_ptr,
             c3d_default_material_id,
-            non_mechos_scale_sizes_ptr);
+            non_mechos_scale_sizes_ptr,
+            obj_to_m3d_flags);
           // TEST
 //        std::cout << '\n' << "other m3d" << '\n';
 //        std::cout << "input: " <<

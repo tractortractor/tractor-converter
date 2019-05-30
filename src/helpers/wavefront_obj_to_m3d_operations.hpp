@@ -2,6 +2,7 @@
 #define TRACTOR_CONVERTER_WAVEFRONT_OBJ_TO_M3D_OPERATIONS_H
 
 #include "defines.hpp"
+#include "bitflag.hpp"
 #include "wavefront_obj_constants.hpp"
 #include "vangers_3d_model_constants.hpp"
 
@@ -49,6 +50,11 @@ namespace exception{
 } // namespace exception
 
 
+
+enum class obj_to_m3d_flag
+{
+  none = 0,
+};
 
 const std::size_t J_cfg_num_of_values = 9;
 
@@ -170,7 +176,8 @@ public:
     const volInt::polyhedron *center_of_mass_model_arg,
     double max_weapons_radius_arg,
     unsigned int c3d_default_material_id_arg,
-    std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg);
+    std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg,
+    bitflag<obj_to_m3d_flag> flags_arg);
 
   void mechos_wavefront_objs_to_m3d();
   volInt::polyhedron weapon_wavefront_objs_to_m3d();
@@ -183,6 +190,8 @@ private:
   unsigned int c3d_default_material_id;
   std::unordered_map<std::string, double> *non_mechos_scale_sizes;
   double prm_scale_size;
+
+  bitflag<obj_to_m3d_flag> flags;
 
 
   void read_file_cfg_helper_overwrite_volume(
@@ -460,7 +469,8 @@ void mechos_wavefront_objs_to_m3d(
   const volInt::polyhedron *weapon_attachment_point_model_arg,
   const volInt::polyhedron *center_of_mass_model_arg,
   double max_weapons_radius_arg,
-  unsigned int c3d_default_material_id_arg);
+  unsigned int c3d_default_material_id_arg,
+  bitflag<obj_to_m3d_flag> flags_arg);
 
 volInt::polyhedron weapon_wavefront_objs_to_m3d(
   const boost::filesystem::path &input_file_path_arg,
@@ -470,7 +480,8 @@ volInt::polyhedron weapon_wavefront_objs_to_m3d(
   const volInt::polyhedron *weapon_attachment_point_arg,
   const volInt::polyhedron *center_of_mass_model_arg,
   unsigned int c3d_default_material_id_arg,
-  std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg);
+  std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg,
+  bitflag<obj_to_m3d_flag> flags_arg);
 
 void animated_wavefront_objs_to_a3d(
   const boost::filesystem::path &input_file_path_arg,
@@ -479,7 +490,8 @@ void animated_wavefront_objs_to_a3d(
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *center_of_mass_model_arg,
   unsigned int c3d_default_material_id_arg,
-  std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg);
+  std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg,
+  bitflag<obj_to_m3d_flag> flags_arg);
 
 void other_wavefront_objs_to_m3d(
   const boost::filesystem::path &input_file_path_arg,
@@ -488,7 +500,8 @@ void other_wavefront_objs_to_m3d(
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *center_of_mass_model_arg,
   unsigned int c3d_default_material_id_arg,
-  std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg);
+  std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg,
+  bitflag<obj_to_m3d_flag> flags_arg);
 
 } // namespace helpers
 } // namespace tractor_converter
