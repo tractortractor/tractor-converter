@@ -35,10 +35,7 @@ m3d_to_wavefront_obj_model::m3d_to_wavefront_obj_model(
   const volInt::polyhedron *center_of_mass_model_arg,
   double scale_size_arg,
   unsigned int float_precision_objs_arg,
-  bool extract_nonexistent_weapons_arg,
-  bool use_custom_volume_by_default_arg,
-  bool use_custom_rcm_by_default_arg,
-  bool use_custom_J_by_default_arg)
+  bitflag<m3d_to_obj_flag> flags_arg)
 : vangers_model(
     input_file_path_arg,
     output_dir_path_arg / input_file_path_arg.stem(),
@@ -49,10 +46,7 @@ m3d_to_wavefront_obj_model::m3d_to_wavefront_obj_model(
     ghost_wheel_model_arg,
     center_of_mass_model_arg),
   float_precision_objs(float_precision_objs_arg),
-  extract_nonexistent_weapons(extract_nonexistent_weapons_arg),
-  use_custom_volume_by_default(use_custom_volume_by_default_arg),
-  use_custom_rcm_by_default(use_custom_rcm_by_default_arg),
-  use_custom_J_by_default(use_custom_J_by_default_arg)
+  flags(flags_arg)
 {
   model_name = input_file_path.stem().string();
 
@@ -1399,7 +1393,7 @@ void m3d_to_wavefront_obj_model::merge_main_model_with_weapons(
       cur_weapon_num < m3d::weapon_slot::max_slots;
       ++cur_weapon_num)
   {
-    if(extract_nonexistent_weapons ||
+    if(flags & m3d_to_obj_flag::extract_nonexistent_weapons ||
        cur_weapon_slot_data[cur_weapon_num].exists)
     {
       volInt::polyhedron temp_weapon_model = *example_weapon_model;
@@ -1487,7 +1481,7 @@ void m3d_to_wavefront_obj_model::add_weapons_to_models_map(
       cur_weapon_num < m3d::weapon_slot::max_slots;
       ++cur_weapon_num)
   {
-    if(extract_nonexistent_weapons ||
+    if(flags & m3d_to_obj_flag::extract_nonexistent_weapons ||
        cur_weapon_slot_data[cur_weapon_num].exists)
     {
       std::string cur_model_name =
@@ -1670,7 +1664,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
     "# Affects generation of center of mass and inertia tensor.\n"
     "# Used to determine mass. \n"
     "# Mass is used in many calculations and affects ram power.\n");
-  if(!use_custom_volume_by_default)
+  if(!(flags & m3d_to_obj_flag::use_custom_volume_by_default))
   {
     conf_data_to_save.push_back('#');
   }
@@ -1685,7 +1679,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
       "inertia tensor.\n"
     "# Doesn't change behavior of the object in game if "
       "inertia tensor was overwritten.\n");
-  if(!use_custom_rcm_by_default)
+  if(!(flags & m3d_to_obj_flag::use_custom_rcm_by_default))
   {
     conf_data_to_save.push_back('#');
   }
@@ -1698,7 +1692,8 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
       "when custom matrix is supplied.\n"
     "# Used in many calculations.\n");
   // Special handling for fishes since they are sensitive to inertia tensor.
-  if(!use_custom_J_by_default && model_name != "f1")
+  if(!(flags & m3d_to_obj_flag::use_custom_J_by_default) &&
+     model_name != "f1")
   {
     conf_data_to_save.push_back('#');
   }
@@ -1745,7 +1740,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
       "# Affects generation of center of mass and inertia tensor.\n"
       "# Used to determine mass. \n"
       "# Mass is used in many calculations and affects ram power.\n");
-    if(!use_custom_volume_by_default)
+    if(!(flags & m3d_to_obj_flag::use_custom_volume_by_default))
     {
       conf_data_to_save.push_back('#');
     }
@@ -1759,7 +1754,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
         "to generate inertia tensor.\n"
       "# Doesn't change behavior of the debris in game if inertia tensor "
         "was overwritten.\n");
-    if(!use_custom_rcm_by_default)
+    if(!(flags & m3d_to_obj_flag::use_custom_rcm_by_default))
     {
       conf_data_to_save.push_back('#');
     }
@@ -1770,7 +1765,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
       "# Overwrite inertia tensor matrix for debris models "
         "when custom matrix is supplied.\n"
       "# Used in many calculations.\n");
-    if(!use_custom_J_by_default)
+    if(!(flags & m3d_to_obj_flag::use_custom_J_by_default))
     {
       conf_data_to_save.push_back('#');
     }
@@ -1854,7 +1849,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
     "# Affects generation of center of mass and inertia tensor.\n"
     "# Used to determine mass. \n"
     "# Mass is used in many calculations and affects ram power.\n");
-  if(!use_custom_volume_by_default)
+  if(!(flags & m3d_to_obj_flag::use_custom_volume_by_default))
   {
     conf_data_to_save.push_back('#');
   }
@@ -1869,7 +1864,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
       "to generate inertia tensor.\n"
     "# Doesn't change behavior of animated model in game if inertia tensor "
       "was overwritten.\n");
-  if(!use_custom_rcm_by_default)
+  if(!(flags & m3d_to_obj_flag::use_custom_rcm_by_default))
   {
     conf_data_to_save.push_back('#');
   }
@@ -1880,7 +1875,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
     "# Overwrite inertia tensor matrix for animated models when "
       "custom matrix is supplied.\n"
     "# Used in many calculations.\n");
-  if(!use_custom_J_by_default)
+  if(!(flags & m3d_to_obj_flag::use_custom_J_by_default))
   {
     conf_data_to_save.push_back('#');
   }
@@ -2058,10 +2053,7 @@ void mechos_m3d_to_wavefront_objs(
   const volInt::polyhedron *center_of_mass_model_ptr,
   double scale_size,
   unsigned int float_precision_objs,
-  bool extract_nonexistent_weapons,
-  bool use_custom_volume_by_default,
-  bool use_custom_rcm_by_default,
-  bool use_custom_J_by_default)
+  bitflag<m3d_to_obj_flag> flags)
 {
   m3d_to_wavefront_obj_model cur_vangers_model(
     m3d_filepath,
@@ -2074,10 +2066,7 @@ void mechos_m3d_to_wavefront_objs(
     center_of_mass_model_ptr,
     scale_size,
     float_precision_objs,
-    extract_nonexistent_weapons,
-    use_custom_volume_by_default,
-    use_custom_rcm_by_default,
-    use_custom_J_by_default);
+    flags);
   cur_vangers_model.mechos_m3d_to_wavefront_objs();
 }
 
@@ -2092,10 +2081,9 @@ volInt::polyhedron weapon_m3d_to_wavefront_objs(
   const volInt::polyhedron *center_of_mass_model_ptr,
   double scale_size,
   unsigned int float_precision_objs,
-  bool use_custom_volume_by_default,
-  bool use_custom_rcm_by_default,
-  bool use_custom_J_by_default)
+  bitflag<m3d_to_obj_flag> flags)
 {
+  flags &= ~m3d_to_obj_flag::extract_nonexistent_weapons;
   m3d_to_wavefront_obj_model cur_vangers_model(
     m3d_filepath,
     output_dir_path,
@@ -2107,10 +2095,7 @@ volInt::polyhedron weapon_m3d_to_wavefront_objs(
     center_of_mass_model_ptr,
     scale_size,
     float_precision_objs,
-    false,
-    use_custom_volume_by_default,
-    use_custom_rcm_by_default,
-    use_custom_J_by_default);
+    flags);
   return cur_vangers_model.weapon_m3d_to_wavefront_objs();
 }
 
@@ -2124,10 +2109,9 @@ void animated_a3d_to_wavefront_objs(
   const volInt::polyhedron *center_of_mass_model_ptr,
   double scale_size,
   unsigned int float_precision_objs,
-  bool use_custom_volume_by_default,
-  bool use_custom_rcm_by_default,
-  bool use_custom_J_by_default)
+  bitflag<m3d_to_obj_flag> flags)
 {
+  flags &= ~m3d_to_obj_flag::extract_nonexistent_weapons;
   m3d_to_wavefront_obj_model cur_vangers_model(
     a3d_filepath,
     output_dir_path,
@@ -2139,10 +2123,7 @@ void animated_a3d_to_wavefront_objs(
     center_of_mass_model_ptr,
     scale_size,
     float_precision_objs,
-    false,
-    use_custom_volume_by_default,
-    use_custom_rcm_by_default,
-    use_custom_J_by_default);
+    flags);
   cur_vangers_model.animated_a3d_to_wavefront_objs();
 }
 
@@ -2156,10 +2137,9 @@ void other_m3d_to_wavefront_objs(
   const volInt::polyhedron *center_of_mass_model_ptr,
   double scale_size,
   unsigned int float_precision_objs,
-  bool use_custom_volume_by_default,
-  bool use_custom_rcm_by_default,
-  bool use_custom_J_by_default)
+  bitflag<m3d_to_obj_flag> flags)
 {
+  flags &= ~m3d_to_obj_flag::extract_nonexistent_weapons;
   m3d_to_wavefront_obj_model cur_vangers_model(
     m3d_filepath,
     output_dir_path,
@@ -2171,10 +2151,7 @@ void other_m3d_to_wavefront_objs(
     center_of_mass_model_ptr,
     scale_size,
     float_precision_objs,
-    false,
-    use_custom_volume_by_default,
-    use_custom_rcm_by_default,
-    use_custom_J_by_default);
+    flags);
   cur_vangers_model.other_m3d_to_wavefront_objs();
 }
 

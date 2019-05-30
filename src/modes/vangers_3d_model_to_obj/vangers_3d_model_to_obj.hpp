@@ -2,6 +2,7 @@
 #define TRACTOR_CONVERTER_VANGERS_3D_MODEL_TO_OBJ_H
 
 #include "defines.hpp"
+#include "bitflag.hpp"
 #include "vangers_3d_model_constants.hpp"
 
 #include "hex.hpp"

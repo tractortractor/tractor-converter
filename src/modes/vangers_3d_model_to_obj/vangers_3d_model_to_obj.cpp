@@ -100,6 +100,28 @@ void vangers_3d_model_to_obj_mode(
       boost::filesystem::system_complete(
         options["wavefront_mtl"].as<std::string>());
 
+    helpers::bitflag<helpers::m3d_to_obj_flag> m3d_to_obj_flags;
+    if(options["extract_nonexistent_weapons"].as<bool>())
+    {
+      m3d_to_obj_flags |=
+        helpers::m3d_to_obj_flag::extract_nonexistent_weapons;
+    }
+    if(options["use_custom_volume_by_default"].as<bool>())
+    {
+      m3d_to_obj_flags |=
+        helpers::m3d_to_obj_flag::use_custom_volume_by_default;
+    }
+    if(options["use_custom_rcm_by_default"].as<bool>())
+    {
+      m3d_to_obj_flags |=
+        helpers::m3d_to_obj_flag::use_custom_rcm_by_default;
+    }
+    if(options["use_custom_J_by_default"].as<bool>())
+    {
+      m3d_to_obj_flags |=
+        helpers::m3d_to_obj_flag::use_custom_J_by_default;
+    }
+
 
 
     if(wavefront_float_precision < volInt::min_float_precision)
@@ -470,9 +492,7 @@ void vangers_3d_model_to_obj_mode(
             center_of_mass_model_ptr,
             scale_size,
             wavefront_float_precision,
-            options["use_custom_volume_by_default"].as<bool>(),
-            options["use_custom_rcm_by_default"].as<bool>(),
-            options["use_custom_J_by_default"].as<bool>());
+            m3d_to_obj_flags);
       }
 
       volInt::polyhedron *mechos_weapon_model_ptr;
@@ -518,10 +538,7 @@ void vangers_3d_model_to_obj_mode(
           center_of_mass_model_ptr,
           scale_size,
           wavefront_float_precision,
-          options["extract_nonexistent_weapons"].as<bool>(),
-          options["use_custom_volume_by_default"].as<bool>(),
-          options["use_custom_rcm_by_default"].as<bool>(),
-          options["use_custom_J_by_default"].as<bool>());
+          m3d_to_obj_flags);
       }
 
 
@@ -542,9 +559,7 @@ void vangers_3d_model_to_obj_mode(
           center_of_mass_model_ptr,
           scale_size,
           wavefront_float_precision,
-          options["use_custom_volume_by_default"].as<bool>(),
-          options["use_custom_rcm_by_default"].as<bool>(),
-          options["use_custom_J_by_default"].as<bool>());
+          m3d_to_obj_flags);
       }
 
 
@@ -565,9 +580,7 @@ void vangers_3d_model_to_obj_mode(
           center_of_mass_model_ptr,
           scale_size,
           wavefront_float_precision,
-          options["use_custom_volume_by_default"].as<bool>(),
-          options["use_custom_rcm_by_default"].as<bool>(),
-          options["use_custom_J_by_default"].as<bool>());
+          m3d_to_obj_flags);
       }
 
       boost::filesystem::path where_to_save_mtl;

@@ -2,6 +2,7 @@
 #define TRACTOR_CONVERTER_M3D_TO_WAVEFRONT_OBJ_OPERATIONS_H
 
 #include "defines.hpp"
+#include "bitflag.hpp"
 #include "wavefront_obj_constants.hpp"
 #include "vangers_3d_model_constants.hpp"
 
@@ -33,6 +34,15 @@
 
 namespace tractor_converter{
 namespace helpers{
+
+enum class m3d_to_obj_flag
+{
+  none = 0,
+  extract_nonexistent_weapons = 1,
+  use_custom_volume_by_default = 2,
+  use_custom_rcm_by_default = 3,
+  use_custom_J_by_default = 4,
+};
 
 enum merge_model_type{wheel, weapon, attachment_point, center_of_mass};
 
@@ -72,10 +82,7 @@ public:
     const volInt::polyhedron *center_of_mass_model_arg,
     double scale_size_arg,
     unsigned int float_precision_objs_arg,
-    bool extract_nonexistent_weapons_arg,
-    bool use_custom_volume_by_default_arg,
-    bool use_custom_rcm_by_default_arg,
-    bool use_custom_J_by_default_arg);
+    bitflag<m3d_to_obj_flag> flags_arg);
 
 
 
@@ -89,10 +96,8 @@ public:
 private:
 
   int float_precision_objs;
-  bool extract_nonexistent_weapons;
-  bool use_custom_volume_by_default;
-  bool use_custom_rcm_by_default;
-  bool use_custom_J_by_default;
+
+  bitflag<m3d_to_obj_flag> flags;
 
   std::string float_precision_objs_string;
 
@@ -369,10 +374,7 @@ void mechos_m3d_to_wavefront_objs(
   const volInt::polyhedron *center_of_mass_model_ptr,
   double scale_size,
   unsigned int float_precision_objs,
-  bool extract_nonexistent_weapons_arg,
-  bool use_custom_volume_by_default_arg,
-  bool use_custom_rcm_by_default_arg,
-  bool use_custom_J_by_default_arg);
+  bitflag<m3d_to_obj_flag> flags);
 volInt::polyhedron weapon_m3d_to_wavefront_objs(
   const boost::filesystem::path &m3d_filepath,
   const boost::filesystem::path &output_dir_path,
@@ -382,9 +384,7 @@ volInt::polyhedron weapon_m3d_to_wavefront_objs(
   const volInt::polyhedron *center_of_mass_model_ptr,
   double scale_size,
   unsigned int float_precision_objs,
-  bool use_custom_volume_by_default_arg,
-  bool use_custom_rcm_by_default_arg,
-  bool use_custom_J_by_default_arg);
+  bitflag<m3d_to_obj_flag> flags);
 void animated_a3d_to_wavefront_objs(
   const boost::filesystem::path &a3d_filepath,
   const boost::filesystem::path &output_dir_path,
@@ -393,9 +393,7 @@ void animated_a3d_to_wavefront_objs(
   const volInt::polyhedron *center_of_mass_model_ptr,
   double scale_size,
   unsigned int float_precision_objs,
-  bool use_custom_volume_by_default_arg,
-  bool use_custom_rcm_by_default_arg,
-  bool use_custom_J_by_default_arg);
+  bitflag<m3d_to_obj_flag> flags);
 void other_m3d_to_wavefront_objs(
   const boost::filesystem::path &m3d_filepath,
   const boost::filesystem::path &output_dir_path,
@@ -404,9 +402,7 @@ void other_m3d_to_wavefront_objs(
   const volInt::polyhedron *center_of_mass_model_ptr,
   double scale_size,
   unsigned int float_precision_objs,
-  bool use_custom_volume_by_default_arg,
-  bool use_custom_rcm_by_default_arg,
-  bool use_custom_J_by_default_arg);
+  bitflag<m3d_to_obj_flag> flags);
 
 } // namespace helpers
 } // namespace tractor_converter
