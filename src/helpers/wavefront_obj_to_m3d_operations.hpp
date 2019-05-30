@@ -331,7 +331,7 @@ private:
   void write_vertices(const volInt::polyhedron &model);
 
   void write_normal(const std::vector<double> &norm,
-                    bool sort_info_exists);
+                    bitflag<normal_flag> flags);
   void write_normals(const volInt::polyhedron &model);
 
   void write_polygon(const volInt::polyhedron &model,

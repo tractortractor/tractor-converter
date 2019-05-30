@@ -2,6 +2,7 @@
 #define TRACTOR_CONVERTER_VANGERS_3D_MODEL_OPERATIONS_H
 
 #include "defines.hpp"
+#include "bitflag.hpp"
 #include "wavefront_obj_constants.hpp"
 #include "vangers_3d_model_constants.hpp"
 
@@ -33,6 +34,12 @@ namespace tractor_converter{
 namespace helpers{
 
 
+
+enum class normal_flag
+{
+  none = 0,
+  sort_info = 1,
+};
 
 typedef long double scaled_float;
 typedef std::vector<double> point;

@@ -414,14 +414,14 @@ void m3d_to_wavefront_obj_model::read_vertices(volInt::polyhedron &model)
 
 
 std::vector<double> m3d_to_wavefront_obj_model::read_normal(
-  bool sort_info_exists = TRACTOR_CONVERTER_NORMAL_SORT_INFO_EXISTS)
+  bitflag<normal_flag> flags = normal_flag::sort_info)
 {
   std::vector<double> norm =
     volInt::vector_scale(wavefront_obj::vector_scale_val,
                          read_vec_var_from_m3d<char, double>(3));
   unsigned char discarded_n_power =
     read_var_from_m3d<unsigned char, unsigned char>();
-  if(sort_info_exists == TRACTOR_CONVERTER_NORMAL_SORT_INFO_EXISTS)
+  if(flags & normal_flag::sort_info)
   {
     int discarded_sort_info = read_var_from_m3d<int, int>();
   }
@@ -478,7 +478,7 @@ volInt::face m3d_to_wavefront_obj_model::read_polygon(
 
 
   std::vector<double> discarded_flat_normal =
-    read_normal(TRACTOR_CONVERTER_NORMAL_SORT_INFO_ABSENT);
+    read_normal(normal_flag::none);
   std::vector<double> discarded_medium_vert =
     read_vec_var_from_m3d_scaled<char, double>(3);
 

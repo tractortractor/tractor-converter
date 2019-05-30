@@ -1120,13 +1120,13 @@ void wavefront_obj_to_m3d_model::write_vertices(
 
 void wavefront_obj_to_m3d_model::write_normal(
   const std::vector<double> &norm,
-  bool sort_info_exists = TRACTOR_CONVERTER_NORMAL_SORT_INFO_EXISTS)
+  bitflag<normal_flag> flags = normal_flag::sort_info)
 {
   write_vec_var_to_m3d_rounded<double, char>(
     volInt::vector_scale(c3d::vector_scale_val, norm));
   write_var_to_m3d<unsigned char, unsigned char>(
     c3d::normal::default_n_power);
-  if(sort_info_exists == TRACTOR_CONVERTER_NORMAL_SORT_INFO_EXISTS)
+  if(flags & normal_flag::sort_info)
   {
     write_var_to_m3d<int, int>(c3d::normal::default_sort_info);
   }
@@ -1152,7 +1152,7 @@ void wavefront_obj_to_m3d_model::write_polygon(
   write_var_to_m3d<unsigned int, unsigned int>(
     c3d::polygon::default_color_shift);
 
-  write_normal(poly.norm, TRACTOR_CONVERTER_NORMAL_SORT_INFO_ABSENT);
+  write_normal(poly.norm, normal_flag::none);
 
   std::vector<double> medium_vert = get_medium_vert(model, poly);
   write_vec_var_to_m3d_scaled_rounded<double, char>(medium_vert);

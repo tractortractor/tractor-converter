@@ -217,7 +217,7 @@ private:
   std::vector<double> read_vertex();
   void read_vertices(volInt::polyhedron &model);
 
-  std::vector<double> read_normal(bool sort_info_exists);
+  std::vector<double> read_normal(bitflag<normal_flag> flags);
   void read_normals(volInt::polyhedron &model);
 
   volInt::face read_polygon(const volInt::polyhedron &model,
