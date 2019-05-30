@@ -58,33 +58,6 @@ std::string read_file(boost::filesystem::ifstream &file,
   return bytes_to_return;
 }
 
-std::string read_file(const std::string &path_string,
-                      const bitflag<file_flag> flags,
-                      const int start_byte_string_num,
-                      const int start_byte_file_num,
-                      const int bytes_to_read_num_arg,
-                      const std::string &file_name_error)
-{
-  std::ios_base::openmode mode = std::ios_base::in;
-  if(flags & file_flag::binary)
-  {
-    mode |= std::ios_base::binary;
-  }
-  boost::filesystem::ifstream file(path_string, mode);
-  if(!file)
-  {
-    throw exception::file_not_found(
-      "Can't open " + file_name_error + " file \"" + path_string + "\".");
-  }
-
-  return read_file(file,
-                   flags,
-                   start_byte_string_num,
-                   start_byte_file_num,
-                   bytes_to_read_num_arg,
-                   file_name_error);
-}
-
 std::string read_file(const boost::filesystem::path &path,
                       const bitflag<file_flag> flags,
                       const int start_byte_string_num,
@@ -112,6 +85,20 @@ std::string read_file(const boost::filesystem::path &path,
                    file_name_error);
 }
 
+std::string read_file(const std::string &path_string,
+                      const bitflag<file_flag> flags,
+                      const int start_byte_string_num,
+                      const int start_byte_file_num,
+                      const int bytes_to_read_num_arg,
+                      const std::string &file_name_error)
+{
+  return read_file(boost::filesystem::path(path_string),
+                   flags,
+                   start_byte_string_num,
+                   start_byte_file_num,
+                   bytes_to_read_num_arg,
+                   file_name_error);
+}
 
 
 
@@ -148,39 +135,6 @@ void write_to_file(boost::filesystem::ofstream &file,
 
 
 
-void write_to_file(const std::string &path_string,
-                   const std::string &bytes_to_write,
-                   const bitflag<file_flag> flags,
-                   const int start_byte_string_num,
-                   const int start_byte_file_num,
-                   const int bytes_to_write_num_arg,
-                   const std::string &file_name_error)
-{
-  std::ios_base::openmode mode = std::ios_base::out;
-  if(!(flags & file_flag::overwrite))
-  {
-     mode |= std::ios_base::in;
-  }
-  if(flags & file_flag::binary)
-  {
-    mode |= std::ios_base::binary;
-  }
-  boost::filesystem::ofstream file(path_string, mode);
-  if(!file)
-  {
-    throw exception::file_not_saved(
-      "Can't save " + file_name_error + " file \"" + path_string + "\".");
-  }
-
-  write_to_file(file,
-                bytes_to_write,
-                flags,
-                start_byte_string_num,
-                start_byte_file_num,
-                bytes_to_write_num_arg,
-                file_name_error);
-}
-
 void write_to_file(const boost::filesystem::path &path,
                    const std::string &bytes_to_write,
                    const bitflag<file_flag> flags,
@@ -214,34 +168,24 @@ void write_to_file(const boost::filesystem::path &path,
                 file_name_error);
 }
 
-
-
-void save_file(const std::string &path_string,
-               const std::string &bytes_to_write,
-               const bitflag<file_flag> flags,
-               const std::string &file_name_error)
+void write_to_file(const std::string &path_string,
+                   const std::string &bytes_to_write,
+                   const bitflag<file_flag> flags,
+                   const int start_byte_string_num,
+                   const int start_byte_file_num,
+                   const int bytes_to_write_num_arg,
+                   const std::string &file_name_error)
 {
-  std::ios_base::openmode mode = std::ios_base::out;
-  if(flags & file_flag::binary)
-  {
-    mode |= std::ios_base::binary;
-  }
-
-  boost::filesystem::ofstream file(path_string, mode);
-  if(!file)
-  {
-    throw exception::file_not_saved(
-      "Can't save " + file_name_error + " file \"" + path_string + "\".");
-  }
-
-  write_to_file(file,
+  write_to_file(boost::filesystem::path(path_string),
                 bytes_to_write,
-                flags | file_flag::write_all,
-                0,
-                0,
-                write_all_dummy_size,
+                flags,
+                start_byte_string_num,
+                start_byte_file_num,
+                bytes_to_write_num_arg,
                 file_name_error);
 }
+
+
 
 void save_file(const boost::filesystem::path &path,
                const std::string &bytes_to_write,
@@ -263,6 +207,20 @@ void save_file(const boost::filesystem::path &path,
   write_to_file(file,
                 bytes_to_write,
                 flags | file_flag::write_all,
+                0,
+                0,
+                write_all_dummy_size,
+                file_name_error);
+}
+
+void save_file(const std::string &path_string,
+               const std::string &bytes_to_write,
+               const bitflag<file_flag> flags,
+               const std::string &file_name_error)
+{
+  write_to_file(boost::filesystem::path(path_string),
+                bytes_to_write,
+                flags,
                 0,
                 0,
                 write_all_dummy_size,
