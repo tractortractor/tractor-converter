@@ -248,7 +248,8 @@ private:
   template<typename SOURCE, typename DESTINATION>
   void write_vec_var_to_m3d(const std::vector<SOURCE> &vec_src)
   {
-    std::vector<DESTINATION> vec_dest(vec_src.begin(), vec_src.end());
+    std::vector<DESTINATION> vec_dest =
+      cast_vec_var<SOURCE, DESTINATION>(vec_src);
     vec_num_to_raw_bytes<DESTINATION>(vec_dest, m3d_data, m3d_data_cur_pos);
     m3d_data_cur_pos += sizeof(DESTINATION) * vec_dest.size();
   }
@@ -280,15 +281,8 @@ private:
   void write_nest_vec_var_to_m3d(
     const std::vector<std::vector<SOURCE>> &nest_vec_src)
   {
-    std::vector<std::vector<DESTINATION>> nest_vec_dest;
-    std::transform(
-      nest_vec_src.begin(), nest_vec_src.end(),
-      std::back_inserter(nest_vec_dest),
-      [](const std::vector<SOURCE> &vec_src)
-        {
-          return std::vector<DESTINATION>(vec_src.begin(), vec_src.end());
-        }
-    );
+    std::vector<std::vector<DESTINATION>> nest_vec_dest =
+      cast_nest_vec_var<SOURCE, DESTINATION>(nest_vec_src);
     nest_vec_num_to_raw_bytes<DESTINATION>(nest_vec_dest,
                                            m3d_data,
                                            m3d_data_cur_pos);

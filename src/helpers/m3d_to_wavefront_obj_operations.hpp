@@ -131,7 +131,8 @@ private:
   {
     std::vector<SOURCE> vec_src =
       raw_bytes_to_vec_num<SOURCE>(m3d_data, m3d_data_cur_pos, count);
-    std::vector<DESTINATION> vec_dest(vec_src.begin(), vec_src.end());
+    std::vector<DESTINATION> vec_dest =
+      cast_vec_var<SOURCE, DESTINATION>(vec_src);
     m3d_data_cur_pos += sizeof(SOURCE) * count;
     return vec_dest;
   }
@@ -153,15 +154,8 @@ private:
   {
     std::vector<std::vector<SOURCE>> nest_vec_src =
       raw_bytes_to_nest_vec_num<SOURCE>(m3d_data, m3d_data_cur_pos, count_map);
-    std::vector<std::vector<DESTINATION>> nest_vec_dest;
-    std::transform(
-      nest_vec_src.begin(), nest_vec_src.end(),
-      std::back_inserter(nest_vec_dest),
-      [](const std::vector<SOURCE> &vec_src)
-        {
-          return std::vector<DESTINATION>(vec_src.begin(), vec_src.end());
-        }
-    );
+    std::vector<std::vector<DESTINATION>> nest_vec_dest =
+      cast_nest_vec_var<SOURCE, DESTINATION>(nest_vec_src);
     for(const auto count : count_map)
     {
       m3d_data_cur_pos += sizeof(SOURCE) * count;
@@ -189,15 +183,8 @@ private:
                                         m3d_data_cur_pos,
                                         count_vec,
                                         count_el);
-    std::vector<std::vector<DESTINATION>> nest_vec_dest;
-    std::transform(
-      nest_vec_src.begin(), nest_vec_src.end(),
-      std::back_inserter(nest_vec_dest),
-      [](const std::vector<SOURCE> &vec_src)
-        {
-          return std::vector<DESTINATION>(vec_src.begin(), vec_src.end());
-        }
-    );
+    std::vector<std::vector<DESTINATION>> nest_vec_dest =
+      cast_nest_vec_var<SOURCE, DESTINATION>(nest_vec_src);
     m3d_data_cur_pos += sizeof(SOURCE) * count_vec * count_el;
     return nest_vec_dest;
   }
