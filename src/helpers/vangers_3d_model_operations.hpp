@@ -64,6 +64,35 @@ const std::vector<std::string> vangers_3d_tree_folders
   "weapon",
 };
 
+
+
+template<typename SOURCE, typename DESTINATION>
+std::vector<DESTINATION> cast_vec_var(
+  const std::vector<SOURCE> &vec_src)
+{
+  return std::vector<DESTINATION>(vec_src.begin(), vec_src.end());
+}
+
+
+
+template<typename SOURCE, typename DESTINATION>
+std::vector<std::vector<DESTINATION>> cast_nest_vec_var(
+  const std::vector<std::vector<SOURCE>> &nest_vec_src)
+{
+  std::vector<std::vector<DESTINATION>> nest_vec_dest;
+  std::transform(
+    nest_vec_src.begin(), nest_vec_src.end(),
+    std::back_inserter(nest_vec_dest),
+    [](const std::vector<SOURCE> &vec_src)
+      {
+        return cast_vec_var<SOURCE, DESTINATION>(vec_src);
+      }
+  );
+  return nest_vec_dest;
+}
+
+
+
 struct vangers_3d_paths_game_dir
 {
   struct io_paths
