@@ -210,8 +210,6 @@ boost::program_options::variables_map get_options(int ac, char** av)
             "\nEach directory with multiple wavefront *.obj files "
                 "is converted into single *.m3d or *.a3d file."
             "\n"
-            "\nUse \"m3d_weapon_file\" option to specify name of *.m3d "
-                "weapon model which was used while converting to *.obj."
             "\nUse \"weapon_attachment_point_file\" option to specify path "
                 "to wavefront *.obj file "
                 "which was used while converting to *.obj."
