@@ -178,7 +178,8 @@ void create_wavefront_mtl_mode(
             std::stoi(offset_str.substr(cur_pos), &chars_processed);
           cur_pos += chars_processed + 1;
         }
-        // If offset_str does not contain color_offset and shift_offset numbers.
+        // If offset_str does not contain
+        // color_offset and shift_offset numbers.
         catch(std::invalid_argument &)
 	{
           // TEST
