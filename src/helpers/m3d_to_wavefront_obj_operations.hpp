@@ -44,7 +44,7 @@ enum class m3d_to_obj_flag
   use_custom_J_by_default = 4,
 };
 
-enum merge_model_type{wheel, weapon, attachment_point, center_of_mass};
+enum class merge_model_type{wheel, weapon, attachment_point, center_of_mass};
 
 // 1 digit left to dot + 1 dot + 8 expected digits right to dot + 4 exponent
 const std::size_t per_file_cfg_float_size_increase = 1 + 1 + 8 + 4;

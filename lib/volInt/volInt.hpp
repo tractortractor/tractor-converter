@@ -81,7 +81,7 @@ namespace exception{
 
 
 
-enum rotation_axis{x, y, z};
+enum class rotation_axis{x, y, z};
 
 
 

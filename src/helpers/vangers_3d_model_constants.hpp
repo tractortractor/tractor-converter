@@ -19,7 +19,7 @@ namespace c3d{
   const int scaling_max_extreme_radius = 123;
   const double vector_scale_val = 123.0;
 
-  enum c3d_type
+  enum class c3d_type
   {
     regular,
     bound,

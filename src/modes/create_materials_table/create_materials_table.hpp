@@ -27,7 +27,7 @@
 
 namespace tractor_converter{
 
-enum html_material_changes{none, per_world, per_quant};
+enum class html_material_changes{none, per_world, per_quant};
 
 const std::pair<int,int> color_ind_changes_per_world_range = {0 , 127};
 const std::pair<int,int> color_ind_changes_per_quant_range = {88, 119};

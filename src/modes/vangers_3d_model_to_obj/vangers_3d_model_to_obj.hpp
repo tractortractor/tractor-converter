@@ -25,7 +25,7 @@
 
 namespace tractor_converter{
 
-enum scale_from_map_type{mechos, non_mechos};
+enum class scale_from_map_type{mechos, non_mechos};
 double scale_from_map(
   const std::unordered_map<std::string, double> &scale_sizes,
   const boost::filesystem::path &to_lookup_path,

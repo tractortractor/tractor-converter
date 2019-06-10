@@ -143,7 +143,7 @@ class vangers_model
 {
 public:
 
-//enum struct file_type{m3d, a3d, none};
+//enum class file_type{m3d, a3d, none};
 
   vangers_model(
     const boost::filesystem::path &input_file_path_arg,
