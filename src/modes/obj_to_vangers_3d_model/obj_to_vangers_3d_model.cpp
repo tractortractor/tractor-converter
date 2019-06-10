@@ -26,8 +26,6 @@ void obj_to_vangers_3d_model_mode(
     boost::filesystem::path output_dir =
       helpers::get_directory(options["output_dir"].as<std::string>(),
                              "output_dir");
-//  std::string m3d_weapon_file =
-//    options["m3d_weapon_file"].as<std::string>();
     boost::filesystem::path weapon_attachment_point_file =
       boost::filesystem::system_complete(
         options["weapon_attachment_point_file"].as<std::string>());
@@ -106,34 +104,6 @@ void obj_to_vangers_3d_model_mode(
         "incorrect weapon attachment point data." << '\n';
       weapon_attachment_point_model_ptr = nullptr;
     }
-
-
-
-/*
-    volInt::polyhedron weapon_model;
-    volInt::polyhedron *weapon_model_ptr;
-    try
-    {
-      helpers::vangers_model m3d_weapon_model(
-        boost::filesystem::path(m3d_weapon_file),
-        output_dir,
-        "m3d_weapon_file",
-        "output_dir",
-        options["3d_obj_float_precision"].as<int>());
-
-      weapon_model = m3d_weapon_model.read_c3d(c3d::c3d_type::regular);
-      weapon_model_ptr = &weapon_model;
-    }
-    catch(std::exception &e)
-    {
-      std::cout << "vangers_3d_to_obj mode - failed to get " <<
-        "example weapon model: " << e.what() << '\n';
-      std::cout << "Generated mechos *.obj files " <<
-        "should not be converted back to *.m3d " <<
-        "since there will be no data about weapons' positions." << '\n';
-      weapon_model_ptr = nullptr;
-    }
-*/
 
 
 
@@ -337,45 +307,6 @@ void obj_to_vangers_3d_model_mode(
       double max_weapons_radius =
         helpers::get_weapons_bound_sphere_radius(weapons_models);
 
-/*
-      volInt::polyhedron *mechos_weapon_model_ptr;
-      if(weapons_models.count(m3d_weapon_file))
-      {
-        mechos_weapon_model_ptr = &weapons_models.at(m3d_weapon_file);
-        if(!mechos_weapon_model_ptr->find_ref_points())
-        {
-          std::cout << '\n';
-          std::cout << "Failed to get example weapon model: " <<
-            m3d_weapon_file << '\n';
-          std::cout << '\n';
-          std::cout << "Can't find 3 reference vertices." << '\n';
-          std::cout << "You should change m3d_weapon_file option " <<
-            "to one of the following:" << '\n';
-          for(const auto &weapons_model : weapons_models)
-          {
-            std::cout << weapons_model.first << '\n';
-          }
-          std::cout << '\n';
-          mechos_weapon_model_ptr = nullptr;
-        }
-      }
-      else
-      {
-        std::cout << '\n';
-        std::cout << "Failed to get example weapon model: " <<
-          m3d_weapon_file << '\n';
-        std::cout << "Generated mechos *.m3d files will have " <<
-          "incorrect weapons' positions data." << '\n';
-        std::cout << "You should change m3d_weapon_file option " <<
-          "to one of the following:" << '\n';
-        for(const auto &weapons_model : weapons_models)
-        {
-          std::cout << weapons_model.first << '\n';
-        }
-        std::cout << '\n';
-        mechos_weapon_model_ptr = nullptr;
-      }
-*/
       volInt::polyhedron *mechos_weapon_model_ptr = nullptr;
 
 
