@@ -682,7 +682,7 @@ void m3d_to_wavefront_obj_model::read_m3d_wheel_data(
     read_var_from_m3d_scaled<int, double>();
   cur_wheel_data[wheel_id].radius =
     read_var_from_m3d_scaled<int, double>();
-  cur_wheel_data[wheel_id].bound_index = read_var_from_m3d<int, int>();
+  int discarded_bound_index = read_var_from_m3d<int, int>();
 
   if(cur_wheel_data[wheel_id].steer)
   {

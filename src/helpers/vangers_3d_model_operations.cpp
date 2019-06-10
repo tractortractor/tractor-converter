@@ -13,7 +13,6 @@ wheel_data::wheel_data()
   r = std::vector<double>(3, 0.0);
   width = 0;
   radius = 0;
-  bound_index = 0;
 }
 
 weapon_slot_data::weapon_slot_data()

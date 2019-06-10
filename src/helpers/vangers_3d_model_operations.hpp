@@ -121,7 +121,6 @@ struct wheel_data
   std::vector<double> r;
   double width;
   double radius;
-  int bound_index;
 
   // Does not exist in actual *.m3d file.
   int ghost;

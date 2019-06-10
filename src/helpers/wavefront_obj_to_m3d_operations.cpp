@@ -1268,7 +1268,7 @@ void wavefront_obj_to_m3d_model::write_m3d_wheel_data(
     cur_wheel_data[wheel_id].width);
   write_var_to_m3d_scaled_rounded<double, int>(
     cur_wheel_data[wheel_id].radius);
-  write_var_to_m3d<int, int>(cur_wheel_data[wheel_id].bound_index);
+  write_var_to_m3d<int, int>(m3d::wheel::default_bound_index);
   if(cur_wheel_data[wheel_id].steer)
   {
     write_c3d(wheels_models[wheel_id]);
