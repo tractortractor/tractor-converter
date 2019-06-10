@@ -665,7 +665,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
         std::cout << "Failed to retrieve custom center of mass in " <<
           input_file_name_error << " file " <<
           main_model.wavefront_obj_path << '\n';
-        std::cout << e.what();
+        std::cout << e.what() << '\n';
         std::cout <<
           "Center of mass is not overwritten for main model." << '\n';
       }
@@ -738,6 +738,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
               "Failed to retrieve custom center of mass in " <<
               input_file_name_error << " file " <<
               (*debris_models)[cur_debris].wavefront_obj_path << '\n';
+            std::cout << e.what() << '\n';
             std::cout <<
               "Center of mass is not overwritten for debris model " <<
               std::to_string(cur_debris + 1) << "." << '\n';
@@ -895,6 +896,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_a3d(
             "Failed to retrieve custom center of mass in " <<
             input_file_name_error << " file " <<
             animated_models[cur_animated].wavefront_obj_path << '\n';
+          std::cout << e.what() << '\n';
           std::cout <<
             "Center of mass is not overwritten for animated model " <<
             std::to_string(cur_animated + 1) << "." << '\n';
