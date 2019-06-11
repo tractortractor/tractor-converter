@@ -2404,6 +2404,31 @@ void wavefront_obj_to_m3d_model::get_debris_data(
 
 
 
+void wavefront_obj_to_m3d_model::center_debris(
+  volInt::polyhedron &debris_model,
+  volInt::polyhedron &debris_bound_model)
+{
+  debris_model.offset = debris_model.get_model_center();
+  debris_model.move_coord_system_to_point_inv_neg_vol(
+    debris_model.offset_point());
+  debris_bound_model.move_coord_system_to_point_inv_neg_vol(
+    debris_model.offset_point());
+}
+
+void wavefront_obj_to_m3d_model::center_debris(
+  std::deque<volInt::polyhedron> &debris_models,
+  std::deque<volInt::polyhedron> &debris_bound_models)
+{
+  for(std::size_t i = 0; i < n_debris; ++i)
+  {
+    center_debris(debris_models[i], debris_bound_models[i]);
+  }
+}
+
+
+
+
+
 void wavefront_obj_to_m3d_model::get_scale_helper_get_extreme_radius(
   volInt::polyhedron *model,
   double &extreme_radius,

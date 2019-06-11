@@ -406,6 +406,13 @@ private:
     const std::deque<volInt::polyhedron> &debris_models,
     const std::deque<volInt::polyhedron> &debris_bound_models);
 
+  void center_debris(
+    std::deque<volInt::polyhedron> &debris_models,
+    std::deque<volInt::polyhedron> &debris_bound_models);
+  void center_debris(
+    volInt::polyhedron &debris_model,
+    volInt::polyhedron &debris_bound_model);
+
   void get_scale_helper_get_extreme_radius(
     volInt::polyhedron *model,
     double &extreme_radius,
