@@ -1675,6 +1675,21 @@ void polyhedron::calculate_c3d_properties()
 
 
 
+void polyhedron::calculate_c3d_properties_inv_neg_vol()
+{
+  // If volume is negative, vertices have wrong order.
+  // They must be reversed again in this case.
+  faces_calc_params(); // Must be called before "check_volume()".
+  if(check_volume() < 0)
+  {
+    invertVertNorms();
+    reverse_polygons_orientation();
+    faces_calc_params();
+  }
+}
+
+
+
 std::pair<std::vector<double>, std::vector<double>> &
   polyhedron::extreme_points_pair()
 {

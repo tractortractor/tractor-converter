@@ -365,6 +365,7 @@ typedef struct polyhedron {
 
   void calculate_rmax();
   void calculate_c3d_properties();
+  void calculate_c3d_properties_inv_neg_vol();
 
   std::pair<std::vector<double>, std::vector<double>> &extreme_points_pair();
   const std::pair<std::vector<double>, std::vector<double>> &
