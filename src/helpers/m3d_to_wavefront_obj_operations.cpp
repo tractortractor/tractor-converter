@@ -579,15 +579,7 @@ volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
 
   read_sorted_polygon_indices(cur_model);
 
-  // If volume is negative, vertices have wrong order.
-  // They must be reversed again in this case.
-  cur_model.faces_calc_params(); // Must be called before "check_volume()".
-  if(cur_model.check_volume() < 0)
-  {
-    cur_model.invertVertNorms();
-    cur_model.reverse_polygons_orientation();
-    cur_model.faces_calc_params();
-  }
+  cur_model.calculate_c3d_properties_inv_neg_vol();
 
   return cur_model;
 }
