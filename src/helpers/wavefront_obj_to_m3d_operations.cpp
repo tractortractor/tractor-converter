@@ -162,6 +162,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 //  std::cout << "first time!" << '\n';
 //  std::cout << "model:" << model_name << '\n';
 
+  center_debris(debris_models, debris_bound_models);
 
   get_m3d_scale_size(&cur_main_model,
                      &cur_main_bound_model,
