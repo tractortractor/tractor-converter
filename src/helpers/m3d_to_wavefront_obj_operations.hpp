@@ -320,10 +320,21 @@ private:
     std::vector<std::unordered_map<std::string, volInt::polyhedron>>
       &debris_models,
     std::vector<volInt::polyhedron> &debris_bound_models);
+
+  void move_debris_to_offset(
+    std::unordered_map<std::string, volInt::polyhedron> &debris_model,
+    volInt::polyhedron &debris_bound_model);
+  void move_debris_to_offset(
+    std::vector<std::unordered_map<std::string, volInt::polyhedron>>
+      &debris_models,
+    std::vector<volInt::polyhedron> &debris_bound_models);
+
   void save_m3d_debris_data(
     std::vector<std::unordered_map<std::string, volInt::polyhedron>>
       &debris_models,
     std::vector<volInt::polyhedron> &debris_bound_models);
+
+
 
   void read_m3d_weapon_slot(std::size_t slot_id);
   void read_m3d_weapon_slots();

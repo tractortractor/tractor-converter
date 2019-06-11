@@ -1566,6 +1566,31 @@ void m3d_to_wavefront_obj_model::read_m3d_debris_data(
 
 
 
+void m3d_to_wavefront_obj_model::move_debris_to_offset(
+  std::unordered_map<std::string, volInt::polyhedron> &debris_model,
+  volInt::polyhedron &debris_bound_model)
+{
+  volInt::polyhedron &main_debris_model =
+    debris_model[wavefront_obj::main_obj_name];
+  std::vector<double> offset = main_debris_model.offset_point();
+  main_debris_model.move_model_to_point_inv_neg_vol(offset);
+  debris_bound_model.move_model_to_point_inv_neg_vol(offset);
+}
+
+void m3d_to_wavefront_obj_model::move_debris_to_offset(
+  std::vector<std::unordered_map<std::string, volInt::polyhedron>>
+    &debris_models,
+  std::vector<volInt::polyhedron> &debris_bound_models)
+{
+  for(int debris_num = 0; debris_num < n_debris; ++debris_num)
+  {
+    move_debris_to_offset(debris_models[debris_num],
+                          debris_bound_models[debris_num]);
+  }
+}
+
+
+
 void m3d_to_wavefront_obj_model::save_m3d_debris_data(
   std::vector<std::unordered_map<std::string, volInt::polyhedron>>
     &debris_models,
