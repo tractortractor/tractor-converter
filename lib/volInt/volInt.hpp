@@ -351,6 +351,9 @@ typedef struct polyhedron {
     const std::vector<double> &point);
 
   void move_coord_system_to_point(const std::vector<double> &point);
+  void move_coord_system_to_point_inv_neg_vol(
+    const std::vector<double> &point);
+  void move_coord_system_to_center();
   void move_coord_system_to_point(
     std::vector<const std::vector<double>*> vertices,
     const std::vector<double> &point);

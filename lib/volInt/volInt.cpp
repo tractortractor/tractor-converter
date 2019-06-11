@@ -1221,6 +1221,23 @@ void polyhedron::move_coord_system_to_point(
 
 
 
+void polyhedron::move_coord_system_to_point_inv_neg_vol(
+  const std::vector<double> &point_arg)
+{
+  move_coord_system_to_point(point_arg);
+  calculate_c3d_properties_inv_neg_vol();
+}
+
+
+
+void polyhedron::move_coord_system_to_center()
+{
+  std::vector<double> center = get_model_center();
+  move_coord_system_to_point(center);
+}
+
+
+
 void polyhedron::move_coord_system_to_point(
   std::vector<const std::vector<double>*> verts_arg,
   const std::vector<double> &point_arg)
