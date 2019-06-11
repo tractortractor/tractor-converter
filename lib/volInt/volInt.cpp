@@ -1176,6 +1176,15 @@ void polyhedron::move_model_to_point(const std::vector<double> &point_arg)
 
 
 
+void polyhedron::move_model_to_point_inv_neg_vol(
+  const std::vector<double> &point_arg)
+{
+  move_model_to_point(point_arg);
+  calculate_c3d_properties_inv_neg_vol();
+}
+
+
+
 void polyhedron::move_model_to_point(
   std::vector<const std::vector<double>*> verts_arg,
   const std::vector<double> &point_arg)
