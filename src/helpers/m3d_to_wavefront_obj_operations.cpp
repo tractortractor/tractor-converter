@@ -112,6 +112,7 @@ void m3d_to_wavefront_obj_model::mechos_m3d_to_wavefront_objs()
   if(n_debris)
   {
     read_m3d_debris_data(debris_models, debris_bound_models);
+    move_debris_to_offset(debris_models, debris_bound_models);
     save_m3d_debris_data(debris_models, debris_bound_models);
   }
   c3d_to_wavefront_obj("_main_bound", c3d::c3d_type::bound);
