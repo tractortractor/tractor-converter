@@ -1979,9 +1979,7 @@ std::unordered_map<int, volInt::polyhedron>
       // So center of wheel model will have coordinates: 0, 0, 0.
       point wheel_center = cur_wheel_model.get_model_center();
       cur_wheel_model.offset_point() = wheel_center;
-      cur_wheel_model.move_coord_system_to_point(wheel_center);
-      // Must be called since model was moved.
-      cur_wheel_model.faces_calc_params();
+      cur_wheel_model.move_coord_system_to_point_inv_neg_vol(wheel_center);
     }
   }
 

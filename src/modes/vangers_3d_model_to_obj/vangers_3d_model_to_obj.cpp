@@ -186,8 +186,7 @@ void vangers_3d_model_to_obj_mode(
           c3d::c3d_type::regular,
           c3d::color::string_to_id::wheel);
       ghost_wheel_model_ptr = &ghost_wheel_model;
-      helpers::point ghost_wheel_center = ghost_wheel_model.get_model_center();
-      ghost_wheel_model.move_coord_system_to_point(ghost_wheel_center);
+      ghost_wheel_model.move_coord_system_to_center();
     }
     catch(std::exception &e)
     {

@@ -1255,8 +1255,7 @@ void m3d_to_wavefront_obj_model::merge_helper_move_model_into_main(
   {
     // Changing model_to_move so calculated center of extreme coordinates
     // and actual center are the same.
-    std::vector<double> model_center = model_to_move.get_model_center();
-    model_to_move.move_coord_system_to_point(model_center);
+    model_to_move.move_coord_system_to_center();
     merge_model_color_id = c3d::color::string_to_id::wheel;
   }
   else if(merge_type == merge_model_type::weapon)
