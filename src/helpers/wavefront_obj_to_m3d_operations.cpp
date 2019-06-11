@@ -634,7 +634,11 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
     std::ifstream ifs(config_file_str.c_str());
     if(ifs)
     {
-      boost::program_options::store(parse_config_file(ifs, config), vm);
+      // When debris or animation frame *.obj file is deleted
+      // config option for this debris or animation frame is not expected.
+      // To prevent "unrecognised option" error
+      // allow_unregistered argument is set to true for parse_config_file().
+      boost::program_options::store(parse_config_file(ifs, config, true), vm);
       boost::program_options::notify(vm);
     }
     else
