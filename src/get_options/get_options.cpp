@@ -222,11 +222,11 @@ boost::program_options::variables_map get_options(int ac, char** av)
                 "which have no material or unexpected one."
             "\nUse \"3d_scale_cap\" option to specify maximum scale."
             "\nSpecify \"center_model\" option "
-              "to automatically move model to center of extreme points."
+                "to automatically move model to center of extreme points."
             "\nSpecify \"recalculate_vertex_normals\" option "
-              "to recalculate vertex normals."
+                "to recalculate vertex normals."
             "\nSpecify \"generate_bound_models\" option "
-              "to automatically generate bound models."
+                "to automatically generate bound models."
             "\n"
             "\n\"source_dir\" and \"output_dir\" options must be specified."
           "\n"
@@ -324,8 +324,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
       ("items_bmp",
        boost::program_options::bool_switch()->default_value(false),
        "\tConverting item files so 2 *.bmp "
-           "should be created for each *.tga file.\n"
-       "\"map\" and \"output_dir_through_map\" "
+           "should be created for each *.tga file."
+           "\"map\" and \"output_dir_through_map\" "
            "must be specified in this case.\n"
        "\tUsed by \"tga_to_bmp\" mode.\n")
       ("map",
@@ -335,7 +335,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
       ("output_dir_through_map",
        boost::program_options::value<std::string>(),
        "\tDirectory where to output *.bmp files "
-         "generated with \"compare_bmp_escave_outside\" map.\n"
+           "generated with \"compare_bmp_escave_outside\" map.\n"
        "\tUsed by \"tga_to_bmp\" mode.\n")
       ("fix_null_bytes_and_direction",
        boost::program_options::bool_switch()->default_value(false),
@@ -350,9 +350,9 @@ boost::program_options::variables_map get_options(int ac, char** av)
        "\tPrecision of float numbers of output Wavefront object "
            "and material files.\n"
        "\tDefaults to "
-         TRACTOR_CONVERTER_DEFAULT_3D_OBJ_FLOAT_PRECISION_STR ".\n"
+           TRACTOR_CONVERTER_DEFAULT_3D_OBJ_FLOAT_PRECISION_STR ".\n"
        "\tUsed by \"vangers_3d_model_to_obj\" "
-       "and \"create_wavefront_mtl\" modes.\n")
+           "and \"create_wavefront_mtl\" modes.\n")
       ("3d_default_scale",
        boost::program_options::value<double>()->
          default_value(TRACTOR_CONVERTER_DEFAULT_3D_DEFAULT_SCALE),
@@ -431,30 +431,30 @@ boost::program_options::variables_map get_options(int ac, char** av)
        boost::program_options::value<double>()->
          default_value(TRACTOR_CONVERTER_DEFAULT_3D_SCALE_CAP),
        "\tIf model scale is higher than this cap, "
-         "it will be lowered to this cap.\n"
+           "it will be lowered to this cap.\n"
        "\tNeeded since the game can't properly render objects "
-         "beyond certain scale_size under certain circumstances.\n"
+           "beyond certain scale_size under certain circumstances.\n"
        "\tDefaults to " TRACTOR_CONVERTER_DEFAULT_3D_SCALE_CAP_STR ".\n"
        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
       ("center_model",
        boost::program_options::bool_switch()->default_value(false),
        "\tAutomatically move model to center of extreme points.\n"
        "\tShould be always turned on to ensure proper position of "
-         "in-game xyzmax bounding box and rmax bounding sphere.\n"
+           "in-game xyzmax bounding box and rmax bounding sphere.\n"
        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
       ("recalculate_vertex_normals",
        boost::program_options::bool_switch()->default_value(false),
        "\tRecalculate vertex normals.\n"
        "\tShould be always turned on unless "
-         "vertex normals were manually set specifically for this game.\n"
+           "vertex normals were manually set specifically for this game.\n"
        "\tBad vertex normals will most likely result in "
-         "polygons appearing black when should be bright and vice versa.\n"
+           "polygons appearing black when should be bright and vice versa.\n"
        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
       ("generate_bound_models",
        boost::program_options::bool_switch()->default_value(false),
        "\tAutomatically generate bound models.\n"
        "\tShould be always turned on unless "
-         "bound models were manually edited.\n"
+           "bound models were manually edited.\n"
        "\t*.obj bound models are ignored if turned on.\n"
        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
       ("mtl_n_wheels",
@@ -477,7 +477,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
        "\tExample config file entry:\n"
        "\tmtl_body_offs = 129_3;130_3\n"
        "\tUsed by \"create_wavefront_mtl\" and "
-         "\"create_materials_table\" modes.\n")
+           "\"create_materials_table\" modes.\n")
       ;
 
     // Hidden options, will be allowed both on command line and
