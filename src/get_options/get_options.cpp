@@ -345,10 +345,12 @@ boost::program_options::variables_map get_options(int ac, char** av)
        "\tUsed by \"tga_to_bmp\" mode.\n")
 
       ("3d_obj_float_precision",
-       boost::program_options::value<int>()->default_value(6),
+       boost::program_options::value<int>()->
+         default_value(TRACTOR_CONVERTER_DEFAULT_3D_OBJ_FLOAT_PRECISION),
        "\tPrecision of float numbers of output Wavefront object "
            "and material files.\n"
-       "\tDefaults to 6.\n"
+       "\tDefaults to "
+         TRACTOR_CONVERTER_DEFAULT_3D_OBJ_FLOAT_PRECISION_STR ".\n"
        "\tUsed by \"vangers_3d_model_to_obj\" "
        "and \"create_wavefront_mtl\" modes.\n")
       ("3d_default_scale",
