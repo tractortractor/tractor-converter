@@ -3,6 +3,7 @@
 
 #include "defines.hpp"
 #include "tga_constants.hpp"
+#include "bitflag.hpp"
 
 #include "raw_num_operations.hpp"
 
@@ -21,13 +22,13 @@ std::size_t get_color_size(
   const std::string &bytes,
   const std::size_t image_start_pos,
   const std::string &path_string,
-  const int throw_on_failure = TRACTOR_CONVERTER_THROW_ON_FAILURE);
+  const bitflag<error_handling> error_flags = error_handling::throw_exception);
 
 std::size_t get_colors_num(
   const std::string &bytes,
   const std::size_t image_start_pos,
   const std::string &path_string,
-  const int throw_on_failure = TRACTOR_CONVERTER_THROW_ON_FAILURE);
+  const bitflag<error_handling> error_flags = error_handling::throw_exception);
 
 struct tga
 {

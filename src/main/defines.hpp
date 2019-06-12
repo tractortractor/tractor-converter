@@ -20,8 +20,7 @@
 
 
 // For helpers.
-#define TRACTOR_CONVERTER_DONT_THROW_ON_FAILURE 0
-#define TRACTOR_CONVERTER_THROW_ON_FAILURE 1
+enum class error_handling{none, throw_exception};
 
 
 

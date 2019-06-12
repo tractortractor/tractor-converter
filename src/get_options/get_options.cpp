@@ -470,7 +470,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
 //  if(vm.count("help"))
     if(helpers::check_option(vm,
                              "help",
-                             TRACTOR_CONVERTER_DONT_THROW_ON_FAILURE))
+                             error_handling::none))
     {
       std::cout << visible << "\n";
       std::exit(EXIT_SUCCESS);
@@ -479,7 +479,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
 //  if(vm.count("version"))
     if(helpers::check_option(vm,
                              "version",
-                             TRACTOR_CONVERTER_DONT_THROW_ON_FAILURE))
+                             error_handling::none))
     {
       std::cout << "Tractor converter program, version " <<
         TRACTOR_CONVERTER_VERSION << "\n";

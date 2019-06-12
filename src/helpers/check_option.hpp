@@ -2,6 +2,7 @@
 #define TRACTOR_CONVERTER_CHECK_OPTION_H
 
 #include "defines.hpp"
+#include "bitflag.hpp"
 
 #include <boost/program_options.hpp>
 
@@ -16,10 +17,12 @@ namespace helpers{
 
 int check_option(const boost::program_options::variables_map &options,
                  const std::string &option_name,
-                 const int throw_on_failure = TRACTOR_CONVERTER_THROW_ON_FAILURE);
+                 const bitflag<error_handling> error_flags =
+                   error_handling::throw_exception);
 int check_options(const boost::program_options::variables_map &options,
                   const std::vector<std::string> &option_names,
-                  const int throw_on_failure = TRACTOR_CONVERTER_THROW_ON_FAILURE);
+                  const bitflag<error_handling> error_flags =
+                    error_handling::throw_exception);
 
 } // namespace helpers
 } // namespace tractor_converter

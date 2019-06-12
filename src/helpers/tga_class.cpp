@@ -11,7 +11,7 @@ std::size_t get_color_size(
   const std::string &bytes,
   const std::size_t image_start_pos,
   const std::string &path_string,
-  const int throw_on_failure)
+  const bitflag<error_handling> error_flags)
 {
   const std::size_t color_size =
     static_cast<std::size_t>(static_cast<unsigned char>(
@@ -19,7 +19,7 @@ std::size_t get_color_size(
     8; // 8 bits per byte
   if(color_size != tga_default_color_size)
   {
-    if(throw_on_failure == TRACTOR_CONVERTER_THROW_ON_FAILURE)
+    if(error_flags & error_handling::throw_exception)
     {
       throw std::runtime_error(
         "Image " + path_string + " have color depth size " +
@@ -41,7 +41,7 @@ std::size_t get_colors_num(
   const std::string &bytes,
   const std::size_t image_start_pos,
   const std::string &path_string,
-  const int throw_on_failure)
+  const bitflag<error_handling> error_flags)
 {
   std::uint16_t colors_num =
     raw_bytes_to_num<std::uint16_t>(
@@ -50,7 +50,7 @@ std::size_t get_colors_num(
 
   if(colors_num > tga_default_colors_num_in_pal)
   {
-    if(throw_on_failure == TRACTOR_CONVERTER_THROW_ON_FAILURE)
+    if(error_flags & error_handling::throw_exception)
     {
       throw std::runtime_error(
         "Image " + path_string + " have number of colors in palette " +
