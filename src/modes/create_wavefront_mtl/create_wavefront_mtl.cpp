@@ -218,6 +218,13 @@ void create_wavefront_mtl_mode(
             source_pal,
             c3d::color::center_of_mass_offset);
 
+        colors_maps["wheel"]["wheel"] = wheel_color;
+        colors_maps["wheel_steer"]["wheel_steer"] = wheel_color;
+        colors_maps["wheel_ghost"]["wheel_ghost"] = wheel_color;
+        colors_maps["wheel_steer_ghost"]["wheel_steer_ghost"] =
+          wheel_color;
+        colors_maps["wheel_ghost_steer"]["wheel_ghost_steer"] =
+          wheel_color;
         for(std::size_t cur_wheel = 0; cur_wheel < n_wheels; ++cur_wheel)
         {
           colors_maps["wheel"]
