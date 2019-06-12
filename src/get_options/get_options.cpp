@@ -111,7 +111,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
               "in *.bmp images for escave and non-escave files."
             "\nCreate map to indicate which bytes of source files "
                 "match bytes of compared files."
-            "\nSpecify \"readable_output\" option to get human readable output."
+            "\nSpecify \"readable_output\" option "
+              "to get human readable output."
             "\n\"source_dir\", \"dir_to_compare\" and \"output_file\" "
                 "options must be specified."
           "\n"
@@ -436,7 +437,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
        "\tThey must be delimited by any non-numeric character.\n"
        "\tExample config file entry:\n"
        "\tmtl_body_offs = 129_3;130_3\n"
-       "\tUsed by \"create_wavefront_mtl\" and \"create_materials_table\" modes.\n")
+       "\tUsed by \"create_wavefront_mtl\" and "
+         "\"create_materials_table\" modes.\n")
       ;
 
     // Hidden options, will be allowed both on command line and
