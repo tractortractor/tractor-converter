@@ -53,6 +53,7 @@ SET(TRACTOR_CONVERTER_SOURCES
   helpers/tga_class.cpp
   helpers/to_string_precision.cpp
   helpers/file_operations.cpp
+  helpers/get_option.cpp
   helpers/check_option.cpp
   helpers/raw_num_operations.cpp
   helpers/bitflag.cpp
@@ -92,6 +93,7 @@ SET(TRACTOR_CONVERTER_HEADER_FILES
   helpers/tga_class.hpp
   helpers/to_string_precision.hpp
   helpers/file_operations.hpp
+  helpers/get_option.hpp
   helpers/check_option.hpp
   helpers/raw_num_operations.hpp
   helpers/bitflag.hpp
