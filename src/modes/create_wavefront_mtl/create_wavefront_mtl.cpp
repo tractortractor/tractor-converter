@@ -150,49 +150,13 @@ void create_wavefront_mtl_mode(
     std::size_t n_wheels =
       options["mtl_n_wheels"].as<std::size_t>();
 
-    std::vector<std::string> additional_body_offsets_str;
-//    try
-//    {
-      additional_body_offsets_str =
-        options["mtl_body_offs"].as<std::vector<std::string>>();
-//    }
-//    catch(boost::bad_any_cast &)
-//    {
-//    }
+    std::vector<std::string> additional_body_offsets_str =
+      helpers::get_vec_str_option(options,
+                                  "mtl_body_offs",
+                                  error_handling::none);
 
-    c3d::color::offset_map additional_body_offsets;
-    for(const auto &offset_str : additional_body_offsets_str)
-    {
-      std::size_t cur_pos = 0;
-      while(true)
-      {
-        int color_offset;
-        int color_shift;
-        try
-        {
-          std::size_t chars_processed;
-          color_offset =
-            std::stoi(offset_str.substr(cur_pos), &chars_processed);
-          cur_pos += chars_processed + 1;
-          color_shift =
-            std::stoi(offset_str.substr(cur_pos), &chars_processed);
-          cur_pos += chars_processed + 1;
-        }
-        // If offset_str does not contain
-        // color_offset and shift_offset numbers.
-        catch(std::invalid_argument &)
-	{
-          // TEST
-//        std::cout << "Invalid mtl_body_offs option: " << offset_str << '\n';
-//        throw;
-          break;
-        }
-        additional_body_offsets
-            ["body_offset_" + std::to_string(color_offset) +
-             "_shift_" + std::to_string(color_shift)] =
-          c3d::color::offset_pair(color_offset, color_shift);
-      }
-    }
+    c3d::color::offset_map additional_body_offsets =
+      helpers::parse_mtl_body_offs(additional_body_offsets_str);
 
 
 

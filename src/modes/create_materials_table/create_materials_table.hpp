@@ -7,6 +7,8 @@
 
 #include "hex.hpp"
 #include "check_option.hpp"
+#include "get_option.hpp"
+#include "parse_mtl_body_offs.hpp"
 #include "file_operations.hpp"
 #include "to_string_precision.hpp"
 
