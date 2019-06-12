@@ -115,13 +115,13 @@ html_material create_materials_table_mode_helper_read_material(
     colors.push_back(color);
   }
   html_material_changes changes = html_material_changes::none;
-  // If color_ind_changes_per_world_range intersects offset, end_offset range
+  // If color_ind_changes_per_world_range intersects offset, end_offset range.
   if(color_ind_changes_per_world_range.first <= end_offset &&
      color_ind_changes_per_world_range.second >= offset_pair.offset)
   {
     changes = html_material_changes::per_world;
   }
-  // If color_ind_changes_per_quant_range intersects offset, end_offset range
+  // If color_ind_changes_per_quant_range intersects offset, end_offset range.
   if(color_ind_changes_per_quant_range.first <= end_offset &&
      color_ind_changes_per_quant_range.second >= offset_pair.offset)
   {
@@ -253,7 +253,8 @@ void create_materials_table_mode(
             std::stoi(offset_str.substr(cur_pos), &chars_processed);
           cur_pos += chars_processed + 1;
         }
-        // If offset_str does not contain color_offset and shift_offset numbers.
+        // If offset_str does not contain
+        // color_offset and shift_offset numbers.
         catch(std::invalid_argument &)
         {
           // TEST
