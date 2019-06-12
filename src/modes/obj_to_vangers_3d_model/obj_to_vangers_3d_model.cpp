@@ -34,6 +34,25 @@ void obj_to_vangers_3d_model_mode(
         options["center_of_mass_file"].as<std::string>());
     std::string c3d_default_material_str =
       options["c3d_default_material"].as<std::string>();
+    double scale_cap = options["3d_scale_cap"].as<double>();
+
+    helpers::bitflag<helpers::obj_to_m3d_flag> obj_to_m3d_flags;
+    if(options["center_model"].as<bool>())
+    {
+      obj_to_m3d_flags |=
+        helpers::obj_to_m3d_flag::center_model;
+    }
+    if(options["recalculate_vertex_normals"].as<bool>())
+    {
+      obj_to_m3d_flags |=
+        helpers::obj_to_m3d_flag::recalculate_vertex_normals;
+    }
+    if(options["generate_bound_models"].as<bool>())
+    {
+      obj_to_m3d_flags |=
+        helpers::obj_to_m3d_flag::generate_bound_models;
+    }
+
     unsigned int c3d_default_material_id;
     try
     {
@@ -142,8 +161,6 @@ void obj_to_vangers_3d_model_mode(
         "for generation of *.m3d/*.a3d files." << '\n';
       center_of_mass_model_ptr = nullptr;
     }
-
-    helpers::bitflag<helpers::obj_to_m3d_flag> obj_to_m3d_flags;
 
 
 
@@ -281,8 +298,9 @@ void obj_to_vangers_3d_model_mode(
               weapon_attachment_point_model_ptr,
               center_of_mass_model_ptr,
               c3d_default_material_id,
-              non_mechos_scale_sizes_ptr,
-              obj_to_m3d_flags);
+              scale_cap,
+              obj_to_m3d_flags,
+              non_mechos_scale_sizes_ptr);
           // TEST
 //        std::cout << '\n' << "weapon m3d" << '\n';
 //        std::cout << "input: " <<
@@ -325,6 +343,7 @@ void obj_to_vangers_3d_model_mode(
             center_of_mass_model_ptr,
             max_weapons_radius,
             c3d_default_material_id,
+            scale_cap,
             obj_to_m3d_flags);
           // TEST
 //        std::cout << '\n' << "mechos m3d" << '\n';
@@ -357,8 +376,9 @@ void obj_to_vangers_3d_model_mode(
             "output_dir",
             center_of_mass_model_ptr,
             c3d_default_material_id,
-            non_mechos_scale_sizes_ptr,
-            obj_to_m3d_flags);
+            scale_cap,
+            obj_to_m3d_flags,
+            non_mechos_scale_sizes_ptr);
           // TEST
 //        std::cout << '\n' << "animated a3d" << '\n';
 //        std::cout << "input: " <<
@@ -390,8 +410,9 @@ void obj_to_vangers_3d_model_mode(
             "output_dir",
             center_of_mass_model_ptr,
             c3d_default_material_id,
-            non_mechos_scale_sizes_ptr,
-            obj_to_m3d_flags);
+            scale_cap,
+            obj_to_m3d_flags,
+            non_mechos_scale_sizes_ptr);
           // TEST
 //        std::cout << '\n' << "other m3d" << '\n';
 //        std::cout << "input: " <<

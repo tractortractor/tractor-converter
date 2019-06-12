@@ -101,8 +101,9 @@ wavefront_obj_to_m3d_model::wavefront_obj_to_m3d_model(
   const volInt::polyhedron *center_of_mass_model_arg,
   double max_weapons_radius_arg,
   unsigned int c3d_default_material_id_arg,
-  std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg,
-  bitflag<obj_to_m3d_flag> flags_arg)
+  double scale_cap_arg,
+  bitflag<obj_to_m3d_flag> flags_arg,
+  std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg)
 : vangers_model(input_file_path_arg,
     output_dir_path_arg,
     input_file_name_error_arg,
@@ -113,8 +114,9 @@ wavefront_obj_to_m3d_model::wavefront_obj_to_m3d_model(
     center_of_mass_model_arg),
   max_weapons_radius(max_weapons_radius_arg),
   c3d_default_material_id(c3d_default_material_id_arg),
-  non_mechos_scale_sizes(non_mechos_scale_sizes_arg),
-  flags(flags_arg)
+  scale_cap(scale_cap_arg),
+  flags(flags_arg),
+  non_mechos_scale_sizes(non_mechos_scale_sizes_arg)
 {
   model_name = input_file_path_arg.filename().string();
 
@@ -2984,6 +2986,7 @@ void mechos_wavefront_objs_to_m3d(
   const volInt::polyhedron *center_of_mass_model_arg,
   double max_weapons_radius_arg,
   unsigned int c3d_default_material_id_arg,
+  double scale_cap_arg,
   bitflag<obj_to_m3d_flag> flags_arg)
 {
   wavefront_obj_to_m3d_model cur_vangers_model(
@@ -2996,8 +2999,9 @@ void mechos_wavefront_objs_to_m3d(
     center_of_mass_model_arg,
     max_weapons_radius_arg,
     c3d_default_material_id_arg,
-    nullptr,
-    flags_arg);
+    scale_cap_arg,
+    flags_arg,
+    nullptr);
   cur_vangers_model.mechos_wavefront_objs_to_m3d();
 }
 
@@ -3011,8 +3015,9 @@ volInt::polyhedron weapon_wavefront_objs_to_m3d(
   const volInt::polyhedron *weapon_attachment_point_arg,
   const volInt::polyhedron *center_of_mass_model_arg,
   unsigned int c3d_default_material_id_arg,
-  std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg,
-  bitflag<obj_to_m3d_flag> flags_arg)
+  double scale_cap_arg,
+  bitflag<obj_to_m3d_flag> flags_arg,
+  std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg)
 {
   wavefront_obj_to_m3d_model cur_vangers_model(
     input_file_path_arg,
@@ -3024,8 +3029,9 @@ volInt::polyhedron weapon_wavefront_objs_to_m3d(
     center_of_mass_model_arg,
     0.0,
     c3d_default_material_id_arg,
-    non_mechos_scale_sizes_arg,
-    flags_arg);
+    scale_cap_arg,
+    flags_arg,
+    non_mechos_scale_sizes_arg);
   return cur_vangers_model.weapon_wavefront_objs_to_m3d();
 }
 
@@ -3038,8 +3044,9 @@ void animated_wavefront_objs_to_a3d(
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *center_of_mass_model_arg,
   unsigned int c3d_default_material_id_arg,
-  std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg,
-  bitflag<obj_to_m3d_flag> flags_arg)
+  double scale_cap_arg,
+  bitflag<obj_to_m3d_flag> flags_arg,
+  std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg)
 {
   wavefront_obj_to_m3d_model cur_vangers_model(
     input_file_path_arg,
@@ -3051,8 +3058,9 @@ void animated_wavefront_objs_to_a3d(
     center_of_mass_model_arg,
     0.0,
     c3d_default_material_id_arg,
-    non_mechos_scale_sizes_arg,
-    flags_arg);
+    scale_cap_arg,
+    flags_arg,
+    non_mechos_scale_sizes_arg);
   cur_vangers_model.animated_wavefront_objs_to_a3d();
 }
 
@@ -3065,8 +3073,9 @@ void other_wavefront_objs_to_m3d(
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *center_of_mass_model_arg,
   unsigned int c3d_default_material_id_arg,
-  std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg,
-  bitflag<obj_to_m3d_flag> flags_arg)
+  double scale_cap_arg,
+  bitflag<obj_to_m3d_flag> flags_arg,
+  std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg)
 {
   wavefront_obj_to_m3d_model cur_vangers_model(
     input_file_path_arg,
@@ -3078,8 +3087,9 @@ void other_wavefront_objs_to_m3d(
     center_of_mass_model_arg,
     0.0,
     c3d_default_material_id_arg,
-    non_mechos_scale_sizes_arg,
-    flags_arg);
+    scale_cap_arg,
+    flags_arg,
+    non_mechos_scale_sizes_arg);
   cur_vangers_model.other_wavefront_objs_to_m3d();
 }
 
