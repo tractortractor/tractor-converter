@@ -1659,13 +1659,6 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
   weapon_slots_existence = 0;
   cur_weapon_slot_data =
     std::vector<weapon_slot_data>(m3d::weapon_slot::max_slots);
-  for(std::size_t cur_slot = 0;
-      cur_slot < m3d::weapon_slot::max_slots;
-      ++cur_slot)
-  {
-    cur_weapon_slot_data[cur_slot].location_angle_of_slot = 0;
-    volInt::vector_make_zero(cur_weapon_slot_data[cur_slot].R_slot);
-  }
 
   if(!weapon_attachment_point)
   {
