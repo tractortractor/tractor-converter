@@ -1026,6 +1026,21 @@ void polyhedron::faces_calc_params()
 
 
 
+void polyhedron::faces_calc_params_inv_neg_vol()
+{
+  // If volume is negative, vertices have wrong order.
+  // They must be reversed again in this case.
+  faces_calc_params(); // Must be called before "check_volume()".
+  if(check_volume() < 0)
+  {
+    invertVertNorms();
+    reverse_polygons_orientation();
+    faces_calc_params();
+  }
+}
+
+
+
 
 
 void polyhedron::get_extreme_points()
@@ -1182,7 +1197,7 @@ void polyhedron::move_model_to_point_inv_neg_vol(
   const std::vector<double> &point_arg)
 {
   move_model_to_point(point_arg);
-  calculate_c3d_properties_inv_neg_vol();
+  faces_calc_params_inv_neg_vol();
 }
 
 
@@ -1227,7 +1242,7 @@ void polyhedron::move_coord_system_to_point_inv_neg_vol(
   const std::vector<double> &point_arg)
 {
   move_coord_system_to_point(point_arg);
-  calculate_c3d_properties_inv_neg_vol();
+  faces_calc_params_inv_neg_vol();
 }
 
 
@@ -1699,21 +1714,6 @@ void polyhedron::calculate_c3d_properties()
     expected_volume += (p1 * (p3 % p4)) / 6.0f;
   }
   */
-}
-
-
-
-void polyhedron::calculate_c3d_properties_inv_neg_vol()
-{
-  // If volume is negative, vertices have wrong order.
-  // They must be reversed again in this case.
-  faces_calc_params(); // Must be called before "check_volume()".
-  if(check_volume() < 0)
-  {
-    invertVertNorms();
-    reverse_polygons_orientation();
-    faces_calc_params();
-  }
 }
 
 

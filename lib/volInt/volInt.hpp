@@ -314,6 +314,7 @@ typedef struct polyhedron {
   void invertVertNorms();
   void reverse_polygons_orientation();
   void faces_calc_params(); // Must be called again if model was moved.
+  void faces_calc_params_inv_neg_vol();
 
   void get_extreme_points();
   model_extreme_points get_extreme_points(
@@ -369,7 +370,6 @@ typedef struct polyhedron {
 
   void calculate_rmax();
   void calculate_c3d_properties();
-  void calculate_c3d_properties_inv_neg_vol();
 
   std::pair<std::vector<double>, std::vector<double>> &extreme_points_pair();
   const std::pair<std::vector<double>, std::vector<double>> &

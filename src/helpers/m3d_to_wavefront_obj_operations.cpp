@@ -580,7 +580,7 @@ volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
 
   read_sorted_polygon_indices(cur_model);
 
-  cur_model.calculate_c3d_properties_inv_neg_vol();
+  cur_model.faces_calc_params_inv_neg_vol();
 
   return cur_model;
 }
