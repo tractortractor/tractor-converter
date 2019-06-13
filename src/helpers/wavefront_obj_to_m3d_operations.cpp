@@ -2394,6 +2394,9 @@ void wavefront_obj_to_m3d_model::center_debris(
   volInt::polyhedron &debris_bound_model)
 {
   debris_model.offset = debris_model.get_model_center();
+  // Not needed since offset of debris bound model is never used.
+  // Added for consistency.
+  debris_bound_model.offset = debris_model.offset;
   debris_model.move_coord_system_to_point_inv_neg_vol(
     debris_model.offset_point());
   debris_bound_model.move_coord_system_to_point_inv_neg_vol(
