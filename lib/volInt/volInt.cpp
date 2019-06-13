@@ -592,7 +592,8 @@ void model_extreme_points::set_zmin(double new_zmin)
 
 
 
-void model_extreme_points::get_most_extreme(const model_extreme_points &other)
+void model_extreme_points::get_most_extreme_cmp_cur(
+  const model_extreme_points &other)
 {
   for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
   {
@@ -607,7 +608,8 @@ void model_extreme_points::get_most_extreme(const model_extreme_points &other)
   }
 }
 
-void model_extreme_points::get_most_extreme(const std::vector<double> &point)
+void model_extreme_points::get_most_extreme_cmp_cur(
+  const std::vector<double> &point)
 {
   for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
   {

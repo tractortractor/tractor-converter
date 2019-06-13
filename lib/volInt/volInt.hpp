@@ -249,8 +249,8 @@ struct model_extreme_points {
   void set_ymin(double new_ymin);
   void set_zmin(double new_zmin);
 
-  void get_most_extreme(const model_extreme_points &other);
-  void get_most_extreme(const std::vector<double> &point);
+  void get_most_extreme_cmp_cur(const model_extreme_points &other);
+  void get_most_extreme_cmp_cur(const std::vector<double> &point);
   void get_most_extreme(const std::vector<std::vector<double>> &points);
   void get_most_extreme(const std::vector<const std::vector<double>*> &points);
 
