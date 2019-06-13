@@ -131,8 +131,8 @@ struct weapon_slot_data
 {
   weapon_slot_data();
 
-  std::vector<double> R_slots;
-  double location_angle_of_slots;
+  std::vector<double> R_slot;
+  double location_angle_of_slot;
 
   bool exists;
 };

@@ -575,23 +575,23 @@ namespace m3d{
     const std::size_t slots_existence_size = sizeof(int);
 
     // 12 int vector
-    const std::size_t R_slots_size = sizeof(int) * 3;
+    const std::size_t R_slot_size = sizeof(int) * 3;
     // 4 int
-    const std::size_t location_angle_of_slots_size = sizeof(int);
+    const std::size_t location_angle_of_slot_size = sizeof(int);
 
     // 16
     const std::size_t slot_data_size =
-      R_slots_size + location_angle_of_slots_size;
+      R_slot_size + location_angle_of_slot_size;
 
 
     // 0 int
     const std::size_t slots_existence_pos = 0;
 
     // 0 int vector
-    const std::size_t R_slots_rel_pos = 0;
+    const std::size_t R_slot_rel_pos = 0;
     // 12 int
-    const std::size_t location_angle_of_slots_rel_pos =
-      R_slots_rel_pos + sizeof(int) * 3;
+    const std::size_t location_angle_of_slot_rel_pos =
+      R_slot_rel_pos + sizeof(int) * 3;
   } // namespace weapon_slot
 
 } // namespace m3d

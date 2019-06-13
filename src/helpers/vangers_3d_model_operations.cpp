@@ -17,8 +17,8 @@ wheel_data::wheel_data()
 
 weapon_slot_data::weapon_slot_data()
 {
-  R_slots = std::vector<double>(3, 0.0);
-  location_angle_of_slots = 0.0;
+  R_slot = std::vector<double>(3, 0.0);
+  location_angle_of_slot = 0.0;
   exists = false;
 }
 

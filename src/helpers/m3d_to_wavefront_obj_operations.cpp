@@ -249,11 +249,11 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
     std::cout << "cur_slot: " << cur_slot << '\n';
     for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
     {
-      std::cout << "R_slots[" << cur_coord << "]" <<
-        cur_weapon_slot_data[cur_slot].R_slots[cur_coord] << '\n';
+      std::cout << "R_slot[" << cur_coord << "]" <<
+        cur_weapon_slot_data[cur_slot].R_slot[cur_coord] << '\n';
     }
-    std::cout << "slot_data_el.location_angle_of_slots: " <<
-      cur_weapon_slot_data[cur_slot].location_angle_of_slots << '\n';
+    std::cout << "slot_data_el.location_angle_of_slot: " <<
+      cur_weapon_slot_data[cur_slot].location_angle_of_slot << '\n';
   }
   */
   c3d_to_wavefront_obj("_main_bound", c3d::c3d_type::bound);
@@ -1392,8 +1392,8 @@ void m3d_to_wavefront_obj_model::merge_main_model_with_weapons(
       merge_helper_move_model_into_main(
         main_model,
         temp_weapon_model,
-        cur_weapon_slot_data[cur_weapon_num].R_slots,
-        cur_weapon_slot_data[cur_weapon_num].location_angle_of_slots,
+        cur_weapon_slot_data[cur_weapon_num].R_slot,
+        cur_weapon_slot_data[cur_weapon_num].location_angle_of_slot,
         cur_weapon_num,
         merge_model_type::weapon);
     }
@@ -1481,8 +1481,8 @@ void m3d_to_wavefront_obj_model::add_weapons_to_models_map(
         std::to_string(cur_weapon_num + 1);
       models_map[cur_model_name] = *example_weapon_model;
       move_weapon_model(
-        cur_weapon_slot_data[cur_weapon_num].R_slots,
-        cur_weapon_slot_data[cur_weapon_num].location_angle_of_slots,
+        cur_weapon_slot_data[cur_weapon_num].R_slot,
+        cur_weapon_slot_data[cur_weapon_num].location_angle_of_slot,
         cur_weapon_num,
         models_map[cur_model_name]);
     }
@@ -1612,9 +1612,9 @@ void m3d_to_wavefront_obj_model::save_m3d_debris_data(
 
 void m3d_to_wavefront_obj_model::read_m3d_weapon_slot(std::size_t slot_id)
 {
-  cur_weapon_slot_data[slot_id].R_slots =
+  cur_weapon_slot_data[slot_id].R_slot =
     read_vec_var_from_m3d_scaled<int, double>(3);
-  cur_weapon_slot_data[slot_id].location_angle_of_slots =
+  cur_weapon_slot_data[slot_id].location_angle_of_slot =
     volInt::sicher_angle_to_radians(read_var_from_m3d<int, int>());
   // In weapon_slots_existence only rightmost 3 bits are important.
   // Each bit corresponds to weapon slot from right to left.

@@ -276,17 +276,17 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 //    cur_weapon < m3d::weapon_slot::max_slots;
 //    ++cur_weapon)
 //{
-//  std::vector<double> R_slots;
-//  double location_angle_of_slots;
+//  std::vector<double> R_slot;
+//  double location_angle_of_slot;
 //  std::cout <<
-//    "cur_weapon_slot_data[" << cur_weapon << "].location_angle_of_slots" <<
-//    cur_weapon_slot_data[cur_weapon].location_angle_of_slots << '\n';
+//    "cur_weapon_slot_data[" << cur_weapon << "].location_angle_of_slot" <<
+//    cur_weapon_slot_data[cur_weapon].location_angle_of_slot << '\n';
 //  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
 //  {
 //    std::cout <<
 //      "cur_weapon_slot_data[" << cur_weapon <<
-//        "].R_slots[" << cur_coord << "]" <<
-//      cur_weapon_slot_data[cur_weapon].R_slots[cur_coord] << '\n';
+//        "].R_slot[" << cur_coord << "]" <<
+//      cur_weapon_slot_data[cur_weapon].R_slot[cur_coord] << '\n';
 //  }
 //}
 
@@ -1319,10 +1319,10 @@ void wavefront_obj_to_m3d_model::write_m3d_debris_data(
 void wavefront_obj_to_m3d_model::write_m3d_weapon_slot(std::size_t slot_id)
 {
   write_vec_var_to_m3d_scaled_rounded<double, int>(
-    cur_weapon_slot_data[slot_id].R_slots);
+    cur_weapon_slot_data[slot_id].R_slot);
   write_var_to_m3d<int, int>(
     volInt::radians_to_sicher_angle(
-      cur_weapon_slot_data[slot_id].location_angle_of_slots));
+      cur_weapon_slot_data[slot_id].location_angle_of_slot));
 }
 
 void wavefront_obj_to_m3d_model::write_m3d_weapon_slots()
@@ -1663,8 +1663,8 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
       cur_slot < m3d::weapon_slot::max_slots;
       ++cur_slot)
   {
-    cur_weapon_slot_data[cur_slot].location_angle_of_slots = 0;
-    volInt::vector_make_zero(cur_weapon_slot_data[cur_slot].R_slots);
+    cur_weapon_slot_data[cur_slot].location_angle_of_slot = 0;
+    volInt::vector_make_zero(cur_weapon_slot_data[cur_slot].R_slot);
   }
 
   if(!weapon_attachment_point)
@@ -1761,7 +1761,7 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
           "for attachment point in mechos model." + '\n');
       }
 
-      cur_weapon_slot_data[cur_slot].location_angle_of_slots =
+      cur_weapon_slot_data[cur_slot].location_angle_of_slot =
         std::remainder(
           std::atan2(two_rel_to_one[0], two_rel_to_one[2]) -
             weapon_attachment_point->ref_angle,
@@ -1779,7 +1779,7 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
       {
         volInt::rotate_point_by_axis(
           ref_vert,
-          cur_weapon_slot_data[cur_slot].location_angle_of_slots,
+          cur_weapon_slot_data[cur_slot].location_angle_of_slot,
           volInt::rotation_axis::y);
       }
 
@@ -1817,7 +1817,7 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
         }
       }
 
-      cur_weapon_slot_data[cur_slot].R_slots =
+      cur_weapon_slot_data[cur_slot].R_slot =
         volInt::vector_minus((*cur_weapon_verts[cur_slot][0]),
                              ref_verts_rotated[0]);
     }
@@ -2477,13 +2477,13 @@ void wavefront_obj_to_m3d_model::get_m3d_scale_size(
       {
         get_extreme_radius(extreme_radius,
                            max_weapons_radius,
-                           slot_data.R_slots);
+                           slot_data.R_slot);
 /*
         double max_slot_distance =
           std::sqrt(
-            slot_data.R_slots[0]*slot_data.R_slots[0] +
-            slot_data.R_slots[1]*slot_data.R_slots[1] +
-            slot_data.R_slots[2]*slot_data.R_slots[2]);
+            slot_data.R_slot[0]*slot_data.R_slot[0] +
+            slot_data.R_slot[1]*slot_data.R_slot[1] +
+            slot_data.R_slot[2]*slot_data.R_slot[2]);
         get_extreme_radius(extreme_radius, max_slot_distance);
 */
 /*
@@ -2491,10 +2491,10 @@ void wavefront_obj_to_m3d_model::get_m3d_scale_size(
         {
           get_extreme_radius(
             extreme_radius,
-            slot_data.R_slots[cur_coord] + max_weapons_radius);
+            slot_data.R_slot[cur_coord] + max_weapons_radius);
           get_extreme_radius(
             extreme_radius,
-            slot_data.R_slots[cur_coord] - max_weapons_radius);
+            slot_data.R_slot[cur_coord] - max_weapons_radius);
           // TEST
           if(boost::filesystem::path(main_model->wavefront_obj_path)
                .stem().string() ==
@@ -2502,16 +2502,16 @@ void wavefront_obj_to_m3d_model::get_m3d_scale_size(
           {
             std::cout << "extreme_radius: " <<
               extreme_radius << '\n';
-            std::cout << "slot_data.R_slots[" << cur_coord << "]: " <<
-              slot_data.R_slots[cur_coord] << '\n';
+            std::cout << "slot_data.R_slot[" << cur_coord << "]: " <<
+              slot_data.R_slot[cur_coord] << '\n';
             std::cout << "max_weapons_radius: " <<
               max_weapons_radius << '\n';
             std::cout <<
-              "slot_data.R_slots[cur_coord] + max_weapons_radius: " <<
-              slot_data.R_slots[cur_coord] + max_weapons_radius << '\n';
+              "slot_data.R_slot[cur_coord] + max_weapons_radius: " <<
+              slot_data.R_slot[cur_coord] + max_weapons_radius << '\n';
             std::cout <<
-              "slot_data.R_slots[cur_coord] - max_weapons_radius: " <<
-              slot_data.R_slots[cur_coord] - max_weapons_radius << '\n';
+              "slot_data.R_slot[cur_coord] - max_weapons_radius: " <<
+              slot_data.R_slot[cur_coord] - max_weapons_radius << '\n';
           }
         }
 */
