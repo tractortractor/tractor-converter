@@ -1573,8 +1573,13 @@ void m3d_to_wavefront_obj_model::move_debris_to_offset(
 {
   volInt::polyhedron &main_debris_model =
     debris_model[wavefront_obj::main_obj_name];
+  volInt::polyhedron &rcm_debris_model =
+    debris_model[wavefront_obj::center_of_mass_obj_name];
+
   std::vector<double> offset = main_debris_model.offset_point();
+
   main_debris_model.move_model_to_point_inv_neg_vol(offset);
+  rcm_debris_model.move_model_to_point(offset);
   debris_bound_model.move_model_to_point_inv_neg_vol(offset);
 }
 

@@ -2387,6 +2387,10 @@ void wavefront_obj_to_m3d_model::center_debris(
   volInt::polyhedron &debris_bound_model)
 {
   debris_model.offset = debris_model.get_model_center();
+  if(debris_model.rcm_overwritten)
+  {
+    volInt::vector_minus_self(debris_model.rcm, debris_model.offset_point());
+  }
   // Not needed since offset of debris bound model is never used.
   // Added for consistency.
   debris_bound_model.offset = debris_model.offset;
