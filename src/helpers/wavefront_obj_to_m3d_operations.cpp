@@ -2151,30 +2151,12 @@ void wavefront_obj_to_m3d_model::get_m3d_header_data(
 
   if(debris_models && debris_bound_models)
   {
-
-    int cur_debris = 0;
-    int cur_debris_bound = 0;
-
     for(auto &&model : *debris_models)
     {
-
-      // TEST
-//    std::cout << "\n\n\n";
-//    std::cout << "debris: " << cur_debris;
-//    std::cout << model_name <<
-//      " debris #" << cur_debris << " model." << '\n';
-      ++cur_debris;
       model.calculate_c3d_properties();
     }
     for(auto &&model : *debris_bound_models)
     {
-
-      // TEST
-//    std::cout << "\n\n\n";
-//    std::cout << "cur_debris_bound: " << cur_debris_bound;
-//    std::cout << model_name <<
-//      " debris bound #" << cur_debris << " model." << '\n';
-      ++cur_debris_bound;
       model.calculate_c3d_properties();
     }
   }
