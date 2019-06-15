@@ -935,7 +935,7 @@ void polyhedron::reverse_polygons_orientation()
 // Must be called again if model was moved.
 void polyhedron::faces_calc_params()
 {
-  double dx1, dy1, dz1, dx2, dy2, dz2, nx, ny, nz, len;
+  double nx, ny, nz, len;
 
   std::size_t faces_size = faces.size();
   std::unordered_set<std::size_t> bad_polygons;
@@ -945,16 +945,25 @@ void polyhedron::faces_calc_params()
   for(std::size_t i = 0; i < faces_size; ++i)
   {
     face &f = faces[i];
-    /* compute face normal and offset w from first 3 vertices */
-    dx1 = verts[f.verts[1]][VOLINT_X] - verts[f.verts[0]][VOLINT_X];
-    dy1 = verts[f.verts[1]][VOLINT_Y] - verts[f.verts[0]][VOLINT_Y];
-    dz1 = verts[f.verts[1]][VOLINT_Z] - verts[f.verts[0]][VOLINT_Z];
-    dx2 = verts[f.verts[2]][VOLINT_X] - verts[f.verts[1]][VOLINT_X];
-    dy2 = verts[f.verts[2]][VOLINT_Y] - verts[f.verts[1]][VOLINT_Y];
-    dz2 = verts[f.verts[2]][VOLINT_Z] - verts[f.verts[1]][VOLINT_Z];
-    nx = dy1 * dz2 - dy2 * dz1;
-    ny = dz1 * dx2 - dz2 * dx1;
-    nz = dx1 * dy2 - dx2 * dy1;
+
+
+    /* compute face normal and offset w */
+    nx = ny = nz = 0.0;
+    for(std::size_t cur_vert = 0; cur_vert < numVertsPerPoly; ++cur_vert)
+    {
+      std::vector<double> current =
+        verts[f.verts[cur_vert]];
+      std::vector<double> next =
+        verts[f.verts[(cur_vert+1)%numVertsPerPoly]];
+      nx += (current[VOLINT_Y] - next[VOLINT_Y]) *
+            (current[VOLINT_Z] + next[VOLINT_Z]);
+      ny += (current[VOLINT_Z] - next[VOLINT_Z]) *
+            (current[VOLINT_X] + next[VOLINT_X]);
+      nz += (current[VOLINT_X] - next[VOLINT_X]) *
+            (current[VOLINT_Y] + next[VOLINT_Y]);
+    }
+
+
     len = sqrt(nx * nx + ny * ny + nz * nz);
     f.norm[VOLINT_X] = nx / len;
     f.norm[VOLINT_Y] = ny / len;
