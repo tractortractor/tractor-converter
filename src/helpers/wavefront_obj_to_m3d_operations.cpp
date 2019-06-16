@@ -2052,6 +2052,26 @@ void wavefront_obj_to_m3d_model::get_m3d_extreme_points(
   */
 }
 
+void wavefront_obj_to_m3d_model::get_m3d_extreme_points_calc_c3d_extr(
+  volInt::polyhedron *main_model,
+  std::unordered_map<int, volInt::polyhedron> *wheels_models)
+{
+  main_model->get_extreme_points();
+  if(wheels_models)
+  {
+    for(int wheel_n : main_model->wheels_steer)
+    {
+      if(main_model->wheels_non_ghost.count(wheel_n))
+      {
+        (*wheels_models)[wheel_n].get_extreme_points();
+      }
+    }
+  }
+  get_m3d_extreme_points(main_model, wheels_models);
+}
+
+
+
 void wavefront_obj_to_m3d_model::get_a3d_extreme_points(
   const std::deque<volInt::polyhedron> *models)
 {
@@ -2079,6 +2099,16 @@ void wavefront_obj_to_m3d_model::get_a3d_extreme_points(
     std::cout << '\n';
   }
   */
+}
+
+void wavefront_obj_to_m3d_model::get_a3d_extreme_points_calc_c3d_extr(
+  std::deque<volInt::polyhedron> *models)
+{
+  for(auto &&model : *models)
+  {
+    model.get_extreme_points();
+  }
+  get_a3d_extreme_points(models);
 }
 
 

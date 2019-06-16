@@ -390,8 +390,14 @@ private:
     const volInt::polyhedron *main_model,
     const std::unordered_map<int, volInt::polyhedron> *wheels_models =
       nullptr);
+  void get_m3d_extreme_points_calc_c3d_extr(
+    volInt::polyhedron *main_model,
+    std::unordered_map<int, volInt::polyhedron> *wheels_models =
+      nullptr);
   void get_a3d_extreme_points(
     const std::deque<volInt::polyhedron> *models);
+  void get_a3d_extreme_points_calc_c3d_extr(
+    std::deque<volInt::polyhedron> *models);
 
 
 
