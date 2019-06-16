@@ -137,7 +137,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
   std::deque<volInt::polyhedron> debris_bound_models =
     read_objs_with_prefix("debris_bound", c3d::c3d_type::bound);
 
-  // Must be called before call to remove_polygons() and get_m3d_header_data()
+  // Must be called before call to remove_polygons() and get_m3d_header_data().
   read_file_cfg_m3d(cur_main_model, &debris_models);
 
 
@@ -153,7 +153,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
     get_wheels_steer(cur_main_model);
 
 
-  // Must be called before call to get_m3d_scale_size()
+  // Must be called before call to get_m3d_scale_size().
   remove_polygons(cur_main_model, remove_polygons_model::mechos);
   for(auto &&debris_model : debris_models)
   {
@@ -197,7 +197,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 
 
 
-  // Allocating enough space for *.m3d file
+  // Allocating enough space for *.m3d file.
   m3d_data = std::string(m3d_file_size, '\0');
   m3d_data_cur_pos = 0;
 
@@ -332,7 +332,7 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
   volInt::polyhedron cur_main_bound_model =
     read_obj_prefix("main_bound", c3d::c3d_type::bound);
 
-  // Must be called before call to remove_polygons() and get_m3d_header_data()
+  // Must be called before call to remove_polygons() and get_m3d_header_data().
   read_file_cfg_m3d(cur_main_model);
 
 
@@ -340,7 +340,7 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
   get_attachment_point(cur_main_model);
 
 
-  // Must be called before call to get_m3d_scale_size()
+  // Must be called before call to get_m3d_scale_size().
   remove_polygons(cur_main_model, remove_polygons_model::weapon);
 
   if(flags & obj_to_m3d_flag::center_model)
@@ -359,7 +359,7 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
 
 
 
-  // Allocating enough space for *.m3d file
+  // Allocating enough space for *.m3d file.
   m3d_data = std::string(m3d_file_size, '\0');
   m3d_data_cur_pos = 0;
 
@@ -413,12 +413,12 @@ void wavefront_obj_to_m3d_model::animated_wavefront_objs_to_a3d()
     read_objs_with_prefix("", c3d::c3d_type::regular);
 
 
-  // Must be called before call to remove_polygons() and get_a3d_header_data()
+  // Must be called before call to remove_polygons() and get_a3d_header_data().
   read_file_cfg_a3d(animated_models);
 
 
 
-  // Must be called before call to get_a3d_scale_size()
+  // Must be called before call to get_a3d_scale_size().
   for(auto &&animated_model : animated_models)
   {
     remove_polygons(animated_model, remove_polygons_model::regular);
@@ -437,7 +437,7 @@ void wavefront_obj_to_m3d_model::animated_wavefront_objs_to_a3d()
 
   std::size_t a3d_file_size = get_a3d_file_size(&animated_models);
 
-  // Allocating enough space for *.a3d file
+  // Allocating enough space for *.a3d file.
   m3d_data = std::string(a3d_file_size, '\0');
   m3d_data_cur_pos = 0;
 
@@ -470,12 +470,12 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
   volInt::polyhedron cur_main_bound_model =
     read_obj_prefix("main_bound", c3d::c3d_type::bound);
 
-  // Must be called before call to remove_polygons() and get_m3d_header_data()
+  // Must be called before call to remove_polygons() and get_m3d_header_data().
   read_file_cfg_m3d(cur_main_model);
 
 
 
-  // Must be called before call to get_m3d_scale_size()
+  // Must be called before call to get_m3d_scale_size().
   remove_polygons(cur_main_model, remove_polygons_model::regular);
 
   if(flags & obj_to_m3d_flag::center_model)
@@ -494,7 +494,7 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
 
 
 
-  // Allocating enough space for *.m3d file
+  // Allocating enough space for *.m3d file.
   m3d_data = std::string(m3d_file_size, '\0');
   m3d_data_cur_pos = 0;
 
@@ -704,7 +704,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
     {
       if(vm.count("custom_inertia_tensor_main"))
       {
-        // 9 doubles to describe 3x3 inertia tensor matrix
+        // 9 doubles to describe 3x3 inertia tensor matrix.
         const std::vector<double> custom_J_main =
           parse_per_file_cfg_multiple_options<double>(
             vm["custom_inertia_tensor_main"].as<std::vector<std::string>>());
@@ -786,7 +786,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
             "custom_inertia_tensor_debris_" + std::to_string(cur_debris + 1);
           if(vm.count(cur_custom_J_option))
           {
-            // 9 doubles to describe 3x3 inertia tensor matrix
+            // 9 doubles to describe 3x3 inertia tensor matrix.
             const std::vector<double> custom_J_debris =
               parse_per_file_cfg_multiple_options<double>(
                 vm[cur_custom_J_option].as<std::vector<std::string>>());
@@ -944,7 +944,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_a3d(
           "custom_inertia_tensor_animated_" + std::to_string(cur_animated + 1);
         if(vm.count(cur_custom_J_option))
         {
-          // 9 doubles to describe 3x3 inertia tensor matrix
+          // 9 doubles to describe 3x3 inertia tensor matrix.
           const std::vector<double> custom_J_animated =
             parse_per_file_cfg_multiple_options<double>(
               vm[cur_custom_J_option].as<std::vector<std::string>>());
@@ -1060,7 +1060,7 @@ std::vector<double> wavefront_obj_to_m3d_model::get_medium_vert(
   if(poly.color_id ==
      c3d::color::string_to_id::zero_reserved)
   {
-    // preserved sign
+    // Preserved sign.
     std::vector<double> extreme_abs_coords(3, 0.0);
     for(const auto vert_ind : poly.verts)
     {
@@ -1179,7 +1179,7 @@ void wavefront_obj_to_m3d_model::write_polygon(
   write_var_to_m3d<int, int>(poly.numVerts);
   write_var_to_m3d<int, int>(c3d::polygon::default_sort_info);
   write_var_to_m3d<unsigned int, unsigned int>(poly.color_id);
-  // color_shift is always 0
+  // color_shift is always 0.
   write_var_to_m3d<unsigned int, unsigned int>(
     c3d::polygon::default_color_shift);
 
@@ -1566,7 +1566,7 @@ std::pair<point, point> wavefront_obj_to_m3d_model::get_compare_points(
 
 
 
-// rcm - center of mass
+// rcm - center of mass.
 void wavefront_obj_to_m3d_model::get_custom_rcm(volInt::polyhedron &model)
 {
   if(!center_of_mass_model)
@@ -1812,7 +1812,8 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
 
       // If all coordinates of points 2 and 3 relative to 1 are the same
       // in rotated orig model and current model then model wasn't changed.
-      // rotated_compare_points.first is difference between 2nd reference points.
+      // rotated_compare_points.first is difference
+      // between 2nd reference points.
       // rotated_compare_points.second is difference between 3rd ones.
       // Throwing exception if difference is not zero.
       for(std::size_t cur_coord = 0 ; cur_coord < 3; ++cur_coord)
@@ -2857,7 +2858,7 @@ void wavefront_obj_to_m3d_model::remove_polygons(
   verts_to_keep.reserve(model.verts.size());
   norms_to_keep.reserve(model.vertNorms.size());
 
-  // removing right polygons
+  // Removing right polygons.
   if(model_type == remove_polygons_model::mechos)
   {
     remove_polygons_helper_erase_mechos(model);
