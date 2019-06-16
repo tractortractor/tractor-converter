@@ -1989,6 +1989,7 @@ void wavefront_obj_to_m3d_model::get_m3d_extreme_points(
   const volInt::polyhedron *main_model,
   const std::unordered_map<int, volInt::polyhedron> *wheels_models)
 {
+  extreme_points = volInt::model_extreme_points();
   extreme_points.get_most_extreme_cmp_cur(main_model->extreme_points);
   // TEST
   /*
@@ -2054,6 +2055,7 @@ void wavefront_obj_to_m3d_model::get_m3d_extreme_points(
 void wavefront_obj_to_m3d_model::get_a3d_extreme_points(
   const std::deque<volInt::polyhedron> *models)
 {
+  extreme_points = volInt::model_extreme_points();
   for(const auto &model : *models)
   {
     extreme_points.get_most_extreme_cmp_cur(model.extreme_points);
