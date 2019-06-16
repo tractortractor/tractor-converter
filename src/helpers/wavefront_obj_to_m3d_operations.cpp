@@ -2334,8 +2334,8 @@ void wavefront_obj_to_m3d_model::get_wheels_data(
       wheels_extreme_points[wheel_n].xmax() -
       wheels_extreme_points[wheel_n].xmin();
     cur_wheel_data[wheel_n].radius =
-      wheels_extreme_points[wheel_n].zmax() -
-      wheels_extreme_points[wheel_n].zmin() / 2;
+      (wheels_extreme_points[wheel_n].zmax() -
+       wheels_extreme_points[wheel_n].zmin()) / 2;
 
     // TEST
     /*
