@@ -166,6 +166,15 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 
   center_debris(debris_models, debris_bound_models);
 
+  if(flags & obj_to_m3d_flag::center_model)
+  {
+    center_m3d(&cur_main_model,
+               &cur_main_bound_model,
+               &wheels_models,
+               &debris_models,
+               &debris_bound_models);
+  }
+
   get_m3d_scale_size(&cur_main_model,
                      &cur_main_bound_model,
                      &wheels_models,
@@ -334,6 +343,10 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
   // Must be called before call to get_m3d_scale_size()
   remove_polygons(cur_main_model, remove_polygons_model::weapon);
 
+  if(flags & obj_to_m3d_flag::center_model)
+  {
+    center_m3d(&cur_main_model, &cur_main_bound_model);
+  }
 
   get_m3d_scale_size(&cur_main_model, &cur_main_bound_model);
 
@@ -411,6 +424,11 @@ void wavefront_obj_to_m3d_model::animated_wavefront_objs_to_a3d()
     remove_polygons(animated_model, remove_polygons_model::regular);
   }
 
+  if(flags & obj_to_m3d_flag::center_model)
+  {
+    center_a3d(&animated_models);
+  }
+
   get_a3d_scale_size(&animated_models);
 
   get_a3d_header_data(&animated_models);
@@ -460,6 +478,10 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
   // Must be called before call to get_m3d_scale_size()
   remove_polygons(cur_main_model, remove_polygons_model::regular);
 
+  if(flags & obj_to_m3d_flag::center_model)
+  {
+    center_m3d(&cur_main_model, &cur_main_bound_model);
+  }
 
   get_m3d_scale_size(&cur_main_model, &cur_main_bound_model);
 
