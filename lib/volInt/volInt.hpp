@@ -77,6 +77,10 @@ namespace exception{
   {
     using std::runtime_error::runtime_error;
   };
+  struct zero_volume : public virtual std::runtime_error
+  {
+    using std::runtime_error::runtime_error;
+  };
 } // namespace exception
 
 

@@ -1532,6 +1532,13 @@ void polyhedron::calculate_c3d_properties()
                    "(before scaling to the in-game units of measurement).");
     throw exception::negative_volume(err_msg);
   }
+  // If volume is 0 for main model of *.m3d or first model of *.a3d,
+  // the game will freeze while loading models.
+  if(T0 == 0.0 && wheel_id < 0)
+  {
+    throw exception::zero_volume("Input model " + wavefront_obj_path +
+                                 " have zero volume.");
+  }
 
   if(!volume_overwritten)
   {
