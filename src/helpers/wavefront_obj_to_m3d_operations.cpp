@@ -2446,6 +2446,76 @@ void wavefront_obj_to_m3d_model::center_debris(
 
 
 
+void wavefront_obj_to_m3d_model::center_m3d(
+  volInt::polyhedron *main_model,
+  volInt::polyhedron *main_bound_model,
+  std::unordered_map<int, volInt::polyhedron> *wheels_models,
+  std::deque<volInt::polyhedron> *debris_models,
+  std::deque<volInt::polyhedron> *debris_bound_models)
+{
+  get_m3d_extreme_points_calc_c3d_extr(main_model, wheels_models);
+  std::vector<double> m3d_center = extreme_points.get_center();
+
+  main_model->move_coord_system_to_point_inv_neg_vol(m3d_center);
+  main_bound_model->move_coord_system_to_point_inv_neg_vol(m3d_center);
+
+  if(wheels_models)
+  {
+    for(std::size_t wheel_n = 0; wheel_n < n_wheels; ++wheel_n)
+    {
+      if(main_model->wheels_steer.count(wheel_n) &&
+         main_model->wheels_non_ghost.count(wheel_n))
+      {
+        volInt::vector_minus_self((*wheels_models)[wheel_n].offset_point(),
+                                  m3d_center);
+      }
+      volInt::vector_minus_self(cur_wheel_data[wheel_n].r, m3d_center);
+    }
+  }
+  if(debris_models && debris_bound_models)
+  {
+    for(auto &&model : *debris_models)
+    {
+      volInt::vector_minus_self(model.offset_point(), m3d_center);
+    }
+    for(auto &&model : *debris_bound_models)
+    {
+      volInt::vector_minus_self(model.offset_point(), m3d_center);
+    }
+  }
+  if(weapon_slots_existence)
+  {
+    for(std::size_t slot_id = 0;
+        slot_id < m3d::weapon_slot::max_slots;
+        ++slot_id)
+    {
+      weapon_slot_data &cur_slot = cur_weapon_slot_data[slot_id];
+      if(cur_slot.exists)
+      {
+        volInt::vector_minus_self(cur_slot.R_slot, m3d_center);
+      }
+    }
+  }
+}
+
+
+
+void wavefront_obj_to_m3d_model::center_a3d(
+  std::deque<volInt::polyhedron> *models)
+{
+  get_a3d_extreme_points_calc_c3d_extr(models);
+  std::vector<double> a3d_center = extreme_points.get_center();
+
+  for(auto &&model : *models)
+  {
+    model.move_coord_system_to_point_inv_neg_vol(a3d_center);
+  }
+}
+
+
+
+
+
 void wavefront_obj_to_m3d_model::get_scale_helper_get_extreme_radius(
   volInt::polyhedron *model,
   double &extreme_radius,

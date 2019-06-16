@@ -423,6 +423,14 @@ private:
     volInt::polyhedron &debris_model,
     volInt::polyhedron &debris_bound_model);
 
+  void center_m3d(
+    volInt::polyhedron *main_model,
+    volInt::polyhedron *main_bound_model,
+    std::unordered_map<int, volInt::polyhedron> *wheels_models = nullptr,
+    std::deque<volInt::polyhedron> *debris_models = nullptr,
+    std::deque<volInt::polyhedron> *debris_bound_models = nullptr);
+  void center_a3d(std::deque<volInt::polyhedron> *models);
+
   void get_scale_helper_get_extreme_radius(
     volInt::polyhedron *model,
     double &extreme_radius,
