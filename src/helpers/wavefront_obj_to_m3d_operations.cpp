@@ -2550,6 +2550,24 @@ void wavefront_obj_to_m3d_model::get_scale_helper_get_extreme_radius(
 
 
 
+void wavefront_obj_to_m3d_model::get_scale_helper_set_scale_from_rmax()
+{
+  scale_size = c3d::scaling_max_extreme_radius / rmax;
+
+  double prm_lst_scale_size = 1 / scale_size;
+
+  if(non_mechos_scale_sizes)
+  {
+    (*non_mechos_scale_sizes)[model_name] = prm_lst_scale_size;
+  }
+  else
+  {
+    prm_scale_size = prm_lst_scale_size;
+  }
+}
+
+
+
 void wavefront_obj_to_m3d_model::get_m3d_scale_size(
   volInt::polyhedron *main_model,
   volInt::polyhedron *main_bound_model,
@@ -2653,17 +2671,7 @@ void wavefront_obj_to_m3d_model::get_m3d_scale_size(
   }
 
   rmax = extreme_radius;
-  scale_size = c3d::scaling_max_extreme_radius / extreme_radius;
-
-  if(non_mechos_scale_sizes)
-  {
-    (*non_mechos_scale_sizes)[model_name] =
-      extreme_radius / c3d::scaling_max_extreme_radius;
-  }
-  else
-  {
-    prm_scale_size = extreme_radius / c3d::scaling_max_extreme_radius;
-  }
+  get_scale_helper_set_scale_from_rmax();
 }
 
 
@@ -2679,10 +2687,7 @@ void wavefront_obj_to_m3d_model::get_a3d_scale_size(
   }
 
   rmax = extreme_radius;
-  scale_size = c3d::scaling_max_extreme_radius / extreme_radius;
-
-  (*non_mechos_scale_sizes)[model_name] =
-    extreme_radius / c3d::scaling_max_extreme_radius;
+  get_scale_helper_set_scale_from_rmax();
 }
 
 

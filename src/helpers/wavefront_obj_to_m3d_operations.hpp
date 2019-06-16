@@ -435,6 +435,7 @@ private:
     volInt::polyhedron *model,
     double &extreme_radius,
     const point offset = {0.0, 0.0, 0.0});
+  void get_scale_helper_set_scale_from_rmax();
   void get_m3d_scale_size(
     volInt::polyhedron *main_model,
     volInt::polyhedron *main_bound_model,
