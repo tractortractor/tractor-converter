@@ -2553,8 +2553,25 @@ void wavefront_obj_to_m3d_model::get_scale_helper_get_extreme_radius(
 void wavefront_obj_to_m3d_model::get_scale_helper_set_scale_from_rmax()
 {
   scale_size = c3d::scaling_max_extreme_radius / rmax;
-
   double prm_lst_scale_size = 1 / scale_size;
+  if(prm_lst_scale_size > scale_cap)
+  {
+    std::cout << '\n';
+    std::cout << "3d_scale_cap " << scale_cap <<
+      " is lower than calculated scale_size " << prm_lst_scale_size <<
+      " of " << input_file_path << " model." << '\n';
+    std::cout << "3d_scale_cap is written to ";
+    if(non_mechos_scale_sizes)
+    {
+      std::cout << "game.lst";
+    }
+    else
+    {
+      std::cout << model_name << ".prm";
+    }
+    std::cout << " file instead of calculated scale_size." << '\n';
+    prm_lst_scale_size = scale_cap;
+  }
 
   if(non_mechos_scale_sizes)
   {
