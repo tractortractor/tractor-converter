@@ -104,7 +104,8 @@ wavefront_obj_to_m3d_model::wavefront_obj_to_m3d_model(
   double scale_cap_arg,
   bitflag<obj_to_m3d_flag> flags_arg,
   std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg)
-: vangers_model(input_file_path_arg,
+: vangers_model(
+    input_file_path_arg,
     output_dir_path_arg,
     input_file_name_error_arg,
     output_file_name_error_arg,
