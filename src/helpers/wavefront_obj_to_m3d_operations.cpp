@@ -2073,24 +2073,19 @@ void wavefront_obj_to_m3d_model::get_m3d_extreme_points(
   }
   */
 
-  if(wheels_models)
-  {
-    for(const int wheel_steer_num : main_model->wheels_steer)
-    {
-      if(main_model->wheels_non_ghost.count(wheel_steer_num))
+  for_each_steer_non_ghost_wheel(
+    main_model, wheels_models,
+    [&](const volInt::polyhedron &wheel_model)
       {
-        const volInt::polyhedron &cur_wheel =
-          (*wheels_models).at(wheel_steer_num);
         volInt::model_extreme_points cur_wheel_extreme_points =
-          cur_wheel.extreme_points;
+          wheel_model.extreme_points;
         volInt::vector_plus_self(cur_wheel_extreme_points.max(),
-                                 cur_wheel.offset_point());
+                                 wheel_model.offset_point());
         volInt::vector_plus_self(cur_wheel_extreme_points.min(),
-                                 cur_wheel.offset_point());
+                                 wheel_model.offset_point());
         extreme_points.get_most_extreme_cmp_cur(cur_wheel_extreme_points);
-      }
-    }
-  }
+      });
+
   // TEST
   /*
   if(model_name == "m4")
@@ -2118,16 +2113,12 @@ void wavefront_obj_to_m3d_model::get_m3d_extreme_points_calc_c3d_extr(
   std::unordered_map<int, volInt::polyhedron> *wheels_models)
 {
   main_model->get_extreme_points();
-  if(wheels_models)
-  {
-    for(int wheel_n : main_model->wheels_steer)
-    {
-      if(main_model->wheels_non_ghost.count(wheel_n))
+  for_each_steer_non_ghost_wheel(
+    main_model, wheels_models,
+    [](volInt::polyhedron &wheel_model)
       {
-        (*wheels_models)[wheel_n].get_extreme_points();
-      }
-    }
-  }
+        wheel_model.get_extreme_points();
+      });
   get_m3d_extreme_points(main_model, wheels_models);
 }
 
@@ -2195,45 +2186,13 @@ void wavefront_obj_to_m3d_model::get_m3d_header_data(
 
   main_model->calculate_c3d_properties();
   main_bound_model->calculate_c3d_properties();
-  if(wheels_models)
-  {
-    for(int wheel_n : main_model->wheels_steer)
-    {
-      // TEST
-//    std::cout << "\n\n\n";
-//    std::cout << "wheel: " << wheel_model.first;
-//    std::cout << model_name << " wheel #" << wheel_n << " model." << '\n';
-      if(main_model->wheels_non_ghost.count(wheel_n))
-      {
-        // TEST
-//      wheel_model.second.calculate_c3d_properties();
-        // TEST
-//        std::ofstream test_poly_properties_ofstream_two(
-//          (output_dir_path.string() + "/" + model_name +
-//             "_wheel_after_" + std::to_string(wheel_n) + ".txt").c_str(),
-//          std::ios_base::out);
-//        std::cout << "wheel " << wheel_n << " of " <<
-//          input_file_path.string() << '\n';
-//        for(int cur_face = 0, num_faces = (*wheels_models)[wheel_n].numFaces;
-//            cur_face < num_faces;
-//            ++cur_face)
-//        {
-//          volInt::face &cur_poly =
-//            (*wheels_models)[wheel_n].faces[cur_face];
-//          test_poly_properties_ofstream_two << "cur_poly.norm[VOLINT_X]: " <<
-//            cur_poly.norm[VOLINT_X] << '\n';
-//          test_poly_properties_ofstream_two << "cur_poly.norm[VOLINT_Y]: " <<
-//            cur_poly.norm[VOLINT_Y] << '\n';
-//          test_poly_properties_ofstream_two << "cur_poly.norm[VOLINT_Z]: " <<
-//            cur_poly.norm[VOLINT_Z] << '\n';
-//          test_poly_properties_ofstream_two << "cur_poly.w: " <<
-//            cur_poly.w << '\n';
-//        }
 
-        (*wheels_models)[wheel_n].calculate_c3d_properties();
-      }
-    }
-  }
+  for_each_steer_non_ghost_wheel(
+    main_model, wheels_models,
+    [](volInt::polyhedron &wheel_model)
+      {
+        wheel_model.calculate_c3d_properties();
+      });
 
   if(debris_models && debris_bound_models)
   {
@@ -2520,19 +2479,17 @@ void wavefront_obj_to_m3d_model::center_m3d(
   main_model->move_coord_system_to_point_inv_neg_vol(m3d_center);
   main_bound_model->move_coord_system_to_point_inv_neg_vol(m3d_center);
 
-  if(wheels_models)
+  for(std::size_t wheel_n = 0; wheel_n < n_wheels; ++wheel_n)
   {
-    for(std::size_t wheel_n = 0; wheel_n < n_wheels; ++wheel_n)
-    {
-      if(main_model->wheels_steer.count(wheel_n) &&
-         main_model->wheels_non_ghost.count(wheel_n))
-      {
-        volInt::vector_minus_self((*wheels_models)[wheel_n].offset_point(),
-                                  m3d_center);
-      }
-      volInt::vector_minus_self(cur_wheel_data[wheel_n].r, m3d_center);
-    }
+    volInt::vector_minus_self(cur_wheel_data[wheel_n].r, m3d_center);
   }
+  for_each_steer_non_ghost_wheel(
+    main_model, wheels_models,
+    [&](volInt::polyhedron &wheel_model)
+      {
+        volInt::vector_minus_self(wheel_model.offset_point(), m3d_center);
+      });
+
   if(debris_models && debris_bound_models)
   {
     for(auto &&model : *debris_models)
@@ -2635,24 +2592,15 @@ void wavefront_obj_to_m3d_model::get_m3d_scale_size(
   get_scale_helper_get_extreme_radius(main_model, extreme_radius);
 //get_scale_helper_get_extreme_radius(main_bound_model,
 //                                    extreme_radius);
-  if(wheels_models)
-  {
-    for(const int wheel_steer_num : main_model->wheels_steer)
-    {
-      if(main_model->wheels_non_ghost.count(wheel_steer_num))
+
+  for_each_steer_non_ghost_wheel(
+    main_model, wheels_models,
+    [&](volInt::polyhedron &wheel_model)
       {
-        get_scale_helper_get_extreme_radius(
-          &wheels_models->at(wheel_steer_num),
-          extreme_radius,
-          cur_wheel_data[wheel_steer_num].r);
-      }
-    }
-//  for(const auto &model : *wheels_models)
-//  {
-//    get_scale_helper_get_extreme_radius(&model.second,
-//                                        extreme_radius);
-//  }
-  }
+        get_scale_helper_get_extreme_radius(&wheel_model,
+                                            extreme_radius,
+                                            wheel_model.offset_point());
+      });
 
   // TEST
   /*
