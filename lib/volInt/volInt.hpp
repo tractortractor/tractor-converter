@@ -190,6 +190,10 @@ void matrix_multiply_self(
 
 
 
+const double vector_scale_val = 1.0;
+
+
+
 /*
 // VANGERS SOURCE
 // how angle conversions works in vangers code
