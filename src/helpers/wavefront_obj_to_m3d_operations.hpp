@@ -36,6 +36,7 @@
 #include <deque>
 #include <unordered_set>
 #include <unordered_map>
+#include <functional>
 
 namespace tractor_converter{
 namespace helpers{
@@ -360,6 +361,15 @@ private:
 
   void write_a3d_header_data();
 
+
+  void for_each_steer_non_ghost_wheel(
+    const volInt::polyhedron *main_model,
+    const std::unordered_map<int, volInt::polyhedron> *wheels_models,
+    std::function<void(const volInt::polyhedron&)> func_to_call);
+  void for_each_steer_non_ghost_wheel(
+    const volInt::polyhedron *main_model,
+    std::unordered_map<int, volInt::polyhedron> *wheels_models,
+    std::function<void(volInt::polyhedron&)> func_to_call);
 
 
   std::vector<point*> get_ref_points_for_part_of_model(

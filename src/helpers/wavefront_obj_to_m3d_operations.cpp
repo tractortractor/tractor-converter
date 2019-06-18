@@ -1361,6 +1361,44 @@ void wavefront_obj_to_m3d_model::write_m3d_weapon_slots()
 
 
 
+void wavefront_obj_to_m3d_model::for_each_steer_non_ghost_wheel(
+  const volInt::polyhedron *main_model,
+  const std::unordered_map<int, volInt::polyhedron> *wheels_models,
+  std::function<void(const volInt::polyhedron&)> func_to_call)
+{
+  if(wheels_models)
+  {
+    for(const auto wheel_steer_num : main_model->wheels_steer)
+    {
+      if(main_model->wheels_non_ghost.count(wheel_steer_num))
+      {
+        func_to_call((*wheels_models).at(wheel_steer_num));
+      }
+    }
+  }
+}
+
+void wavefront_obj_to_m3d_model::for_each_steer_non_ghost_wheel(
+  const volInt::polyhedron *main_model,
+  std::unordered_map<int, volInt::polyhedron> *wheels_models,
+  std::function<void(volInt::polyhedron&)> func_to_call)
+{
+  if(wheels_models)
+  {
+    for(const auto wheel_steer_num : main_model->wheels_steer)
+    {
+      if(main_model->wheels_non_ghost.count(wheel_steer_num))
+      {
+        func_to_call((*wheels_models).at(wheel_steer_num));
+      }
+    }
+  }
+}
+
+
+
+
+
 std::vector<point*>
   wavefront_obj_to_m3d_model::get_ref_points_for_part_of_model(
     volInt::polyhedron &model,
