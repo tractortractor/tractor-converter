@@ -887,14 +887,6 @@ polyhedron::polyhedron(int numVerts_arg,
 
 
 
-double polyhedron::check_volume()
-{
-  compVolumeIntegrals(this);
-  return T0;
-}
-
-
-
 void polyhedron::invertVertNorms()
 {
   for(auto &&vertNorm : vertNorms)
@@ -1046,6 +1038,15 @@ void polyhedron::faces_calc_params_inv_neg_vol()
     reverse_polygons_orientation();
     faces_calc_params();
   }
+}
+
+
+
+// Must be called after faces_calc_params().
+double polyhedron::check_volume()
+{
+  compVolumeIntegrals(this);
+  return T0;
 }
 
 

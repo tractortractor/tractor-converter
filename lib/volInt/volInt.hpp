@@ -314,11 +314,13 @@ typedef struct polyhedron {
     int numFaces_arg,
     int verts_per_poly_arg);
 
-  double check_volume();
   void invertVertNorms();
   void reverse_polygons_orientation();
+
   void faces_calc_params(); // Must be called again if model was moved.
   void faces_calc_params_inv_neg_vol();
+
+  double check_volume();
 
   void get_extreme_points();
   model_extreme_points get_extreme_points(
