@@ -946,6 +946,18 @@ std::vector<double> polyhedron::face_calc_normal(std::size_t face_ind)
 
 
 
+double polyhedron::face_calc_offset_w(std::size_t face_ind)
+{
+  face &cur_face = faces[face_ind];
+  double offset_w;
+  offset_w = - cur_face.norm[VOLINT_X] * verts[cur_face.verts[0]][VOLINT_X]
+             - cur_face.norm[VOLINT_Y] * verts[cur_face.verts[0]][VOLINT_Y]
+             - cur_face.norm[VOLINT_Z] * verts[cur_face.verts[0]][VOLINT_Z];
+  return offset_w;
+}
+
+
+
 // Must be called again if model was moved.
 void polyhedron::faces_calc_params()
 {

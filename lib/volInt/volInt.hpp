@@ -318,6 +318,7 @@ typedef struct polyhedron {
   void reverse_polygons_orientation();
 
   std::vector<double> face_calc_normal(std::size_t face_ind);
+  double face_calc_offset_w(std::size_t face_ind);
   void faces_calc_params(); // Must be called again if model was moved.
   void faces_calc_params_inv_neg_vol();
 
