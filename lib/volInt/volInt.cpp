@@ -924,6 +924,28 @@ void polyhedron::reverse_polygons_orientation()
 
 
 
+std::vector<double> polyhedron::face_calc_normal(std::size_t face_ind)
+{
+  face &cur_face = faces[face_ind];
+  std::vector<double> normal(3, 0.0);
+  for(std::size_t cur_vert = 0; cur_vert < numVertsPerPoly; ++cur_vert)
+  {
+    std::vector<double> current =
+      verts[cur_face.verts[cur_vert]];
+    std::vector<double> next =
+      verts[cur_face.verts[(cur_vert+1)%numVertsPerPoly]];
+    normal[VOLINT_X] += (current[VOLINT_Y] - next[VOLINT_Y]) *
+                        (current[VOLINT_Z] + next[VOLINT_Z]);
+    normal[VOLINT_Y] += (current[VOLINT_Z] - next[VOLINT_Z]) *
+                        (current[VOLINT_X] + next[VOLINT_X]);
+    normal[VOLINT_Z] += (current[VOLINT_X] - next[VOLINT_X]) *
+                        (current[VOLINT_Y] + next[VOLINT_Y]);
+  }
+  return normal;
+}
+
+
+
 // Must be called again if model was moved.
 void polyhedron::faces_calc_params()
 {
