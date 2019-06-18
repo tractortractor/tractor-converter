@@ -961,86 +961,24 @@ double polyhedron::face_calc_offset_w(std::size_t face_ind)
 // Must be called again if model was moved.
 void polyhedron::faces_calc_params()
 {
-  double nx, ny, nz, len;
-
   std::size_t faces_size = faces.size();
   std::unordered_set<std::size_t> bad_polygons;
   bad_polygons.reserve(faces_size);
 
-//  for(auto &&f : faces)
-  for(std::size_t i = 0; i < faces_size; ++i)
+  for(std::size_t face_ind = 0; face_ind < faces_size; ++face_ind)
   {
-    face &f = faces[i];
+    face &cur_face = faces[face_ind];
 
+    cur_face.norm = face_calc_normal(face_ind);
 
-    /* compute face normal and offset w */
-    nx = ny = nz = 0.0;
-    for(std::size_t cur_vert = 0; cur_vert < numVertsPerPoly; ++cur_vert)
+    vector_scale_self(vector_scale_val, cur_face.norm);
+
+    cur_face.w = face_calc_offset_w(face_ind);
+
+    if(vector_length(cur_face.norm) == 0.0)
     {
-      std::vector<double> current =
-        verts[f.verts[cur_vert]];
-      std::vector<double> next =
-        verts[f.verts[(cur_vert+1)%numVertsPerPoly]];
-      nx += (current[VOLINT_Y] - next[VOLINT_Y]) *
-            (current[VOLINT_Z] + next[VOLINT_Z]);
-      ny += (current[VOLINT_Z] - next[VOLINT_Z]) *
-            (current[VOLINT_X] + next[VOLINT_X]);
-      nz += (current[VOLINT_X] - next[VOLINT_X]) *
-            (current[VOLINT_Y] + next[VOLINT_Y]);
+      bad_polygons.insert(face_ind);
     }
-
-
-    len = sqrt(nx * nx + ny * ny + nz * nz);
-    f.norm[VOLINT_X] = nx / len;
-    f.norm[VOLINT_Y] = ny / len;
-    f.norm[VOLINT_Z] = nz / len;
-    f.w = - f.norm[VOLINT_X] * verts[f.verts[0]][VOLINT_X]
-          - f.norm[VOLINT_Y] * verts[f.verts[0]][VOLINT_Y]
-          - f.norm[VOLINT_Z] * verts[f.verts[0]][VOLINT_Z];
-
-    if(len == 0)
-    {
-      bad_polygons.insert(i);
-    }
-
-/*
-    if(std::isnan(f.norm[VOLINT_X]) ||
-       std::isnan(f.norm[VOLINT_Y]) ||
-       std::isnan(f.norm[VOLINT_Z]) ||
-       std::isnan(f.w))
-    {
-      std::cout << "NaN detected!" << '\n';
-      std::cout << "f.norm[VOLINT_X]: " << f.norm[VOLINT_X] << '\n';
-      std::cout << "f.norm[VOLINT_Y]: " << f.norm[VOLINT_Y] << '\n';
-      std::cout << "f.norm[VOLINT_Z]: " << f.norm[VOLINT_Z] << '\n';
-      std::cout << "f.w: " << f.w << '\n';
-      std::cout << "nx: " << nx << '\n';
-      std::cout << "nx: " << ny << '\n';
-      std::cout << "nx: " << nz << '\n';
-      std::cout << "len: " << len << '\n';
-
-      std::cout << "verts[f.verts[0]][VOLINT_X]: " <<
-        verts[f.verts[0]][VOLINT_X] << '\n';
-      std::cout << "verts[f.verts[0]][VOLINT_Y]: " <<
-        verts[f.verts[0]][VOLINT_Y] << '\n';
-      std::cout << "verts[f.verts[0]][VOLINT_Z]: " <<
-        verts[f.verts[0]][VOLINT_Z] << '\n';
-
-      std::cout << "verts[f.verts[1]][VOLINT_X]: " <<
-        verts[f.verts[1]][VOLINT_X] << '\n';
-      std::cout << "verts[f.verts[1]][VOLINT_Y]: " <<
-        verts[f.verts[1]][VOLINT_Y] << '\n';
-      std::cout << "verts[f.verts[1]][VOLINT_Z]: " <<
-        verts[f.verts[1]][VOLINT_Z] << '\n';
-
-      std::cout << "verts[f.verts[2]][VOLINT_X]: " <<
-        verts[f.verts[2]][VOLINT_X] << '\n';
-      std::cout << "verts[f.verts[2]][VOLINT_Y]: " <<
-        verts[f.verts[2]][VOLINT_Y] << '\n';
-      std::cout << "verts[f.verts[2]][VOLINT_Z]: " <<
-        verts[f.verts[2]][VOLINT_Z] << '\n';
-    }
-*/
   }
 
   // Deleting bad polygons.
