@@ -702,233 +702,42 @@ std::vector<volInt::polyhedron>
 
 
 
-void m3d_to_wavefront_obj_model::mark_wheels_helper_check_poly_in_group(
-  const volInt::face *cur_poly,
-  const std::vector<std::vector<const volInt::face*>> &wheels_groups,
-  bool &cur_poly_in_group,
-  std::size_t &cur_poly_group_num) const
-{
-  if(!wheels_groups.empty())
-  {
-    for(std::size_t cur_wheels_group = 0,
-          wheels_groups_size = wheels_groups.size();
-        cur_wheels_group < wheels_groups_size;
-        ++cur_wheels_group)
-    {
-      if(std::find(wheels_groups[cur_wheels_group].begin(),
-                   wheels_groups[cur_wheels_group].end(),
-                   cur_poly) !=
-         wheels_groups[cur_wheels_group].end())
-      {
-        cur_poly_in_group = true;
-        cur_poly_group_num = cur_wheels_group;
-        break;
-      }
-    }
-  }
-}
-
-
-
 void m3d_to_wavefront_obj_model::mark_wheels_helper_get_wheels(
   const std::vector<const volInt::face*> &polygons,
   volInt::polyhedron &main_model,
   std::vector<std::vector<const volInt::face*>> &end_wheels_groups,
   std::vector<std::vector<double>> &wheels_centers) const
 {
-  // Creating groups of polygons for each non-steering wheel.
-  // wheels_groups contains addresses of polygons in polygons.
-  std::vector<std::vector<const volInt::face*>> wheels_groups;
-  std::size_t polygons_size = polygons.size();
-  wheels_groups.reserve(polygons_size);
-//polygons;
-
-  std::size_t non_empty_groups_num = 0;
-
-  for(std::size_t cur_poly_num = 0;
-      cur_poly_num < polygons_size;
-      ++cur_poly_num)
-  {
-    const volInt::face *cur_poly = polygons[cur_poly_num];
-
-    bool cur_poly_isolated = true;
-
-    // checking if cur_poly is already in group
-    bool cur_poly_in_group = false;
-    std::size_t cur_poly_group_num;
-    mark_wheels_helper_check_poly_in_group(cur_poly,
-                                           wheels_groups,
-                                           cur_poly_in_group,
-                                           cur_poly_group_num);
-
-    // Checking all polygons if they are connected to cur_poly.
-    for(std::size_t poly_to_compare_num = 0;
-        poly_to_compare_num < polygons_size;
-        ++poly_to_compare_num)
-    {
-      const volInt::face *poly_to_compare = polygons[poly_to_compare_num];
-      // Skipping all operations if cur_poly is poly_to_compare.
-      if(cur_poly_num == poly_to_compare_num)
-      {
-        continue;
-      }
-
-      // Checking if cur_poly and poly_to_compare have same vertex.
-      bool same_vertex = false;
-      for(std::size_t cur_vertex_num = 0;
-          cur_vertex_num < c3d::regular_model_vertices_per_polygon;
-          ++cur_vertex_num)
-      {
-        if(std::find(cur_poly->verts.begin(),
-                     cur_poly->verts.end(),
-                     poly_to_compare->verts[cur_vertex_num]) !=
-           cur_poly->verts.end())
+  end_wheels_groups =
+    volInt::get_groups_of_connected_items<const volInt::face*>(
+      polygons,
+      [](const volInt::face* first, const volInt::face* second)->bool
         {
-          same_vertex = true;
-          break;
-        }
-      }
-      // Skipping if no same vertices found.
-      if(!same_vertex)
-      {
-        continue;
-      }
+          // Checking if cur_poly and poly_to_compare have same vertex.
+          for(std::size_t cur_vertex_num = 0;
+              cur_vertex_num < c3d::regular_model_vertices_per_polygon;
+              ++cur_vertex_num)
+          {
+            if(std::find(first->verts.begin(),
+                         first->verts.end(),
+                         second->verts[cur_vertex_num]) !=
+               first->verts.end())
+            {
+              return true;
+            }
+          }
+          return false;
+        });
 
-      cur_poly_isolated = false;
-
-
-
-      // checking if poly_to_compare is already in group
-      bool poly_to_compare_in_group = false;
-      std::size_t poly_to_compare_group_num;
-      mark_wheels_helper_check_poly_in_group
-      (
-        poly_to_compare,
-        wheels_groups,
-        poly_to_compare_in_group,
-        poly_to_compare_group_num
-      );
-
-      // If both connected polygons are already in groups
-      // but those groups are different.
-      // Inserting elements of poly_to_compare group into cur_poly group.
-      if(cur_poly_in_group &&
-         poly_to_compare_in_group &&
-         cur_poly_group_num != poly_to_compare_group_num)
-      {
-        // TEST
-//      std::cout << "case 1" << '\n';
-        wheels_groups[cur_poly_group_num].insert(
-          wheels_groups[cur_poly_group_num].end(),
-          wheels_groups[poly_to_compare_group_num].begin(),
-          wheels_groups[poly_to_compare_group_num].end());
-        // Clearing 2nd group and never reusing it again.
-        wheels_groups[poly_to_compare_group_num].clear();
-        wheels_groups[poly_to_compare_group_num].shrink_to_fit();
-
-        --non_empty_groups_num;
-      }
-      // If only 1 polygon is in group other polygon is inserted in this group.
-      else if(cur_poly_in_group && !poly_to_compare_in_group)
-      {
-        // TEST
-//      std::cout << "case 2" << '\n';
-        wheels_groups[cur_poly_group_num].push_back(poly_to_compare);
-      }
-      else if(!cur_poly_in_group && poly_to_compare_in_group)
-      {
-        // TEST
-//      std::cout << "case 3" << '\n';
-        // Note that cur_poly_in_group and cur_poly_group_num are changed
-        // since they are later used in this loop.
-        cur_poly_in_group = true;
-        cur_poly_group_num = poly_to_compare_group_num;
-        wheels_groups[poly_to_compare_group_num].push_back(cur_poly);
-      }
-      // If both polygons are not in group creating new one.
-      else if(!cur_poly_in_group && !poly_to_compare_in_group)
-      {
-        // TEST
-//      std::cout << "case 4" << '\n';
-        std::size_t last_wheels_group_num = wheels_groups.size();
-
-        cur_poly_in_group = true;
-        cur_poly_group_num = last_wheels_group_num;
-
-        wheels_groups.push_back(std::vector<const volInt::face*>());
-        wheels_groups[last_wheels_group_num].reserve(polygons_size);
-        wheels_groups[last_wheels_group_num].push_back(cur_poly);
-        wheels_groups[last_wheels_group_num].push_back(poly_to_compare);
-
-        ++non_empty_groups_num;
-      }
-    }
-
-    // If cur_poly have no common vertices with any other polygons
-    // create new group for this polygon.
-    if(cur_poly_isolated)
-    {
-      // TEST
-//    std::cout << "case 5" << '\n';
-      wheels_groups.push_back(std::vector<const volInt::face*>(1, cur_poly));
-
-      ++non_empty_groups_num;
-    }
-  }
-
-
-  // Getting rid of unused groups.
-  end_wheels_groups.reserve(non_empty_groups_num);
-  for(auto &&wheels_group : wheels_groups)
-  {
-    if(!wheels_group.empty())
-    {
-      end_wheels_groups.push_back(std::move(wheels_group));
-    }
-  }
-
-  wheels_groups.clear();
-  wheels_groups.shrink_to_fit();
-
-
-  // TEST
-  /*
-  std::cout << "\n\n\n";
-  std::cout << "reading wheels" << '\n';
-  // Getting center of each group.
-  for(std::size_t cur_wheel_group = 0;
-      cur_wheel_group < end_wheels_groups.size();
-      ++cur_wheel_group)
-  {
-    std::cout << "\tcur_wheel_group: " << cur_wheel_group << '\n';
-    std::cout << '\n';
-    for(std::size_t cur_wheel_poly = 0;
-        cur_wheel_poly < end_wheels_groups[cur_wheel_group].size();
-        ++cur_wheel_poly)
-    {
-      std::cout << "cur_wheel_poly: " << cur_wheel_poly << "; vertices: ";
-      for(std::size_t cur_vertex = 0;
-          cur_vertex < c3d::regular_model_vertices_per_polygon;
-          ++cur_vertex)
-      {
-        std::cout <<
-          end_wheels_groups[cur_wheel_group][cur_wheel_poly]->
-            verts[cur_vertex] << "; ";
-      }
-      std::cout << '\n';
-    }
-  }
-  */
-
-
-  wheels_centers.reserve(non_empty_groups_num);
-  for(std::size_t cur_group = 0; cur_group < non_empty_groups_num; ++cur_group)
+  std::size_t end_wheels_groups_size = end_wheels_groups.size();
+  wheels_centers.reserve(end_wheels_groups_size);
+  for(std::size_t cur_group = 0;
+      cur_group < end_wheels_groups_size;
+      ++cur_group)
   {
     wheels_centers.push_back(
       main_model.get_model_center(end_wheels_groups[cur_group]));
   }
-  // TEST
-//std::cout << "\n\n\n";
 }
 
 

@@ -234,13 +234,6 @@ private:
 
 
 
-
-  void mark_wheels_helper_check_poly_in_group(
-    const volInt::face *cur_poly,
-    const std::vector<std::vector<const volInt::face*>> &wheels_groups,
-    bool &cur_poly_in_group,
-    std::size_t &cur_poly_group_num) const;
-
   void mark_wheels_helper_get_wheels(
     const std::vector<const volInt::face*> &polygons,
     volInt::polyhedron &main_model,
