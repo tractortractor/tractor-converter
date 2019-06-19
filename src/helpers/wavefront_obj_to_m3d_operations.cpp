@@ -1634,9 +1634,9 @@ void wavefront_obj_to_m3d_model::get_custom_rcm(volInt::polyhedron &model)
   for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
   {
     if(!(std::abs(compare_points.first[cur_coord]) <
-         volInt::ref_points_distinct_distance &&
+         volInt::distinct_distance &&
        std::abs(compare_points.second[cur_coord]) <
-         volInt::ref_points_distinct_distance))
+         volInt::distinct_distance))
     {
       throw std::runtime_error(
         input_file_name_error + " file " +
@@ -1695,9 +1695,9 @@ void wavefront_obj_to_m3d_model::get_attachment_point(
   for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
   {
     if(!(std::abs(compare_points.first[cur_coord]) <
-         volInt::ref_points_distinct_distance &&
+         volInt::distinct_distance &&
        std::abs(compare_points.second[cur_coord]) <
-         volInt::ref_points_distinct_distance))
+         volInt::distinct_distance))
     {
       throw std::runtime_error(
         input_file_name_error + " file " +
@@ -1802,9 +1802,9 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
       // compare_points.second is difference between 3rd ones.
       // Throwing exception if difference of y coordinate is not zero.
       if(!(std::abs(compare_points.first[1]) <
-             volInt::ref_points_distinct_distance &&
+             volInt::distinct_distance &&
            std::abs(compare_points.second[1]) <
-             volInt::ref_points_distinct_distance))
+             volInt::distinct_distance))
       {
         throw std::runtime_error(
           input_file_name_error + " file " +
@@ -1858,9 +1858,9 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
       for(std::size_t cur_coord = 0 ; cur_coord < 3; ++cur_coord)
       {
         if(!(std::abs(rotated_compare_points.first[cur_coord]) <
-               volInt::ref_points_distinct_distance &&
+               volInt::distinct_distance &&
              std::abs(rotated_compare_points.second[cur_coord]) <
-               volInt::ref_points_distinct_distance))
+               volInt::distinct_distance))
         {
           throw std::runtime_error(
             input_file_name_error + " file " +

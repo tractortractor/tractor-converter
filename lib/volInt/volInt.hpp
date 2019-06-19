@@ -392,11 +392,11 @@ const int sicher_angle_Pi = 2048; // "1 << Pi_len" where "Pi_len = 11".
 
 
 const int min_float_precision = 3;
-const double ref_points_distinct_distance =
+const double distinct_distance =
   1.0/std::pow(10, min_float_precision);
-//const double ref_points_distinct_distance = 1.0e-3;
-const double sqr_ref_points_distinct_distance =
-  VOLINT_SQR(ref_points_distinct_distance);
+//const double distinct_distance = 1.0e-3;
+const double sqr_distinct_distance =
+  VOLINT_SQR(distinct_distance);
 const double density = 1.0;
 
 /*

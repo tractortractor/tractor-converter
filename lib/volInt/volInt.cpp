@@ -1327,9 +1327,9 @@ bool polyhedron::find_ref_points()
           std::vector<double> rel_to_one =
             vector_minus((*cur_point), (*ref_vert_one));
 
-          if((std::abs(rel_to_one[0]) > ref_points_distinct_distance ||
-                std::abs(rel_to_one[2]) > ref_points_distinct_distance) &&
-             std::abs(rel_to_one[1]) > ref_points_distinct_distance)
+          if((std::abs(rel_to_one[0]) > distinct_distance ||
+                std::abs(rel_to_one[2]) > distinct_distance) &&
+             std::abs(rel_to_one[1]) > distinct_distance)
           {
             ref_vert_two_ind.first = cur_poly_two_num;
             ref_vert_two_ind.second = cur_vert_two_num;
@@ -1370,17 +1370,14 @@ bool polyhedron::find_ref_points()
                 std::cout << "x1*z2 - x2*z1: " << x1*z2 - x2*z1 << '\n';
                 std::cout << "y1*z2 - y2*z1: " << y1*z2 - y2*z1 << '\n';
 
-                std::cout << "sqr_ref_points_distinct_distance: " <<
-                  sqr_ref_points_distinct_distance << '\n';
+                std::cout << "sqr_distinct_distance: " <<
+                  sqr_distinct_distance << '\n';
                 */
 
                 // If current vert is not collinear with vert one and vert two.
-                if(!(std::abs(x1*y2 - x2*y1) <
-                       sqr_ref_points_distinct_distance &&
-                     std::abs(x1*z2 - x2*z1) <
-                       sqr_ref_points_distinct_distance &&
-                     std::abs(y1*z2 - y2*z1) <
-                       sqr_ref_points_distinct_distance))
+                if(!(std::abs(x1*y2 - x2*y1) < sqr_distinct_distance &&
+                     std::abs(x1*z2 - x2*z1) < sqr_distinct_distance &&
+                     std::abs(y1*z2 - y2*z1) < sqr_distinct_distance))
                 {
                   ref_vert_three_ind.first = cur_poly_three_num;
                   ref_vert_three_ind.second = cur_vert_three_num;
