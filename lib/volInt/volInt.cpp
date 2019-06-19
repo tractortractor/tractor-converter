@@ -441,6 +441,21 @@ double vector_length_between(
 
 
 
+bool vector_equal(
+  const std::vector<double> &first,
+  const std::vector<double> &second)
+{
+  if(std::abs(first[0] - second[0]) < distinct_distance &&
+     std::abs(first[1] - second[1]) < distinct_distance &&
+     std::abs(first[2] - second[2]) < distinct_distance)
+  {
+    return true;
+  }
+  return false;
+}
+
+
+
 double vector_dot_product(const std::vector<double> &first,
                           const std::vector<double> &second)
 {

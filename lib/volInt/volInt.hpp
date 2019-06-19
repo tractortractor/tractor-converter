@@ -156,6 +156,10 @@ double vector_length_between(
   const std::vector<double> &first,
   const std::vector<double> &second);
 
+bool vector_equal(
+  const std::vector<double> &first,
+  const std::vector<double> &second);
+
 double vector_dot_product(
   const std::vector<double> &first,
   const std::vector<double> &second);
