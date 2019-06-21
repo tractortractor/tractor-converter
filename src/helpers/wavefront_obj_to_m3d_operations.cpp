@@ -2550,7 +2550,7 @@ void wavefront_obj_to_m3d_model::get_scale_helper_set_scale_from_rmax()
 {
   scale_size = c3d::scaling_max_extreme_radius / rmax;
   double prm_lst_scale_size = 1 / scale_size;
-  if(prm_lst_scale_size > scale_cap)
+  if(prm_lst_scale_size - scale_cap > volInt::distinct_distance)
   {
     std::cout << '\n';
     std::cout << "3d_scale_cap " << scale_cap <<
