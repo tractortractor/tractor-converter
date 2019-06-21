@@ -476,6 +476,29 @@ std::vector<double> vector_cross_product(const std::vector<double> &first,
 
 
 
+double vector_angle(
+  const std::vector<double> &first,
+  const std::vector<double> &second)
+{
+  double length = vector_length(first) * vector_length(second);
+  double dot_product = vector_dot_product(first, second);
+  double cosine = dot_product/length;
+  if(std::abs(cosine) >= 1.0)
+  {
+    if(dot_product >= 0.0)
+    {
+      return 0.0;
+    }
+    else
+    {
+      return M_PI;
+    }
+  }
+  return std::acos(cosine);
+}
+
+
+
 void matrix_multiply_self(
   std::vector<std::vector<double>> &mat,
   double num)
