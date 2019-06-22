@@ -1064,6 +1064,25 @@ void polyhedron::faces_calc_params_inv_neg_vol()
 
 
 
+double polyhedron::get_vertex_angle(std::size_t face_ind, std::size_t vert_ind)
+{
+  face &cur_face = faces[face_ind];
+  std::size_t prev_ind =
+    (vert_ind - 1 + cur_face.numVerts) % cur_face.numVerts;
+  std::size_t next_ind =
+    (vert_ind + 1) % cur_face.numVerts;
+  std::vector<double> &prev_vertex =
+    verts[cur_face.verts[prev_ind]];
+  std::vector<double> &cur_vertex =
+    verts[cur_face.verts[vert_ind]];
+  std::vector<double> &next_vertex =
+    verts[cur_face.verts[next_ind]];
+  return vector_angle(vector_minus(cur_vertex, prev_vertex),
+                      vector_minus(cur_vertex, next_vertex));
+}
+
+
+
 // Must be called after faces_calc_params().
 double polyhedron::check_volume()
 {

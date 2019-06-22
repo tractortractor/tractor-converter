@@ -513,6 +513,8 @@ typedef struct polyhedron {
   void faces_calc_params(); // Must be called again if model was moved.
   void faces_calc_params_inv_neg_vol();
 
+  double get_vertex_angle(std::size_t face_ind, std::size_t vert_ind);
+
   double check_volume();
 
   void get_extreme_points();
