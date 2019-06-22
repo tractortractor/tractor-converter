@@ -13,9 +13,7 @@ std::vector<std::string> get_vec_str_option(
   const bitflag<error_handling> error_flags)
 {
   std::vector<std::string> option;
-  if(helpers::check_option(options,
-                           option_name,
-                           error_flags))
+  if(helpers::check_option(options, option_name, error_flags))
   {
     try
     {
