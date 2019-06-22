@@ -55,9 +55,11 @@
 #include <utility>
 #include <limits>
 #include <vector>
+#include <unordered_map>
 #include <unordered_set>
 #include <string>
 #include <functional>
+#include <numeric>
 
 
 
@@ -514,6 +516,8 @@ typedef struct polyhedron {
   void faces_calc_params_inv_neg_vol();
 
   double get_vertex_angle(std::size_t face_ind, std::size_t vert_ind);
+
+  void recalc_vertNorms(double max_smooth_angle);
 
   double check_volume();
 
