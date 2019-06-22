@@ -225,6 +225,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
                 "to automatically move model to center of extreme points."
             "\nSpecify \"recalculate_vertex_normals\" option "
                 "to recalculate vertex normals."
+            "\nUse \"max_smooth_angle\" option to specify "
+                "max angle between smooth faces when generating normals."
             "\nSpecify \"generate_bound_models\" option "
                 "to automatically generate bound models."
             "\n"
@@ -449,6 +451,18 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "vertex normals were manually set specifically for this game.\n"
        "\tBad vertex normals will most likely result in "
            "polygons appearing black when should be bright and vice versa.\n"
+       "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
+      ("max_smooth_angle",
+       boost::program_options::value<std::string>()->
+         default_value(TRACTOR_CONVERTER_DEFAULT_MAX_SMOOTH_ANGLE),
+       "\tUsed when recalculating vertex normals.\n"
+       "\tAngle is measured in radians by default.\n"
+       "\tIf \"d\" character is found right after the number, "
+           "value is measured in degrees.\n"
+       "\tIf angle between normals of two connected polygons "
+           "is lower than this value, they will be considered smooth "
+           "relative to each other.\n"
+       "\tDefaults to " TRACTOR_CONVERTER_DEFAULT_MAX_SMOOTH_ANGLE ".\n"
        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
       ("generate_bound_models",
        boost::program_options::bool_switch()->default_value(false),
