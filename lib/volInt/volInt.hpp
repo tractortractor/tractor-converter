@@ -92,6 +92,9 @@ enum class rotation_axis{x, y, z};
 
 
 
+double degrees_to_radians(double degrees);
+double radians_to_degrees(double radians);
+
 double sicher_angle_to_radians(int sicher_angle);
 int radians_to_sicher_angle(double radians);
 
