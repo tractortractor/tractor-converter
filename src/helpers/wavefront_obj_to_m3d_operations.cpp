@@ -192,6 +192,17 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 
 
 
+  if(flags & obj_to_m3d_flag::recalculate_vertex_normals)
+  {
+    m3d_recalc_vertNorms(&cur_main_model,
+                         &cur_main_bound_model,
+                         &wheels_models,
+                         &debris_models,
+                         &debris_bound_models);
+  }
+
+
+
   std::size_t m3d_file_size = get_m3d_file_size(&cur_main_model,
                                                 &cur_main_bound_model,
                                                 &wheels_models,
@@ -356,6 +367,12 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
   get_m3d_header_data(&cur_main_model, &cur_main_bound_model);
 
 
+  if(flags & obj_to_m3d_flag::recalculate_vertex_normals)
+  {
+    m3d_recalc_vertNorms(&cur_main_model, &cur_main_bound_model);
+  }
+
+
 
   std::size_t m3d_file_size =
     get_m3d_file_size(&cur_main_model, &cur_main_bound_model);
@@ -436,6 +453,11 @@ void wavefront_obj_to_m3d_model::animated_wavefront_objs_to_a3d()
 
   get_a3d_header_data(&animated_models);
 
+  if(flags & obj_to_m3d_flag::recalculate_vertex_normals)
+  {
+    a3d_recalc_vertNorms(&animated_models);
+  }
+
 
 
   std::size_t a3d_file_size = get_a3d_file_size(&animated_models);
@@ -489,6 +511,11 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
   get_m3d_scale_size(&cur_main_model, &cur_main_bound_model);
 
   get_m3d_header_data(&cur_main_model, &cur_main_bound_model);
+
+  if(flags & obj_to_m3d_flag::recalculate_vertex_normals)
+  {
+    m3d_recalc_vertNorms(&cur_main_model, &cur_main_bound_model);
+  }
 
 
 
