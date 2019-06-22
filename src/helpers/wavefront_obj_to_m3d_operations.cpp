@@ -2700,6 +2700,51 @@ void wavefront_obj_to_m3d_model::get_a3d_scale_size(
 
 
 
+void wavefront_obj_to_m3d_model::m3d_recalc_vertNorms(
+  volInt::polyhedron *main_model,
+  volInt::polyhedron *main_bound_model,
+  std::unordered_map<int, volInt::polyhedron> *wheels_models,
+  std::deque<volInt::polyhedron> *debris_models,
+  std::deque<volInt::polyhedron> *debris_bound_models)
+{
+  main_model->recalc_vertNorms(max_smooth_angle);
+  main_bound_model->recalc_vertNorms(max_smooth_angle);
+
+  for_each_steer_non_ghost_wheel(
+    main_model, wheels_models,
+    [&](volInt::polyhedron &wheel_model)
+      {
+        wheel_model.recalc_vertNorms(max_smooth_angle);
+      });
+
+  if(debris_models && debris_bound_models)
+  {
+    for(auto &&model : *debris_models)
+    {
+      model.recalc_vertNorms(max_smooth_angle);
+    }
+    for(auto &&model : *debris_bound_models)
+    {
+      model.recalc_vertNorms(max_smooth_angle);
+    }
+  }
+}
+
+
+
+void wavefront_obj_to_m3d_model::a3d_recalc_vertNorms(
+  std::deque<volInt::polyhedron> *models)
+{
+  for(auto &&model : *models)
+  {
+    model.recalc_vertNorms(max_smooth_angle);
+  }
+}
+
+
+
+
+
 std::size_t wavefront_obj_to_m3d_model::get_c3d_file_size(
   const volInt::polyhedron *model)
 {

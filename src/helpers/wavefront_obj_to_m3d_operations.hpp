@@ -456,6 +456,14 @@ private:
     std::deque<volInt::polyhedron> *debris_bound_models = nullptr);
   void get_a3d_scale_size(std::deque<volInt::polyhedron> *models);
 
+  void m3d_recalc_vertNorms(
+    volInt::polyhedron *main_model,
+    volInt::polyhedron *main_bound_model,
+    std::unordered_map<int, volInt::polyhedron> *wheels_models = nullptr,
+    std::deque<volInt::polyhedron> *debris_models = nullptr,
+    std::deque<volInt::polyhedron> *debris_bound_models = nullptr);
+  void a3d_recalc_vertNorms(std::deque<volInt::polyhedron> *models);
+
   std::size_t get_c3d_file_size(const volInt::polyhedron *model);
   std::size_t get_m3d_file_size(
     const volInt::polyhedron *main_model,
