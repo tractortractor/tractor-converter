@@ -348,20 +348,19 @@ boost::program_options::variables_map get_options(int ac, char** av)
 
       ("3d_obj_float_precision",
        boost::program_options::value<int>()->
-         default_value(TRACTOR_CONVERTER_DEFAULT_3D_OBJ_FLOAT_PRECISION),
-       "\tPrecision of float numbers of output Wavefront object "
-           "and material files.\n"
-       "\tDefaults to "
-           TRACTOR_CONVERTER_DEFAULT_3D_OBJ_FLOAT_PRECISION_STR ".\n"
-       "\tUsed by \"vangers_3d_model_to_obj\" "
-           "and \"create_wavefront_mtl\" modes.\n")
+         default_value(defines::obj_float_precision),
+       ("\tPrecision of float numbers of output Wavefront object "
+            "and material files.\n"
+        "\tDefaults to " + defines::obj_float_precision_str + ".\n"
+        "\tUsed by \"vangers_3d_model_to_obj\" "
+            "and \"create_wavefront_mtl\" modes.\n").c_str())
       ("3d_default_scale",
        boost::program_options::value<double>()->
-         default_value(TRACTOR_CONVERTER_DEFAULT_3D_DEFAULT_SCALE),
-       "\tIf there is no info about scale_size for some object "
-           "in *.prm or game.lst configs this valuse is used.\n"
-       "\tDefaults to " TRACTOR_CONVERTER_DEFAULT_3D_DEFAULT_SCALE_STR ".\n"
-       "\tUsed by \"vangers_3d_model_to_obj\" mode.\n")
+         default_value(defines::default_scale),
+       ("\tIf there is no info about scale_size for some object "
+            "in *.prm or game.lst configs this valuse is used.\n"
+        "\tDefaults to " + defines::default_scale_str + ".\n"
+        "\tUsed by \"vangers_3d_model_to_obj\" mode.\n").c_str())
       ("m3d_weapon_file",
        boost::program_options::value<std::string>()->default_value(""),
        "\tName of *.m3d file which contains weapon model.\n"
@@ -423,21 +422,21 @@ boost::program_options::variables_map get_options(int ac, char** av)
        "\tUsed by \"vangers_3d_model_to_obj\" mode.\n")
       ("c3d_default_material",
        boost::program_options::value<std::string>()->
-         default_value(TRACTOR_CONVERTER_DEFAULT_C3D_DEFAULT_MATERIAL),
-       "\tName of default material.\n"
-       "\tIf polygon have unexpected material or no material "
-           "then default material is assigned to it.\n"
-       "\tDefaults to " TRACTOR_CONVERTER_DEFAULT_C3D_DEFAULT_MATERIAL ".\n"
-       "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
+         default_value(defines::c3d_default_material),
+       ("\tName of default material.\n"
+        "\tIf polygon have unexpected material or no material "
+            "then default material is assigned to it.\n"
+        "\tDefaults to " + defines::c3d_default_material + ".\n"
+        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n").c_str())
       ("3d_scale_cap",
        boost::program_options::value<double>()->
-         default_value(TRACTOR_CONVERTER_DEFAULT_3D_SCALE_CAP),
-       "\tIf model scale is higher than this cap, "
-           "it will be lowered to this cap.\n"
-       "\tNeeded since the game can't properly render objects "
-           "beyond certain scale_size under certain circumstances.\n"
-       "\tDefaults to " TRACTOR_CONVERTER_DEFAULT_3D_SCALE_CAP_STR ".\n"
-       "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
+         default_value(defines::default_3d_scale_cap),
+       ("\tIf model scale is higher than this cap, "
+            "it will be lowered to this cap.\n"
+        "\tNeeded since the game can't properly render objects "
+            "beyond certain scale_size under certain circumstances.\n"
+        "\tDefaults to " + defines::default_3d_scale_cap_str + ".\n"
+        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n").c_str())
       ("center_model",
        boost::program_options::bool_switch()->default_value(false),
        "\tAutomatically move model to center of extreme points.\n"
@@ -454,16 +453,16 @@ boost::program_options::variables_map get_options(int ac, char** av)
        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
       ("max_smooth_angle",
        boost::program_options::value<std::string>()->
-         default_value(TRACTOR_CONVERTER_DEFAULT_MAX_SMOOTH_ANGLE),
-       "\tUsed when recalculating vertex normals.\n"
-       "\tAngle is measured in radians by default.\n"
-       "\tIf \"d\" character is found right after the number, "
-           "value is measured in degrees.\n"
-       "\tIf angle between normals of two connected polygons "
-           "is lower than this value, they will be considered smooth "
-           "relative to each other.\n"
-       "\tDefaults to " TRACTOR_CONVERTER_DEFAULT_MAX_SMOOTH_ANGLE ".\n"
-       "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
+         default_value(defines::default_max_smooth_angle),
+       ("\tUsed when recalculating vertex normals.\n"
+        "\tAngle is measured in radians by default.\n"
+        "\tIf \"d\" character is found right after the number, "
+            "value is measured in degrees.\n"
+        "\tIf angle between normals of two connected polygons "
+            "is lower than this value, they will be considered smooth "
+            "relative to each other.\n"
+        "\tDefaults to " + defines::default_max_smooth_angle + ".\n"
+        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n").c_str())
       ("generate_bound_models",
        boost::program_options::bool_switch()->default_value(false),
        "\tAutomatically generate bound models.\n"
@@ -537,7 +536,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
                              error_handling::none))
     {
       std::cout << "Tractor converter program, version " <<
-        TRACTOR_CONVERTER_VERSION << "\n";
+        defines::version << "\n";
       std::exit(EXIT_SUCCESS);
     }
 

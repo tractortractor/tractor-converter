@@ -74,7 +74,7 @@ void obj_to_vangers_3d_model_mode(
       std::cout << "Invalid \"c3d_default_material\" option " <<
         c3d_default_material_str << '\n';
       std::cout << e.what() << '\n';
-      std::cout << "Using " TRACTOR_CONVERTER_DEFAULT_C3D_DEFAULT_MATERIAL
+      std::cout << "Using " << defines::c3d_default_material <<
         " as default." << '\n';
 
       std::cout << "Valid materials:" << '\n';
@@ -89,7 +89,7 @@ void obj_to_vangers_3d_model_mode(
 
       c3d_default_material_id =
         c3d::color::ids.by<c3d::color::name>().at(
-          TRACTOR_CONVERTER_DEFAULT_C3D_DEFAULT_MATERIAL);
+          defines::c3d_default_material);
     }
 
 

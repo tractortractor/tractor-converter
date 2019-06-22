@@ -1,38 +1,37 @@
 #ifndef TRACTOR_CONVERTER_DEFINES_H
 #define TRACTOR_CONVERTER_DEFINES_H
 
+#include <string>
 
+namespace tractor_converter{
 
-#define TRACTOR_CONVERTER_VERSION "1.0.0"
+namespace defines{
 
-#define TRACTOR_CONVERTER_STR_HELPER(x) #x
-#define TRACTOR_CONVERTER_STR(x) TRACTOR_CONVERTER_STR_HELPER(x)
-
-
+const std::string version = "1.0.0";
 
 // For program options.
-#define TRACTOR_CONVERTER_DEFAULT_3D_OBJ_FLOAT_PRECISION 6
-#define TRACTOR_CONVERTER_DEFAULT_3D_OBJ_FLOAT_PRECISION_STR \
-  TRACTOR_CONVERTER_STR(TRACTOR_CONVERTER_DEFAULT_3D_OBJ_FLOAT_PRECISION)
+const int obj_float_precision = 6;
+const std::string obj_float_precision_str =
+  std::to_string(obj_float_precision);
 
-#define TRACTOR_CONVERTER_DEFAULT_3D_DEFAULT_SCALE 0.195313
-#define TRACTOR_CONVERTER_DEFAULT_3D_DEFAULT_SCALE_STR \
-  TRACTOR_CONVERTER_STR(TRACTOR_CONVERTER_DEFAULT_3D_DEFAULT_SCALE)
+const double default_scale = 0.195313;
+const std::string default_scale_str =
+  std::to_string(default_scale);
 
-#define TRACTOR_CONVERTER_DEFAULT_C3D_DEFAULT_MATERIAL "body_red"
+const std::string c3d_default_material = "body_red";
 
-#define TRACTOR_CONVERTER_DEFAULT_3D_SCALE_CAP 0.560547
-#define TRACTOR_CONVERTER_DEFAULT_3D_SCALE_CAP_STR \
-  TRACTOR_CONVERTER_STR(TRACTOR_CONVERTER_DEFAULT_3D_SCALE_CAP)
+const double default_3d_scale_cap = 0.560547;
+const std::string default_3d_scale_cap_str =
+  std::to_string(default_3d_scale_cap);
 
-#define TRACTOR_CONVERTER_DEFAULT_MAX_SMOOTH_ANGLE "30d"
+const std::string default_max_smooth_angle = "30d";
 
-
+} // namespace defines
 
 // For helpers.
 enum class error_handling{none, throw_exception};
 
-
+} // namespace tractor_converter
 
 #endif // TRACTOR_CONVERTER_DEFINES_H
 
