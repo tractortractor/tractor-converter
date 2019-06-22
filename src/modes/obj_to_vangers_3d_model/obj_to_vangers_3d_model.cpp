@@ -35,6 +35,10 @@ void obj_to_vangers_3d_model_mode(
     std::string c3d_default_material_str =
       options["c3d_default_material"].as<std::string>();
     double scale_cap = options["3d_scale_cap"].as<double>();
+    double max_smooth_angle =
+      helpers::get_angle_option(options,
+                                "max_smooth_angle",
+                                error_handling::throw_exception);
 
     helpers::bitflag<helpers::obj_to_m3d_flag> obj_to_m3d_flags;
     if(options["center_model"].as<bool>())
@@ -299,6 +303,7 @@ void obj_to_vangers_3d_model_mode(
               center_of_mass_model_ptr,
               c3d_default_material_id,
               scale_cap,
+              max_smooth_angle,
               obj_to_m3d_flags,
               non_mechos_scale_sizes_ptr);
           // TEST
@@ -344,6 +349,7 @@ void obj_to_vangers_3d_model_mode(
             max_weapons_radius,
             c3d_default_material_id,
             scale_cap,
+            max_smooth_angle,
             obj_to_m3d_flags);
           // TEST
 //        std::cout << '\n' << "mechos m3d" << '\n';
@@ -377,6 +383,7 @@ void obj_to_vangers_3d_model_mode(
             center_of_mass_model_ptr,
             c3d_default_material_id,
             scale_cap,
+            max_smooth_angle,
             obj_to_m3d_flags,
             non_mechos_scale_sizes_ptr);
           // TEST
@@ -411,6 +418,7 @@ void obj_to_vangers_3d_model_mode(
             center_of_mass_model_ptr,
             c3d_default_material_id,
             scale_cap,
+            max_smooth_angle,
             obj_to_m3d_flags,
             non_mechos_scale_sizes_ptr);
           // TEST

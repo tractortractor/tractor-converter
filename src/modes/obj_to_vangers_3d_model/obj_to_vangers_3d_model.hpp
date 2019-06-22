@@ -7,6 +7,7 @@
 
 #include "hex.hpp"
 #include "check_option.hpp"
+#include "get_option.hpp"
 #include "file_operations.hpp"
 #include "vangers_3d_model_operations.hpp"
 #include "wavefront_obj_to_m3d_operations.hpp"

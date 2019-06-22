@@ -102,6 +102,7 @@ wavefront_obj_to_m3d_model::wavefront_obj_to_m3d_model(
   double max_weapons_radius_arg,
   unsigned int c3d_default_material_id_arg,
   double scale_cap_arg,
+  double max_smooth_angle_arg,
   bitflag<obj_to_m3d_flag> flags_arg,
   std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg)
 : vangers_model(
@@ -116,6 +117,7 @@ wavefront_obj_to_m3d_model::wavefront_obj_to_m3d_model(
   max_weapons_radius(max_weapons_radius_arg),
   c3d_default_material_id(c3d_default_material_id_arg),
   scale_cap(scale_cap_arg),
+  max_smooth_angle(max_smooth_angle_arg),
   flags(flags_arg),
   non_mechos_scale_sizes(non_mechos_scale_sizes_arg)
 {
@@ -3103,6 +3105,7 @@ void mechos_wavefront_objs_to_m3d(
   double max_weapons_radius_arg,
   unsigned int c3d_default_material_id_arg,
   double scale_cap_arg,
+  double max_smooth_angle_arg,
   bitflag<obj_to_m3d_flag> flags_arg)
 {
   wavefront_obj_to_m3d_model cur_vangers_model(
@@ -3116,6 +3119,7 @@ void mechos_wavefront_objs_to_m3d(
     max_weapons_radius_arg,
     c3d_default_material_id_arg,
     scale_cap_arg,
+    max_smooth_angle_arg,
     flags_arg,
     nullptr);
   cur_vangers_model.mechos_wavefront_objs_to_m3d();
@@ -3132,6 +3136,7 @@ volInt::polyhedron weapon_wavefront_objs_to_m3d(
   const volInt::polyhedron *center_of_mass_model_arg,
   unsigned int c3d_default_material_id_arg,
   double scale_cap_arg,
+  double max_smooth_angle_arg,
   bitflag<obj_to_m3d_flag> flags_arg,
   std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg)
 {
@@ -3146,6 +3151,7 @@ volInt::polyhedron weapon_wavefront_objs_to_m3d(
     0.0,
     c3d_default_material_id_arg,
     scale_cap_arg,
+    max_smooth_angle_arg,
     flags_arg,
     non_mechos_scale_sizes_arg);
   return cur_vangers_model.weapon_wavefront_objs_to_m3d();
@@ -3161,6 +3167,7 @@ void animated_wavefront_objs_to_a3d(
   const volInt::polyhedron *center_of_mass_model_arg,
   unsigned int c3d_default_material_id_arg,
   double scale_cap_arg,
+  double max_smooth_angle_arg,
   bitflag<obj_to_m3d_flag> flags_arg,
   std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg)
 {
@@ -3175,6 +3182,7 @@ void animated_wavefront_objs_to_a3d(
     0.0,
     c3d_default_material_id_arg,
     scale_cap_arg,
+    max_smooth_angle_arg,
     flags_arg,
     non_mechos_scale_sizes_arg);
   cur_vangers_model.animated_wavefront_objs_to_a3d();
@@ -3190,6 +3198,7 @@ void other_wavefront_objs_to_m3d(
   const volInt::polyhedron *center_of_mass_model_arg,
   unsigned int c3d_default_material_id_arg,
   double scale_cap_arg,
+  double max_smooth_angle_arg,
   bitflag<obj_to_m3d_flag> flags_arg,
   std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg)
 {
@@ -3204,6 +3213,7 @@ void other_wavefront_objs_to_m3d(
     0.0,
     c3d_default_material_id_arg,
     scale_cap_arg,
+    max_smooth_angle_arg,
     flags_arg,
     non_mechos_scale_sizes_arg);
   cur_vangers_model.other_wavefront_objs_to_m3d();
