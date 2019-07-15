@@ -136,13 +136,28 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 {
   volInt::polyhedron cur_main_model =
     read_obj_prefix("main", c3d::c3d_type::regular);
-  volInt::polyhedron cur_main_bound_model =
-    read_obj_prefix("main_bound", c3d::c3d_type::bound);
+
+  volInt::polyhedron cur_main_bound_model;
+  volInt::polyhedron *cur_main_bound_model_ptr = nullptr;
+  if(!(flags & obj_to_m3d_flag::generate_bound_models))
+  {
+    cur_main_bound_model = read_obj_prefix("main_bound", c3d::c3d_type::bound);
+    cur_main_bound_model_ptr = &cur_main_bound_model;
+  }
+
 
   std::deque<volInt::polyhedron> debris_models =
     read_objs_with_prefix("debris", c3d::c3d_type::regular);
-  std::deque<volInt::polyhedron> debris_bound_models =
-    read_objs_with_prefix("debris_bound", c3d::c3d_type::bound);
+
+  std::deque<volInt::polyhedron> debris_bound_models;
+  std::deque<volInt::polyhedron> *debris_bound_models_ptr = nullptr;
+  if(!(flags & obj_to_m3d_flag::generate_bound_models))
+  {
+    debris_bound_models =
+      read_objs_with_prefix("debris_bound", c3d::c3d_type::bound);
+    debris_bound_models_ptr = &debris_bound_models;
+  }
+
 
   // Must be called before call to remove_polygons() and get_m3d_header_data().
   read_file_cfg_m3d(cur_main_model, &debris_models);
@@ -154,7 +169,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 //std::cout << "getting weapons of model: " << input_file_path << '\n';
   get_weapons_data(cur_main_model);
   get_wheels_data(cur_main_model);
-  get_debris_data(debris_models, debris_bound_models);
+  get_debris_data(&debris_models, debris_bound_models_ptr);
 
   std::unordered_map<int, volInt::polyhedron> wheels_models =
     get_wheels_steer(cur_main_model);
@@ -171,47 +186,58 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 //  std::cout << "first time!" << '\n';
 //  std::cout << "model:" << model_name << '\n';
 
-  center_debris(debris_models, debris_bound_models);
+  center_debris(&debris_models, debris_bound_models_ptr);
 
   if(flags & obj_to_m3d_flag::center_model)
   {
     center_m3d(&cur_main_model,
-               &cur_main_bound_model,
+               cur_main_bound_model_ptr,
                &wheels_models,
                &debris_models,
-               &debris_bound_models);
+               debris_bound_models_ptr);
   }
 
   get_m3d_scale_size(&cur_main_model,
-                     &cur_main_bound_model,
+                     cur_main_bound_model_ptr,
                      &wheels_models,
                      &debris_models,
-                     &debris_bound_models);
+                     debris_bound_models_ptr);
 
   get_m3d_header_data(&cur_main_model,
-                      &cur_main_bound_model,
+                      cur_main_bound_model_ptr,
                       &wheels_models,
                       &debris_models,
-                      &debris_bound_models);
+                      debris_bound_models_ptr);
 
 
+  if(flags & obj_to_m3d_flag::generate_bound_models)
+  {
+    m3d_mechos_generate_bound(
+      &cur_main_model,
+      &wheels_models,
+      &debris_models,
+      cur_main_bound_model,
+      debris_bound_models);
+    cur_main_bound_model_ptr = &cur_main_bound_model;
+    debris_bound_models_ptr = &debris_bound_models;
+  }
 
   if(flags & obj_to_m3d_flag::recalculate_vertex_normals)
   {
     m3d_recalc_vertNorms(&cur_main_model,
-                         &cur_main_bound_model,
+                         cur_main_bound_model_ptr,
                          &wheels_models,
                          &debris_models,
-                         &debris_bound_models);
+                         debris_bound_models_ptr);
   }
 
 
 
   std::size_t m3d_file_size = get_m3d_file_size(&cur_main_model,
-                                                &cur_main_bound_model,
+                                                cur_main_bound_model_ptr,
                                                 &wheels_models,
                                                 &debris_models,
-                                                &debris_bound_models);
+                                                debris_bound_models_ptr);
 
 
 
@@ -228,9 +254,9 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
   }
   if(n_debris)
   {
-    write_m3d_debris_data(debris_models, debris_bound_models);
+    write_m3d_debris_data(debris_models, *debris_bound_models_ptr);
   }
-  write_c3d(cur_main_bound_model);
+  write_c3d(*cur_main_bound_model_ptr);
 
 
     // TEST
@@ -347,8 +373,14 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
 {
   volInt::polyhedron cur_main_model =
     read_obj_prefix("main", c3d::c3d_type::regular);
-  volInt::polyhedron cur_main_bound_model =
-    read_obj_prefix("main_bound", c3d::c3d_type::bound);
+
+  volInt::polyhedron cur_main_bound_model;
+  volInt::polyhedron *cur_main_bound_model_ptr = nullptr;
+  if(!(flags & obj_to_m3d_flag::generate_bound_models))
+  {
+    cur_main_bound_model = read_obj_prefix("main_bound", c3d::c3d_type::bound);
+    cur_main_bound_model_ptr = &cur_main_bound_model;
+  }
 
   // Must be called before call to remove_polygons() and get_m3d_header_data().
   read_file_cfg_m3d(cur_main_model);
@@ -363,23 +395,29 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
 
   if(flags & obj_to_m3d_flag::center_model)
   {
-    center_m3d(&cur_main_model, &cur_main_bound_model);
+    center_m3d(&cur_main_model, cur_main_bound_model_ptr);
   }
 
-  get_m3d_scale_size(&cur_main_model, &cur_main_bound_model);
+  get_m3d_scale_size(&cur_main_model, cur_main_bound_model_ptr);
 
-  get_m3d_header_data(&cur_main_model, &cur_main_bound_model);
+  get_m3d_header_data(&cur_main_model, cur_main_bound_model_ptr);
 
+
+  if(flags & obj_to_m3d_flag::generate_bound_models)
+  {
+    m3d_non_mechos_generate_bound(&cur_main_model, cur_main_bound_model);
+    cur_main_bound_model_ptr = &cur_main_bound_model;
+  }
 
   if(flags & obj_to_m3d_flag::recalculate_vertex_normals)
   {
-    m3d_recalc_vertNorms(&cur_main_model, &cur_main_bound_model);
+    m3d_recalc_vertNorms(&cur_main_model, cur_main_bound_model_ptr);
   }
 
 
 
   std::size_t m3d_file_size =
-    get_m3d_file_size(&cur_main_model, &cur_main_bound_model);
+    get_m3d_file_size(&cur_main_model, cur_main_bound_model_ptr);
 
 
 
@@ -389,7 +427,7 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
 
   write_c3d(cur_main_model);
   write_m3d_header_data();
-  write_c3d(cur_main_bound_model);
+  write_c3d(*cur_main_bound_model_ptr);
   write_var_to_m3d<int, int>(weapon_slots_existence);
 
 
@@ -496,8 +534,14 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
 {
   volInt::polyhedron cur_main_model =
     read_obj_prefix("main", c3d::c3d_type::regular);
-  volInt::polyhedron cur_main_bound_model =
-    read_obj_prefix("main_bound", c3d::c3d_type::bound);
+
+  volInt::polyhedron cur_main_bound_model;
+  volInt::polyhedron *cur_main_bound_model_ptr = nullptr;
+  if(!(flags & obj_to_m3d_flag::generate_bound_models))
+  {
+    cur_main_bound_model = read_obj_prefix("main_bound", c3d::c3d_type::bound);
+    cur_main_bound_model_ptr = &cur_main_bound_model;
+  }
 
   // Must be called before call to remove_polygons() and get_m3d_header_data().
   read_file_cfg_m3d(cur_main_model);
@@ -509,22 +553,29 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
 
   if(flags & obj_to_m3d_flag::center_model)
   {
-    center_m3d(&cur_main_model, &cur_main_bound_model);
+    center_m3d(&cur_main_model, cur_main_bound_model_ptr);
   }
 
-  get_m3d_scale_size(&cur_main_model, &cur_main_bound_model);
+  get_m3d_scale_size(&cur_main_model, cur_main_bound_model_ptr);
 
-  get_m3d_header_data(&cur_main_model, &cur_main_bound_model);
+  get_m3d_header_data(&cur_main_model, cur_main_bound_model_ptr);
+
+
+  if(flags & obj_to_m3d_flag::generate_bound_models)
+  {
+    m3d_non_mechos_generate_bound(&cur_main_model, cur_main_bound_model);
+    cur_main_bound_model_ptr = &cur_main_bound_model;
+  }
 
   if(flags & obj_to_m3d_flag::recalculate_vertex_normals)
   {
-    m3d_recalc_vertNorms(&cur_main_model, &cur_main_bound_model);
+    m3d_recalc_vertNorms(&cur_main_model, cur_main_bound_model_ptr);
   }
 
 
 
   std::size_t m3d_file_size =
-    get_m3d_file_size(&cur_main_model, &cur_main_bound_model);
+    get_m3d_file_size(&cur_main_model, cur_main_bound_model_ptr);
 
 
 
@@ -534,7 +585,7 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
 
   write_c3d(cur_main_model);
   write_m3d_header_data();
-  write_c3d(cur_main_bound_model);
+  write_c3d(*cur_main_bound_model_ptr);
   write_var_to_m3d<int, int>(weapon_slots_existence);
 
 
