@@ -218,6 +218,31 @@ void vangers_model::merge_model_with_weapon_attachment_point(
 
 
 
+volInt::model_extreme_points vangers_model::get_wheel_params_extremes()
+{
+  volInt::model_extreme_points params_extremes;
+
+  for(auto wheel_data_el : cur_wheel_data)
+  {
+    std::vector<double> wheel_max_point = wheel_data_el.r;
+    std::vector<double> wheel_min_point = wheel_data_el.r;
+    for(auto cur_axis : volInt::axes_by_plane[VOLINT_X])
+    {
+      wheel_max_point[cur_axis] += wheel_data_el.radius;
+      wheel_min_point[cur_axis] -= wheel_data_el.radius;
+    }
+    wheel_max_point[VOLINT_X] += wheel_data_el.width / 2;
+    wheel_min_point[VOLINT_X] -= wheel_data_el.width / 2;
+
+    params_extremes.get_most_extreme_cmp_cur(wheel_max_point);
+    params_extremes.get_most_extreme_cmp_cur(wheel_min_point);
+  }
+
+  return params_extremes;
+}
+
+
+
 
 
 // not needed

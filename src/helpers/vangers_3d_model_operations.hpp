@@ -316,6 +316,8 @@ protected:
   void merge_model_with_weapon_attachment_point(
     volInt::polyhedron &main_model) const;
 
+  volInt::model_extreme_points get_wheel_params_extremes();
+
 
 
   std::pair<std::vector<double>, std::vector<double>> &extreme_points_pair();
