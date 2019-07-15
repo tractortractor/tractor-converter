@@ -46,30 +46,29 @@
 
 
 
+#include <boost/container_hash/hash.hpp>
+
 #include <stdexcept>
 
-// TEST
-//#include <iostream>
 #include <algorithm>
 #include <cmath>
 #include <utility>
 #include <limits>
 #include <vector>
+#include <deque>
+#include <map>
 #include <unordered_map>
 #include <unordered_set>
 #include <string>
 #include <functional>
 #include <numeric>
+#include <iterator>
 
 
 
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
-
-// TEST
-//#include <cstdlib>
-//#include <signal.h>
 
 
 
@@ -426,6 +425,169 @@ const double sqr_distinct_distance =
   VOLINT_SQR(distinct_distance);
 const double density = 1.0;
 
+const std::size_t axes_num = 3;
+const std::size_t axes_2d_num = 2;
+
+const std::vector<std::vector<std::size_t>> axes_by_plane =
+  {
+    {1, 2}, // x axis
+    {0, 2}, // y axis
+    {0, 1}, // z axis
+  };
+
+namespace color_ids {
+  const unsigned int zero_reserved =  0;
+  const unsigned int body =           1;
+  const unsigned int max_colors_ids = 25;
+} // namespace color_ids
+
+namespace generate_bound{
+  typedef std::deque<std::size_t> layer_vert_inds;
+  typedef std::map<std::size_t, layer_vert_inds> layers_inds_of_axis;
+  typedef std::vector<layers_inds_of_axis> layers_inds_by_axis;
+
+  const std::size_t expected_inter_verts_per_edge = 10;
+
+  const std::size_t plane_extrs_num = 4;
+  // Assumes that get_planes_4_extreme_points() generates points in this order.
+  //   y
+  // 3   2
+  //       x
+  // 0   1
+  const std::vector<std::vector<std::size_t>> extr_lines =
+    {
+      {0, 1},
+      {1, 2},
+      {2, 3},
+      {3, 0},
+      {0, 1, 2, 3},
+    };
+  const std::size_t plane_middle_extr_num = extr_lines.size();
+
+
+  const std::size_t end_z_layers_num_mechos = 2;
+  const std::size_t end_z_layers_num_other = 3;
+
+  enum class model_type{mechos, other};
+
+  namespace model{
+
+    const std::size_t verts_per_poly = 4;
+
+    const std::vector<std::size_t> zero_reserved_face_inds = {4, 5, 6, 7};
+
+    const std::size_t z_layers_num = 3;
+    const std::size_t num_verts_per_z_layer = 9;
+    const std::size_t num_verts = z_layers_num * num_verts_per_z_layer;
+    // 6 sides * 4 polygons per side.
+    const std::size_t num_faces = 6 * 4;
+
+    //    y
+    // e3 m2 e2
+    // m3 m4 m1 x
+    // e0 m0 e1
+    // Converting to:
+    //   y
+    // 0 1 2
+    // 3 4 5 x
+    // 6 7 8
+    const std::vector<std::size_t> extr_to_end =   {6, 8, 2, 0};
+    const std::vector<std::size_t> middle_to_end = {7, 5, 1, 3, 4};
+
+
+    const std::vector<std::vector<int>> face_ind_to_vert_inds =
+      {
+        // Getting top and low sides.
+        // top
+        // <-
+        //  /\
+        // 0 1 2
+        // 3 4 5
+        // 6 7 8
+        {0, 3, 4, 1},
+        {1, 4, 5, 2},
+        {3, 6, 7, 4},
+        {4, 7, 8, 5},
+        // low
+        // ->
+        //  \/
+        // 18 19 20
+        // 21 22 23
+        // 24 25 26
+        {18, 19, 22, 21},
+        {19, 20, 23, 22},
+        {21, 22, 25, 24},
+        {22, 23, 26, 25},
+
+
+        // Getting front and back sides.
+        // back
+        // <-
+        //  /\
+        // 6  7  8
+        // 15 16 17
+        // 24 25 26
+        {6,  15, 16, 7},
+        {7,  16, 17, 8},
+        {15, 24, 25, 16},
+        {16, 25, 26, 17},
+        // front
+        // ->
+        //  \/
+        // 0  1  2
+        // 9  10 11
+        // 18 19 20
+        {0,  1,  10, 9},
+        {1,  2,  11, 10},
+        {9,  10, 19, 18},
+        {10, 11, 20, 19},
+
+
+
+        // Getting left and right sides.
+        // left
+        // <-
+        //  /\
+        // 0  3  6
+        // 9  12 15
+        // 18 21 24
+        {0,  9,  12, 3},
+        {3,  12, 15, 6},
+        {9,  18, 21, 12},
+        {12, 21, 24, 15},
+        // right
+        // ->
+        //  \/
+        // 2  5  8
+        // 11 14 17
+        // 20 23 26
+        {2,  5,  14, 11},
+        {5,  8,  17, 14},
+        {11, 14, 23, 20},
+        {14, 17, 26, 23},
+      };
+
+    // low
+    //        y
+    //     18 19 20
+    // -x  21 22 23  x
+    //     24 25 26
+    //       -y
+    const std::vector<std::vector<std::size_t>> min_verts_to_adjust_by_wheel =
+      {
+        {18, 21, 24}, // -x
+        {24, 25, 26}, // -y
+      };
+    const std::vector<std::vector<std::size_t>> max_verts_to_adjust_by_wheel =
+      {
+        {20, 23, 26}, // x
+        {18, 19, 20}, // y
+      };
+    const std::size_t min_layer_vert_to_center = 22;
+    const std::vector<std::size_t> min_layer_extremes = {18, 20, 24, 26};
+  } // namespace model
+} // namespace generate_bound
+
 /*
    ============================================================================
    data structures
@@ -591,6 +753,38 @@ typedef struct polyhedron {
 
   void calculate_rmax();
   void calculate_c3d_properties();
+
+
+  std::vector<std::vector<std::vector<double>>>
+    get_planes_4_extreme_points() const;
+  static std::vector<std::unordered_map<std::size_t, double>>
+    get_verts_plane_lengths_rel_points(
+      std::size_t perpendicular_axis,
+      const std::vector<std::vector<double>> &verts_arg,
+      const std::vector<std::vector<double>> &points_2d,
+      const generate_bound::layer_vert_inds &vert_inds);
+  static generate_bound::layer_vert_inds get_min_length_layer_points(
+    const std::vector<std::unordered_map<std::size_t, double>> &
+      verts_plane_lengths_rel_points);
+  static double get_plane_area_from_points(
+    std::size_t perpendicular_axis,
+    const std::vector<std::vector<double>> &verts_arg,
+    const generate_bound::layer_vert_inds &vert_inds);
+  static std::vector<std::vector<double>> get_extr_middle_points(
+    std::size_t perpendicular_axis,
+    const std::vector<std::vector<double>> &verts_arg,
+    const generate_bound::layer_vert_inds &layer_extrs);
+  polyhedron extr_inds_to_bound(
+    const std::vector<std::vector<double>> &verts_arg,
+    const generate_bound::layers_inds_of_axis &extr_inds,
+    const generate_bound::layers_inds_of_axis &middle_inds,
+    generate_bound::model_type type,
+    const model_extreme_points *wheel_params_extremes = nullptr) const;
+  polyhedron generate_bound_model(
+    const generate_bound::model_type type,
+    const std::size_t layers_num,
+    const double area_threshold_multiplier,
+    const model_extreme_points *wheel_params_extremes = nullptr) const;
 
   std::pair<std::vector<double>, std::vector<double>> &extreme_points_pair();
   const std::pair<std::vector<double>, std::vector<double>> &

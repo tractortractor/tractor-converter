@@ -2114,6 +2114,792 @@ void polyhedron::calculate_c3d_properties()
 
 
 
+
+
+// Extreme points are generated in such order,
+// they can be used as polygon vertices to find area.
+// axis 1
+// 3   2
+//       axis 0
+// 0   1
+std::vector<std::vector<std::vector<double>>>
+  polyhedron::get_planes_4_extreme_points() const
+{
+  std::vector<std::vector<std::vector<double>>> plane_4_extreme_points_by_axis(
+    axes_num,
+    std::vector<std::vector<double>>(generate_bound::plane_extrs_num,
+                                     std::vector<double>(axes_2d_num, 0.0)));
+  for(std::size_t cur_axis = 0; cur_axis < axes_num; ++cur_axis)
+  {
+    std::vector<std::size_t> plane_axes = axes_by_plane[cur_axis];
+
+    std::vector<double> plane_max_point(axes_2d_num, 0.0);
+    plane_max_point[0] = max_point()[plane_axes[0]];
+    plane_max_point[1] = max_point()[plane_axes[1]];
+
+    std::vector<double> plane_min_point(axes_2d_num, 0.0);
+    plane_min_point[0] = min_point()[plane_axes[0]];
+    plane_min_point[1] = min_point()[plane_axes[1]];
+
+    std::vector<std::vector<double>> plane_minmax_points(
+      2,
+      std::vector<double>(axes_2d_num, 0.0));
+    plane_minmax_points[0][0] = max_point()[plane_axes[0]];
+    plane_minmax_points[0][1] = min_point()[plane_axes[1]];
+
+    plane_minmax_points[1][0] = min_point()[plane_axes[0]];
+    plane_minmax_points[1][1] = max_point()[plane_axes[1]];
+
+    plane_4_extreme_points_by_axis[cur_axis][0] = plane_min_point;
+    plane_4_extreme_points_by_axis[cur_axis][1] = plane_minmax_points[0];
+    plane_4_extreme_points_by_axis[cur_axis][2] = plane_max_point;
+    plane_4_extreme_points_by_axis[cur_axis][3] = plane_minmax_points[1];
+  }
+  return plane_4_extreme_points_by_axis;
+}
+
+
+
+std::vector<std::unordered_map<std::size_t, double>>
+  polyhedron::get_verts_plane_lengths_rel_points(
+    std::size_t perpendicular_axis,
+    const std::vector<std::vector<double>> &verts_arg,
+    const std::vector<std::vector<double>> &points_2d,
+    const generate_bound::layer_vert_inds &vert_inds)
+{
+  std::size_t points_2d_size = points_2d.size();
+  std::vector<std::unordered_map<std::size_t, double>> plane_lengths(
+    points_2d_size);
+
+  for(std::size_t point_2d_ind = 0;
+      point_2d_ind < points_2d_size;
+      ++point_2d_ind)
+  {
+    const std::vector<double> &cur_point_2d_value = points_2d[point_2d_ind];
+    std::for_each(std::begin(vert_inds), std::end(vert_inds),
+      [&](std::size_t vert_ind)
+      {
+        std::vector<double> vert_rel_to_point_2d(axes_2d_num, 0.0);
+        for(std::size_t plane_2d_axis = 0;
+            plane_2d_axis < axes_2d_num;
+            ++plane_2d_axis)
+        {
+          std::size_t model_3d_axis =
+            axes_by_plane[perpendicular_axis][plane_2d_axis];
+          vert_rel_to_point_2d[plane_2d_axis] =
+            verts_arg[vert_ind][model_3d_axis] -
+            cur_point_2d_value[plane_2d_axis];
+        }
+        plane_lengths[point_2d_ind][vert_ind] =
+          vector_2d_length(vert_rel_to_point_2d);
+      });
+  }
+  return plane_lengths;
+}
+
+
+
+generate_bound::layer_vert_inds polyhedron::get_min_length_layer_points(
+  const std::vector<std::unordered_map<std::size_t, double>>
+    &verts_plane_lengths_rel_points)
+{
+  std::size_t points_size = verts_plane_lengths_rel_points.size();
+  generate_bound::layer_vert_inds layer_verts_by_length(points_size);
+  for(std::size_t cur_point = 0;
+      cur_point < points_size;
+      ++cur_point)
+  {
+    const std::unordered_map<std::size_t, double> &cur_v_plane_lengths =
+      verts_plane_lengths_rel_points[cur_point];
+
+    auto extreme_vert_ind_itr =
+      std::min_element(
+        cur_v_plane_lengths.begin(), cur_v_plane_lengths.end(),
+        [](const std::pair<std::size_t, double> &a,
+           const std::pair<std::size_t, double> &b)
+          {
+            return a.second < b.second;
+          });
+    layer_verts_by_length[cur_point] = extreme_vert_ind_itr->first;
+  }
+  return layer_verts_by_length;
+}
+
+
+
+double polyhedron::get_plane_area_from_points(
+    std::size_t perpendicular_axis,
+    const std::vector<std::vector<double>> &verts_arg,
+    const generate_bound::layer_vert_inds &vert_inds)
+{
+  double area = 0.0;
+  std::vector<std::size_t> model_3d_axes = axes_by_plane[perpendicular_axis];
+  for(std::size_t vert_ind_ind = 0, vert_inds_size = vert_inds.size();
+      vert_ind_ind < vert_inds_size;
+      ++vert_ind_ind)
+  {
+    std::size_t cur_vert_ind = vert_inds[vert_ind_ind];
+    std::size_t next_vert_ind = vert_inds[(vert_ind_ind+1)%vert_inds_size];
+    const std::vector<double> &current = verts_arg[cur_vert_ind];
+    const std::vector<double> &next = verts_arg[next_vert_ind];
+    area += (current[model_3d_axes[0]] + next[model_3d_axes[0]]) *
+            (current[model_3d_axes[1]] - next[model_3d_axes[1]]);
+  }
+  return std::abs(area) / 2;
+}
+
+
+
+std::vector<std::vector<double>> polyhedron::get_extr_middle_points(
+  std::size_t perpendicular_axis,
+  const std::vector<std::vector<double>> &verts_arg,
+  const generate_bound::layer_vert_inds &layer_extrs)
+{
+  std::vector<std::vector<double>> extr_middle_points_2d(
+    generate_bound::plane_middle_extr_num,
+    std::vector<double>(axes_2d_num, 0.0));
+  for(std::size_t cur_middle_point = 0;
+      cur_middle_point < generate_bound::plane_middle_extr_num;
+      ++cur_middle_point)
+  {
+    std::vector<double> extr_points_2d_sum(axes_2d_num, 0.0);
+    for(auto extr_ind : generate_bound::extr_lines[cur_middle_point])
+    {
+      const std::vector<double> &extr_point = verts_arg[layer_extrs[extr_ind]];
+      for(std::size_t plane_2d_axis = 0;
+          plane_2d_axis < axes_2d_num;
+          ++plane_2d_axis)
+      {
+        std::size_t model_3d_axis =
+          axes_by_plane[perpendicular_axis][plane_2d_axis];
+        extr_points_2d_sum[plane_2d_axis] += extr_point[model_3d_axis];
+      }
+    }
+    extr_middle_points_2d[cur_middle_point] =
+      vector_2d_divide(extr_points_2d_sum,
+                       generate_bound::extr_lines[cur_middle_point].size());
+  }
+  return extr_middle_points_2d;
+}
+
+
+
+// It is assumed that indices of layer are supplied in this order.
+// e - extreme point. m - middle point.
+//    y
+// e3 m2 e2
+// m3 m4 m1 x
+// e0 m0 e1
+polyhedron polyhedron::extr_inds_to_bound(
+  const std::vector<std::vector<double>> &verts_arg,
+  const generate_bound::layers_inds_of_axis &extr_inds,
+  const generate_bound::layers_inds_of_axis &middle_inds,
+  generate_bound::model_type type,
+  const model_extreme_points *wheel_params_extremes) const
+{
+  polyhedron bound_model;
+  bound_model.verts =
+    std::vector<std::vector<double>>(generate_bound::model::num_verts);
+
+  std::size_t end_z_layers_num = extr_inds.size();
+  std::size_t extr_size = generate_bound::model::extr_to_end.size();
+  std::size_t mid_size = generate_bound::model::middle_to_end.size();
+
+  // Setting vertices from middle and extreme vertices of main model.
+  for(std::size_t layer_ind = 0; layer_ind < end_z_layers_num; ++layer_ind)
+  {
+    std::size_t starting_vert_ind =
+      layer_ind * generate_bound::model::num_verts_per_z_layer;
+    for(std::size_t cur_extr = 0; cur_extr < extr_size; ++cur_extr)
+    {
+      std::size_t end_vert_ind =
+        generate_bound::model::extr_to_end[cur_extr] + starting_vert_ind;
+      bound_model.verts[end_vert_ind] =
+        verts_arg[extr_inds.at(layer_ind).at(cur_extr)];
+    }
+    for(std::size_t cur_mid = 0; cur_mid < mid_size; ++cur_mid)
+    {
+      std::size_t end_vert_ind =
+        generate_bound::model::middle_to_end[cur_mid] + starting_vert_ind;
+      bound_model.verts[end_vert_ind] =
+        verts_arg[middle_inds.at(layer_ind).at(cur_mid)];
+    }
+  }
+  if(type == generate_bound::model_type::mechos)
+  {
+    std::size_t start_of_mid_layer =
+      generate_bound::model::num_verts_per_z_layer;
+    std::size_t start_of_low_layer =
+      2 * generate_bound::model::num_verts_per_z_layer;
+    std::size_t mid_vert_ind = start_of_mid_layer;
+    std::size_t low_vert_ind = start_of_low_layer;
+    for(; mid_vert_ind < start_of_low_layer; ++mid_vert_ind, ++low_vert_ind)
+    {
+      bound_model.verts[low_vert_ind] = bound_model.verts[mid_vert_ind];
+      bound_model.verts[low_vert_ind][VOLINT_Z] = zmin();
+    }
+
+    // Setting lowest vertices to be at least
+    // as high or as low by x and y axes as wheel_params_extremes.
+    for(std::size_t cur_axis = 0;
+        cur_axis < generate_bound::model::min_verts_to_adjust_by_wheel.size();
+        ++cur_axis)
+    {
+      double min_value = wheel_params_extremes->min()[cur_axis];
+      double max_value = wheel_params_extremes->max()[cur_axis];
+      for(auto vert_ind :
+          generate_bound::model::min_verts_to_adjust_by_wheel[cur_axis])
+      {
+        double &vert_coord = bound_model.verts[vert_ind][cur_axis];
+        if(vert_coord > min_value)
+        {
+          vert_coord = min_value;
+        }
+      }
+      for(auto vert_ind :
+          generate_bound::model::max_verts_to_adjust_by_wheel[cur_axis])
+      {
+        double &vert_coord = bound_model.verts[vert_ind][cur_axis];
+        if(vert_coord < max_value)
+        {
+          vert_coord = max_value;
+        }
+      }
+    }
+
+    std::vector<double> min_layer_center(3, 0.0);
+    for(auto extr_ind : generate_bound::model::min_layer_extremes)
+    {
+      vector_plus_self(min_layer_center, bound_model.verts[extr_ind]);
+    }
+    vector_divide_self(min_layer_center,
+                       generate_bound::model::min_layer_extremes.size());
+    bound_model.verts[generate_bound::model::min_layer_vert_to_center] =
+      min_layer_center;
+  }
+
+
+  // Creating dummy normal.
+  bound_model.vertNorms.push_back({0.0, 0.0, 0.0});
+
+  // Creating faces.
+  bound_model.faces = std::vector<face>(generate_bound::model::num_faces,
+                                        generate_bound::model::verts_per_poly);
+  std::size_t faces_size = generate_bound::model::num_faces;
+
+  // Setting default color_id.
+  for(std::size_t face_ind = 0; face_ind < faces_size; ++face_ind)
+  {
+    bound_model.faces[face_ind].color_id = color_ids::body;
+  }
+  if(type == generate_bound::model_type::mechos)
+  {
+    for(auto face_ind : generate_bound::model::zero_reserved_face_inds)
+    {
+      bound_model.faces[face_ind].color_id = color_ids::zero_reserved;
+    }
+  }
+
+
+  // Setting normal indices for faces.
+  for(std::size_t face_ind = 0; face_ind < faces_size; ++face_ind)
+  {
+    face &cur_face = bound_model.faces[face_ind];
+    cur_face.vertNorms = std::vector<int>(cur_face.numVerts, 0);
+  }
+
+
+  // Setting vert indices for faces.
+  for(std::size_t face_ind = 0; face_ind < faces_size; ++face_ind)
+  {
+    bound_model.faces[face_ind].verts =
+      generate_bound::model::face_ind_to_vert_inds[face_ind];
+  }
+
+
+  bound_model.numVerts = bound_model.verts.size();
+  bound_model.numVertNorms = bound_model.vertNorms.size();
+  bound_model.numFaces = bound_model.faces.size();
+  bound_model.numVertsPerPoly = bound_model.faces[0].numVerts;
+  bound_model.numVertTotal =
+    bound_model.numFaces * bound_model.numVertsPerPoly;
+
+  bound_model.faces_calc_params();
+
+  return bound_model;
+}
+
+
+
+polyhedron polyhedron::generate_bound_model(
+  const generate_bound::model_type type,
+  const std::size_t layers_num,
+  const double area_threshold_multiplier,
+  const model_extreme_points *wheel_params_extremes) const
+{
+  std::vector<std::size_t> layers_inds(layers_num);
+  std::iota(layers_inds.begin(), layers_inds.end(), 0);
+
+
+
+  std::vector<double> model_dimensions(axes_num, 0.0);
+  model_dimensions = vector_minus(max_point(), min_point());
+
+  // Getting distance between layers for each axis.
+  std::vector<double> layer_step_per_axis(axes_num, 0.0);
+  for(std::size_t cur_axis = 0; cur_axis < axes_num; ++cur_axis)
+  {
+    layer_step_per_axis[cur_axis] =
+      model_dimensions[cur_axis] / (layers_num - 1);
+  }
+
+
+
+  // Getting edges.
+  std::unordered_set<
+    std::pair<std::size_t, std::size_t>,
+    boost::hash<std::pair<std::size_t, std::size_t>>>
+      edges;
+  edges.reserve(numVertTotal);
+  for(std::size_t face_ind = 0; face_ind < numFaces; ++face_ind)
+  {
+    for(std::size_t vert_f_ind = 0; vert_f_ind < numVertsPerPoly; ++vert_f_ind)
+    {
+      std::size_t next_vert_f_ind = (vert_f_ind + 1) % numVertsPerPoly;
+
+      std::size_t vert_ind = faces[face_ind].verts[vert_f_ind];
+      std::size_t next_vert_ind = faces[face_ind].verts[next_vert_f_ind];
+
+      if(vert_ind > next_vert_ind)
+      {
+        std::swap(vert_ind, next_vert_ind);
+      }
+      edges.insert({vert_ind, next_vert_ind});
+    }
+  }
+
+
+
+  // Creating layer_verts from points of intersection between edges and layers.
+  std::vector<std::vector<double>> verts_rel_min = verts;
+  for(auto &&vert : verts_rel_min)
+  {
+    vector_minus_self(vert, min_point());
+  }
+
+  std::vector<std::vector<double>> layers_verts;
+  layers_verts.reserve(
+    edges.size() * axes_num * generate_bound::expected_inter_verts_per_edge);
+  generate_bound::layers_inds_by_axis layers_vert_inds(axes_num);
+  std::size_t cur_layer_vert_ind = 0;
+  for(std::size_t cur_axis = 0; cur_axis < axes_num; ++cur_axis)
+  {
+    double layer_step = layer_step_per_axis[cur_axis];
+    const std::vector<std::size_t> &plane_axes = axes_by_plane[cur_axis];
+    for(auto edge : edges)
+    {
+      std::vector<double> first_v_rel_min = verts_rel_min[edge.first];
+      std::vector<double> second_v_rel_min = verts_rel_min[edge.second];
+
+      // If both points are at the same plane
+      // which is perpendicular to cur_axis.
+      if(std::abs(first_v_rel_min[cur_axis] - second_v_rel_min[cur_axis]) <
+         distinct_distance)
+      {
+        // If this plane is close enough to layer, add those points to layer.
+        double middle_cur_axis_coord =
+          (first_v_rel_min[cur_axis] + second_v_rel_min[cur_axis]) / 2;
+        if(std::abs(std::remainder(middle_cur_axis_coord, layer_step)) <
+           distinct_distance)
+        {
+          std::size_t layer_ind =
+            std::round(middle_cur_axis_coord / layer_step);
+
+          layers_verts.push_back(verts[edge.first]);
+          layers_vert_inds[cur_axis][layer_ind].push_back(cur_layer_vert_ind);
+          ++cur_layer_vert_ind;
+
+          layers_verts.push_back(verts[edge.second]);
+          layers_vert_inds[cur_axis][layer_ind].push_back(cur_layer_vert_ind);
+          ++cur_layer_vert_ind;
+        }
+        continue;
+      }
+
+      // Making sure that first vert is lower than second vert by cur_axis.
+      if(first_v_rel_min[cur_axis] > second_v_rel_min[cur_axis])
+      {
+        std::swap(first_v_rel_min, second_v_rel_min);
+        // Note that "edge" is local std::pair, not reference.
+        std::swap(edge.first, edge.second);
+      }
+
+      std::size_t low_layer;
+      std::size_t top_layer;
+
+      // If lowest point is close to layer,
+      // this layer is the low layer of edge.
+      if(std::abs(std::remainder(first_v_rel_min[cur_axis], layer_step)) <
+         distinct_distance)
+      {
+        low_layer = std::round(first_v_rel_min[cur_axis] / layer_step);
+      }
+      // Else layer above this point is low layer of edge.
+      else
+      {
+        low_layer = std::ceil(first_v_rel_min[cur_axis] / layer_step);
+      }
+
+      // If topmost point is close to layer,
+      // this layer is the top layer of edge.
+      if(std::abs(std::remainder(second_v_rel_min[cur_axis], layer_step)) <
+         distinct_distance)
+      {
+        top_layer = std::round(second_v_rel_min[cur_axis] / layer_step);
+      }
+      // Else layer below this point is top layer of edge.
+      else
+      {
+        top_layer = std::floor(second_v_rel_min[cur_axis] / layer_step);
+      }
+
+      std::vector<double> direction =
+        vector_minus(second_v_rel_min, first_v_rel_min);
+
+      for(std::size_t layer_ind = low_layer, max_layer = top_layer + 1;
+          layer_ind < max_layer;
+          ++layer_ind)
+      {
+        std::vector<double> layer_inter_vert(axes_num);
+
+        layer_inter_vert[cur_axis] = layer_ind * layer_step;
+
+        double step_ind =
+          (layer_inter_vert[cur_axis] - first_v_rel_min[cur_axis]) /
+          direction[cur_axis];
+        for(auto plane_axis : plane_axes)
+        {
+          double axis_step = direction[plane_axis];
+          layer_inter_vert[plane_axis] =
+            step_ind * axis_step + first_v_rel_min[plane_axis];
+        }
+
+        layers_verts.push_back(vector_plus(layer_inter_vert, min_point()));
+        layers_vert_inds[cur_axis][layer_ind].push_back(cur_layer_vert_ind);
+        ++cur_layer_vert_ind;
+      }
+    }
+  }
+
+
+
+  // Getting extreme points per plane.
+  // Extreme points are generated in such order,
+  // they can be used as polygon vertices to find area.
+  std::vector<std::vector<std::vector<double>>>
+    plane_4_extreme_points_by_axis =
+      get_planes_4_extreme_points();
+
+
+
+  // Getting plane lengths of vertices relative to each plane extreme point.
+  std::vector<
+    std::vector<std::vector<std::unordered_map<std::size_t, double>>>>
+      layers_lengths_rel_extrs(
+        axes_num,
+        std::vector<std::vector<std::unordered_map<std::size_t, double>>>(
+          layers_num));
+  for(std::size_t cur_axis = 0; cur_axis < axes_num; ++cur_axis)
+  {
+    for(std::size_t layer_ind = 0; layer_ind < layers_num; ++layer_ind)
+    {
+      layers_lengths_rel_extrs[cur_axis][layer_ind] =
+        get_verts_plane_lengths_rel_points(
+          cur_axis,
+          layers_verts,
+          plane_4_extreme_points_by_axis[cur_axis],
+          layers_vert_inds[cur_axis][layer_ind]);
+    }
+  }
+
+
+
+  // Getting extreme vertices for each layer.
+  // Extreme vertices are generated in such order,
+  // they can be used as polygon vertices to find area.
+  // 3 2
+  // 0 1
+  generate_bound::layers_inds_by_axis layers_inds_extreme_points(axes_num);
+  for(std::size_t cur_axis = 0; cur_axis < axes_num; ++cur_axis)
+  {
+    for(std::size_t layer_ind = 0; layer_ind < layers_num; ++layer_ind)
+    {
+      const generate_bound::layer_vert_inds &cur_layer_vert_inds =
+        layers_vert_inds[cur_axis][layer_ind];
+      if(cur_layer_vert_inds.size() > 0)
+      {
+        layers_inds_extreme_points[cur_axis][layer_ind] =
+          get_min_length_layer_points(
+            layers_lengths_rel_extrs[cur_axis][layer_ind]);
+      }
+    }
+  }
+
+
+
+  // Getting area per layer.
+  std::vector<std::vector<double>> layers_areas(
+    axes_num, std::vector<double>(layers_num, 0.0));
+  for(std::size_t cur_axis = 0; cur_axis < axes_num; ++cur_axis)
+  {
+    for(std::size_t layer_ind = 0; layer_ind < layers_num; ++layer_ind)
+    {
+      layers_areas[cur_axis][layer_ind] =
+        get_plane_area_from_points(
+          cur_axis,
+          layers_verts,
+          layers_inds_extreme_points[cur_axis][layer_ind]);
+    }
+  }
+
+
+
+  // Finding topmost layer with most area.
+  std::vector<std::size_t> layer_most_areas_inds(axes_num);
+  std::vector<double> layer_most_areas(axes_num, 0.0);
+  for(std::size_t cur_axis = 0; cur_axis < axes_num; ++cur_axis)
+  {
+    std::vector<double> &layer_areas = layers_areas[cur_axis];
+    auto layer_ind_itr =
+      std::max_element(
+        layers_inds.begin(), layers_inds.end(),
+        [&](std::size_t a, std::size_t b)
+          {
+            if(std::abs(layer_areas[a] - layer_areas[b]) < distinct_distance)
+            {
+              return a < b;
+            }
+            return layer_areas[a] < layer_areas[b];
+          });
+    layer_most_areas_inds[cur_axis] = (*layer_ind_itr);
+    layer_most_areas[cur_axis] = layer_areas[(*layer_ind_itr)];
+  }
+
+
+
+  // Getting area treshold to find top and bottom layers.
+  std::vector<double> area_thresholds(axes_num, 0.0);
+  for(std::size_t cur_axis = 0; cur_axis < axes_num; ++cur_axis)
+  {
+    area_thresholds[cur_axis] =
+      layer_most_areas[cur_axis] * area_threshold_multiplier;
+  }
+
+
+
+  // Finding max and min layers.
+  std::vector<std::size_t> max_layers(axes_num);
+  std::vector<std::size_t> min_layers(axes_num);
+  for(std::size_t cur_axis = 0; cur_axis < axes_num; ++cur_axis)
+  {
+    std::vector<double> &layer_areas = layers_areas[cur_axis];
+    double area_threshold = area_thresholds[cur_axis];
+    std::size_t layer_ind;
+
+    // Max.
+    layer_ind = layer_areas.size() - 1;
+    for(auto layer_area_ritr = layer_areas.rbegin();
+        layer_area_ritr != layer_areas.rend();
+        ++layer_area_ritr, --layer_ind)
+    {
+      if((*layer_area_ritr) >= area_threshold)
+      {
+        max_layers[cur_axis] = layer_ind;
+        break;
+      }
+    }
+    // Min.
+    layer_ind = 0;
+    for(auto layer_area_itr = layer_areas.begin();
+        layer_area_itr != layer_areas.end();
+        ++layer_area_itr, ++layer_ind)
+    {
+      if((*layer_area_itr) >= area_threshold)
+      {
+        min_layers[cur_axis] = layer_ind;
+        break;
+      }
+    }
+  }
+  if(type == generate_bound::model_type::mechos)
+  {
+    min_layers[VOLINT_Z] = 0;
+  }
+
+
+
+  // Getting layer-defined bounds from max and min layers.
+  model_extreme_points layer_bounds;
+  for(std::size_t cur_axis = 0; cur_axis < axes_num; ++cur_axis)
+  {
+    layer_bounds.max()[cur_axis] =
+      ((max_layers[cur_axis]) * layer_step_per_axis[cur_axis]) +
+      min_point()[cur_axis];
+    layer_bounds.min()[cur_axis] =
+      min_layers[cur_axis] * layer_step_per_axis[cur_axis] +
+      min_point()[cur_axis];
+  }
+
+
+
+  // Adjusting layer verts so they will be within layer_bounds.
+  for(std::size_t cur_axis = 0; cur_axis < axes_num; ++cur_axis)
+  {
+    for(auto &&layer_vert : layers_verts)
+    {
+      if(layer_vert[cur_axis] > layer_bounds.max()[cur_axis])
+      {
+        layer_vert[cur_axis] = layer_bounds.max()[cur_axis];
+      }
+      else if(layer_vert[cur_axis] < layer_bounds.min()[cur_axis])
+      {
+        layer_vert[cur_axis] = layer_bounds.min()[cur_axis];
+      }
+    }
+  }
+
+
+
+  // Adding indices of higher verts to topmost layer and
+  // indices of lower verts to lowest layer.
+  for(std::size_t cur_axis = 0; cur_axis < axes_num; ++cur_axis)
+  {
+    generate_bound::layer_vert_inds &top_layer_vert_inds =
+      layers_vert_inds[cur_axis][max_layers[cur_axis]];
+    generate_bound::layer_vert_inds &low_layer_vert_inds =
+      layers_vert_inds[cur_axis][min_layers[cur_axis]];
+
+    for(std::size_t cur_layer = (layers_num - 1);
+        cur_layer > max_layers[cur_axis];
+        --cur_layer)
+    {
+      generate_bound::layer_vert_inds &higher_vert_inds =
+        layers_vert_inds[cur_axis][cur_layer];
+      top_layer_vert_inds.insert(top_layer_vert_inds.end(),
+        higher_vert_inds.begin(), higher_vert_inds.end());
+    }
+
+    for(std::size_t cur_layer = 0;
+        cur_layer < min_layers[cur_axis];
+        ++cur_layer)
+    {
+      generate_bound::layer_vert_inds &lower_vert_inds =
+        layers_vert_inds[cur_axis][cur_layer];
+      low_layer_vert_inds.insert(low_layer_vert_inds.end(),
+        lower_vert_inds.begin(), lower_vert_inds.end());
+    }
+  }
+
+
+
+  std::size_t end_layers_num;
+  if(type == generate_bound::model_type::mechos)
+  {
+    end_layers_num = generate_bound::end_z_layers_num_mechos;
+  }
+  else if(type == generate_bound::model_type::other)
+  {
+    end_layers_num = generate_bound::end_z_layers_num_other;
+  }
+  std::vector<std::size_t> bound_defining_z_layers =
+  {
+    max_layers[VOLINT_Z],
+    layer_most_areas_inds[VOLINT_Z],
+    min_layers[VOLINT_Z],
+  };
+
+
+
+  // Getting plane lengths of vertices relative to plane extreme point.
+  // Finding lengths only for vertices of bound defining z layers.
+  std::vector<std::vector<std::unordered_map<std::size_t, double>>>
+    z_layers_lengths(end_layers_num);
+
+  for(std::size_t end_layer = 0; end_layer < end_layers_num; ++end_layer)
+  {
+    z_layers_lengths[end_layer] =
+      get_verts_plane_lengths_rel_points(
+        VOLINT_Z,
+        layers_verts,
+        plane_4_extreme_points_by_axis[VOLINT_Z],
+        layers_vert_inds[VOLINT_Z][bound_defining_z_layers[end_layer]]);
+  }
+
+
+
+  // Getting extreme vertices for bound defining z layers.
+  // Extreme vertices are generated in such order,
+  // they can be used as polygon vertices to find area.
+  // 3 2
+  // 0 1
+  generate_bound::layers_inds_of_axis layers_extrs_inds;
+  for(std::size_t end_layer = 0; end_layer < end_layers_num; ++end_layer)
+  {
+    layers_extrs_inds[end_layer] =
+      get_min_length_layer_points(z_layers_lengths[end_layer]);
+  }
+
+
+
+  // layers_extrs_inds will be used to form end bound model.
+  // Finding medium points to form
+  // standard Vangers bound model with 9 vertices per side.
+  std::vector<std::vector<std::vector<double>>> middle_points(end_layers_num);
+  for(std::size_t end_layer = 0; end_layer < end_layers_num; ++end_layer)
+  {
+    middle_points[end_layer] =
+      get_extr_middle_points(
+        VOLINT_Z,
+        layers_verts,
+        layers_extrs_inds[end_layer]);
+  }
+
+
+
+  // Getting lengths of verts relative to middle points.
+  std::vector<std::vector<std::unordered_map<std::size_t, double>>>
+    verts_lengths_rel_middle_points(end_layers_num);
+  for(std::size_t end_layer = 0; end_layer < end_layers_num; ++end_layer)
+  {
+    verts_lengths_rel_middle_points[end_layer] =
+      get_verts_plane_lengths_rel_points(
+        VOLINT_Z,
+        layers_verts,
+        middle_points[end_layer],
+        layers_vert_inds[VOLINT_Z][bound_defining_z_layers[end_layer]]);
+  }
+
+
+
+  // Assigning vert with minimum length as middle point.
+  generate_bound::layers_inds_of_axis middle_vert_inds;
+  for(std::size_t end_layer = 0; end_layer < end_layers_num; ++end_layer)
+  {
+    middle_vert_inds[end_layer] =
+      get_min_length_layer_points(verts_lengths_rel_middle_points[end_layer]);
+  }
+
+
+
+  return extr_inds_to_bound(layers_verts,
+                            layers_extrs_inds,
+                            middle_vert_inds,
+                            type,
+                            wheel_params_extremes);
+}
+
+
+
 std::pair<std::vector<double>, std::vector<double>> &
   polyhedron::extreme_points_pair()
 {
