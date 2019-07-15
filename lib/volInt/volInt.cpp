@@ -453,6 +453,15 @@ double vector_length_between(
 
 
 
+std::vector<double> vector_middle(
+  const std::vector<double> &first,
+  const std::vector<double> &second)
+{
+  return vector_divide(vector_plus(first, second), 2);
+}
+
+
+
 bool vector_equal(
   const std::vector<double> &first,
   const std::vector<double> &second)
@@ -507,6 +516,44 @@ double vector_angle(
     }
   }
   return std::acos(cosine);
+}
+
+
+
+std::vector<double> vector_2d_minus(const std::vector<double> &first,
+                                    const std::vector<double> &second)
+{
+  std::vector<double> ret(axes_2d_num, 0.0);
+  ret[0] = first[0] - second[0];
+  ret[1] = first[1] - second[1];
+  return ret;
+}
+
+
+
+void vector_2d_minus_self(std::vector<double> &first,
+                          const std::vector<double> &second)
+{
+  first[0] -= second[0];
+  first[1] -= second[1];
+}
+
+
+
+std::vector<double> vector_2d_divide(const std::vector<double> &vec,
+                                     double num)
+{
+  std::vector<double> ret(axes_2d_num, 0.0);
+  ret[0] = vec[0] / num;
+  ret[1] = vec[1] / num;
+  return ret;
+}
+
+
+
+double vector_2d_length(const std::vector<double> &vec)
+{
+  return std::hypot(vec[0], vec[1]);
 }
 
 

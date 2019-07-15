@@ -161,6 +161,10 @@ double vector_length_between(
   const std::vector<double> &first,
   const std::vector<double> &second);
 
+std::vector<double> vector_middle(
+  const std::vector<double> &first,
+  const std::vector<double> &second);
+
 bool vector_equal(
   const std::vector<double> &first,
   const std::vector<double> &second);
@@ -176,6 +180,16 @@ std::vector<double> vector_cross_product(
 double vector_angle(
   const std::vector<double> &first,
   const std::vector<double> &second);
+
+std::vector<double> vector_2d_minus(const std::vector<double> &first,
+                                    const std::vector<double> &second);
+void vector_2d_minus_self(std::vector<double> &first,
+                          const std::vector<double> &second);
+
+std::vector<double> vector_2d_divide(const std::vector<double> &vec,
+                                     double num);
+
+double vector_2d_length(const std::vector<double> &vec);
 
 void matrix_multiply_self(
   std::vector<std::vector<double>> &mat,
