@@ -39,6 +39,19 @@ void obj_to_vangers_3d_model_mode(
       helpers::get_angle_option(options,
                                 "max_smooth_angle",
                                 error_handling::throw_exception);
+    std::size_t gen_bound_layers_num =
+      options["generate_bound_layers_num"].as<std::size_t>();
+    double gen_bound_area_threshold =
+      options["generate_bound_area_threshold"].as<double>();
+    if(gen_bound_area_threshold > defines::gen_bound_area_threshold_max)
+    {
+      std::cout << "generate_bound_area_threshold " <<
+        gen_bound_area_threshold << " is more than expected max " <<
+        defines::gen_bound_area_threshold_max << '\n';
+      std::cout << "generate_bound_area_threshold is set to " <<
+        defines::gen_bound_area_threshold_max << '\n';
+      gen_bound_area_threshold = defines::gen_bound_area_threshold_max;
+    }
 
     helpers::bitflag<helpers::obj_to_m3d_flag> obj_to_m3d_flags;
     if(options["center_model"].as<bool>())
@@ -304,6 +317,8 @@ void obj_to_vangers_3d_model_mode(
               c3d_default_material_id,
               scale_cap,
               max_smooth_angle,
+              gen_bound_layers_num,
+              gen_bound_area_threshold,
               obj_to_m3d_flags,
               non_mechos_scale_sizes_ptr);
           // TEST
@@ -350,6 +365,8 @@ void obj_to_vangers_3d_model_mode(
             c3d_default_material_id,
             scale_cap,
             max_smooth_angle,
+            gen_bound_layers_num,
+            gen_bound_area_threshold,
             obj_to_m3d_flags);
           // TEST
 //        std::cout << '\n' << "mechos m3d" << '\n';
@@ -419,6 +436,8 @@ void obj_to_vangers_3d_model_mode(
             c3d_default_material_id,
             scale_cap,
             max_smooth_angle,
+            gen_bound_layers_num,
+            gen_bound_area_threshold,
             obj_to_m3d_flags,
             non_mechos_scale_sizes_ptr);
           // TEST

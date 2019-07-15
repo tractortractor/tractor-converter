@@ -229,6 +229,10 @@ boost::program_options::variables_map get_options(int ac, char** av)
                 "max angle between smooth faces when generating normals."
             "\nSpecify \"generate_bound_models\" option "
                 "to automatically generate bound models."
+            "\n\"generate_bound_layers_num\" option "
+                "is used while generating bound models."
+            "\n\"generate_bound_area_threshold\" option "
+                "is used while generating bound models."
             "\n"
             "\n\"source_dir\" and \"output_dir\" options must be specified."
           "\n"
@@ -470,6 +474,23 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "bound models were manually edited.\n"
        "\t*.obj bound models are ignored if turned on.\n"
        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
+      ("generate_bound_layers_num",
+       boost::program_options::value<std::size_t>()->
+         default_value(defines::default_gen_bound_layers_num),
+       ("\tUsed when generating bound model.\n"
+        "\tMore layers will make generated bound model more precise.\n"
+        "\tDefaults to " + defines::default_gen_bound_layers_num_str + ".\n"
+        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n").c_str())
+      ("generate_bound_area_threshold",
+       boost::program_options::value<double>()->
+         default_value(defines::default_gen_bound_area_threshold),
+       ("\tUsed when generating bound model.\n"
+        "\tWith higher values more parts of original model will be considered "
+            "insignificant and will end up outside of generated bound.\n"
+        "\tDefaults to " +
+            defines::default_gen_bound_area_threshold_str + ".\n"
+        "\tMaximum is " + defines::gen_bound_area_threshold_max_str + ".\n"
+        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n").c_str())
       ("mtl_n_wheels",
        boost::program_options::value<std::size_t>()->default_value(50),
        "\tNumber of wheel materials to generate for *.mtl file.\n"
