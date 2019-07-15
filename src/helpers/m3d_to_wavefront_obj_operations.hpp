@@ -61,12 +61,6 @@ const std::size_t per_file_cfg_expected_animated_el_size = 1000;
 
 
 
-void set_color_id(volInt::polyhedron &model,
-                  unsigned int new_color_id,
-                  int new_wheel_weapon_num = -1);
-
-
-
 class m3d_to_wavefront_obj_model : vangers_model
 {
 public:

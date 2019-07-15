@@ -583,6 +583,8 @@ typedef struct polyhedron {
 
   void rotate_by_axis(double angle, rotation_axis axis);
 
+  void set_color_id(unsigned int new_color_id, int new_wheel_weapon_num = -1);
+
 
   bool find_ref_points();
 

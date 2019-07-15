@@ -7,23 +7,6 @@ namespace helpers{
 
 
 
-void set_color_id(volInt::polyhedron &model,
-                  unsigned int new_color_id,
-                  int new_wheel_weapon_num)
-{
-  for(auto &&cur_poly : model.faces)
-  {
-    // If non-standard color id ended up in m3d model it must be preserved.
-    if(cur_poly.color_id < c3d::color::string_to_id::max_colors_ids)
-    {
-      cur_poly.color_id = new_color_id;
-    }
-    cur_poly.wheel_weapon_id = new_wheel_weapon_num;
-  }
-}
-
-
-
 m3d_to_wavefront_obj_model::m3d_to_wavefront_obj_model(
   const boost::filesystem::path &input_file_path_arg,
   const boost::filesystem::path &output_dir_path_arg,
@@ -1257,7 +1240,7 @@ void m3d_to_wavefront_obj_model::move_weapon_model(
   volInt::vector_minus_self(new_position, weapon_offset);
 
   // Changing color_id for model.
-  set_color_id(weapon_model, c3d::color::string_to_id::weapon, weapon_num);
+  weapon_model.set_color_id(c3d::color::string_to_id::weapon, weapon_num);
 
 
 
@@ -1308,8 +1291,7 @@ void m3d_to_wavefront_obj_model::add_attachment_point_to_models_map(
     *weapon_attachment_point;
   models_map[wavefront_obj::attachment_point_obj_name].move_model_to_point(
     attachment_point_pos);
-  set_color_id(
-    models_map[wavefront_obj::attachment_point_obj_name],
+  models_map[wavefront_obj::attachment_point_obj_name].set_color_id(
     c3d::color::string_to_id::attachment_point);
 }
 
@@ -1322,8 +1304,7 @@ void m3d_to_wavefront_obj_model::add_center_of_mass_to_models_map(
   models_map[wavefront_obj::center_of_mass_obj_name] = *center_of_mass_model;
   models_map[wavefront_obj::center_of_mass_obj_name].move_model_to_point(
     center_of_mass);
-  set_color_id(
-    models_map[wavefront_obj::center_of_mass_obj_name],
+  models_map[wavefront_obj::center_of_mass_obj_name].set_color_id(
     c3d::color::string_to_id::center_of_mass);
 }
 

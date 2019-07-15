@@ -1676,6 +1676,22 @@ void polyhedron::rotate_by_axis(double angle, rotation_axis axis)
 
 
 
+void polyhedron::set_color_id(unsigned int new_color_id,
+                              int new_wheel_weapon_num)
+{
+  for(auto &&cur_poly : faces)
+  {
+    // If non-standard color id ended up in m3d model it must be preserved.
+    if(cur_poly.color_id < color_ids::max_colors_ids)
+    {
+      cur_poly.color_id = new_color_id;
+    }
+    cur_poly.wheel_weapon_id = new_wheel_weapon_num;
+  }
+}
+
+
+
 // Getting two points which are distant enough from each other by x and z.
 bool polyhedron::find_ref_points()
 {
