@@ -2401,7 +2401,7 @@ void wavefront_obj_to_m3d_model::get_wheels_data(
   // Getting wheel data using extreme coords.
   for(std::size_t wheel_n = 0; wheel_n < n_wheels; ++wheel_n)
   {
-
+    cur_wheel_data[wheel_n].wheel_model_index = wheel_n;
     if(main_model.wheels_steer.count(wheel_n))
     {
       cur_wheel_data[wheel_n].steer = 1;
@@ -2409,6 +2409,14 @@ void wavefront_obj_to_m3d_model::get_wheels_data(
     else
     {
       cur_wheel_data[wheel_n].steer = 0;
+    }
+    if(main_model.wheels_ghost.count(wheel_n))
+    {
+      cur_wheel_data[wheel_n].ghost = 1;
+    }
+    else
+    {
+      cur_wheel_data[wheel_n].ghost = 0;
     }
 
     cur_wheel_data[wheel_n].r = wheels_extreme_points[wheel_n].get_center();
