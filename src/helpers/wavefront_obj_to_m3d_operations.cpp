@@ -2215,7 +2215,10 @@ void wavefront_obj_to_m3d_model::get_m3d_header_data(
   */
 
   main_model->calculate_c3d_properties();
-  main_bound_model->calculate_c3d_properties();
+  if(main_bound_model)
+  {
+    main_bound_model->calculate_c3d_properties();
+  }
 
   for_each_steer_non_ghost_wheel(
     main_model, wheels_models,
@@ -2224,12 +2227,15 @@ void wavefront_obj_to_m3d_model::get_m3d_header_data(
         wheel_model.calculate_c3d_properties();
       });
 
-  if(debris_models && debris_bound_models)
+  if(debris_models)
   {
     for(auto &&model : *debris_models)
     {
       model.calculate_c3d_properties();
     }
+  }
+  if(debris_bound_models)
+  {
     for(auto &&model : *debris_bound_models)
     {
       model.calculate_c3d_properties();
@@ -2443,14 +2449,17 @@ void wavefront_obj_to_m3d_model::get_wheels_data(
 
 
 void wavefront_obj_to_m3d_model::get_debris_data(
-  const std::deque<volInt::polyhedron> &debris_models,
-  const std::deque<volInt::polyhedron> &debris_bound_models)
+  const std::deque<volInt::polyhedron> *debris_models,
+  const std::deque<volInt::polyhedron> *debris_bound_models)
 {
-  std::size_t debris_num = debris_models.size();
-  std::size_t debris_bound_models_size = debris_bound_models.size();
-  if(debris_num > debris_bound_models_size)
+  std::size_t debris_num = debris_models->size();
+  if(debris_bound_models)
   {
-    debris_num = debris_bound_models_size;
+    std::size_t debris_bound_models_size = debris_bound_models->size();
+    if(debris_num > debris_bound_models_size)
+    {
+      debris_num = debris_bound_models_size;
+    }
   }
   n_debris = debris_num;
 
@@ -2473,30 +2482,43 @@ void wavefront_obj_to_m3d_model::get_debris_data(
 
 
 void wavefront_obj_to_m3d_model::center_debris(
-  volInt::polyhedron &debris_model,
-  volInt::polyhedron &debris_bound_model)
+  volInt::polyhedron *debris_model,
+  volInt::polyhedron *debris_bound_model)
 {
-  debris_model.offset = debris_model.get_model_center();
-  if(debris_model.rcm_overwritten)
+  debris_model->offset_point() = debris_model->get_model_center();
+  debris_model->move_coord_system_to_point_inv_neg_vol(
+    debris_model->offset_point());
+  if(debris_model->rcm_overwritten)
   {
-    volInt::vector_minus_self(debris_model.rcm, debris_model.offset_point());
+    volInt::vector_minus_self(debris_model->rcm, debris_model->offset_point());
   }
-  // Not needed since offset of debris bound model is never used.
-  // Added for consistency.
-  debris_bound_model.offset = debris_model.offset;
-  debris_model.move_coord_system_to_point_inv_neg_vol(
-    debris_model.offset_point());
-  debris_bound_model.move_coord_system_to_point_inv_neg_vol(
-    debris_model.offset_point());
+  if(debris_bound_model)
+  {
+    // Not needed since offset of debris bound model is never used.
+    // Added for consistency.
+    debris_bound_model->offset_point() = debris_model->offset_point();
+    debris_bound_model->move_coord_system_to_point_inv_neg_vol(
+      debris_model->offset_point());
+  }
 }
 
 void wavefront_obj_to_m3d_model::center_debris(
-  std::deque<volInt::polyhedron> &debris_models,
-  std::deque<volInt::polyhedron> &debris_bound_models)
+  std::deque<volInt::polyhedron> *debris_models,
+  std::deque<volInt::polyhedron> *debris_bound_models)
 {
-  for(std::size_t i = 0; i < n_debris; ++i)
+  if(debris_bound_models)
   {
-    center_debris(debris_models[i], debris_bound_models[i]);
+    for(std::size_t i = 0; i < n_debris; ++i)
+    {
+      center_debris(&(*debris_models)[i], &(*debris_bound_models)[i]);
+    }
+  }
+  else
+  {
+    for(std::size_t i = 0; i < n_debris; ++i)
+    {
+      center_debris(&(*debris_models)[i]);
+    }
   }
 }
 
@@ -2515,7 +2537,10 @@ void wavefront_obj_to_m3d_model::center_m3d(
   std::vector<double> m3d_center = extreme_points.get_center();
 
   main_model->move_coord_system_to_point_inv_neg_vol(m3d_center);
-  main_bound_model->move_coord_system_to_point_inv_neg_vol(m3d_center);
+  if(main_bound_model)
+  {
+    main_bound_model->move_coord_system_to_point_inv_neg_vol(m3d_center);
+  }
 
   for(std::size_t wheel_n = 0; wheel_n < n_wheels; ++wheel_n)
   {
@@ -2528,12 +2553,15 @@ void wavefront_obj_to_m3d_model::center_m3d(
         volInt::vector_minus_self(wheel_model.offset_point(), m3d_center);
       });
 
-  if(debris_models && debris_bound_models)
+  if(debris_models)
   {
     for(auto &&model : *debris_models)
     {
       volInt::vector_minus_self(model.offset_point(), m3d_center);
     }
+  }
+  if(debris_bound_models)
+  {
     for(auto &&model : *debris_bound_models)
     {
       volInt::vector_minus_self(model.offset_point(), m3d_center);
@@ -2699,17 +2727,20 @@ void wavefront_obj_to_m3d_model::get_m3d_scale_size(
       }
     }
   }
-  if(debris_models && debris_bound_models)
+  if(debris_models)
   {
     for(auto &model : *debris_models)
     {
       get_scale_helper_get_extreme_radius(&model, extreme_radius);
     }
-//  for(const auto &model : *debris_bound_models)
-//  {
-//    get_scale_helper_get_extreme_radius(&model, extreme_radius);
-//  }
   }
+//  if(debris_bound_models)
+//  {
+//    for(const auto &model : *debris_bound_models)
+//    {
+//      get_scale_helper_get_extreme_radius(&model, extreme_radius);
+//    }
+//  }
 
   rmax = extreme_radius;
   get_scale_helper_set_scale_from_rmax();
@@ -2743,7 +2774,10 @@ void wavefront_obj_to_m3d_model::m3d_recalc_vertNorms(
   std::deque<volInt::polyhedron> *debris_bound_models)
 {
   main_model->recalc_vertNorms(max_smooth_angle);
-  main_bound_model->recalc_vertNorms(max_smooth_angle);
+  if(main_bound_model)
+  {
+    main_bound_model->recalc_vertNorms(max_smooth_angle);
+  }
 
   for_each_steer_non_ghost_wheel(
     main_model, wheels_models,
@@ -2752,12 +2786,15 @@ void wavefront_obj_to_m3d_model::m3d_recalc_vertNorms(
         wheel_model.recalc_vertNorms(max_smooth_angle);
       });
 
-  if(debris_models && debris_bound_models)
+  if(debris_models)
   {
     for(auto &&model : *debris_models)
     {
       model.recalc_vertNorms(max_smooth_angle);
     }
+  }
+  if(debris_bound_models)
+  {
     for(auto &&model : *debris_bound_models)
     {
       model.recalc_vertNorms(max_smooth_angle);
@@ -2811,7 +2848,10 @@ std::size_t wavefront_obj_to_m3d_model::get_m3d_file_size(
   }
 
   size += get_c3d_file_size(main_model);
-  size += get_c3d_file_size(main_bound_model);
+  if(main_bound_model)
+  {
+    size += get_c3d_file_size(main_bound_model);
+  }
   if(n_wheels && wheels_models)
   {
     for(std::size_t i = 0; i < n_wheels; ++i)
@@ -2822,11 +2862,17 @@ std::size_t wavefront_obj_to_m3d_model::get_m3d_file_size(
       }
     }
   }
-  if(n_debris && debris_models && debris_bound_models)
+  if(n_debris && debris_models)
   {
     for(std::size_t i = 0; i < n_debris; ++i)
     {
       size += get_c3d_file_size(&(*debris_models)[i]);
+    }
+  }
+  if(n_debris && debris_bound_models)
+  {
+    for(std::size_t i = 0; i < n_debris; ++i)
+    {
       size += get_c3d_file_size(&(*debris_bound_models)[i]);
     }
   }

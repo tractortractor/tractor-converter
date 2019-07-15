@@ -415,7 +415,7 @@ private:
 
   void get_m3d_header_data(
     volInt::polyhedron *main_model,
-    volInt::polyhedron *main_bound_model,
+    volInt::polyhedron *main_bound_model = nullptr,
     std::unordered_map<int, volInt::polyhedron> *wheels_models = nullptr,
     std::deque<volInt::polyhedron> *debris_models = nullptr,
     std::deque<volInt::polyhedron> *debris_bound_models = nullptr);
@@ -425,19 +425,19 @@ private:
   void get_wheels_data(const volInt::polyhedron &main_model);
 
   void get_debris_data(
-    const std::deque<volInt::polyhedron> &debris_models,
-    const std::deque<volInt::polyhedron> &debris_bound_models);
+    const std::deque<volInt::polyhedron> *debris_models,
+    const std::deque<volInt::polyhedron> *debris_bound_models = nullptr);
 
   void center_debris(
-    std::deque<volInt::polyhedron> &debris_models,
-    std::deque<volInt::polyhedron> &debris_bound_models);
+    std::deque<volInt::polyhedron> *debris_models,
+    std::deque<volInt::polyhedron> *debris_bound_models = nullptr);
   void center_debris(
-    volInt::polyhedron &debris_model,
-    volInt::polyhedron &debris_bound_model);
+    volInt::polyhedron *debris_model,
+    volInt::polyhedron *debris_bound_model = nullptr);
 
   void center_m3d(
     volInt::polyhedron *main_model,
-    volInt::polyhedron *main_bound_model,
+    volInt::polyhedron *main_bound_model = nullptr,
     std::unordered_map<int, volInt::polyhedron> *wheels_models = nullptr,
     std::deque<volInt::polyhedron> *debris_models = nullptr,
     std::deque<volInt::polyhedron> *debris_bound_models = nullptr);
@@ -450,7 +450,7 @@ private:
   void get_scale_helper_set_scale_from_rmax();
   void get_m3d_scale_size(
     volInt::polyhedron *main_model,
-    volInt::polyhedron *main_bound_model,
+    volInt::polyhedron *main_bound_model = nullptr,
     std::unordered_map<int, volInt::polyhedron> *wheels_models = nullptr,
     std::deque<volInt::polyhedron> *debris_models = nullptr,
     std::deque<volInt::polyhedron> *debris_bound_models = nullptr);
@@ -458,7 +458,7 @@ private:
 
   void m3d_recalc_vertNorms(
     volInt::polyhedron *main_model,
-    volInt::polyhedron *main_bound_model,
+    volInt::polyhedron *main_bound_model = nullptr,
     std::unordered_map<int, volInt::polyhedron> *wheels_models = nullptr,
     std::deque<volInt::polyhedron> *debris_models = nullptr,
     std::deque<volInt::polyhedron> *debris_bound_models = nullptr);
@@ -467,7 +467,7 @@ private:
   std::size_t get_c3d_file_size(const volInt::polyhedron *model);
   std::size_t get_m3d_file_size(
     const volInt::polyhedron *main_model,
-    const volInt::polyhedron *main_bound_model,
+    const volInt::polyhedron *main_bound_model = nullptr,
     const std::unordered_map<int, volInt::polyhedron> *wheels_models = nullptr,
     const std::deque<volInt::polyhedron> *debris_models = nullptr,
     const std::deque<volInt::polyhedron> *debris_bound_models = nullptr);
