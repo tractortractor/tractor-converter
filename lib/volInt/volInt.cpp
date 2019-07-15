@@ -790,10 +790,10 @@ face::face(int numVerts_arg)
 : numVerts(numVerts_arg),
   color_id(0),
   wheel_weapon_id(-1),
-  norm(std::vector<double>(3)),
+  norm(std::vector<double>(3, 0.0)),
   w(0.0),
-  verts(std::vector<int>(numVerts)),
-  vertNorms(std::vector<int>(numVerts))
+  verts(std::vector<int>(numVerts, -1)),
+  vertNorms(std::vector<int>(numVerts, -1))
 {
 }
 
