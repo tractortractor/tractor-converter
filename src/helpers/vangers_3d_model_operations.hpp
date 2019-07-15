@@ -66,6 +66,15 @@ const std::vector<std::string> vangers_3d_tree_folders
 
 
 
+enum class merge_model_type{wheel, weapon, attachment_point, center_of_mass};
+enum class merge_with_weapons_flag
+{
+  none = 0,
+  extract_nonexistent_weapons = 1,
+};
+
+
+
 template<typename SOURCE, typename DESTINATION>
 std::vector<DESTINATION> cast_vec_var(
   const std::vector<SOURCE> &vec_src)
@@ -192,6 +201,123 @@ protected:
   const volInt::polyhedron *center_of_mass_model;
 
 
+
+  template<typename WHEELS_CONTAINER>
+  void merge_helper_reserve_space_in_main(
+    volInt::polyhedron *main_model,
+    const WHEELS_CONTAINER *steer_wheels_models = nullptr,
+    const WHEELS_CONTAINER *non_steer_ghost_wheels_models = nullptr) const
+  {
+    int new_main_model_num_verts = main_model->numVerts;
+    int new_main_model_num_vert_norms = main_model->numVertNorms;
+    int new_main_model_num_poly = main_model->numFaces;
+    if(n_wheels)
+    {
+      for(int cur_wheel_num = 0;
+          cur_wheel_num < cur_wheel_data.size();
+          ++cur_wheel_num)
+      {
+        if(steer_wheels_models &&
+           cur_wheel_data[cur_wheel_num].steer)
+        {
+          const volInt::polyhedron &wheel_model =
+            (*steer_wheels_models).at(
+              cur_wheel_data[cur_wheel_num].wheel_model_index);
+          new_main_model_num_verts += wheel_model.numVerts;
+          new_main_model_num_vert_norms += wheel_model.numVertNorms;
+          new_main_model_num_poly += wheel_model.numFaces;
+        }
+        else if(non_steer_ghost_wheels_models &&
+                cur_wheel_data[cur_wheel_num].ghost)
+        {
+          const volInt::polyhedron &wheel_model =
+            (*non_steer_ghost_wheels_models).at(
+              cur_wheel_data[cur_wheel_num].wheel_model_index);
+          new_main_model_num_verts += wheel_model.numVerts;
+          new_main_model_num_vert_norms += wheel_model.numVertNorms;
+          new_main_model_num_poly += wheel_model.numFaces;
+        }
+      }
+    }
+    // Example weapon models are no longer merged with main model.
+  //if(weapon_slots_existence && example_weapon_model)
+  //{
+  //  new_main_model_num_verts +=
+  //    example_weapon_model->numVerts * m3d::weapon_slot::max_slots;
+  //  new_main_model_num_vert_norms +=
+  //    example_weapon_model->numVertNorms * m3d::weapon_slot::max_slots;
+  //  new_main_model_num_poly +=
+  //    example_weapon_model->numFaces * m3d::weapon_slot::max_slots;
+  //}
+    // Center of mass model is no longer merged with main model.
+  //if(center_of_mass_model)
+  //{
+  //  new_main_model_num_verts += center_of_mass_model->numVerts;
+  //  new_main_model_num_vert_norms += center_of_mass_model->numVertNorms;
+  //  new_main_model_num_poly += center_of_mass_model->numFaces;
+  //}
+    main_model->verts.reserve(new_main_model_num_verts);
+    main_model->vertNorms.reserve(new_main_model_num_vert_norms);
+    main_model->faces.reserve(new_main_model_num_poly);
+  }
+
+  void merge_helper_move_model_into_main(volInt::polyhedron &main_model,
+                                         volInt::polyhedron &model_to_move,
+                                         std::vector<double> new_position,
+                                         double new_angle,
+                                         int wheel_weapon_num,
+                                         merge_model_type merge_type) const;
+
+  template<typename WHEELS_CONTAINER>
+  void merge_main_model_with_wheels(
+    volInt::polyhedron *main_model,
+    WHEELS_CONTAINER *steer_wheels_models = nullptr,
+    WHEELS_CONTAINER *non_steer_ghost_wheels_models = nullptr) const
+  {
+    // inserting steering wheels into main model
+    for(int cur_wheel_num = 0;
+        cur_wheel_num < cur_wheel_data.size();
+        ++cur_wheel_num)
+    {
+      if(steer_wheels_models &&
+         cur_wheel_data[cur_wheel_num].steer)
+      {
+        merge_helper_move_model_into_main(
+          *main_model,
+          (*steer_wheels_models)
+            [cur_wheel_data[cur_wheel_num].wheel_model_index],
+          cur_wheel_data[cur_wheel_num].r,
+          0.0,
+          cur_wheel_num,
+          merge_model_type::wheel);
+      }
+      else if(non_steer_ghost_wheels_models &&
+              cur_wheel_data[cur_wheel_num].ghost)
+      {
+        merge_helper_move_model_into_main(
+          *main_model,
+          (*non_steer_ghost_wheels_models)
+            [cur_wheel_data[cur_wheel_num].wheel_model_index],
+          cur_wheel_data[cur_wheel_num].r,
+          0.0,
+          cur_wheel_num,
+          merge_model_type::wheel);
+      }
+    }
+  }
+
+  // Not used.
+  void merge_main_model_with_weapons(
+    volInt::polyhedron &main_model,
+    bitflag<merge_with_weapons_flag> flags) const;
+  // Not used.
+  void merge_model_with_center_of_mass(volInt::polyhedron &main_model) const;
+
+  void merge_model_with_weapon_attachment_point(
+    volInt::polyhedron &main_model) const;
+
+
+
   std::pair<std::vector<double>, std::vector<double>> &extreme_points_pair();
   const std::pair<std::vector<double>, std::vector<double>> &
     extreme_points_pair() const;
@@ -277,7 +403,6 @@ protected:
       nest_vec.begin(), nest_vec.end(),
       [&](std::vector<T> &vec){ scale_vec_trunc<T>(vec, exp); });
   }
-
 };
 
 

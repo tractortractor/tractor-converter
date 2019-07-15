@@ -58,6 +58,168 @@ vangers_model::vangers_model(
 
 
 
+
+
+void vangers_model::merge_helper_move_model_into_main(
+  volInt::polyhedron &main_model,
+  volInt::polyhedron &model_to_move,
+  point new_position,
+  double new_angle,
+  int wheel_weapon_num,
+  merge_model_type merge_type) const
+{
+  if(model_to_move.verts.size() == 0)
+  {
+    return;
+  }
+
+  unsigned int merge_model_color_id;
+  if(merge_type == merge_model_type::wheel)
+  {
+    // Changing model_to_move so calculated center of extreme coordinates
+    // and actual center are the same.
+    model_to_move.move_coord_system_to_center();
+    merge_model_color_id = c3d::color::string_to_id::wheel;
+  }
+  else if(merge_type == merge_model_type::weapon)
+  {
+    // Changing position of weapon as it is changed in vangers source code.
+    /*
+    // VANGERS SOURCE
+    Vector off =
+      A_c2p *
+      Vector(
+        data_in_slots[i] -> model -> x_off,
+        data_in_slots[i] -> model -> y_off,
+        data_in_slots[i] -> model -> z_off);
+    data_in_slots[i] -> model -> draw_child(R_slots[i] - off,A_c2p,A_p2c);
+    */
+    std::vector<double> weapon_offset = model_to_move.offset_point();
+    volInt::rotate_point_by_axis(weapon_offset,
+                                 new_angle,
+                                 volInt::rotation_axis::y);
+    volInt::vector_minus_self(new_position, weapon_offset);
+
+    merge_model_color_id = c3d::color::string_to_id::weapon;
+  }
+  else if(merge_type == merge_model_type::attachment_point)
+  {
+    merge_model_color_id = c3d::color::string_to_id::attachment_point;
+  }
+  else if(merge_type == merge_model_type::center_of_mass)
+  {
+    merge_model_color_id = c3d::color::string_to_id::center_of_mass;
+  }
+  // Changing color_id for model.
+  model_to_move.set_color_id(merge_model_color_id, wheel_weapon_num);
+
+
+
+  // Changing model_to_move's y angle.
+  model_to_move.rotate_by_axis(new_angle, volInt::rotation_axis::y);
+
+
+
+  // Changing coordinates of all vertices of model_to_move
+  // so it will be in the right place.
+  // new_position is center coordinates of model_to_move
+  // relative to main model center.
+  model_to_move.move_model_to_point(new_position);
+
+  // Since all vertices and norms are appended to main model
+  // all vertices and norm indexes of moved polygons must be updated.
+  for(auto &&cur_poly : model_to_move.faces)
+  {
+    for(auto &&cur_vert_index : cur_poly.verts)
+    {
+      cur_vert_index += main_model.numVerts;
+    }
+    for(auto &&cur_vert_norm_index : cur_poly.vertNorms)
+    {
+      cur_vert_norm_index += main_model.numVertNorms;
+    }
+  }
+
+  // moving vertices, vertices' normals and polygons of wheel into main model
+  std::move(model_to_move.verts.begin(),
+            model_to_move.verts.end(),
+            std::back_inserter(main_model.verts));
+  std::move(model_to_move.vertNorms.begin(),
+            model_to_move.vertNorms.end(),
+            std::back_inserter(main_model.vertNorms));
+  std::move(model_to_move.faces.begin(),
+            model_to_move.faces.end(),
+            std::back_inserter(main_model.faces));
+
+  main_model.numVerts += model_to_move.numVerts;
+  main_model.numVertNorms += model_to_move.numVertNorms;
+  main_model.numFaces += model_to_move.numFaces;
+}
+
+
+
+// Not used.
+void vangers_model::merge_main_model_with_weapons(
+  volInt::polyhedron &main_model,
+  bitflag<merge_with_weapons_flag> flags) const
+{
+  // inserting weapon models into main model
+  for(int cur_weapon_num = 0;
+      cur_weapon_num < m3d::weapon_slot::max_slots;
+      ++cur_weapon_num)
+  {
+    if(flags & merge_with_weapons_flag::extract_nonexistent_weapons ||
+       cur_weapon_slot_data[cur_weapon_num].exists)
+    {
+      volInt::polyhedron temp_weapon_model = *example_weapon_model;
+      merge_helper_move_model_into_main(
+        main_model,
+        temp_weapon_model,
+        cur_weapon_slot_data[cur_weapon_num].R_slot,
+        cur_weapon_slot_data[cur_weapon_num].location_angle_of_slot,
+        cur_weapon_num,
+        merge_model_type::weapon);
+    }
+  }
+}
+
+
+
+// Not used.
+void vangers_model::merge_model_with_center_of_mass(
+  volInt::polyhedron &model) const
+{
+  volInt::polyhedron temp_center_of_mass_model = *center_of_mass_model;
+  merge_helper_move_model_into_main(
+    model,
+    temp_center_of_mass_model,
+    model.rcm,
+    0.0,
+    -1,
+    merge_model_type::center_of_mass);
+}
+
+
+
+void vangers_model::merge_model_with_weapon_attachment_point(
+  volInt::polyhedron &main_model) const
+{
+  std::vector<double> attachment_point = main_model.offset_point();
+
+  volInt::polyhedron temp_attachment_point_model = *weapon_attachment_point;
+  merge_helper_move_model_into_main(
+    main_model,
+    temp_attachment_point_model,
+    attachment_point,
+    0.0,
+    -1,
+    merge_model_type::attachment_point);
+}
+
+
+
+
+
 // not needed
 /*
 void vangers_model::scale_3d_point(std::vector<double> &point)

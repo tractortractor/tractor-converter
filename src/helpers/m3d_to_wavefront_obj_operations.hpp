@@ -44,8 +44,6 @@ enum class m3d_to_obj_flag
   use_custom_J_by_default = 4,
 };
 
-enum class merge_model_type{wheel, weapon, attachment_point, center_of_mass};
-
 // 1 digit left to dot + 1 dot + 8 expected digits right to dot + 4 exponent
 const std::size_t per_file_cfg_float_size_increase = 1 + 1 + 8 + 4;
 // 19 integer number
@@ -249,35 +247,6 @@ private:
     const volInt::polyhedron &main_model,
     std::vector<volInt::polyhedron> &steer_wheels_models,
     std::vector<volInt::polyhedron> &non_steer_ghost_wheels_models);
-
-
-  void merge_helper_reserve_space_in_main(
-    volInt::polyhedron &main_model,
-    const std::vector<volInt::polyhedron> &wheels_models,
-    const std::vector<volInt::polyhedron>
-      &non_steer_ghost_wheels_models) const;
-
-
-  void merge_helper_move_model_into_main(volInt::polyhedron &main_model,
-                                         volInt::polyhedron &model_to_move,
-                                         std::vector<double> new_position,
-                                         double new_angle,
-                                         int wheel_weapon_num,
-                                         merge_model_type merge_type) const;
-
-
-  void merge_main_model_with_wheels(
-    volInt::polyhedron &main_model,
-    std::vector<volInt::polyhedron> &wheel_models,
-    std::vector<volInt::polyhedron> &non_steer_ghost_wheels_models) const;
-
-  // Not used.
-  void merge_main_model_with_weapons(volInt::polyhedron &main_model) const;
-  // Not used.
-  void merge_model_with_center_of_mass(volInt::polyhedron &main_model) const;
-
-  void merge_model_with_weapon_attachment_point(
-    volInt::polyhedron &main_model) const;
 
 
   void move_weapon_model(std::vector<double> new_position,
