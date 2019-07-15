@@ -2341,28 +2341,31 @@ polyhedron polyhedron::extr_inds_to_bound(
 
     // Setting lowest vertices to be at least
     // as high or as low by x and y axes as wheel_params_extremes.
-    for(std::size_t cur_axis = 0;
-        cur_axis < generate_bound::model::min_verts_to_adjust_by_wheel.size();
-        ++cur_axis)
+    if(wheel_params_extremes)
     {
-      double min_value = wheel_params_extremes->min()[cur_axis];
-      double max_value = wheel_params_extremes->max()[cur_axis];
-      for(auto vert_ind :
-          generate_bound::model::min_verts_to_adjust_by_wheel[cur_axis])
+      for(std::size_t cur_axis = 0;
+          cur_axis < generate_bound::model::min_verts_to_adjust_by_wheel.size();
+          ++cur_axis)
       {
-        double &vert_coord = bound_model.verts[vert_ind][cur_axis];
-        if(vert_coord > min_value)
+        double min_value = wheel_params_extremes->min()[cur_axis];
+        double max_value = wheel_params_extremes->max()[cur_axis];
+        for(auto vert_ind :
+            generate_bound::model::min_verts_to_adjust_by_wheel[cur_axis])
         {
-          vert_coord = min_value;
+          double &vert_coord = bound_model.verts[vert_ind][cur_axis];
+          if(vert_coord > min_value)
+          {
+            vert_coord = min_value;
+          }
         }
-      }
-      for(auto vert_ind :
-          generate_bound::model::max_verts_to_adjust_by_wheel[cur_axis])
-      {
-        double &vert_coord = bound_model.verts[vert_ind][cur_axis];
-        if(vert_coord < max_value)
+        for(auto vert_ind :
+            generate_bound::model::max_verts_to_adjust_by_wheel[cur_axis])
         {
-          vert_coord = max_value;
+          double &vert_coord = bound_model.verts[vert_ind][cur_axis];
+          if(vert_coord < max_value)
+          {
+            vert_coord = max_value;
+          }
         }
       }
     }

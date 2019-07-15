@@ -2770,6 +2770,73 @@ void wavefront_obj_to_m3d_model::get_a3d_scale_size(
 
 
 
+void wavefront_obj_to_m3d_model::m3d_mechos_generate_bound(
+  const volInt::polyhedron *main_model,
+  const std::unordered_map<int, volInt::polyhedron> *wheels_models,
+  const std::deque<volInt::polyhedron> *debris_models,
+  volInt::polyhedron &new_main_bound,
+  std::deque<volInt::polyhedron> &new_debris_bounds)
+{
+  volInt::polyhedron main_model_copy = *main_model;
+
+  if(wheels_models && wheels_models->size())
+  {
+    std::unordered_map<int, volInt::polyhedron> wheels_to_insert =
+      *wheels_models;
+    merge_helper_reserve_space_in_main(&main_model_copy,
+                                       &wheels_to_insert);
+    merge_main_model_with_wheels(&main_model_copy,
+                                 &wheels_to_insert);
+  }
+
+  volInt::model_extreme_points wheel_params_extremes;
+  volInt::model_extreme_points *wheel_params_extremes_ptr = nullptr;
+  if(cur_wheel_data.size())
+  {
+    wheel_params_extremes = get_wheel_params_extremes();
+    wheel_params_extremes_ptr = &wheel_params_extremes;
+  }
+
+  new_main_bound =
+    main_model_copy.generate_bound_model(
+      volInt::generate_bound::model_type::mechos,
+      gen_bound_layers_num,
+      gen_bound_area_threshold,
+      wheel_params_extremes_ptr);
+
+  new_main_bound.calculate_c3d_properties();
+
+  for(std::size_t cur_debris = 0; cur_debris < n_debris; ++cur_debris)
+  {
+    new_debris_bounds.push_back(
+      (*debris_models)[cur_debris].generate_bound_model(
+        volInt::generate_bound::model_type::other,
+        gen_bound_layers_num,
+        gen_bound_area_threshold));
+    new_debris_bounds[cur_debris].offset_point() =
+      (*debris_models)[cur_debris].offset_point();
+  }
+}
+
+
+
+void wavefront_obj_to_m3d_model::m3d_non_mechos_generate_bound(
+  const volInt::polyhedron *main_model,
+  volInt::polyhedron &new_main_bound)
+{
+  new_main_bound =
+    main_model->generate_bound_model(
+      volInt::generate_bound::model_type::other,
+      gen_bound_layers_num,
+      gen_bound_area_threshold);
+
+  new_main_bound.calculate_c3d_properties();
+}
+
+
+
+
+
 void wavefront_obj_to_m3d_model::m3d_recalc_vertNorms(
   volInt::polyhedron *main_model,
   volInt::polyhedron *main_bound_model,

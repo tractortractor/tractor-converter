@@ -460,6 +460,16 @@ private:
     std::deque<volInt::polyhedron> *debris_bound_models = nullptr);
   void get_a3d_scale_size(std::deque<volInt::polyhedron> *models);
 
+  void m3d_mechos_generate_bound(
+    const volInt::polyhedron *main_model,
+    const std::unordered_map<int, volInt::polyhedron> *wheels_models,
+    const std::deque<volInt::polyhedron> *debris_models,
+    volInt::polyhedron &new_main_bound,
+    std::deque<volInt::polyhedron> &new_debris_bounds);
+  void m3d_non_mechos_generate_bound(
+    const volInt::polyhedron *main_model,
+    volInt::polyhedron &new_main_bound);
+
   void m3d_recalc_vertNorms(
     volInt::polyhedron *main_model,
     volInt::polyhedron *main_bound_model = nullptr,
