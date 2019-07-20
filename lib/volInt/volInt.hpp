@@ -616,23 +616,23 @@ typedef struct polyhedron {
 
   void get_extreme_points();
   model_extreme_points get_extreme_points(
-    const std::vector<const volInt::face*> &polygons) const;
+    const std::vector<const face*> &polygons) const;
 
 
   std::vector<double> get_model_center();
   std::vector<double> get_model_center(
     const std::vector<const std::vector<double>*> &vertices) const;
   std::vector<double> get_model_center(
-    const std::vector<const volInt::face*> &polygons) const;
+    const std::vector<const face*> &polygons) const;
 
-  std::vector<const volInt::face*>
+  std::vector<const face*>
     get_polygons_by_color(unsigned int color_id) const;
-  std::vector<const volInt::face*> get_polygons_by_ids(
+  std::vector<const face*> get_polygons_by_ids(
     unsigned int color_id,
     int wheel_weapon_id) const;
 
   std::vector<const std::vector<double>*> get_vertices_by_polygons(
-    const std::vector<const volInt::face*> &model_polygons) const;
+    const std::vector<const face*> &model_polygons) const;
 
   std::vector<const std::vector<double>*> get_vertices_by_color(
     unsigned int color_id) const;
@@ -646,7 +646,7 @@ typedef struct polyhedron {
     std::vector<const std::vector<double>*> vertices,
     const std::vector<double> &point);
   void move_model_to_point(
-    std::vector<const volInt::face*> polygons,
+    std::vector<const face*> polygons,
     const std::vector<double> &point);
 
   void move_coord_system_to_point(const std::vector<double> &point);
@@ -657,7 +657,7 @@ typedef struct polyhedron {
     std::vector<const std::vector<double>*> vertices,
     const std::vector<double> &point);
   void move_coord_system_to_point(
-    std::vector<const volInt::face*> polygons,
+    std::vector<const face*> polygons,
     const std::vector<double> &point);
 
   void rotate_by_axis(double angle, rotation_axis axis);

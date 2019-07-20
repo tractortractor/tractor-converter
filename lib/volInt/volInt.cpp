@@ -1110,7 +1110,7 @@ void polyhedron::faces_calc_params()
   faces.erase(
     std::remove_if(
       faces.begin(), faces.end(),
-      [&](const volInt::face &f)
+      [&](const face &f)
       {
         return bad_polygons.count(cur_f_n++);
       }
@@ -1394,7 +1394,7 @@ void polyhedron::get_extreme_points()
 
 
 model_extreme_points polyhedron::get_extreme_points(
-  const std::vector<const volInt::face*> &polygons_arg) const
+  const std::vector<const face*> &polygons_arg) const
 {
   model_extreme_points tmp_extreme_points;
 
@@ -1429,7 +1429,7 @@ std::vector<double> polyhedron::get_model_center(
 
 
 std::vector<double> polyhedron::get_model_center(
-  const std::vector<const volInt::face*> &polygons_arg) const
+  const std::vector<const face*> &polygons_arg) const
 {
   model_extreme_points tmp_extreme_points = get_extreme_points(polygons_arg);
   return tmp_extreme_points.get_center();
@@ -1439,10 +1439,10 @@ std::vector<double> polyhedron::get_model_center(
 
 
 
-std::vector<const volInt::face*> polyhedron::get_polygons_by_color(
+std::vector<const face*> polyhedron::get_polygons_by_color(
   unsigned int color_id_arg) const
 {
-  std::vector<const volInt::face*> tmp_polygons;
+  std::vector<const face*> tmp_polygons;
   tmp_polygons.reserve(numFaces);
   for(int cur_poly = 0; cur_poly < numFaces; ++cur_poly)
   {
@@ -1456,11 +1456,11 @@ std::vector<const volInt::face*> polyhedron::get_polygons_by_color(
 
 
 
-std::vector<const volInt::face*> polyhedron::get_polygons_by_ids(
+std::vector<const face*> polyhedron::get_polygons_by_ids(
   unsigned int color_id_arg,
   int wheel_weapon_id_arg) const
 {
-  std::vector<const volInt::face*> tmp_polygons;
+  std::vector<const face*> tmp_polygons;
   tmp_polygons.reserve(numFaces);
   for(int cur_poly = 0; cur_poly < numFaces; ++cur_poly)
   {
@@ -1478,7 +1478,7 @@ std::vector<const volInt::face*> polyhedron::get_polygons_by_ids(
 
 
 std::vector<const std::vector<double>*> polyhedron::get_vertices_by_polygons(
-    const std::vector<const volInt::face*> &polygons_arg) const
+    const std::vector<const face*> &polygons_arg) const
 {
   std::vector<const std::vector<double>*> tmp_verts;
 
@@ -1506,7 +1506,7 @@ std::vector<const std::vector<double>*> polyhedron::get_vertices_by_polygons(
 std::vector<const std::vector<double>*> polyhedron::get_vertices_by_color(
   unsigned int color_id) const
 {
-  std::vector<const volInt::face*> tmp_polygons =
+  std::vector<const face*> tmp_polygons =
     get_polygons_by_color(color_id);
   return get_vertices_by_polygons(tmp_polygons);
 }
@@ -1517,7 +1517,7 @@ std::vector<const std::vector<double>*> polyhedron::get_vertices_by_ids(
   unsigned int color_id,
   int wheel_weapon_id) const
 {
-  std::vector<const volInt::face*> tmp_polygons =
+  std::vector<const face*> tmp_polygons =
     get_polygons_by_ids(color_id, wheel_weapon_id);
   return get_vertices_by_polygons(tmp_polygons);
 }
@@ -1560,7 +1560,7 @@ void polyhedron::move_model_to_point(
 
 
 void polyhedron::move_model_to_point(
-  std::vector<const volInt::face*> polygons_arg,
+  std::vector<const face*> polygons_arg,
   const std::vector<double> &point_arg)
 {
   std::vector<const std::vector<double>*> tmp_verts =
@@ -1613,7 +1613,7 @@ void polyhedron::move_coord_system_to_point(
 
 
 void polyhedron::move_coord_system_to_point(
-  std::vector<const volInt::face*> polygons_arg,
+  std::vector<const face*> polygons_arg,
   const std::vector<double> &point_arg)
 {
   std::vector<const std::vector<double>*> tmp_verts =
