@@ -569,6 +569,33 @@ void matrix_multiply_self(
 
 
 
+std::size_t calc_norms::normal_to_key(const std::vector<double> &norm)
+{
+  std::size_t key = 0;
+  for(std::size_t cur_norm = 0; cur_norm < axes_num; ++cur_norm)
+  {
+    key +=
+      static_cast<std::size_t>(
+        to_integer_multiply +
+        std::round(norm[cur_norm] * to_integer_multiply)) <<
+      to_key_shift[cur_norm];
+  }
+  return key;
+}
+
+std::vector<double> calc_norms::key_to_normal(std::size_t key)
+{
+  std::vector<double> norm(axes_num, 0.0);
+  for(std::size_t cur_norm = 0; cur_norm < axes_num; ++cur_norm)
+  {
+    std::size_t natural_norm = (key >> to_key_shift[cur_norm]) & k_to_n_mask;
+    norm[cur_norm] = (natural_norm / to_integer_multiply) - vector_scale_val;
+  }
+  return norm;
+}
+
+
+
 /*
    ============================================================================
    data structures
@@ -1138,7 +1165,6 @@ void polyhedron::recalc_vertNorms(double max_smooth_angle)
                                                  std::vector<double>(3, 0.0));
 
   // Assigning unique id to each norm per vertex per face.
-//  std::cout << "Assigning unique id to each norm per vertex per face." << '\n';
   for(std::size_t face_ind = 0, norm_ind = 0; face_ind < numFaces; ++face_ind)
   {
     for(std::size_t norm_f_ind = 0;
@@ -1146,141 +1172,116 @@ void polyhedron::recalc_vertNorms(double max_smooth_angle)
         ++norm_ind, ++norm_f_ind)
     {
       faces[face_ind].vertNorms[norm_f_ind] = norm_ind;
-//      std::cout << "faces[" << face_ind << "]"
-//        ".vertNorms[" << norm_f_ind << "]" <<
-//        faces[face_ind].vertNorms[norm_f_ind] << '\n';
     }
   }
-//  std::cout << "---------------------------------------------" << '\n';
 
   // Calculating non-normalized face normals.
-//  std::cout << "Calculating non-normalized face normals." << '\n';
   std::vector<std::vector<double>> raw_face_norms(numFaces,
                                                   std::vector<double>(3, 0.0));
   for(std::size_t face_ind = 0; face_ind < numFaces; ++face_ind)
   {
     raw_face_norms[face_ind] = face_calc_normal(face_ind);
-//    std::cout << "raw_face_norms[" << face_ind << "]: " <<
-//      raw_face_norms[face_ind][0] << " " <<
-//      raw_face_norms[face_ind][1] << " " <<
-//      raw_face_norms[face_ind][2] << '\n';
   }
-//  std::cout << "---------------------------------------------" << '\n';
 
   // Calculating face vertex angles.
-//  std::cout << "Calculating face vertex angles." << '\n';
-  std::unordered_map<std::size_t, std::unordered_map<std::size_t, double>>
-    vert_angles;
+  std::vector<std::vector<double>> vert_angles(
+    numFaces,
+    std::vector<double>(numVertsPerPoly, 0.0));
   for(std::size_t face_ind = 0; face_ind < numFaces; ++face_ind)
   {
     for(std::size_t vert_f_ind = 0; vert_f_ind < numVertsPerPoly; ++vert_f_ind)
     {
       vert_angles[face_ind][vert_f_ind] =
         get_vertex_angle(face_ind, vert_f_ind);
-//      std::cout << "vert_angles[" << face_ind << "][" << vert_f_ind << "]: " <<
-//        vert_angles[face_ind][vert_f_ind] << '\n';
     }
   }
-//  std::cout << "---------------------------------------------" << '\n';
 
-  // Getting map: vertex - containing faces.
-//  std::cout << "Getting map: vertex - containing faces." << '\n';
-  std::unordered_map<std::size_t, std::unordered_set<std::size_t>>
-    vert_to_faces_map;
-  std::unordered_map<std::size_t, std::unordered_map<std::size_t, std::size_t>>
-    vert_to_faces_map_with_vert_f_num;
+  // Getting map per each vertex: containing face ind - vertex face index.
+  std::vector<std::unordered_map<std::size_t, std::size_t>>
+    vert_to_face_ind_vert_f_ind_pair(numVerts);
+  for(std::size_t vert_ind = 0; vert_ind < numVerts; ++vert_ind)
+  {
+    vert_to_face_ind_vert_f_ind_pair[vert_ind].reserve(
+      calc_norms::expected_connected_polygons_per_vertex);
+  }
+
   for(std::size_t face_ind = 0; face_ind < numFaces; ++face_ind)
   {
     face &cur_face = faces[face_ind];
     for(std::size_t vert_f_ind = 0; vert_f_ind < numVertsPerPoly; ++vert_f_ind)
     {
       std::size_t vert_ind = cur_face.verts[vert_f_ind];
-      vert_to_faces_map[vert_ind].insert(face_ind);
-      vert_to_faces_map_with_vert_f_num[vert_ind][face_ind] = vert_f_ind;
-
-//      std::cout << "vert_to_faces_map_with_vert_f_num"
-//        "[" << vert_ind<< "][" << face_ind << "]: " <<
-//        vert_to_faces_map_with_vert_f_num[vert_ind][face_ind] << '\n';
+      vert_to_face_ind_vert_f_ind_pair[vert_ind][face_ind] = vert_f_ind;
     }
   }
-//  std::cout << "---------------------------------------------" << '\n';
 
   // Calculating angles between faces.
-//  std::cout << "Calculating angles between faces." << '\n';
-  std::unordered_map<std::size_t, std::unordered_map<std::size_t, double>>
-    angles_between_faces;
+  std::unordered_map<
+    std::pair<std::size_t, std::size_t>,
+    double,
+    boost::hash<std::pair<std::size_t, std::size_t>>> angles_between_faces;
+  angles_between_faces.reserve(
+    calc_norms::expected_connected_polygons_per_polygon * numFaces);
   for(std::size_t vert_ind = 0; vert_ind < numVerts; ++vert_ind)
   {
-//    std::cout << "vert_ind: " << vert_ind << '\n';
-    for(auto face_ind : vert_to_faces_map[vert_ind])
+    for(auto face_ind_vert_f_ind_pair :
+        vert_to_face_ind_vert_f_ind_pair[vert_ind])
     {
-//      std::cout << "\tface_ind: " << face_ind << '\n';
-      for(auto face_ind_to_cmp : vert_to_faces_map[vert_ind])
+      std::size_t face_ind = face_ind_vert_f_ind_pair.first;
+      for(auto face_ind_vert_f_ind_pair_to_cmp :
+          vert_to_face_ind_vert_f_ind_pair[vert_ind])
       {
+        std::size_t face_ind_to_cmp = face_ind_vert_f_ind_pair_to_cmp.first;
         // Ignore self.
         if(face_ind == face_ind_to_cmp)
         {
           continue;
         }
+
+        std::pair<std::size_t, std::size_t> face_inds_pair =
+          {face_ind, face_ind_to_cmp};
+        if(face_inds_pair.first > face_inds_pair.second)
+        {
+          std::swap(face_inds_pair.first, face_inds_pair.second);
+        }
+
         // Skip if already in map.
-        if(angles_between_faces.count(face_ind) &&
-           angles_between_faces[face_ind].count(face_ind_to_cmp))
+        if(angles_between_faces.count(face_inds_pair))
         {
           continue;
         }
         double angle =
-          vector_angle(faces[face_ind].norm, faces[face_ind_to_cmp].norm);
-        angles_between_faces[face_ind][face_ind_to_cmp] = angle;
-        angles_between_faces[face_ind_to_cmp][face_ind] = angle;
-//        std::cout << "\t\tangles_between_faces"
-//          "[" << face_ind << "][" << face_ind_to_cmp << "]: " <<
-//          angles_between_faces[face_ind][face_ind_to_cmp] << '\n';
-//        std::cout << "\t\tangles_between_faces"
-//          "[" << face_ind_to_cmp << "][" << face_ind << "]: " <<
-//          angles_between_faces[face_ind_to_cmp][face_ind] << '\n';
+          vector_angle(faces[face_inds_pair.first].norm,
+                       faces[face_inds_pair.second].norm);
+        angles_between_faces[face_inds_pair] = angle;
       }
     }
   }
-//  std::cout << "---------------------------------------------" << '\n';
 
   // Using angles between faces to determine
   // if vertices between faces should be smooth.
-//  std::cout << "Using angles between faces to determine "
-//    "if vertices between faces should be smooth." << '\n';
-  std::unordered_map<std::size_t, std::unordered_set<std::size_t>>
-    smooth_faces;
-  for(auto angles_map_per_face : angles_between_faces)
+  std::unordered_set<
+    std::pair<std::size_t, std::size_t>,
+    boost::hash<std::pair<std::size_t, std::size_t>>>
+      smooth_faces;
+  smooth_faces.reserve(angles_between_faces.size());
+  for(auto face_pair_to_angle : angles_between_faces)
   {
-//    std::cout << "face_ind: " <<
-//      angles_map_per_face.first << '\n';
-    for(auto face_angle_pair : angles_map_per_face.second)
+    if(face_pair_to_angle.second - max_smooth_angle < distinct_distance)
     {
-//      std::cout << "\tface_to_cmp_ind: " <<
-//        face_angle_pair.first << '\n';
-//      std::cout << "\tangle: " <<
-//        face_angle_pair.second << '\n';
-      if(face_angle_pair.second - max_smooth_angle < distinct_distance)
-      {
-        smooth_faces[angles_map_per_face.first].insert(face_angle_pair.first);
-//        std::cout << "smooth" << '\n';
-      }
-//      std::cout << '\n';
+      smooth_faces.insert(face_pair_to_angle.first);
     }
   }
-//  std::cout << "---------------------------------------------" << '\n';
 
 
 
   // https://www.bytehazard.com/articles/vertnorm.html
   // Accumulating normals in each face.
-//  std::cout << "Accumulating normals in each face." << '\n';
   for(std::size_t face_ind = 0; face_ind < numFaces; ++face_ind)
   {
-//    std::cout << "face_ind: " << face_ind << '\n';
     face &cur_face = faces[face_ind];
     for(std::size_t vert_f_ind = 0; vert_f_ind < numVertsPerPoly; ++vert_f_ind)
     {
-//      std::cout << "\tvert_f_ind: " << vert_f_ind << '\n';
       std::size_t vert_ind = cur_face.verts[vert_f_ind];
       std::size_t norm_ind = cur_face.vertNorms[vert_f_ind];
       std::vector<double> &cur_norm = raw_vertNorms[norm_ind];
@@ -1289,121 +1290,87 @@ void polyhedron::recalc_vertNorms(double max_smooth_angle)
       cur_norm = vector_multiply(raw_face_norms[face_ind],
                                  vert_angles[face_ind][vert_f_ind]);
 
-//      std::cout << "\tbegin_norm: " <<
-//        cur_norm[0] << " " << cur_norm[1] << " " << cur_norm[2] << '\n';
-
-      for(auto face_to_cmp_ind : vert_to_faces_map[vert_ind])
+      for(auto face_ind_vert_f_ind_pair_to_cmp :
+          vert_to_face_ind_vert_f_ind_pair[vert_ind])
       {
-//        std::cout << "\t\tface_to_cmp_ind: " << face_to_cmp_ind << '\n';
+        std::size_t face_ind_to_cmp = face_ind_vert_f_ind_pair_to_cmp.first;
 
         // Ignore self.
-        if(face_ind == face_to_cmp_ind)
+        if(face_ind == face_ind_to_cmp)
         {
           continue;
         }
 
+        std::pair<std::size_t, std::size_t> face_inds_pair =
+          {face_ind, face_ind_to_cmp};
+        if(face_inds_pair.first > face_inds_pair.second)
+        {
+          std::swap(face_inds_pair.first, face_inds_pair.second);
+        }
+
         // Criteria for hard-edges.
-        if(!(smooth_faces.count(face_ind) &&
-             smooth_faces[face_ind].count(face_to_cmp_ind)))
+        if(!smooth_faces.count(face_inds_pair))
         {
           continue;
         }
 
         // Accumulate normal.
-        std::size_t vert_to_cmp_f_ind =
-          vert_to_faces_map_with_vert_f_num[vert_ind][face_to_cmp_ind];
+        std::size_t vert_f_ind_to_cmp = face_ind_vert_f_ind_pair_to_cmp.second;
         // No need to get weight per surface since non-normalized
         // face norm length is directly proportional to surface area of face.
         std::vector<double> norm_to_add =
-          vector_multiply(raw_face_norms[face_to_cmp_ind],
-                          vert_angles[face_to_cmp_ind][vert_to_cmp_f_ind]);
+          vector_multiply(raw_face_norms[face_ind_to_cmp],
+                          vert_angles[face_ind_to_cmp][vert_f_ind_to_cmp]);
         vector_plus_self(cur_norm, norm_to_add);
-
-//        std::vector<double> cout_test =
-//          vector_multiply(raw_face_norms[face_to_cmp_ind],
-//                          vert_angles[face_to_cmp_ind][vert_to_cmp_f_ind]);
-//        std::cout << "\t\tnorm_to_accumulate: " <<
-//          norm_to_add[0] << " " <<
-//          norm_to_add[1] << " " <<
-//          norm_to_add[2] << '\n';
-//        std::cout << "\t\tcur_norm: " <<
-//          cur_norm[0] << " " << cur_norm[1] << " " << cur_norm[2] << '\n';
       }
-//    std::cout << "\tend_norm: " <<
-//      cur_norm[0] << " " << cur_norm[1] << " " << cur_norm[2] << '\n';
     }
-//    std::cout << '\n';
   }
-//  std::cout << "---------------------------------------------" << '\n';
 
 
 
 
 
   // Normalizing vertex normals.
-//  std::cout << "Normalizing vertex normals." << '\n';
   for(auto &&raw_vertNorm : raw_vertNorms)
   {
     vector_scale_self(vector_scale_val, raw_vertNorm);
-//    std::cout << "normalized: " <<
-//      raw_vertNorm[0] << " " <<
-//      raw_vertNorm[1] << " " <<
-//      raw_vertNorm[2] << '\n';
   }
-//  std::cout << "---------------------------------------------" << '\n';
 
 
 
   // Reducing number of normals.
+  std::size_t raw_vertNorms_size = raw_vertNorms.size();
+  std::unordered_map<std::size_t, std::size_t> normal_val_to_norm_ind;
+  normal_val_to_norm_ind.reserve(raw_vertNorms_size);
 
-  // Getting groups of indicies of equal normals.
-  std::vector<std::size_t> raw_norm_ids(raw_vertNorms.size());
-  std::iota(raw_norm_ids.begin(), raw_norm_ids.end(), 0);
-
-  std::vector<std::vector<std::size_t>> equal_normals_groups =
-    get_groups_of_connected_items<std::size_t>(
-      raw_norm_ids,
-      [&](std::size_t first, std::size_t second)->bool
-      {
-        return vector_equal(raw_vertNorms[first], raw_vertNorms[second]);
-      });
-
-  numVertNorms = equal_normals_groups.size();
-  vertNorms = std::vector<std::vector<double>>(numVertNorms,
-                                               std::vector<double>(3, 0.0));
-
-  // Getting end normal as average of equal normals.
-  for(std::size_t norm_ind = 0; norm_ind < numVertNorms; ++norm_ind)
-  {
-    for(const auto &norm_group_ind : equal_normals_groups[norm_ind])
-    {
-      vector_plus_self(vertNorms[norm_ind], raw_vertNorms[norm_group_ind]);
-    }
-    vector_divide_self(vertNorms[norm_ind],
-                       equal_normals_groups[norm_ind].size());
-  }
-
-//  std::cout << "raw_to_end_map" << '\n';
-  std::unordered_map<std::size_t, std::size_t> raw_to_end_map;
-  for(std::size_t norm_ind = 0; norm_ind < numVertNorms; ++norm_ind)
-  {
-//  std::cout << "norm_ind: " << norm_ind << '\n';
-    for(auto raw_norm_ind : equal_normals_groups[norm_ind])
-    {
-//    std::cout << "\traw_norm_ind: " << raw_norm_ind << '\n';
-      raw_to_end_map[raw_norm_ind] = norm_ind;
-    }
-//    std::cout << '\n';
-  }
-//  std::cout << "---------------------------------------------" << '\n';
+  vertNorms = std::vector<std::vector<double>>();
+  vertNorms.reserve(raw_vertNorms_size);
+  std::size_t norm_ind = 0;
 
   for(auto &&face : faces)
   {
-    for(auto &&vertNorm : face.vertNorms)
+    for(std::size_t norm_f_ind = 0; norm_f_ind < numVertsPerPoly; ++norm_f_ind)
     {
-      vertNorm = raw_to_end_map[vertNorm];
+      std::size_t raw_norm_ind = face.vertNorms[norm_f_ind];
+      std::size_t vert_norm_val_key =
+        calc_norms::normal_to_key(raw_vertNorms[raw_norm_ind]);
+
+      if(normal_val_to_norm_ind.count(vert_norm_val_key))
+      {
+        face.vertNorms[norm_f_ind] = normal_val_to_norm_ind[vert_norm_val_key];
+      }
+      else
+      {
+        vertNorms.push_back(calc_norms::key_to_normal(vert_norm_val_key));
+        normal_val_to_norm_ind[vert_norm_val_key] = norm_ind;
+        face.vertNorms[norm_f_ind] = norm_ind;
+        ++norm_ind;
+      }
     }
   }
+
+  vertNorms.shrink_to_fit();
+  numVertNorms = vertNorms.size();
 }
 
 

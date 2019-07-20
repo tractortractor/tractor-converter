@@ -50,5 +50,9 @@ BOOST_STATIC_ASSERT_MSG(
   "Floating point numbers must fulfill the requirements "
     "of IEC 559 (IEEE 754) standard");
 
+// Because of volInt::calc_norms::normal_to_key.
+BOOST_STATIC_ASSERT_MSG(
+  std::numeric_limits<std::size_t>::digits >= 33,
+  "std::size_t must be at least 33-bit.");
 
 #endif // TRACTOR_CONVERTER_MAIN_H

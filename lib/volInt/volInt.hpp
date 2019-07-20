@@ -256,6 +256,13 @@ std::vector<std::vector<T>> get_groups_of_connected_items(
 
 
 
+namespace calc_norms{
+  std::size_t normal_to_key(const std::vector<double> &norm);
+  std::vector<double> key_to_normal(std::size_t key);
+} // namespace calc_norms
+
+
+
 /*
    ============================================================================
    macros
@@ -329,6 +336,27 @@ namespace color_ids {
   const unsigned int body =           1;
   const unsigned int max_colors_ids = 25;
 } // namespace color_ids
+
+namespace calc_norms{
+  const std::size_t expected_connected_polygons_per_vertex = 10;
+  const std::size_t expected_connected_polygons_per_polygon = 10;
+
+  const double to_integer_multiply = std::pow(10, min_float_precision);
+  const std::size_t upper_bound =
+    std::round(2 * vector_scale_val * to_integer_multiply);
+
+  const std::size_t upper_bound_shift =
+    static_cast<std::size_t>(std::log2(upper_bound)) + 1;
+
+  const std::vector<std::size_t> to_key_shift =
+    {
+      0,
+      upper_bound_shift,
+      2 * upper_bound_shift,
+    };
+
+  const std::size_t k_to_n_mask = (1 << upper_bound_shift) - 1;
+} // namespace calc_norms
 
 namespace generate_bound{
   typedef std::deque<std::size_t> layer_vert_inds;
