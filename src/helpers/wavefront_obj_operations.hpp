@@ -47,7 +47,7 @@ const std::string float_precision_objs_string_default =
 // 2 newline
 const std::size_t expected_vertex_size_default =
   1 +
-  3 * (1 + 1 + 5 + 1 + float_precision_objs_default) +
+  volInt::axes_num * (1 + 1 + 5 + 1 + float_precision_objs_default) +
   2;
 
 // +1 because "vn" instead of "v"

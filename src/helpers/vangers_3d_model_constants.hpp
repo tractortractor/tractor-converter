@@ -3,6 +3,8 @@
 
 #include "defines.hpp"
 
+#include "volInt.hpp"
+
 //#include <boost/bimap.hpp>
 #include <boost/bimap/bimap.hpp>
 #include <boost/bimap/unordered_set_of.hpp>
@@ -87,12 +89,13 @@ namespace c3d{
     // 80  double vector
     const std::size_t rcm_pos = volume_pos + sizeof(double);
     // 104  double matrix
-    const std::size_t J_pos = rcm_pos + sizeof(double)*3;
+    const std::size_t J_pos = rcm_pos + sizeof(double)*volInt::axes_num;
 
 
 
     // 176
-    const std::size_t size = J_pos + sizeof(double)*3*3;
+    const std::size_t size =
+      J_pos + sizeof(double)*volInt::axes_num*volInt::axes_num;
   } // namespace header
 
   const std::size_t data_pos = header::size;
@@ -105,12 +108,14 @@ namespace c3d{
     // 4  float
     const std::size_t full_coord_size = sizeof(float);
     // 12
-    const std::size_t full_coords_size = full_coord_size * 3;
+    const std::size_t full_coords_size =
+      full_coord_size * volInt::axes_num;
 
     // 1  char
     const std::size_t compact_coord_size = sizeof(char);
     // 3
-    const std::size_t compact_coords_size = compact_coord_size * 3;
+    const std::size_t compact_coords_size =
+      compact_coord_size * volInt::axes_num;
 
     // 4  int
     const std::size_t sort_info_size = sizeof(int);
@@ -159,7 +164,7 @@ namespace c3d{
     // 1  char
     const std::size_t coord_size = sizeof(char);
     // 3
-    const std::size_t coords_size = coord_size * 3;
+    const std::size_t coords_size = coord_size * volInt::axes_num;
 
     // 1 unsigned char
     const std::size_t n_power_size = sizeof(unsigned char);
@@ -209,11 +214,12 @@ namespace c3d{
     const std::size_t flat_normal_n_power_size = sizeof(unsigned char);
     // 4
     const std::size_t flat_normal_size =
-      flat_normal_coord_size * 3 + flat_normal_n_power_size;
+      flat_normal_coord_size * volInt::axes_num + flat_normal_n_power_size;
     // 1 char
     const std::size_t middle_point_coord_size = sizeof(char);
     // 3
-    const std::size_t middle_point_size = middle_point_coord_size * 3;
+    const std::size_t middle_point_size =
+      middle_point_coord_size * volInt::axes_num;
 
 
     // 4 int
@@ -543,7 +549,7 @@ namespace m3d{
     // 4 int
     const std::size_t steer_size = sizeof(int);
     // 24 double vector
-    const std::size_t r_size = sizeof(double) * 3;
+    const std::size_t r_size = sizeof(double) * volInt::axes_num;
     // 4 int
     const std::size_t width_size = sizeof(int);
     // 4 int
@@ -561,7 +567,7 @@ namespace m3d{
     // 4 double vector
     const std::size_t r_pos = steer_pos + sizeof(int);
     // 28 int
-    const std::size_t width_pos = r_pos + sizeof(double) * 3;
+    const std::size_t width_pos = r_pos + sizeof(double) * volInt::axes_num;
     // 32 int
     const std::size_t radius_pos = width_pos + sizeof(int);
     // 36 int
@@ -575,7 +581,7 @@ namespace m3d{
     const std::size_t slots_existence_size = sizeof(int);
 
     // 12 int vector
-    const std::size_t R_slot_size = sizeof(int) * 3;
+    const std::size_t R_slot_size = sizeof(int) * volInt::axes_num;
     // 4 int
     const std::size_t location_angle_of_slot_size = sizeof(int);
 
@@ -591,7 +597,7 @@ namespace m3d{
     const std::size_t R_slot_rel_pos = 0;
     // 12 int
     const std::size_t location_angle_of_slot_rel_pos =
-      R_slot_rel_pos + sizeof(int) * 3;
+      R_slot_rel_pos + sizeof(int) * volInt::axes_num;
   } // namespace weapon_slot
 
 } // namespace m3d

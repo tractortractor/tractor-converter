@@ -182,7 +182,7 @@ std::vector<double> vector_scale(double norm, const std::vector<double> &vec)
     s = norm / vec_length;
   }
 
-  std::vector<double> ret(3, 0.0);
+  std::vector<double> ret(axes_num, 0.0);
   ret[0] = vec[0] * s;
   ret[1] = vec[1] * s;
   ret[2] = vec[2] * s;
@@ -218,7 +218,7 @@ void vector_scale_self(double norm, std::vector<double> &vec)
 std::vector<double> vector_scale_to_max_coord(double max_coord,
                                               const std::vector<double> &vec)
 {
-  std::vector<double> ret(3, 0.0);
+  std::vector<double> ret(axes_num, 0.0);
 
   double extreme_norm = std::abs(vec[0]);
   double el_1_abs = std::abs(vec[1]);
@@ -286,7 +286,7 @@ void vector_make_zero(std::vector<double> &vec)
 
 std::vector<double> vector_invert(const std::vector<double> &vec)
 {
-  std::vector<double> ret(3, 0.0);
+  std::vector<double> ret(axes_num, 0.0);
   ret[0] = -vec[0];
   ret[1] = -vec[1];
   ret[2] = -vec[2];
@@ -307,7 +307,7 @@ void vector_invert_self(std::vector<double> &vec)
 std::vector<double> vector_plus(const std::vector<double> &first,
                                 const std::vector<double> &second)
 {
-  std::vector<double> ret(3, 0.0);
+  std::vector<double> ret(axes_num, 0.0);
   ret[0] = first[0] + second[0];
   ret[1] = first[1] + second[1];
   ret[2] = first[2] + second[2];
@@ -329,7 +329,7 @@ void vector_plus_self(std::vector<double> &first,
 std::vector<double> vector_minus(const std::vector<double> &first,
                                  const std::vector<double> &second)
 {
-  std::vector<double> ret(3, 0.0);
+  std::vector<double> ret(axes_num, 0.0);
   ret[0] = first[0] - second[0];
   ret[1] = first[1] - second[1];
   ret[2] = first[2] - second[2];
@@ -351,7 +351,7 @@ void vector_minus_self(std::vector<double> &first,
 std::vector<double> vector_multiply(const std::vector<double> &first,
                                     const std::vector<double> &second)
 {
-  std::vector<double> ret(3, 0.0);
+  std::vector<double> ret(axes_num, 0.0);
   ret[0] = first[0] * second[0];
   ret[1] = first[1] * second[1];
   ret[2] = first[2] * second[2];
@@ -373,7 +373,7 @@ void vector_multiply_self(std::vector<double> &first,
 std::vector<double> vector_multiply(const std::vector<double> &vec,
                                     double num)
 {
-  std::vector<double> ret(3, 0.0);
+  std::vector<double> ret(axes_num, 0.0);
   ret[0] = vec[0] * num;
   ret[1] = vec[1] * num;
   ret[2] = vec[2] * num;
@@ -395,7 +395,7 @@ void vector_multiply_self(std::vector<double> &vec,
 std::vector<double> vector_divide(const std::vector<double> &first,
                                   const std::vector<double> &second)
 {
-  std::vector<double> ret(3, 0.0);
+  std::vector<double> ret(axes_num, 0.0);
   ret[0] = first[0] / second[0];
   ret[1] = first[1] / second[1];
   ret[2] = first[2] / second[2];
@@ -417,7 +417,7 @@ void vector_divide_self(std::vector<double> &first,
 std::vector<double> vector_divide(const std::vector<double> &vec,
                                   double num)
 {
-  std::vector<double> ret(3, 0.0);
+  std::vector<double> ret(axes_num, 0.0);
   ret[0] = vec[0] / num;
   ret[1] = vec[1] / num;
   ret[2] = vec[2] / num;
@@ -488,7 +488,7 @@ double vector_dot_product(const std::vector<double> &first,
 std::vector<double> vector_cross_product(const std::vector<double> &first,
                                          const std::vector<double> &second)
 {
-  std::vector<double> ret(3, 0.0);
+  std::vector<double> ret(axes_num, 0.0);
   ret[0] = first[1] * second[2] - first[2] * second[1];
   ret[1] = first[2] * second[0] - first[0] * second[2];
   ret[2] = first[0] * second[1] - first[1] * second[0];
@@ -606,8 +606,8 @@ std::vector<double> calc_norms::key_to_normal(std::size_t key)
 
 model_extreme_points::model_extreme_points()
 : extreme_points_pair(
-    std::vector<double>(3, -std::numeric_limits<double>::max()),
-    std::vector<double>(3,  std::numeric_limits<double>::max())
+    std::vector<double>(axes_num, -std::numeric_limits<double>::max()),
+    std::vector<double>(axes_num,  std::numeric_limits<double>::max())
   )
 {
 }
@@ -719,7 +719,7 @@ void model_extreme_points::set_zmin(double new_zmin)
 void model_extreme_points::get_most_extreme_cmp_cur(
   const model_extreme_points &other)
 {
-  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
   {
     if(max()[cur_coord] < other.max()[cur_coord])
     {
@@ -735,7 +735,7 @@ void model_extreme_points::get_most_extreme_cmp_cur(
 void model_extreme_points::get_most_extreme_cmp_cur(
   const std::vector<double> &point)
 {
-  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
   {
     if(max()[cur_coord] < point[cur_coord])
     {
@@ -751,7 +751,7 @@ void model_extreme_points::get_most_extreme_cmp_cur(
 void model_extreme_points::get_most_extreme(
   const std::vector<std::vector<double>> &points)
 {
-  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
   {
     auto result =
       std::minmax_element(
@@ -771,7 +771,7 @@ void model_extreme_points::get_most_extreme(
 void model_extreme_points::get_most_extreme(
   const std::vector<const std::vector<double>*> &points)
 {
-  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
   {
     auto result =
       std::minmax_element(
@@ -800,7 +800,7 @@ std::vector<double> model_extreme_points::get_center()
 
 
 model_offset::model_offset()
-: offset_point(3, 0.0)
+: offset_point(axes_num, 0.0)
 {
 }
 
@@ -864,7 +864,7 @@ face::face(int numVerts_arg)
 : numVerts(numVerts_arg),
   color_id(0),
   wheel_weapon_id(-1),
-  norm(std::vector<double>(3, 0.0)),
+  norm(std::vector<double>(axes_num, 0.0)),
   w(0.0),
   verts(std::vector<int>(numVerts, -1)),
   vertNorms(std::vector<int>(numVerts, -1))
@@ -883,8 +883,8 @@ polyhedron::polyhedron()
   offset(),
   rmax(0.0),
   volume(0.0),
-  rcm(3, 0.0),
-  J(3, std::vector<double>(3, 0.0)),
+  rcm(axes_num, 0.0),
+  J(axes_num, std::vector<double>(axes_num, 0.0)),
   bodyColorOffset(-1),
   bodyColorShift(-1),
   ref_vert_one_ind(-1, -1),
@@ -987,13 +987,15 @@ polyhedron::polyhedron(int numVerts_arg,
   offset(),
   rmax(0.0),
   volume(0.0),
-  rcm(3, 0.0),
-  J(3, std::vector<double>(3, 0.0)),
+  rcm(axes_num, 0.0),
+  J(axes_num, std::vector<double>(axes_num, 0.0)),
   bodyColorOffset(-1),
   bodyColorShift(-1),
-  verts(std::vector<std::vector<double>>(numVerts, std::vector<double>(3))),
+  verts(
+    std::vector<std::vector<double>>(numVerts, std::vector<double>(axes_num))),
   vertNorms(
-    std::vector<std::vector<double>>(numVertNorms, std::vector<double>(3))),
+    std::vector<std::vector<double>>(numVertNorms,
+                                     std::vector<double>(axes_num))),
   faces(std::vector<face>(numFaces, face(verts_per_poly_arg))),
   ref_vert_one_ind(-1, -1),
   ref_vert_one(nullptr),
@@ -1051,7 +1053,7 @@ void polyhedron::reverse_polygons_orientation()
 std::vector<double> polyhedron::face_calc_normal(std::size_t face_ind)
 {
   face &cur_face = faces[face_ind];
-  std::vector<double> normal(3, 0.0);
+  std::vector<double> normal(axes_num, 0.0);
   for(std::size_t cur_vert = 0; cur_vert < numVertsPerPoly; ++cur_vert)
   {
     std::vector<double> current =
@@ -1161,8 +1163,9 @@ double polyhedron::get_vertex_angle(std::size_t face_ind, std::size_t vert_ind)
 void polyhedron::recalc_vertNorms(double max_smooth_angle)
 {
   // Creating norm per each vertex per face.
-  std::vector<std::vector<double>> raw_vertNorms(numVertTotal,
-                                                 std::vector<double>(3, 0.0));
+  std::vector<std::vector<double>> raw_vertNorms(
+    numVertTotal,
+    std::vector<double>(axes_num, 0.0));
 
   // Assigning unique id to each norm per vertex per face.
   for(std::size_t face_ind = 0, norm_ind = 0; face_ind < numFaces; ++face_ind)
@@ -1176,8 +1179,9 @@ void polyhedron::recalc_vertNorms(double max_smooth_angle)
   }
 
   // Calculating non-normalized face normals.
-  std::vector<std::vector<double>> raw_face_norms(numFaces,
-                                                  std::vector<double>(3, 0.0));
+  std::vector<std::vector<double>> raw_face_norms(
+    numFaces,
+    std::vector<double>(axes_num, 0.0));
   for(std::size_t face_ind = 0; face_ind < numFaces; ++face_ind)
   {
     raw_face_norms[face_ind] = face_calc_normal(face_ind);
@@ -1968,7 +1972,7 @@ void polyhedron::calculate_c3d_properties()
                                            verts[faces[cur_poly].verts[0]]);
 
 
-      std::vector<double> flat_normal(3, 0.0);
+      std::vector<double> flat_normal(axes_num, 0.0);
       flat_normal[0] = U[1] * V[2] - U[2] * V[1];
       flat_normal[1] = U[2] * V[0] - U[0] * V[2];
       flat_normal[2] = U[0] * V[1] - U[1] * V[0];
@@ -2337,7 +2341,7 @@ polyhedron polyhedron::extr_inds_to_bound(
       }
     }
 
-    std::vector<double> min_layer_center(3, 0.0);
+    std::vector<double> min_layer_center(axes_num, 0.0);
     for(auto extr_ind : generate_bound::model::min_layer_extremes)
     {
       vector_plus_self(min_layer_center, bound_model.verts[extr_ind]);

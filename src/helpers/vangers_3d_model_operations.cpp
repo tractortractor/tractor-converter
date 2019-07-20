@@ -10,14 +10,14 @@ namespace helpers{
 wheel_data::wheel_data()
 {
   steer = 0;
-  r = std::vector<double>(3, 0.0);
+  r = std::vector<double>(volInt::axes_num, 0.0);
   width = 0;
   radius = 0;
 }
 
 weapon_slot_data::weapon_slot_data()
 {
-  R_slot = std::vector<double>(3, 0.0);
+  R_slot = std::vector<double>(volInt::axes_num, 0.0);
   location_angle_of_slot = 0.0;
   exists = false;
 }

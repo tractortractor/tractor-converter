@@ -334,7 +334,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 //  std::cout <<
 //    "cur_weapon_slot_data[" << cur_weapon << "].location_angle_of_slot" <<
 //    cur_weapon_slot_data[cur_weapon].location_angle_of_slot << '\n';
-//  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+//  for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
 //  {
 //    std::cout <<
 //      "cur_weapon_slot_data[" << cur_weapon <<
@@ -646,9 +646,9 @@ void wavefront_obj_to_m3d_model::read_file_cfg_helper_overwrite_J(
 {
   model.J_overwritten = true;
   std::size_t cur_custom_J_el = 0;
-  for(std::size_t cur_row = 0; cur_row < 3; ++cur_row)
+  for(std::size_t cur_row = 0; cur_row < volInt::axes_num; ++cur_row)
   {
-    for(std::size_t cur_el = 0; cur_el < 3; ++cur_el)
+    for(std::size_t cur_el = 0; cur_el < volInt::axes_num; ++cur_el)
     {
       model.J[cur_row][cur_el] = custom_J[cur_custom_J_el];
       ++cur_custom_J_el;
@@ -658,9 +658,9 @@ void wavefront_obj_to_m3d_model::read_file_cfg_helper_overwrite_J(
   // TEST
   /*
   std::cout << "read_file_cfg_helper_overwrite_J:" << '\n';
-  for(std::size_t cur_row = 0; cur_row < 3; ++cur_row)
+  for(std::size_t cur_row = 0; cur_row < volInt::axes_num; ++cur_row)
   {
-    for(std::size_t cur_el = 0; cur_el < 3; ++cur_el)
+    for(std::size_t cur_el = 0; cur_el < volInt::axes_num; ++cur_el)
     {
       std::cout << "model.J[" << cur_row << "][" << cur_el << "]" <<
         model.J[cur_row][cur_el] << '\n';
@@ -1136,7 +1136,7 @@ std::vector<double> wavefront_obj_to_m3d_model::get_medium_vert(
   const volInt::polyhedron &model,
   const volInt::face &poly)
 {
-  std::vector<double> medium_vert(3, 0.0);
+  std::vector<double> medium_vert(volInt::axes_num, 0.0);
   // For polygon with zero_reserved color middle point is different.
   // middle_x is either xmax of M3D or -xmax of M3D.
   // middle_y is either ymax of M3D or -ymax of M3D.
@@ -1146,11 +1146,11 @@ std::vector<double> wavefront_obj_to_m3d_model::get_medium_vert(
      c3d::color::string_to_id::zero_reserved)
   {
     // Preserved sign.
-    std::vector<double> extreme_abs_coords(3, 0.0);
+    std::vector<double> extreme_abs_coords(volInt::axes_num, 0.0);
     for(const auto vert_ind : poly.verts)
     {
       const std::vector<double> &vert = model.verts[vert_ind];
-      for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+      for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
       {
         if(std::abs(vert[cur_coord]) >
            std::abs(extreme_abs_coords[cur_coord]))
@@ -1188,15 +1188,15 @@ std::vector<double> wavefront_obj_to_m3d_model::get_medium_vert(
       {
         const std::vector<double> &vert = model.verts[vert_ind];
         std::cout << "vert " << cur_vert;
-        for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+        for(std::size_t coord_el = 0; coord_el < volInt::axes_num; ++coord_el)
         {
-          std::cout << " " << vert[cur_coord];
+          std::cout << " " << vert[coord_el];
         }
         std::cout << "\n";
         ++cur_vert;
       }
       std::cout << "medium_vert: ";
-      for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+      for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
       {
         std::cout << " " << medium_vert[cur_coord];
       }
@@ -1715,7 +1715,7 @@ void wavefront_obj_to_m3d_model::get_custom_rcm(volInt::polyhedron &model)
   // compare_points.first is difference between 2nd reference points.
   // compare_points.second is difference between 3rd ones.
   // Throwing exception if difference is not zero.
-  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+  for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
   {
     if(!(std::abs(compare_points.first[cur_coord]) <
          volInt::distinct_distance &&
@@ -1776,7 +1776,7 @@ void wavefront_obj_to_m3d_model::get_attachment_point(
   // compare_points.first is difference between 2nd reference points.
   // compare_points.second is difference between 3rd ones.
   // Throwing exception if difference is not zero.
-  for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+  for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
   {
     if(!(std::abs(compare_points.first[cur_coord]) <
          volInt::distinct_distance &&
@@ -1939,11 +1939,11 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
       // between 2nd reference points.
       // rotated_compare_points.second is difference between 3rd ones.
       // Throwing exception if difference is not zero.
-      for(std::size_t cur_coord = 0 ; cur_coord < 3; ++cur_coord)
+      for(std::size_t coord_el = 0 ; coord_el < volInt::axes_num; ++coord_el)
       {
-        if(!(std::abs(rotated_compare_points.first[cur_coord]) <
+        if(!(std::abs(rotated_compare_points.first[coord_el]) <
                volInt::distinct_distance &&
-             std::abs(rotated_compare_points.second[cur_coord]) <
+             std::abs(rotated_compare_points.second[coord_el]) <
                volInt::distinct_distance))
         {
           throw std::runtime_error(
@@ -2144,13 +2144,13 @@ void wavefront_obj_to_m3d_model::get_m3d_extreme_points(
     std::cout << "\n--------------------\n";
     std::cout << "before\n";
     std::cout << "max_point:";
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+    for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
     {
       std::cout << " " << max_point()[cur_coord];
     }
     std::cout << '\n';
     std::cout << "min_point:";
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+    for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
     {
       std::cout << " " << min_point()[cur_coord];
     }
@@ -2178,13 +2178,13 @@ void wavefront_obj_to_m3d_model::get_m3d_extreme_points(
     std::cout << "\n--------------------\n";
     std::cout << "after\n";
     std::cout << "max_point:";
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+    for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
     {
       std::cout << " " << max_point()[cur_coord];
     }
     std::cout << '\n';
     std::cout << "min_point:";
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+    for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
     {
       std::cout << " " << min_point()[cur_coord];
     }
@@ -2223,13 +2223,13 @@ void wavefront_obj_to_m3d_model::get_a3d_extreme_points(
   {
     std::cout << "\n--------------------\n";
     std::cout << "max_point:";
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+    for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
     {
       std::cout << " " << max_point()[cur_coord];
     }
     std::cout << '\n';
     std::cout << "min_point:";
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+    for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
     {
       std::cout << " " << min_point()[cur_coord];
     }
@@ -2751,14 +2751,14 @@ void wavefront_obj_to_m3d_model::get_m3d_scale_size(
         get_extreme_radius(extreme_radius, max_slot_distance);
 */
 /*
-        for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+        for(std::size_t coord_el = 0; coord_el < volInt::axes_num; ++coord_el)
         {
           get_extreme_radius(
             extreme_radius,
-            slot_data.R_slot[cur_coord] + max_weapons_radius);
+            slot_data.R_slot[coord_el] + max_weapons_radius);
           get_extreme_radius(
             extreme_radius,
-            slot_data.R_slot[cur_coord] - max_weapons_radius);
+            slot_data.R_slot[coord_el] - max_weapons_radius);
           // TEST
           if(boost::filesystem::path(main_model->wavefront_obj_path)
                .stem().string() ==
@@ -2766,16 +2766,16 @@ void wavefront_obj_to_m3d_model::get_m3d_scale_size(
           {
             std::cout << "extreme_radius: " <<
               extreme_radius << '\n';
-            std::cout << "slot_data.R_slot[" << cur_coord << "]: " <<
-              slot_data.R_slot[cur_coord] << '\n';
+            std::cout << "slot_data.R_slot[" << coord_el << "]: " <<
+              slot_data.R_slot[coord_el] << '\n';
             std::cout << "max_weapons_radius: " <<
               max_weapons_radius << '\n';
             std::cout <<
-              "slot_data.R_slot[cur_coord] + max_weapons_radius: " <<
-              slot_data.R_slot[cur_coord] + max_weapons_radius << '\n';
+              "slot_data.R_slot[coord_el] + max_weapons_radius: " <<
+              slot_data.R_slot[coord_el] + max_weapons_radius << '\n';
             std::cout <<
-              "slot_data.R_slot[cur_coord] - max_weapons_radius: " <<
-              slot_data.R_slot[cur_coord] - max_weapons_radius << '\n';
+              "slot_data.R_slot[coord_el] - max_weapons_radius: " <<
+              slot_data.R_slot[coord_el] - max_weapons_radius << '\n';
           }
         }
 */

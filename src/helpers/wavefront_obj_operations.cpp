@@ -355,8 +355,8 @@ volInt::polyhedron raw_obj_to_volInt_model(
 
   // attrib.vertices and attrib.norms are std::vector<double>.
   // Each 3 double numbers = 1 vertex.
-  int num_verts = attrib.vertices.size() / 3;
-  int num_vert_norms = attrib.normals.size() / 3;
+  int num_verts = attrib.vertices.size() / volInt::axes_num;
+  int num_vert_norms = attrib.normals.size() / volInt::axes_num;
 
   int num_faces = 0;
   for(const auto &shape : shapes)
@@ -563,12 +563,9 @@ volInt::polyhedron raw_obj_to_volInt_model(
       cur_vertex < num_verts;
       ++cur_vertex)
   {
-    for(std::size_t cur_coord_el = 0;
-        cur_coord_el < 3;
-        ++cur_coord_el)
+    for(std::size_t coord_el = 0; coord_el < volInt::axes_num; ++coord_el)
     {
-      volInt_model.verts[cur_vertex][cur_coord_el] =
-        attrib.vertices[cur_vert_pos];
+      volInt_model.verts[cur_vertex][coord_el] = attrib.vertices[cur_vert_pos];
       ++cur_vert_pos;
     }
   }
@@ -578,11 +575,9 @@ volInt::polyhedron raw_obj_to_volInt_model(
       cur_vert_normal < num_vert_norms;
       ++cur_vert_normal)
   {
-    for(std::size_t cur_coord_el = 0;
-        cur_coord_el < 3;
-        ++cur_coord_el)
+    for(std::size_t coord_el = 0; coord_el < volInt::axes_num; ++coord_el)
     {
-      volInt_model.vertNorms[cur_vert_normal][cur_coord_el] =
+      volInt_model.vertNorms[cur_vert_normal][coord_el] =
         attrib.normals[cur_vert_norm_pos];
       ++cur_vert_norm_pos;
     }
@@ -714,7 +709,7 @@ void save_volInt_as_wavefront_obj(
     for(std::size_t cur_vertex = 0; cur_vertex < vert_num; ++cur_vertex)
     {
       obj_data.push_back('v');
-      for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+      for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
       {
         obj_data.push_back(' ');
         to_string_precision<double>(
@@ -730,7 +725,7 @@ void save_volInt_as_wavefront_obj(
     for(std::size_t cur_normal = 0; cur_normal < norm_num; ++cur_normal)
     {
       obj_data.append("vn");
-      for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+      for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
       {
         obj_data.push_back(' ');
         to_string_precision<double>(

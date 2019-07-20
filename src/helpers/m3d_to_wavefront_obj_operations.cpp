@@ -230,7 +230,7 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
       ++cur_slot)
   {
     std::cout << "cur_slot: " << cur_slot << '\n';
-    for(std::size_t cur_coord = 0; cur_coord < 3; ++cur_coord)
+    for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
     {
       std::cout << "R_slot[" << cur_coord << "]" <<
         cur_weapon_slot_data[cur_slot].R_slot[cur_coord] << '\n';
@@ -380,9 +380,9 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
 std::vector<double> m3d_to_wavefront_obj_model::read_vertex()
 {
   std::vector<double> vert =
-    read_vec_var_from_m3d_scaled<float, double>(3);
+    read_vec_var_from_m3d_scaled<float, double>(volInt::axes_num);
   std::vector<double> discarded_less_preciese_vert =
-    read_vec_var_from_m3d_scaled<char, double>(3);
+    read_vec_var_from_m3d_scaled<char, double>(volInt::axes_num);
   int discarded_sort_info = read_var_from_m3d<int, int>();
   return vert;
 }
@@ -401,8 +401,9 @@ std::vector<double> m3d_to_wavefront_obj_model::read_normal(
   bitflag<normal_flag> flags = normal_flag::sort_info)
 {
   std::vector<double> norm =
-    volInt::vector_scale(wavefront_obj::vector_scale_val,
-                         read_vec_var_from_m3d<char, double>(3));
+    volInt::vector_scale(
+      wavefront_obj::vector_scale_val,
+      read_vec_var_from_m3d<char, double>(volInt::axes_num));
   unsigned char discarded_n_power =
     read_var_from_m3d<unsigned char, unsigned char>();
   if(flags & normal_flag::sort_info)
@@ -464,7 +465,7 @@ volInt::face m3d_to_wavefront_obj_model::read_polygon(
   std::vector<double> discarded_flat_normal =
     read_normal(normal_flag::none);
   std::vector<double> discarded_medium_vert =
-    read_vec_var_from_m3d_scaled<char, double>(3);
+    read_vec_var_from_m3d_scaled<char, double>(volInt::axes_num);
 
   // Note the reverse order of vertices.
   for(int cur_poly_vertex = numVerts - 1;
@@ -527,22 +528,25 @@ volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
 
   volInt::model_extreme_points discarded_extreme_points;
   discarded_extreme_points.max() =
-    read_vec_var_from_m3d_scaled<int, double>(3);
+    read_vec_var_from_m3d_scaled<int, double>(volInt::axes_num);
   discarded_extreme_points.min() =
-    read_vec_var_from_m3d_scaled<int, double>(3);
+    read_vec_var_from_m3d_scaled<int, double>(volInt::axes_num);
 
   volInt::model_offset offset_point(
-    read_vec_var_from_m3d_scaled<int, double>(3));
+    read_vec_var_from_m3d_scaled<int, double>(volInt::axes_num));
 
   double discarded_rmax = read_var_from_m3d_scaled<int, double>();
 
   std::vector<int> discarded_phi_psi_tetta =
-    read_vec_var_from_m3d<int, int>(3);
+    read_vec_var_from_m3d<int, int>(volInt::axes_num);
 
   double volume = read_var_from_m3d_scaled<double, double>(3.0);
-  std::vector<double> rcm = read_vec_var_from_m3d_scaled<double, double>(3);
+  std::vector<double> rcm =
+    read_vec_var_from_m3d_scaled<double, double>(volInt::axes_num);
   std::vector<std::vector<double>> J =
-    read_nest_vec_var_from_m3d_scaled<double, double>(3, 3, 5.0);
+    read_nest_vec_var_from_m3d_scaled<double, double>(volInt::axes_num,
+                                                      volInt::axes_num,
+                                                      5.0);
 
 
 
@@ -622,7 +626,7 @@ void m3d_to_wavefront_obj_model::c3d_to_wavefront_obj(
 void m3d_to_wavefront_obj_model::read_m3d_header_data()
 {
   std::vector<double> discarded_max_point =
-    read_vec_var_from_m3d_scaled<int, double>(3);
+    read_vec_var_from_m3d_scaled<int, double>(volInt::axes_num);
   double discarded_rmax = read_var_from_m3d_scaled<int, double>();
 
   n_wheels = read_var_from_m3d<int, int>();
@@ -638,7 +642,7 @@ void m3d_to_wavefront_obj_model::read_a3d_header_data()
   n_models = read_var_from_m3d<int, int>();
 
   std::vector<double> discarded_max_point =
-    read_vec_var_from_m3d_scaled<int, double>(3);
+    read_vec_var_from_m3d_scaled<int, double>(volInt::axes_num);
   double discarded_rmax =
     read_var_from_m3d_scaled<int, double>();
 
@@ -653,7 +657,7 @@ void m3d_to_wavefront_obj_model::read_m3d_wheel_data(
 {
   cur_wheel_data[wheel_id].steer = read_var_from_m3d<int, int>();
   cur_wheel_data[wheel_id].r =
-    read_vec_var_from_m3d_scaled<double, double>(3);
+    read_vec_var_from_m3d_scaled<double, double>(volInt::axes_num);
   cur_wheel_data[wheel_id].width =
     read_var_from_m3d_scaled<int, double>();
   cur_wheel_data[wheel_id].radius =
@@ -1172,7 +1176,7 @@ void m3d_to_wavefront_obj_model::save_m3d_debris_data(
 void m3d_to_wavefront_obj_model::read_m3d_weapon_slot(std::size_t slot_id)
 {
   cur_weapon_slot_data[slot_id].R_slot =
-    read_vec_var_from_m3d_scaled<int, double>(3);
+    read_vec_var_from_m3d_scaled<int, double>(volInt::axes_num);
   cur_weapon_slot_data[slot_id].location_angle_of_slot =
     volInt::sicher_angle_to_radians(read_var_from_m3d<int, int>());
   // In weapon_slots_existence only rightmost 3 bits are important.
@@ -1290,15 +1294,15 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
     "\n\n"
     "# Custom inertia tensor matrix for main model.\n"
     "# Split in 3 rows for convenience.\n");
-  for(std::size_t cur_row = 0; cur_row < 3; ++cur_row)
+  for(std::size_t cur_row = 0; cur_row < volInt::axes_num; ++cur_row)
   {
     conf_data_to_save.append(
       "custom_inertia_tensor_main =");
-    for(std::size_t cur_row_el = 0; cur_row_el < 3; ++cur_row_el)
+    for(std::size_t row_el = 0; row_el < volInt::axes_num; ++row_el)
     {
       conf_data_to_save.push_back(' ');
       to_string_precision<double>(
-        main_model.J[cur_row][cur_row_el],
+        main_model.J[cur_row][row_el],
         sprintf_float_per_file_cfg_format,
         conf_data_to_save);
     }
@@ -1370,17 +1374,17 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
         "# Custom inertia tensor matrix for debris model " +
           std::to_string(cur_debris + 1) + ".\n"
         "# Split in 3 rows for convenience.\n");
-      for(std::size_t cur_row = 0; cur_row < 3; ++cur_row)
+      for(std::size_t cur_row = 0; cur_row < volInt::axes_num; ++cur_row)
       {
         conf_data_to_save.append(
           "custom_inertia_tensor_debris_" +
           std::to_string(cur_debris + 1) + " =");
-        for(std::size_t cur_row_el = 0; cur_row_el < 3; ++cur_row_el)
+        for(std::size_t row_el = 0; row_el < volInt::axes_num; ++row_el)
         {
           conf_data_to_save.push_back(' ');
           to_string_precision<double>(
             (*debris_models)[cur_debris][wavefront_obj::main_obj_name].
-                J[cur_row][cur_row_el],
+                J[cur_row][row_el],
             sprintf_float_per_file_cfg_format,
             conf_data_to_save);
         }
@@ -1480,17 +1484,17 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
       "# Custom inertia tensor matrix for animated model " +
         std::to_string(cur_animated + 1) + ".\n"
       "# Split in 3 rows for convenience.\n");
-    for(std::size_t cur_row = 0; cur_row < 3; ++cur_row)
+    for(std::size_t cur_row = 0; cur_row < volInt::axes_num; ++cur_row)
     {
       conf_data_to_save.append(
         "custom_inertia_tensor_animated_" +
         std::to_string(cur_animated + 1) + " =");
-      for(std::size_t cur_row_el = 0; cur_row_el < 3; ++cur_row_el)
+      for(std::size_t row_el = 0; row_el < volInt::axes_num; ++row_el)
       {
         conf_data_to_save.push_back(' ');
         to_string_precision<double>(
           animated_models[cur_animated][wavefront_obj::main_obj_name].
-            J[cur_row][cur_row_el],
+            J[cur_row][row_el],
           sprintf_float_per_file_cfg_format,
           conf_data_to_save);
       }
