@@ -195,32 +195,6 @@ void matrix_multiply_self(
   double num);
 
 
-template<typename T>
-void get_groups_of_connected_items_helper_check_item_in_group(
-  T cur_item,
-  const std::vector<std::vector<T>> &groups,
-  bool &cur_item_in_group,
-  std::size_t &cur_item_group_num)
-{
-  if(!groups.empty())
-  {
-    for(std::size_t cur_group_num = 0,
-          groups_size = groups.size();
-        cur_group_num < groups_size;
-        ++cur_group_num)
-    {
-      if(std::find(groups[cur_group_num].begin(),
-                   groups[cur_group_num].end(),
-                   cur_item) !=
-         groups[cur_group_num].end())
-      {
-        cur_item_in_group = true;
-        cur_item_group_num = cur_group_num;
-        break;
-      }
-    }
-  }
-}
 
 
 
@@ -229,140 +203,55 @@ std::vector<std::vector<T>> get_groups_of_connected_items(
   std::vector<T> orig_vec,
   std::function<bool(T first, T second)> check_connected_func)
 {
-  std::vector<std::vector<T>> vecs_to_return;
   std::vector<std::vector<T>> groups;
   std::size_t orig_vec_size = orig_vec.size();
   groups.reserve(orig_vec_size);
 
-  std::size_t non_empty_groups_num = 0;
+  std::unordered_set<T> items_to_check(orig_vec.begin(), orig_vec.end());
 
-  for(std::size_t cur_item_num = 0;
-      cur_item_num < orig_vec_size;
-      ++cur_item_num)
+  for(std::size_t cur_group_id = 0; !items_to_check.empty(); ++cur_group_id)
   {
-    T cur_item = orig_vec[cur_item_num];
+    groups.push_back(std::vector<T>());
+    groups[cur_group_id].reserve(orig_vec_size);
 
-    bool cur_item_isolated = true;
+    T cur_item = *items_to_check.begin();
+    items_to_check.erase(items_to_check.begin());
 
-    // Checking if cur_item is already in group.
-    bool cur_item_in_group = false;
-    std::size_t cur_item_group_num;
-    get_groups_of_connected_items_helper_check_item_in_group<T>(
-      cur_item,
-      groups,
-      cur_item_in_group,
-      cur_item_group_num);
+    std::unordered_set<T> connected_items_to_check({cur_item});
+    connected_items_to_check.reserve(orig_vec_size);
 
-    // Checking all elements of orig_vec for connection with cur_item.
-    for(std::size_t item_to_compare_num = 0;
-        item_to_compare_num < orig_vec_size;
-        ++item_to_compare_num)
+    // Iterating over first element in group and all connected elements.
+    while(!connected_items_to_check.empty())
     {
-      T item_to_compare = orig_vec[item_to_compare_num];
-      // Skipping all operations if cur_item is item_to_compare.
-      if(cur_item_num == item_to_compare_num)
+      T cur_item = *connected_items_to_check.begin();
+      connected_items_to_check.erase(connected_items_to_check.begin());
+      groups[cur_group_id].push_back(cur_item);
+
+      std::unordered_set<T> new_connected_items;
+      new_connected_items.reserve(orig_vec_size);
+
+      for(auto cur_item_to_cmp : items_to_check)
       {
-        continue;
+        if(check_connected_func(cur_item, cur_item_to_cmp))
+        {
+          new_connected_items.insert(cur_item_to_cmp);
+        }
       }
 
-      // Skipping if items are not connected.
-      if(!check_connected_func(cur_item, item_to_compare))
+      // Erasing all newly found connected items from items to check.
+      for(auto new_connected_item : new_connected_items)
       {
-        continue;
+        items_to_check.erase(items_to_check.find(new_connected_item));
       }
 
-      cur_item_isolated = false;
-
-
-
-      // Checking if item_to_compare is already in group.
-      bool item_to_compare_in_group = false;
-      std::size_t item_to_compare_group_num;
-      get_groups_of_connected_items_helper_check_item_in_group<T>(
-        item_to_compare,
-        groups,
-        item_to_compare_in_group,
-        item_to_compare_group_num);
-
-      // If both connected items are already in groups
-      // but those groups are different.
-      // Inserting elements of item_to_compare group into cur_item group.
-      if(cur_item_in_group &&
-         item_to_compare_in_group &&
-         cur_item_group_num != item_to_compare_group_num)
-      {
-        // TEST
-        //std::cout << "case 1" << '\n';
-        groups[cur_item_group_num].insert(
-          groups[cur_item_group_num].end(),
-          groups[item_to_compare_group_num].begin(),
-          groups[item_to_compare_group_num].end());
-        // Clearing 2nd group and never reusing it again.
-        groups[item_to_compare_group_num].clear();
-        groups[item_to_compare_group_num].shrink_to_fit();
-
-        --non_empty_groups_num;
-      }
-      // If only 1 item is in group other item is inserted in this group.
-      else if(cur_item_in_group && !item_to_compare_in_group)
-      {
-        // TEST
-        //std::cout << "case 2" << '\n';
-        groups[cur_item_group_num].push_back(item_to_compare);
-      }
-      else if(!cur_item_in_group && item_to_compare_in_group)
-      {
-        // TEST
-        //std::cout << "case 3" << '\n';
-        // Note that cur_item_in_group and cur_item_group_num are changed
-        // since they are later used in this loop.
-        cur_item_in_group = true;
-        cur_item_group_num = item_to_compare_group_num;
-        groups[item_to_compare_group_num].push_back(cur_item);
-      }
-      // If both items are not in group creating new one.
-      else if(!cur_item_in_group && !item_to_compare_in_group)
-      {
-        // TEST
-        //std::cout << "case 4" << '\n';
-        std::size_t last_group_num = groups.size();
-
-        cur_item_in_group = true;
-        cur_item_group_num = last_group_num;
-
-        groups.push_back(std::vector<T>());
-        groups[cur_item_group_num].reserve(orig_vec_size);
-        groups[cur_item_group_num].push_back(cur_item);
-        groups[cur_item_group_num].push_back(item_to_compare);
-
-        ++non_empty_groups_num;
-      }
-    }
-
-    // If cur_item is not connected with any other items
-    // create new group for this item.
-    if(cur_item_isolated)
-    {
-      // TEST
-      //std::cout << "case 5" << '\n';
-      groups.push_back(std::vector<T>(1, cur_item));
-
-      ++non_empty_groups_num;
+      connected_items_to_check.insert(new_connected_items.begin(),
+                                      new_connected_items.end());
     }
   }
 
-  // Getting rid of unused groups.
-  vecs_to_return.reserve(non_empty_groups_num);
-  for(auto &&group : groups)
-  {
-    if(!group.empty())
-    {
-      vecs_to_return.push_back(std::move(group));
-    }
-  }
-  vecs_to_return.shrink_to_fit();
+  groups.shrink_to_fit();
 
-  return vecs_to_return;
+  return groups;
 }
 
 
