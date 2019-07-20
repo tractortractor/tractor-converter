@@ -37,6 +37,10 @@ const double gen_bound_area_threshold_max = 0.7;
 const std::string gen_bound_area_threshold_max_str =
   std::to_string(gen_bound_area_threshold_max);
 
+const std::size_t default_mtl_n_wheels = 50;
+const std::string default_mtl_n_wheels_str =
+  std::to_string(default_mtl_n_wheels);
+
 } // namespace defines
 
 // For helpers.

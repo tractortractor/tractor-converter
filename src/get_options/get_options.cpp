@@ -492,10 +492,11 @@ boost::program_options::variables_map get_options(int ac, char** av)
         "\tMaximum is " + defines::gen_bound_area_threshold_max_str + ".\n"
         "\tUsed by \"obj_to_vangers_3d_model\" mode.\n").c_str())
       ("mtl_n_wheels",
-       boost::program_options::value<std::size_t>()->default_value(50),
-       "\tNumber of wheel materials to generate for *.mtl file.\n"
-       "\tDefaults to 50.\n"
-       "\tUsed by \"create_wavefront_mtl\" mode.\n")
+       boost::program_options::value<std::size_t>()->
+         default_value(defines::default_mtl_n_wheels),
+       ("\tNumber of wheel materials to generate for *.mtl file.\n"
+        "\tDefaults to " + defines::default_mtl_n_wheels_str + ".\n"
+        "\tUsed by \"create_wavefront_mtl\" mode.\n").c_str())
       ("mtl_body_offs",
        boost::program_options::value<std::vector<std::string>>(),
        "\tBody materials to create.\n"
