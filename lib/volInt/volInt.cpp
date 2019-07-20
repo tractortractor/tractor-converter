@@ -134,21 +134,13 @@ void rotate_point_by_axis(
   rotation_axis axis)
 {
   std::vector<double> point_orig = point_arg;
-  if(axis == rotation_axis::x)
-  {
-    point_arg[1] = angle_cos * point_orig[1] - angle_sin * point_orig[2];
-    point_arg[2] = angle_sin * point_orig[1] + angle_cos * point_orig[2];
-  }
-  if(axis == rotation_axis::y)
-  {
-    point_arg[0] =  angle_cos * point_orig[0] + angle_sin * point_orig[2];
-    point_arg[2] = -angle_sin * point_orig[0] + angle_cos * point_orig[2];
-  }
-  if(axis == rotation_axis::z)
-  {
-    point_arg[0] = angle_cos * point_orig[0] - angle_sin * point_orig[1];
-    point_arg[1] = angle_sin * point_orig[0] + angle_cos * point_orig[1];
-  }
+
+  const std::vector<std::size_t> &axes =
+    axes_by_plane_continuous[static_cast<std::size_t>(axis)];
+  point_arg[axes[0]] =
+    angle_cos * point_orig[axes[0]] - angle_sin * point_orig[axes[1]];
+  point_arg[axes[1]] =
+    angle_sin * point_orig[axes[0]] + angle_cos * point_orig[axes[1]];
 }
 
 void rotate_point_by_axis(std::vector<double> &point_arg,
@@ -170,8 +162,7 @@ void rotate_point_by_axis(std::vector<double> &point_arg,
 
 std::vector<double> vector_scale(double norm, const std::vector<double> &vec)
 {
-  double vec_length =
-    std::sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]);
+  double vec_length = vector_length(vec);
   double s;
   if(vec_length == 0.0)
   {
@@ -183,9 +174,10 @@ std::vector<double> vector_scale(double norm, const std::vector<double> &vec)
   }
 
   std::vector<double> ret(axes_num, 0.0);
-  ret[0] = vec[0] * s;
-  ret[1] = vec[1] * s;
-  ret[2] = vec[2] * s;
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    ret[cur_coord] = vec[cur_coord] * s;
+  }
 
   return ret;
 }
@@ -194,8 +186,7 @@ std::vector<double> vector_scale(double norm, const std::vector<double> &vec)
 
 void vector_scale_self(double norm, std::vector<double> &vec)
 {
-  double vec_length =
-    std::sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]);
+  double vec_length = vector_length(vec);
   double s;
   if(vec_length == 0.0)
   {
@@ -206,80 +197,20 @@ void vector_scale_self(double norm, std::vector<double> &vec)
     s = norm / vec_length;
   }
 
-  vec[0] *= s;
-  vec[1] *= s;
-  vec[2] *= s;
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    vec[cur_coord] *= s;
+  }
 }
-
-
-
-// not needed
-/*
-std::vector<double> vector_scale_to_max_coord(double max_coord,
-                                              const std::vector<double> &vec)
-{
-  std::vector<double> ret(axes_num, 0.0);
-
-  double extreme_norm = std::abs(vec[0]);
-  double el_1_abs = std::abs(vec[1]);
-  if(el_1_abs > extreme_norm)
-  {
-    extreme_norm = el_1_abs;
-  }
-  double el_2_abs = std::abs(vec[2]);
-  if(el_2_abs > extreme_norm)
-  {
-    extreme_norm = el_2_abs;
-  }
-  double s = max_coord / extreme_norm;
-
-  ret[0] = vec[0] * s;
-  ret[1] = vec[1] * s;
-  ret[2] = vec[2] * s;
-
-  std::cout << "\n\n";
-  std::cout << "vector_scale_to_max_coord" << '\n';
-  std::cout << "max_coord: " << max_coord << '\n';
-  std::cout << "input: " <<
-    vec[0] << ", " << vec[1] << ", " << vec[2] << '\n';
-  std::cout << "s: " << s << '\n';
-  std::cout << "output: " <<
-    ret[0] << ", " << ret[1] << ", " << ret[2] << '\n';
-
-  return ret;
-}
-
-
-
-void vector_scale_self_to_max_coord(double max_coord,
-                                    std::vector<double> &vec)
-{
-  double extreme_norm = std::abs(vec[0]);
-  double el_1_abs = std::abs(vec[1]);
-  if(el_1_abs > extreme_norm)
-  {
-    extreme_norm = el_1_abs;
-  }
-  double el_2_abs = std::abs(vec[2]);
-  if(el_2_abs > extreme_norm)
-  {
-    extreme_norm = el_2_abs;
-  }
-  double s = max_coord / extreme_norm;
-
-  vec[0] *= s;
-  vec[1] *= s;
-  vec[2] *= s;
-}
-*/
 
 
 
 void vector_make_zero(std::vector<double> &vec)
 {
-  vec[0] = 0.0;
-  vec[1] = 0.0;
-  vec[2] = 0.0;
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    vec[cur_coord] = 0.0;
+  }
 }
 
 
@@ -287,9 +218,10 @@ void vector_make_zero(std::vector<double> &vec)
 std::vector<double> vector_invert(const std::vector<double> &vec)
 {
   std::vector<double> ret(axes_num, 0.0);
-  ret[0] = -vec[0];
-  ret[1] = -vec[1];
-  ret[2] = -vec[2];
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    ret[cur_coord] = -vec[cur_coord];
+  }
   return ret;
 }
 
@@ -297,9 +229,10 @@ std::vector<double> vector_invert(const std::vector<double> &vec)
 
 void vector_invert_self(std::vector<double> &vec)
 {
-  vec[0] = -vec[0];
-  vec[1] = -vec[1];
-  vec[2] = -vec[2];
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    vec[cur_coord] = -vec[cur_coord];
+  }
 }
 
 
@@ -308,9 +241,10 @@ std::vector<double> vector_plus(const std::vector<double> &first,
                                 const std::vector<double> &second)
 {
   std::vector<double> ret(axes_num, 0.0);
-  ret[0] = first[0] + second[0];
-  ret[1] = first[1] + second[1];
-  ret[2] = first[2] + second[2];
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    ret[cur_coord] = first[cur_coord] + second[cur_coord];
+  }
   return ret;
 }
 
@@ -319,9 +253,10 @@ std::vector<double> vector_plus(const std::vector<double> &first,
 void vector_plus_self(std::vector<double> &first,
                       const std::vector<double> &second)
 {
-  first[0] += second[0];
-  first[1] += second[1];
-  first[2] += second[2];
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    first[cur_coord] += second[cur_coord];
+  }
 }
 
 
@@ -330,9 +265,10 @@ std::vector<double> vector_minus(const std::vector<double> &first,
                                  const std::vector<double> &second)
 {
   std::vector<double> ret(axes_num, 0.0);
-  ret[0] = first[0] - second[0];
-  ret[1] = first[1] - second[1];
-  ret[2] = first[2] - second[2];
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    ret[cur_coord] = first[cur_coord] - second[cur_coord];
+  }
   return ret;
 }
 
@@ -341,9 +277,10 @@ std::vector<double> vector_minus(const std::vector<double> &first,
 void vector_minus_self(std::vector<double> &first,
                        const std::vector<double> &second)
 {
-  first[0] -= second[0];
-  first[1] -= second[1];
-  first[2] -= second[2];
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    first[cur_coord] -= second[cur_coord];
+  }
 }
 
 
@@ -352,9 +289,10 @@ std::vector<double> vector_multiply(const std::vector<double> &first,
                                     const std::vector<double> &second)
 {
   std::vector<double> ret(axes_num, 0.0);
-  ret[0] = first[0] * second[0];
-  ret[1] = first[1] * second[1];
-  ret[2] = first[2] * second[2];
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    ret[cur_coord] = first[cur_coord] * second[cur_coord];
+  }
   return ret;
 }
 
@@ -363,9 +301,10 @@ std::vector<double> vector_multiply(const std::vector<double> &first,
 void vector_multiply_self(std::vector<double> &first,
                           const std::vector<double> &second)
 {
-  first[0] *= second[0];
-  first[1] *= second[1];
-  first[2] *= second[2];
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    first[cur_coord] *= second[cur_coord];
+  }
 }
 
 
@@ -374,9 +313,10 @@ std::vector<double> vector_multiply(const std::vector<double> &vec,
                                     double num)
 {
   std::vector<double> ret(axes_num, 0.0);
-  ret[0] = vec[0] * num;
-  ret[1] = vec[1] * num;
-  ret[2] = vec[2] * num;
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    ret[cur_coord] = vec[cur_coord] * num;
+  }
   return ret;
 }
 
@@ -385,9 +325,10 @@ std::vector<double> vector_multiply(const std::vector<double> &vec,
 void vector_multiply_self(std::vector<double> &vec,
                           double num)
 {
-  vec[0] *= num;
-  vec[1] *= num;
-  vec[2] *= num;
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    vec[cur_coord] *= num;
+  }
 }
 
 
@@ -396,9 +337,10 @@ std::vector<double> vector_divide(const std::vector<double> &first,
                                   const std::vector<double> &second)
 {
   std::vector<double> ret(axes_num, 0.0);
-  ret[0] = first[0] / second[0];
-  ret[1] = first[1] / second[1];
-  ret[2] = first[2] / second[2];
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    ret[cur_coord] = first[cur_coord] / second[cur_coord];
+  }
   return ret;
 }
 
@@ -407,9 +349,10 @@ std::vector<double> vector_divide(const std::vector<double> &first,
 void vector_divide_self(std::vector<double> &first,
                         const std::vector<double> &second)
 {
-  first[0] /= second[0];
-  first[1] /= second[1];
-  first[2] /= second[2];
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    first[cur_coord] /= second[cur_coord];
+  }
 }
 
 
@@ -418,9 +361,10 @@ std::vector<double> vector_divide(const std::vector<double> &vec,
                                   double num)
 {
   std::vector<double> ret(axes_num, 0.0);
-  ret[0] = vec[0] / num;
-  ret[1] = vec[1] / num;
-  ret[2] = vec[2] / num;
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    ret[cur_coord] = vec[cur_coord] / num;
+  }
   return ret;
 }
 
@@ -429,16 +373,22 @@ std::vector<double> vector_divide(const std::vector<double> &vec,
 void vector_divide_self(std::vector<double> &vec,
                         double num)
 {
-  vec[0] /= num;
-  vec[1] /= num;
-  vec[2] /= num;
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    vec[cur_coord] /= num;
+  }
 }
 
 
 
 double vector_length(const std::vector<double> &vec)
 {
-  return std::sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2]);
+  double length = 0.0;
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    length += vec[cur_coord] * vec[cur_coord];
+  }
+  return std::sqrt(length);
 }
 
 
@@ -466,13 +416,14 @@ bool vector_equal(
   const std::vector<double> &first,
   const std::vector<double> &second)
 {
-  if(std::abs(first[0] - second[0]) < distinct_distance &&
-     std::abs(first[1] - second[1]) < distinct_distance &&
-     std::abs(first[2] - second[2]) < distinct_distance)
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
   {
-    return true;
+    if(std::abs(first[cur_coord] - second[cur_coord]) > distinct_distance)
+    {
+      return false;
+    }
   }
-  return false;
+  return true;
 }
 
 
@@ -480,7 +431,12 @@ bool vector_equal(
 double vector_dot_product(const std::vector<double> &first,
                           const std::vector<double> &second)
 {
-  return first[0] * second[0] + first[1] * second[1] + first[2] * second[2];
+  double dot_product = 0.0;
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    dot_product += first[cur_coord] * second[cur_coord];
+  }
+  return dot_product;
 }
 
 
@@ -489,9 +445,12 @@ std::vector<double> vector_cross_product(const std::vector<double> &first,
                                          const std::vector<double> &second)
 {
   std::vector<double> ret(axes_num, 0.0);
-  ret[0] = first[1] * second[2] - first[2] * second[1];
-  ret[1] = first[2] * second[0] - first[0] * second[2];
-  ret[2] = first[0] * second[1] - first[1] * second[0];
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    const std::vector<std::size_t> &axes = axes_by_plane_continuous[cur_coord];
+    ret[cur_coord] =
+      first[axes[0]] * second[axes[1]] - first[axes[1]] * second[axes[0]];
+  }
   return ret;
 }
 
@@ -524,8 +483,10 @@ std::vector<double> vector_2d_minus(const std::vector<double> &first,
                                     const std::vector<double> &second)
 {
   std::vector<double> ret(axes_2d_num, 0.0);
-  ret[0] = first[0] - second[0];
-  ret[1] = first[1] - second[1];
+  for(std::size_t cur_coord = 0; cur_coord < axes_2d_num; ++cur_coord)
+  {
+    ret[cur_coord] = first[cur_coord] - second[cur_coord];
+  }
   return ret;
 }
 
@@ -534,8 +495,10 @@ std::vector<double> vector_2d_minus(const std::vector<double> &first,
 void vector_2d_minus_self(std::vector<double> &first,
                           const std::vector<double> &second)
 {
-  first[0] -= second[0];
-  first[1] -= second[1];
+  for(std::size_t cur_coord = 0; cur_coord < axes_2d_num; ++cur_coord)
+  {
+    first[cur_coord] -= second[cur_coord];
+  }
 }
 
 
@@ -544,8 +507,10 @@ std::vector<double> vector_2d_divide(const std::vector<double> &vec,
                                      double num)
 {
   std::vector<double> ret(axes_2d_num, 0.0);
-  ret[0] = vec[0] / num;
-  ret[1] = vec[1] / num;
+  for(std::size_t cur_coord = 0; cur_coord < axes_2d_num; ++cur_coord)
+  {
+    ret[cur_coord] = vec[cur_coord] / num;
+  }
   return ret;
 }
 
@@ -562,9 +527,10 @@ void matrix_multiply_self(
   std::vector<std::vector<double>> &mat,
   double num)
 {
-  vector_multiply_self(mat[0], num);
-  vector_multiply_self(mat[1], num);
-  vector_multiply_self(mat[2], num);
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    vector_multiply_self(mat[cur_coord], num);
+  }
 }
 
 

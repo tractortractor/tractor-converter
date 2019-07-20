@@ -89,7 +89,7 @@ namespace exception{
 
 
 
-enum class rotation_axis{x, y, z};
+enum class rotation_axis : std::size_t {x = 0, y = 1, z = 2};
 
 
 
@@ -113,14 +113,6 @@ void rotate_point_by_axis(
 
 std::vector<double> vector_scale(double norm, const std::vector<double> &vec);
 void vector_scale_self(double norm, std::vector<double> &vec);
-
-// not needed
-//std::vector<double> vector_scale_to_max_coord(
-//  double max_coord,
-//  const std::vector<double> &vec);
-//void vector_scale_self_to_max_coord(
-//  double max_coord,
-//  const std::vector<double> &vec);
 
 void vector_make_zero(std::vector<double> &vec);
 
@@ -328,6 +320,13 @@ const std::vector<std::vector<std::size_t>> axes_by_plane =
   {
     {1, 2}, // x axis
     {0, 2}, // y axis
+    {0, 1}, // z axis
+  };
+
+const std::vector<std::vector<std::size_t>> axes_by_plane_continuous =
+  {
+    {1, 2}, // x axis
+    {2, 0}, // y axis
     {0, 1}, // z axis
   };
 
