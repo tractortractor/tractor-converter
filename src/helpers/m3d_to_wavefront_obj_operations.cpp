@@ -805,17 +805,20 @@ void m3d_to_wavefront_obj_model::mark_wheels(
   volInt::polyhedron &main_model,
   const std::vector<volInt::polyhedron> &steer_wheels_models)
 {
-  for(std::size_t i = 0, cur_wheel_data_size = cur_wheel_data.size();
-      i < cur_wheel_data_size;
-      ++i)
+  std::size_t cur_wheel_data_size = cur_wheel_data.size();
+  for(std::size_t wheel_ind = 0; wheel_ind < cur_wheel_data_size; ++wheel_ind)
   {
-    if(cur_wheel_data[i].steer)
+    main_model.wheels.insert(wheel_ind);
+  }
+  for(std::size_t wheel_ind = 0; wheel_ind < cur_wheel_data_size; ++wheel_ind)
+  {
+    if(cur_wheel_data[wheel_ind].steer)
     {
-      main_model.wheels_steer.insert(i);
+      main_model.wheels_steer.insert(wheel_ind);
     }
     else
     {
-      main_model.wheels_non_steer.insert(i);
+      main_model.wheels_non_steer.insert(wheel_ind);
     }
   }
 
@@ -845,10 +848,6 @@ void m3d_to_wavefront_obj_model::mark_wheels(
   // Trying to figure out which part of model is current non-steering wheel.
   // Polygons which belong to this wheel are getting their "wheel_weapon_id"
   // changed to ease material name generation.
-
-//for(int cur_wheel_num = 0, cur_wheel_data_size = cur_wheel_data.size();
-//    cur_wheel_num < cur_wheel_data_size;
-//    ++cur_wheel_num)
   for(std::size_t model_wheel_center_num = 0,
         wheels_centers_size = wheels_centers.size();
       model_wheel_center_num < wheels_centers_size;
@@ -860,18 +859,16 @@ void m3d_to_wavefront_obj_model::mark_wheels(
 //        wheels_centers_size = wheels_centers.size();
 //      model_wheel_center_num < wheels_centers_size;
 //      ++model_wheel_center_num)
-    for(int cur_wheel_num = 0, cur_wheel_data_size = cur_wheel_data.size();
-        cur_wheel_num < cur_wheel_data_size;
-        ++cur_wheel_num)
+    for(int wheel_ind = 0; wheel_ind < cur_wheel_data_size; ++wheel_ind)
     {
-      if(!cur_wheel_data[cur_wheel_num].steer)
+      if(!cur_wheel_data[wheel_ind].steer)
       {
         double distance =
           volInt::vector_length_between(wheels_centers[model_wheel_center_num],
-                                        cur_wheel_data[cur_wheel_num].r);
+                                        cur_wheel_data[wheel_ind].r);
         if(distance < closest_distance)
         {
-          closest_wheel_data_num = cur_wheel_num;
+          closest_wheel_data_num = wheel_ind;
           closest_distance = distance;
         }
       }
@@ -910,32 +907,30 @@ void m3d_to_wavefront_obj_model::mark_wheels(
 
   // Marking ghost wheels.
   non_steer_ghost_wheels_num = 0;
-  for(std::size_t i = 0, cur_wheel_data_size = cur_wheel_data.size();
-      i < cur_wheel_data_size;
-      ++i)
+  for(std::size_t wheel_ind = 0; wheel_ind < cur_wheel_data_size; ++wheel_ind)
   {
     // If there is no group found for wheel center it's a ghost wheel.
-    if(cur_wheel_data[i].steer)
+    if(cur_wheel_data[wheel_ind].steer)
     {
       if(steer_wheels_models.
-           at(cur_wheel_data[i].wheel_model_index).numFaces ==
+           at(cur_wheel_data[wheel_ind].wheel_model_index).numFaces ==
          0)
       {
-        cur_wheel_data[i].ghost = 1;
-        main_model.wheels_ghost.insert(i);
+        cur_wheel_data[wheel_ind].ghost = 1;
+        main_model.wheels_ghost.insert(wheel_ind);
       }
       else
       {
-        cur_wheel_data[i].ghost = 0;
-        main_model.wheels_non_ghost.insert(i);
+        cur_wheel_data[wheel_ind].ghost = 0;
+        main_model.wheels_non_ghost.insert(wheel_ind);
       }
     }
     else
     {
-      if(!main_model.wheels_non_ghost.count(i))
+      if(!main_model.wheels_non_ghost.count(wheel_ind))
       {
-        cur_wheel_data[i].ghost = 1;
-        main_model.wheels_ghost.insert(i);
+        cur_wheel_data[wheel_ind].ghost = 1;
+        main_model.wheels_ghost.insert(wheel_ind);
         ++non_steer_ghost_wheels_num;
       }
     }
@@ -947,8 +942,6 @@ void m3d_to_wavefront_obj_model::mark_wheels(
 // Copy ghost wheel model and scale it to specified width and radius.
 volInt::polyhedron
   m3d_to_wavefront_obj_model::get_ghost_wheels_helper_generate_wheel(
-    double width,
-    double radius,
     int wheel_id)
 {
   volInt::polyhedron cur_ghost_wheel = *ghost_wheel_model;
@@ -1009,31 +1002,25 @@ void m3d_to_wavefront_obj_model::get_ghost_wheels(
 {
   non_steer_ghost_wheels_models.reserve(non_steer_ghost_wheels_num);
 
-  for(std::size_t i = 0, cur_wheel_data_size = cur_wheel_data.size();
-      i < cur_wheel_data_size;
-      ++i)
+  for(std::size_t wheel_ind = 0, cur_wheel_data_size = cur_wheel_data.size();
+      wheel_ind < cur_wheel_data_size;
+      ++wheel_ind)
   {
-    if(cur_wheel_data[i].steer)
+    if(cur_wheel_data[wheel_ind].steer)
     {
-      if(cur_wheel_data[i].ghost)
+      if(cur_wheel_data[wheel_ind].ghost)
       {
-        steer_wheels_models[cur_wheel_data[i].wheel_model_index] =
-          get_ghost_wheels_helper_generate_wheel(
-            cur_wheel_data[i].width,
-            cur_wheel_data[i].radius,
-            i);
+        steer_wheels_models[cur_wheel_data[wheel_ind].wheel_model_index] =
+          get_ghost_wheels_helper_generate_wheel(wheel_ind);
       }
     }
     else
     {
-      if(cur_wheel_data[i].ghost)
+      if(cur_wheel_data[wheel_ind].ghost)
       {
         non_steer_ghost_wheels_models.push_back(
-          get_ghost_wheels_helper_generate_wheel(
-            cur_wheel_data[i].width,
-            cur_wheel_data[i].radius,
-            i));
-        cur_wheel_data[i].wheel_model_index =
+          get_ghost_wheels_helper_generate_wheel(wheel_ind));
+        cur_wheel_data[wheel_ind].wheel_model_index =
           non_steer_ghost_wheels_models.size() - 1;
       }
     }

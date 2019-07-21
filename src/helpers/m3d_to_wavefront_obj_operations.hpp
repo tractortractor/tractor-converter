@@ -249,10 +249,7 @@ private:
     volInt::polyhedron &main_model,
     const std::vector<volInt::polyhedron> &steer_wheels_models);
 
-  volInt::polyhedron get_ghost_wheels_helper_generate_wheel(
-    double width,
-    double radius,
-    int wheel_id);
+  volInt::polyhedron get_ghost_wheels_helper_generate_wheel(int wheel_id);
   void get_ghost_wheels(
     const volInt::polyhedron &main_model,
     std::vector<volInt::polyhedron> &steer_wheels_models,

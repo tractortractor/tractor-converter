@@ -767,16 +767,18 @@ typedef struct polyhedron {
 
   double ref_angle;
 
-  // Used only when converting from *.obj to *.m3d/*.a3d.
-  std::string wavefront_obj_path;
   std::unordered_set<int> wheels;
   std::unordered_set<int> wheels_steer;
   std::unordered_set<int> wheels_non_steer;
   std::unordered_set<int> wheels_ghost;
-  std::unordered_set<int> wheels_non_ghost; // Used when converting
-                                            // from *.m3d to *.obj.
-  int wheel_id; // Holds wheel id in case model itself is a wheel.
-                // Otherwise value is less than 0.
+  std::unordered_set<int> wheels_non_ghost;
+
+  // Holds wheel id in case model itself is a wheel.
+  // Otherwise value is less than 0.
+  int wheel_id;
+
+  // Used only when converting from *.obj to *.m3d/*.a3d.
+  std::string wavefront_obj_path;
 
   // Used only when converting from *.m3d to *.obj.
   bool volume_overwritten;
