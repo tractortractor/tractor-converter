@@ -171,8 +171,8 @@ class wavefront_obj_to_m3d_model : vangers_model
 public:
 
   wavefront_obj_to_m3d_model(
-    const boost::filesystem::path &input_file_path_arg,
-    const boost::filesystem::path &output_dir_path_arg,
+    const boost::filesystem::path &input_m3d_path_arg,
+    const boost::filesystem::path &output_m3d_path_arg,
     const std::string &input_file_name_error_arg,
     const std::string &output_file_name_error_arg,
     const volInt::polyhedron *example_weapon_model_arg,
@@ -520,8 +520,8 @@ void create_prm(
   const double scale_size);
 
 void mechos_wavefront_objs_to_m3d(
-  const boost::filesystem::path &input_file_path_arg,
-  const boost::filesystem::path &output_dir_path_arg,
+  const boost::filesystem::path &input_m3d_path_arg,
+  const boost::filesystem::path &output_m3d_path_arg,
   const std::string &input_file_name_error_arg,
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *example_weapon_model_arg,
@@ -536,8 +536,8 @@ void mechos_wavefront_objs_to_m3d(
   bitflag<obj_to_m3d_flag> flags_arg);
 
 volInt::polyhedron weapon_wavefront_objs_to_m3d(
-  const boost::filesystem::path &input_file_path_arg,
-  const boost::filesystem::path &output_dir_path_arg,
+  const boost::filesystem::path &input_m3d_path_arg,
+  const boost::filesystem::path &output_m3d_path_arg,
   const std::string &input_file_name_error_arg,
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *weapon_attachment_point_arg,
@@ -551,8 +551,8 @@ volInt::polyhedron weapon_wavefront_objs_to_m3d(
   std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg);
 
 void animated_wavefront_objs_to_a3d(
-  const boost::filesystem::path &input_file_path_arg,
-  const boost::filesystem::path &output_dir_path_arg,
+  const boost::filesystem::path &input_m3d_path_arg,
+  const boost::filesystem::path &output_m3d_path_arg,
   const std::string &input_file_name_error_arg,
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *center_of_mass_model_arg,
@@ -563,8 +563,8 @@ void animated_wavefront_objs_to_a3d(
   std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg);
 
 void other_wavefront_objs_to_m3d(
-  const boost::filesystem::path &input_file_path_arg,
-  const boost::filesystem::path &output_dir_path_arg,
+  const boost::filesystem::path &input_m3d_path_arg,
+  const boost::filesystem::path &output_m3d_path_arg,
   const std::string &input_file_name_error_arg,
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *center_of_mass_model_arg,

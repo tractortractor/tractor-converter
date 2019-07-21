@@ -65,8 +65,8 @@ class m3d_to_wavefront_obj_model : vangers_model
 public:
 
   m3d_to_wavefront_obj_model(
-    const boost::filesystem::path &input_file_path_arg,
-    const boost::filesystem::path &output_dir_path_arg,
+    const boost::filesystem::path &input_m3d_path_arg,
+    const boost::filesystem::path &output_m3d_path_arg,
     const std::string &input_file_name_error_arg,
     const std::string &output_file_name_error_arg,
     const volInt::polyhedron *example_weapon_model_arg,
@@ -330,7 +330,7 @@ double read_scale_and_copy_prm(
   const std::string &output_file_name_error);
 void mechos_m3d_to_wavefront_objs(
   const boost::filesystem::path &m3d_filepath,
-  const boost::filesystem::path &output_dir_path,
+  const boost::filesystem::path &output_m3d_path,
   const std::string &input_file_name_error,
   const std::string &output_file_name_error,
   const volInt::polyhedron *weapon_model_ptr,
@@ -341,7 +341,7 @@ void mechos_m3d_to_wavefront_objs(
   bitflag<m3d_to_obj_flag> flags);
 volInt::polyhedron weapon_m3d_to_wavefront_objs(
   const boost::filesystem::path &m3d_filepath,
-  const boost::filesystem::path &output_dir_path,
+  const boost::filesystem::path &output_m3d_path,
   const std::string &input_file_name_error,
   const std::string &output_file_name_error,
   const volInt::polyhedron *weapon_attachment_point_model_ptr,
@@ -351,7 +351,7 @@ volInt::polyhedron weapon_m3d_to_wavefront_objs(
   bitflag<m3d_to_obj_flag> flags);
 void animated_a3d_to_wavefront_objs(
   const boost::filesystem::path &a3d_filepath,
-  const boost::filesystem::path &output_dir_path,
+  const boost::filesystem::path &output_m3d_path,
   const std::string &input_file_name_error,
   const std::string &output_file_name_error,
   const volInt::polyhedron *center_of_mass_model_ptr,
@@ -360,7 +360,7 @@ void animated_a3d_to_wavefront_objs(
   bitflag<m3d_to_obj_flag> flags);
 void other_m3d_to_wavefront_objs(
   const boost::filesystem::path &m3d_filepath,
-  const boost::filesystem::path &output_dir_path,
+  const boost::filesystem::path &output_m3d_path,
   const std::string &input_file_name_error,
   const std::string &output_file_name_error,
   const volInt::polyhedron *center_of_mass_model_ptr,

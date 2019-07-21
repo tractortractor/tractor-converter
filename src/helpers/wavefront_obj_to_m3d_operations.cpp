@@ -92,8 +92,8 @@ template<> std::vector<double> parse_per_file_cfg_multiple_options<double>(
 
 
 wavefront_obj_to_m3d_model::wavefront_obj_to_m3d_model(
-  const boost::filesystem::path &input_file_path_arg,
-  const boost::filesystem::path &output_dir_path_arg,
+  const boost::filesystem::path &input_m3d_path_arg,
+  const boost::filesystem::path &output_m3d_path_arg,
   const std::string &input_file_name_error_arg,
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *example_weapon_model_arg,
@@ -108,8 +108,8 @@ wavefront_obj_to_m3d_model::wavefront_obj_to_m3d_model(
   bitflag<obj_to_m3d_flag> flags_arg,
   std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg)
 : vangers_model(
-    input_file_path_arg,
-    output_dir_path_arg,
+    input_m3d_path_arg,
+    output_m3d_path_arg,
     input_file_name_error_arg,
     output_file_name_error_arg,
     example_weapon_model_arg,
@@ -125,7 +125,7 @@ wavefront_obj_to_m3d_model::wavefront_obj_to_m3d_model(
   flags(flags_arg),
   non_mechos_scale_sizes(non_mechos_scale_sizes_arg)
 {
-  model_name = input_file_path_arg.filename().string();
+  model_name = input_m3d_path_arg.filename().string();
 
   prm_scale_size = 0.0;
 }
@@ -169,7 +169,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 
   // TEST
 //std::cout << '\n';
-//std::cout << "getting weapons of model: " << input_file_path << '\n';
+//std::cout << "getting weapons of model: " << input_m3d_path << '\n';
   get_weapons_data(cur_main_model);
   get_wheels_data(cur_main_model);
   get_debris_data(&debris_models, debris_bound_models_ptr);
@@ -274,7 +274,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
   }
 
 
-  boost::filesystem::path file_to_save = output_dir_path;
+  boost::filesystem::path file_to_save = output_m3d_path;
   file_to_save.append(model_name + ".m3d", boost::filesystem::path::codecvt());
   save_file(file_to_save,
             m3d_data,
@@ -283,11 +283,11 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 
 
 
-  boost::filesystem::path prm_file_input = input_file_path;
+  boost::filesystem::path prm_file_input = input_m3d_path;
   prm_file_input.append(model_name + ".prm",
                         boost::filesystem::path::codecvt());
 
-  boost::filesystem::path prm_file_output = output_dir_path;
+  boost::filesystem::path prm_file_output = output_m3d_path;
   prm_file_output.append(model_name + ".prm",
                          boost::filesystem::path::codecvt());
 
@@ -321,13 +321,13 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
   // TEST
 //std::cout << '\n';
 //std::cout << "scale_size of model: " <<
-//  input_file_path << " is " << scale_size << '\n';
+//  input_m3d_path << " is " << scale_size << '\n';
 
 
 
   // TEST
 //std::cout << '\n';
-//std::cout << "model: " << input_file_path << '\n';
+//std::cout << "model: " << input_m3d_path << '\n';
 //for(std::size_t cur_weapon = 0;
 //    cur_weapon < m3d::weapon_slot::max_slots;
 //    ++cur_weapon)
@@ -352,7 +352,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
     {{wavefront_obj::obj_name::main, cur_main_model}};
   save_volInt_as_wavefront_obj(
     cur_main_model_map,
-    output_dir_path.parent_path() / (model_name + "_test.obj"),
+    output_m3d_path.parent_path() / (model_name + "_test.obj"),
     "test");
   for(const auto &wheel_model : wheels_models)
   {
@@ -360,7 +360,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
       {{wavefront_obj::obj_name::main, wheel_model.second}};
     save_volInt_as_wavefront_obj(
       cur_wheel_model_map,
-      output_dir_path.parent_path() /
+      output_m3d_path.parent_path() /
         (model_name +
            "_wheel_steer_" +
            std::to_string(wheel_model.first) +
@@ -436,7 +436,7 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
 
 
 
-  boost::filesystem::path file_to_save = output_dir_path;
+  boost::filesystem::path file_to_save = output_m3d_path;
   file_to_save.append(model_name + ".m3d", boost::filesystem::path::codecvt());
   save_file(file_to_save,
             m3d_data,
@@ -448,7 +448,7 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
   // TEST
 //std::cout << '\n';
 //std::cout << "scale_size of model: " <<
-//  input_file_path << " is " << scale_size << '\n';
+//  input_m3d_path << " is " << scale_size << '\n';
 
   // TEST
 //std::cout << '\n';
@@ -458,7 +458,7 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
 //std::cout << "z_off: " << cur_main_model.z_off() << '\n';
 //save_volInt_as_wavefront_obj(
 //  cur_main_model,
-//  output_dir_path.parent_path() / (model_name + "_test.obj"),
+//  output_m3d_path.parent_path() / (model_name + "_test.obj"),
 //  "test");
 
 
@@ -521,7 +521,7 @@ void wavefront_obj_to_m3d_model::animated_wavefront_objs_to_a3d()
 
 
 
-  boost::filesystem::path file_to_save = output_dir_path;
+  boost::filesystem::path file_to_save = output_m3d_path;
   file_to_save.append(model_name + ".a3d", boost::filesystem::path::codecvt());
   save_file(file_to_save,
             m3d_data,
@@ -529,7 +529,7 @@ void wavefront_obj_to_m3d_model::animated_wavefront_objs_to_a3d()
             output_file_name_error);
   // TEST
 //std::cout << '\n';
-//std::cout << "scale_size of model: " << input_file_path <<
+//std::cout << "scale_size of model: " << input_m3d_path <<
 //  " is " << scale_size << '\n';
 }
 
@@ -596,7 +596,7 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
 
 
 
-  boost::filesystem::path file_to_save = output_dir_path;
+  boost::filesystem::path file_to_save = output_m3d_path;
   file_to_save.append(model_name + ".m3d", boost::filesystem::path::codecvt());
   save_file(file_to_save,
             m3d_data,
@@ -627,7 +627,7 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
   // TEST
 //std::cout << '\n';
 //std::cout << "scale_size of model: " <<
-//  input_file_path << " is " << scale_size << '\n';
+//  input_m3d_path << " is " << scale_size << '\n';
 }
 
 
@@ -636,7 +636,7 @@ boost::filesystem::path
   wavefront_obj_to_m3d_model::file_prefix_to_path(const std::string &prefix,
                                                   const std::size_t *model_num)
 {
-  return input_file_path / file_prefix_to_filename(prefix, model_num);
+  return input_m3d_path / file_prefix_to_filename(prefix, model_num);
 }
 
 
@@ -695,7 +695,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
   try
   {
     boost::filesystem::path config_file_path =
-      input_file_path / (model_name + ".cfg");
+      input_m3d_path / (model_name + ".cfg");
     std::string config_file_str = config_file_path.string();
 
     // Declare a group of options that will be
@@ -932,7 +932,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_a3d(
   try
   {
     boost::filesystem::path config_file_path =
-      input_file_path / (model_name + ".cfg");
+      input_m3d_path / (model_name + ".cfg");
     std::string config_file_str = config_file_path.string();
 
     // Declare a group of options that will be
@@ -1997,7 +1997,7 @@ std::unordered_map<int, volInt::polyhedron>
 
       // TEST
 //    test_poly_properties_ofstream[wheel_steer_num] =
-//      std::ofstream((output_dir_path.string() + "/" +
+//      std::ofstream((output_m3d_path.string() + "/" +
 //                       model_name + "_wheel_before_" +
 //                       std::to_string(wheel_steer_num) + ".txt").c_str(),
 //                    std::ios_base::out);
@@ -2382,7 +2382,7 @@ void wavefront_obj_to_m3d_model::get_a3d_header_data(
   if(!n_models)
   {
     boost::filesystem::path first_model_path =
-      (input_file_path / (model_name + "_1.obj"));
+      (input_m3d_path / (model_name + "_1.obj"));
     throw std::runtime_error(
       input_file_name_error + " file " +
       first_model_path.string() + " is not valid *.obj model." + '\n' +
@@ -2521,13 +2521,13 @@ void wavefront_obj_to_m3d_model::get_debris_data(
   {
     std::cout << '\n';
     std::cout << "Found " << std::to_string(debris_num) <<
-      " debris for " << input_file_path << " model." << '\n';
+      " debris for " << input_m3d_path << " model." << '\n';
   }
   else
   {
     std::cout << '\n';
     std::cout << "Couldn't find debris for " <<
-      input_file_path << " model." << '\n';
+      input_m3d_path << " model." << '\n';
   }
 }
 
@@ -2674,7 +2674,7 @@ void wavefront_obj_to_m3d_model::get_scale_helper_set_scale_from_rmax()
     std::cout << '\n';
     std::cout << "3d_scale_cap " << scale_cap <<
       " is lower than calculated scale_size " << prm_lst_scale_size <<
-      " of " << input_file_path << " model." << '\n';
+      " of " << input_m3d_path << " model." << '\n';
     std::cout << "3d_scale_cap is written to ";
     if(non_mechos_scale_sizes)
     {
@@ -3352,8 +3352,8 @@ void create_prm(
 
 
 void mechos_wavefront_objs_to_m3d(
-  const boost::filesystem::path &input_file_path_arg,
-  const boost::filesystem::path &output_dir_path_arg,
+  const boost::filesystem::path &input_m3d_path_arg,
+  const boost::filesystem::path &output_m3d_path_arg,
   const std::string &input_file_name_error_arg,
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *example_weapon_model_arg,
@@ -3368,8 +3368,8 @@ void mechos_wavefront_objs_to_m3d(
   bitflag<obj_to_m3d_flag> flags_arg)
 {
   wavefront_obj_to_m3d_model cur_vangers_model(
-    input_file_path_arg,
-    output_dir_path_arg,
+    input_m3d_path_arg,
+    output_m3d_path_arg,
     input_file_name_error_arg,
     output_file_name_error_arg,
     example_weapon_model_arg,
@@ -3389,8 +3389,8 @@ void mechos_wavefront_objs_to_m3d(
 
 
 volInt::polyhedron weapon_wavefront_objs_to_m3d(
-  const boost::filesystem::path &input_file_path_arg,
-  const boost::filesystem::path &output_dir_path_arg,
+  const boost::filesystem::path &input_m3d_path_arg,
+  const boost::filesystem::path &output_m3d_path_arg,
   const std::string &input_file_name_error_arg,
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *weapon_attachment_point_arg,
@@ -3404,8 +3404,8 @@ volInt::polyhedron weapon_wavefront_objs_to_m3d(
   std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg)
 {
   wavefront_obj_to_m3d_model cur_vangers_model(
-    input_file_path_arg,
-    output_dir_path_arg,
+    input_m3d_path_arg,
+    output_m3d_path_arg,
     input_file_name_error_arg,
     output_file_name_error_arg,
     nullptr,
@@ -3425,8 +3425,8 @@ volInt::polyhedron weapon_wavefront_objs_to_m3d(
 
 
 void animated_wavefront_objs_to_a3d(
-  const boost::filesystem::path &input_file_path_arg,
-  const boost::filesystem::path &output_dir_path_arg,
+  const boost::filesystem::path &input_m3d_path_arg,
+  const boost::filesystem::path &output_m3d_path_arg,
   const std::string &input_file_name_error_arg,
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *center_of_mass_model_arg,
@@ -3437,8 +3437,8 @@ void animated_wavefront_objs_to_a3d(
   std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg)
 {
   wavefront_obj_to_m3d_model cur_vangers_model(
-    input_file_path_arg,
-    output_dir_path_arg,
+    input_m3d_path_arg,
+    output_m3d_path_arg,
     input_file_name_error_arg,
     output_file_name_error_arg,
     nullptr,
@@ -3458,8 +3458,8 @@ void animated_wavefront_objs_to_a3d(
 
 
 void other_wavefront_objs_to_m3d(
-  const boost::filesystem::path &input_file_path_arg,
-  const boost::filesystem::path &output_dir_path_arg,
+  const boost::filesystem::path &input_m3d_path_arg,
+  const boost::filesystem::path &output_m3d_path_arg,
   const std::string &input_file_name_error_arg,
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *center_of_mass_model_arg,
@@ -3472,8 +3472,8 @@ void other_wavefront_objs_to_m3d(
   std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg)
 {
   wavefront_obj_to_m3d_model cur_vangers_model(
-    input_file_path_arg,
-    output_dir_path_arg,
+    input_m3d_path_arg,
+    output_m3d_path_arg,
     input_file_name_error_arg,
     output_file_name_error_arg,
     nullptr,

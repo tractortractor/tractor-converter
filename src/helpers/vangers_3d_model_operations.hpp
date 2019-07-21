@@ -155,8 +155,8 @@ public:
 //enum class file_type{m3d, a3d, none};
 
   vangers_model(
-    const boost::filesystem::path &input_file_path_arg,
-    const boost::filesystem::path &output_dir_path_arg,
+    const boost::filesystem::path &input_m3d_path_arg,
+    const boost::filesystem::path &output_m3d_path_arg,
     const std::string &input_file_name_error_arg,
     const std::string &output_file_name_error_arg,
     const volInt::polyhedron *example_weapon_model_arg = nullptr,
@@ -171,8 +171,8 @@ protected:
   std::string m3d_data;
   std::size_t m3d_data_cur_pos;
 
-  const boost::filesystem::path input_file_path;
-  const boost::filesystem::path output_dir_path;
+  const boost::filesystem::path input_m3d_path;
+  const boost::filesystem::path output_m3d_path;
   const std::string input_file_name_error;
   const std::string output_file_name_error;
 

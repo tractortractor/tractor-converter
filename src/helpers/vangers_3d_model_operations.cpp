@@ -25,16 +25,16 @@ weapon_slot_data::weapon_slot_data()
 
 
 vangers_model::vangers_model(
-  const boost::filesystem::path &input_file_path_arg,
-  const boost::filesystem::path &output_dir_path_arg,
+  const boost::filesystem::path &input_m3d_path_arg,
+  const boost::filesystem::path &output_m3d_path_arg,
   const std::string &input_file_name_error_arg,
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *example_weapon_model_arg,
   const volInt::polyhedron *weapon_attachment_point_arg,
   const volInt::polyhedron *ghost_wheel_model_arg,
   const volInt::polyhedron *center_of_mass_model_arg)
-: input_file_path(input_file_path_arg),
-  output_dir_path(output_dir_path_arg),
+: input_m3d_path(input_m3d_path_arg),
+  output_m3d_path(output_m3d_path_arg),
   input_file_name_error(input_file_name_error_arg),
   output_file_name_error(output_file_name_error_arg),
   example_weapon_model(example_weapon_model_arg),
