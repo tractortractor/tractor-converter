@@ -2847,8 +2847,11 @@ void wavefront_obj_to_m3d_model::m3d_mechos_generate_bound(
       gen_bound_layers_num,
       gen_bound_area_threshold,
       wheel_params_extremes_ptr);
+  new_main_bound.wavefront_obj_path =
+    file_prefix_to_path("main_bound").string();
 
   new_main_bound.calculate_c3d_properties();
+
 
   for(std::size_t cur_debris = 0; cur_debris < n_debris; ++cur_debris)
   {
@@ -2859,6 +2862,10 @@ void wavefront_obj_to_m3d_model::m3d_mechos_generate_bound(
         gen_bound_area_threshold));
     new_debris_bounds[cur_debris].offset_point() =
       (*debris_models)[cur_debris].offset_point();
+    new_debris_bounds[cur_debris].wavefront_obj_path =
+      file_prefix_to_path("debris_bound", &cur_debris).string();
+
+    new_debris_bounds[cur_debris].calculate_c3d_properties();
   }
 }
 
@@ -2873,6 +2880,8 @@ void wavefront_obj_to_m3d_model::m3d_non_mechos_generate_bound(
       volInt::generate_bound::model_type::other,
       gen_bound_layers_num,
       gen_bound_area_threshold);
+  new_main_bound.wavefront_obj_path =
+    file_prefix_to_path("main_bound").string();
 
   new_main_bound.calculate_c3d_properties();
 }
