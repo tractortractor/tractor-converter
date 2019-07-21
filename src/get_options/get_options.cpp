@@ -182,6 +182,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
             "\nUse \"ghost_wheel_file\" option to specify path "
                 "to wavefront *.obj file which contains model "
                 "to be inserted in place of wheels with no polygons."
+            "\nSpecify \"extract_bound_model\" option to extract "
+                "bound models of *.m3d files."
             "\nSpecify \"extract_center_of_mass\" option to mark "
                 "center of mass found in *.m3d/*.a3d file."
             "\nUse \"center_of_mass_file\" to specify path "
@@ -387,10 +389,13 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "position of wheels with no polygons.\n"
        "\tDefaults to empty string.\n"
        "\tUsed by \"vangers_3d_model_to_obj\" mode.\n")
+      ("extract_bound_model",
+       boost::program_options::bool_switch()->default_value(false),
+       "\tExtract bound models from *.m3d files.\n"
+       "\tUsed by \"vangers_3d_model_to_obj\" mode.\n")
       ("extract_center_of_mass",
        boost::program_options::bool_switch()->default_value(false),
        "\tExtract center of mass from *.m3d/a3d file and mark it.\n"
-       "\tDefaults to false.\n"
        "\tUsed by \"vangers_3d_model_to_obj\" mode.\n")
       ("center_of_mass_file",
        boost::program_options::value<std::string>()->default_value(""),

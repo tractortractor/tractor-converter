@@ -38,10 +38,11 @@ namespace helpers{
 enum class m3d_to_obj_flag
 {
   none = 0,
-  extract_nonexistent_weapons = 1,
-  use_custom_volume_by_default = 2,
-  use_custom_rcm_by_default = 3,
-  use_custom_J_by_default = 4,
+  extract_bound_model = 1,
+  extract_nonexistent_weapons = 2,
+  use_custom_volume_by_default = 3,
+  use_custom_rcm_by_default = 4,
+  use_custom_J_by_default = 5,
 };
 
 // 1 digit left to dot + 1 dot + 8 expected digits right to dot + 4 exponent
@@ -287,8 +288,8 @@ private:
 
   void save_m3d_debris_data(
     std::vector<std::unordered_map<std::string, volInt::polyhedron>>
-      &debris_models,
-    std::vector<volInt::polyhedron> &debris_bound_models);
+      *debris_models,
+    std::vector<volInt::polyhedron> *debris_bound_models = nullptr);
 
 
 

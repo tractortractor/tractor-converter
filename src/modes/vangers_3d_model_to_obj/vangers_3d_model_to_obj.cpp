@@ -101,6 +101,11 @@ void vangers_3d_model_to_obj_mode(
         options["wavefront_mtl"].as<std::string>());
 
     helpers::bitflag<helpers::m3d_to_obj_flag> m3d_to_obj_flags;
+    if(options["extract_bound_model"].as<bool>())
+    {
+      m3d_to_obj_flags |=
+        helpers::m3d_to_obj_flag::extract_bound_model;
+    }
     if(options["extract_nonexistent_weapons"].as<bool>())
     {
       m3d_to_obj_flags |=

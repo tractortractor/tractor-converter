@@ -96,9 +96,23 @@ void m3d_to_wavefront_obj_model::mechos_m3d_to_wavefront_objs()
   {
     read_m3d_debris_data(debris_models, debris_bound_models);
     move_debris_to_offset(debris_models, debris_bound_models);
-    save_m3d_debris_data(debris_models, debris_bound_models);
+    if(flags & m3d_to_obj_flag::extract_bound_model)
+    {
+      save_m3d_debris_data(&debris_models, &debris_bound_models);
+    }
+    else
+    {
+      save_m3d_debris_data(&debris_models);
+    }
   }
-  c3d_to_wavefront_obj("_main_bound", c3d::c3d_type::bound);
+  if(flags & m3d_to_obj_flag::extract_bound_model)
+  {
+    c3d_to_wavefront_obj("_main_bound", c3d::c3d_type::bound);
+  }
+  else
+  {
+    read_c3d(c3d::c3d_type::bound);
+  }
 
   weapon_slots_existence = read_var_from_m3d<int, int>();
   if(weapon_slots_existence)
@@ -239,7 +253,14 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
       cur_weapon_slot_data[cur_slot].location_angle_of_slot << '\n';
   }
   */
-  c3d_to_wavefront_obj("_main_bound", c3d::c3d_type::bound);
+  if(flags & m3d_to_obj_flag::extract_bound_model)
+  {
+    c3d_to_wavefront_obj("_main_bound", c3d::c3d_type::bound);
+  }
+  else
+  {
+    read_c3d(c3d::c3d_type::bound);
+  }
 
   weapon_slots_existence = read_var_from_m3d<int, int>();
   if(weapon_slots_existence)
@@ -359,7 +380,14 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
       ". Non-mechos model have non-zero n_wheels value.");
   }
 
-  c3d_to_wavefront_obj("_main_bound", c3d::c3d_type::bound);
+  if(flags & m3d_to_obj_flag::extract_bound_model)
+  {
+    c3d_to_wavefront_obj("_main_bound", c3d::c3d_type::bound);
+  }
+  else
+  {
+    read_c3d(c3d::c3d_type::bound);
+  }
 
   weapon_slots_existence = read_var_from_m3d<int, int>();
   if(weapon_slots_existence)
@@ -1157,17 +1185,23 @@ void m3d_to_wavefront_obj_model::move_debris_to_offset(
 
 void m3d_to_wavefront_obj_model::save_m3d_debris_data(
   std::vector<std::unordered_map<std::string, volInt::polyhedron>>
-    &debris_models,
-  std::vector<volInt::polyhedron> &debris_bound_models)
+    *debris_models,
+  std::vector<volInt::polyhedron> *debris_bound_models)
 {
   for(std::size_t cur_debris = 0; cur_debris < n_debris; ++cur_debris)
   {
     save_c3d_as_wavefront_obj(
-      debris_models[cur_debris],
+      (*debris_models)[cur_debris],
       "_debris_" + std::to_string(cur_debris + 1));
-    save_c3d_as_wavefront_obj(
-      debris_bound_models[cur_debris],
-      "_debris_bound_" + std::to_string(cur_debris + 1));
+  }
+  if(debris_bound_models)
+  {
+    for(std::size_t cur_debris = 0; cur_debris < n_debris; ++cur_debris)
+    {
+      save_c3d_as_wavefront_obj(
+        (*debris_bound_models)[cur_debris],
+        "_debris_bound_" + std::to_string(cur_debris + 1));
+    }
   }
 }
 
