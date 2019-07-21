@@ -346,7 +346,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
   // TEST
   /*
   std::unordered_map<std::string, volInt::polyhedron> cur_main_model_map
-    {{wavefront_obj::main_obj_name, cur_main_model}};
+    {{wavefront_obj::obj_name::main, cur_main_model}};
   save_volInt_as_wavefront_obj(
     cur_main_model_map,
     output_dir_path.parent_path() / (model_name + "_test.obj"),
@@ -354,7 +354,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
   for(const auto &wheel_model : wheels_models)
   {
     std::unordered_map<std::string, volInt::polyhedron> cur_wheel_model_map
-      {{wavefront_obj::main_obj_name, wheel_model.second}};
+      {{wavefront_obj::obj_name::main, wheel_model.second}};
     save_volInt_as_wavefront_obj(
       cur_wheel_model_map,
       output_dir_path.parent_path() /

@@ -11,10 +11,12 @@ namespace wavefront_obj{
   const std::string mat_separator = "_";
   const std::size_t mat_separator_size = mat_separator.size();
 
-  const std::string main_obj_name = "main";
-  const std::string weapon_obj_name = "weapon";
-  const std::string attachment_point_obj_name = "attachment_point";
-  const std::string center_of_mass_obj_name = "center_of_mass";
+  namespace obj_name{
+    const std::string main = "main";
+    const std::string weapon = "weapon";
+    const std::string attachment_point = "attachment_point";
+    const std::string center_of_mass = "center_of_mass";
+  } // namespace obj_name
 
   const double vector_scale_val = 1.0;
 

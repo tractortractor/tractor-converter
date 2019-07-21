@@ -158,7 +158,7 @@ void m3d_to_wavefront_obj_model::mechos_m3d_to_wavefront_objs()
 
   std::unordered_map<std::string, volInt::polyhedron> main_models;
   main_models.reserve(main_models_to_reserve);
-  main_models[wavefront_obj::main_obj_name] = std::move(main_model);
+  main_models[wavefront_obj::obj_name::main] = std::move(main_model);
 
   if(weapon_slots_existence && example_weapon_model)
   {
@@ -168,14 +168,15 @@ void m3d_to_wavefront_obj_model::mechos_m3d_to_wavefront_objs()
   {
     add_center_of_mass_to_models_map(
       main_models,
-      main_models[wavefront_obj::main_obj_name].rcm);
+      main_models[wavefront_obj::obj_name::main].rcm);
   }
 
 
 
   save_c3d_as_wavefront_obj(main_models, "main");
 
-  save_file_cfg_m3d(main_models[wavefront_obj::main_obj_name], &debris_models);
+  save_file_cfg_m3d(main_models[wavefront_obj::obj_name::main],
+                    &debris_models);
 }
 
 
@@ -211,7 +212,7 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
 
   std::unordered_map<std::string, volInt::polyhedron> main_models;
   main_models.reserve(main_models_to_reserve);
-  main_models[wavefront_obj::main_obj_name] = main_model;
+  main_models[wavefront_obj::obj_name::main] = main_model;
 
 
 
@@ -219,13 +220,13 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
   {
     add_attachment_point_to_models_map(
       main_models,
-      main_models[wavefront_obj::main_obj_name].offset_point());
+      main_models[wavefront_obj::obj_name::main].offset_point());
   }
   if(center_of_mass_model)
   {
     add_center_of_mass_to_models_map(
       main_models,
-      main_models[wavefront_obj::main_obj_name].rcm);
+      main_models[wavefront_obj::obj_name::main].rcm);
   }
   save_c3d_as_wavefront_obj(main_models, "main");
 
@@ -271,7 +272,7 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
       ". Non-mechos model have non-zero weapon_slots_existence.");
   }
 
-  save_file_cfg_m3d(main_models[wavefront_obj::main_obj_name]);
+  save_file_cfg_m3d(main_models[wavefront_obj::obj_name::main]);
 
 
   if(weapon_attachment_point)
@@ -305,7 +306,7 @@ void m3d_to_wavefront_obj_model::animated_a3d_to_wavefront_objs()
   for(std::size_t cur_animated = 0; cur_animated < n_models; ++cur_animated)
   {
     models[cur_animated].reserve(animated_models_to_reserve);
-    models[cur_animated][wavefront_obj::main_obj_name] =
+    models[cur_animated][wavefront_obj::obj_name::main] =
       read_c3d(c3d::c3d_type::regular);
 
     // TEST
@@ -314,14 +315,14 @@ void m3d_to_wavefront_obj_model::animated_a3d_to_wavefront_objs()
 //      " of " << input_file_path.string() << '\n';
 //    std::cout <<
 //      models.at(cur_animated).
-//        at(wavefront_obj::main_obj_name).check_volume() << '\n';
+//        at(wavefront_obj::obj_name::main).check_volume() << '\n';
 
     if(center_of_mass_model)
     {
 //    merge_model_with_center_of_mass(models[cur_animated]);
       add_center_of_mass_to_models_map(
         models[cur_animated],
-        models[cur_animated][wavefront_obj::main_obj_name].rcm);
+        models[cur_animated][wavefront_obj::obj_name::main].rcm);
     }
     save_c3d_as_wavefront_obj(models[cur_animated], "", &cur_animated);
   }
@@ -359,13 +360,13 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
   std::unordered_map<std::string, volInt::polyhedron> main_models;
   main_models.reserve(main_models_to_reserve);
 
-  main_models[wavefront_obj::main_obj_name] = std::move(main_model);
+  main_models[wavefront_obj::obj_name::main] = std::move(main_model);
 
   if(center_of_mass_model)
   {
 //  merge_model_with_center_of_mass(main_model);
     add_center_of_mass_to_models_map(
-      main_models, main_models[wavefront_obj::main_obj_name].rcm);
+      main_models, main_models[wavefront_obj::obj_name::main].rcm);
   }
 
   save_c3d_as_wavefront_obj(main_models, "main");
@@ -396,7 +397,7 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
       ". Non-mechos model have non-zero weapon_slots_existence.");
   }
 
-  save_file_cfg_m3d(main_models[wavefront_obj::main_obj_name]);
+  save_file_cfg_m3d(main_models[wavefront_obj::obj_name::main]);
 }
 
 
@@ -619,10 +620,12 @@ void m3d_to_wavefront_obj_model::save_c3d_as_wavefront_obj(
   boost::filesystem::path file_to_save =
     file_prefix_to_path(prefix, model_num);
 
-  c3d_models[wavefront_obj::main_obj_name].bodyColorOffset = body_color_offset;
-  c3d_models[wavefront_obj::main_obj_name].bodyColorShift = body_color_shift;
+  c3d_models[wavefront_obj::obj_name::main].bodyColorOffset =
+    body_color_offset;
+  c3d_models[wavefront_obj::obj_name::main].bodyColorShift =
+    body_color_shift;
 
-  c3d_models[wavefront_obj::main_obj_name].wavefront_obj_path =
+  c3d_models[wavefront_obj::obj_name::main].wavefront_obj_path =
     file_to_save.string();
 
   save_volInt_as_wavefront_obj(c3d_models,
@@ -645,7 +648,7 @@ void m3d_to_wavefront_obj_model::save_c3d_as_wavefront_obj(
 //  std::cout << c3d_model.check_volume() << '\n';
 
   std::unordered_map<std::string, volInt::polyhedron> c3d_models
-    {{wavefront_obj::main_obj_name, c3d_model}};
+    {{wavefront_obj::obj_name::main, c3d_model}};
   save_c3d_as_wavefront_obj(c3d_models, prefix, model_num);
 }
 
@@ -1073,7 +1076,7 @@ void m3d_to_wavefront_obj_model::add_weapons_to_models_map(
        cur_weapon_slot_data[cur_weapon_num].exists)
     {
       std::string cur_model_name =
-        wavefront_obj::weapon_obj_name + "_" +
+        wavefront_obj::obj_name::weapon + "_" +
         std::to_string(cur_weapon_num + 1);
       models_map[cur_model_name] = *example_weapon_model;
       move_weapon_model(
@@ -1091,11 +1094,11 @@ void m3d_to_wavefront_obj_model::add_attachment_point_to_models_map(
   std::unordered_map<std::string, volInt::polyhedron> &models_map,
   point attachment_point_pos) const
 {
-  models_map[wavefront_obj::attachment_point_obj_name] =
+  models_map[wavefront_obj::obj_name::attachment_point] =
     *weapon_attachment_point;
-  models_map[wavefront_obj::attachment_point_obj_name].move_model_to_point(
+  models_map[wavefront_obj::obj_name::attachment_point].move_model_to_point(
     attachment_point_pos);
-  models_map[wavefront_obj::attachment_point_obj_name].set_color_id(
+  models_map[wavefront_obj::obj_name::attachment_point].set_color_id(
     c3d::color::string_to_id::attachment_point);
 }
 
@@ -1105,10 +1108,10 @@ void m3d_to_wavefront_obj_model::add_center_of_mass_to_models_map(
   std::unordered_map<std::string, volInt::polyhedron> &models_map,
   point center_of_mass) const
 {
-  models_map[wavefront_obj::center_of_mass_obj_name] = *center_of_mass_model;
-  models_map[wavefront_obj::center_of_mass_obj_name].move_model_to_point(
+  models_map[wavefront_obj::obj_name::center_of_mass] = *center_of_mass_model;
+  models_map[wavefront_obj::obj_name::center_of_mass].move_model_to_point(
     center_of_mass);
-  models_map[wavefront_obj::center_of_mass_obj_name].set_color_id(
+  models_map[wavefront_obj::obj_name::center_of_mass].set_color_id(
     c3d::color::string_to_id::center_of_mass);
 }
 
@@ -1120,14 +1123,14 @@ void m3d_to_wavefront_obj_model::read_m3d_debris_data(
   std::vector<volInt::polyhedron> &debris_bound_models,
   std::size_t debris_num)
 {
-  debris_models[debris_num][wavefront_obj::main_obj_name] =
+  debris_models[debris_num][wavefront_obj::obj_name::main] =
     read_c3d(c3d::c3d_type::regular);
   debris_bound_models.push_back(read_c3d(c3d::c3d_type::bound));
   if(center_of_mass_model)
   {
     add_center_of_mass_to_models_map(
       debris_models[debris_num],
-      debris_models[debris_num][wavefront_obj::main_obj_name].rcm);
+      debris_models[debris_num][wavefront_obj::obj_name::main].rcm);
   }
 }
 
@@ -1166,7 +1169,7 @@ void m3d_to_wavefront_obj_model::move_debris_to_offset(
   volInt::polyhedron &debris_bound_model)
 {
   volInt::polyhedron &main_debris_model =
-    debris_model[wavefront_obj::main_obj_name];
+    debris_model[wavefront_obj::obj_name::main];
 
   std::vector<double> offset = main_debris_model.offset_point();
 
@@ -1174,7 +1177,7 @@ void m3d_to_wavefront_obj_model::move_debris_to_offset(
   if(center_of_mass_model)
   {
     volInt::polyhedron &rcm_debris_model =
-      debris_model[wavefront_obj::center_of_mass_obj_name];
+      debris_model[wavefront_obj::obj_name::center_of_mass];
     rcm_debris_model.move_model_to_point(offset);
   }
   debris_bound_model.move_model_to_point_inv_neg_vol(offset);
@@ -1407,7 +1410,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
         "custom_volume_debris_" +
           std::to_string(cur_debris + 1) + " = ");
       to_string_precision<double>(
-        (*debris_models)[cur_debris][wavefront_obj::main_obj_name].volume,
+        (*debris_models)[cur_debris][wavefront_obj::obj_name::main].volume,
         sprintf_float_per_file_cfg_format,
         conf_data_to_save);
 
@@ -1426,7 +1429,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
         {
           conf_data_to_save.push_back(' ');
           to_string_precision<double>(
-            (*debris_models)[cur_debris][wavefront_obj::main_obj_name].
+            (*debris_models)[cur_debris][wavefront_obj::obj_name::main].
                 J[cur_row][row_el],
             sprintf_float_per_file_cfg_format,
             conf_data_to_save);
@@ -1517,7 +1520,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
       "custom_volume_animated_" +
         std::to_string(cur_animated + 1) + " = ");
     to_string_precision<double>(
-      animated_models[cur_animated][wavefront_obj::main_obj_name].volume,
+      animated_models[cur_animated][wavefront_obj::obj_name::main].volume,
       sprintf_float_per_file_cfg_format,
       conf_data_to_save);
 
@@ -1536,7 +1539,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
       {
         conf_data_to_save.push_back(' ');
         to_string_precision<double>(
-          animated_models[cur_animated][wavefront_obj::main_obj_name].
+          animated_models[cur_animated][wavefront_obj::obj_name::main].
             J[cur_row][row_el],
           sprintf_float_per_file_cfg_format,
           conf_data_to_save);
