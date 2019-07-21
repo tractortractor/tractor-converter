@@ -111,11 +111,12 @@ void obj_to_vangers_3d_model_mode(
     try
     {
       // Getting weapon attachment point model to get positions of the weapons.
-      weapon_attachment_point_model = helpers::raw_obj_to_volInt_model(
-        weapon_attachment_point_file,
-        "weapon_attachment_point_file",
-        c3d::c3d_type::regular,
-        c3d::color::string_to_id::attachment_point);
+      weapon_attachment_point_model =
+        helpers::raw_obj_to_volInt_model(
+          weapon_attachment_point_file,
+          "weapon_attachment_point_file",
+          c3d::c3d_type::regular,
+          c3d::color::string_to_id::attachment_point);
       weapon_attachment_point_model_ptr = &weapon_attachment_point_model;
 
       if(!weapon_attachment_point_model_ptr->find_ref_points())

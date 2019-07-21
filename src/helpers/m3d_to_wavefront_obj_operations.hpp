@@ -88,7 +88,7 @@ public:
 
 private:
 
-  int float_precision_objs;
+  unsigned int float_precision_objs;
 
   bitflag<m3d_to_obj_flag> flags;
 

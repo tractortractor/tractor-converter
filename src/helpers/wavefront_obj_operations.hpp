@@ -99,7 +99,7 @@ volInt::polyhedron raw_obj_to_volInt_model(
   const boost::filesystem::path &input_file_path_arg,
   const std::string &input_file_name_error,
   c3d::c3d_type type,
-  int default_color_id);
+  unsigned int default_color_id);
 
 void save_volInt_as_wavefront_obj(
   const std::unordered_map<std::string, volInt::polyhedron> &c3d_models,

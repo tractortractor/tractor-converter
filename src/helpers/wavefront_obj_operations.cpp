@@ -290,7 +290,7 @@ volInt::polyhedron raw_obj_to_volInt_model(
   const boost::filesystem::path &input_file_path_arg,
   const std::string &input_file_name_error,
   c3d::c3d_type type,
-  int default_color_id)
+  unsigned int default_color_id)
 {
   std::string obj_data =
     read_file(input_file_path_arg,
