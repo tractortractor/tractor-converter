@@ -11,6 +11,14 @@ namespace wavefront_obj{
   const std::string mat_separator = "_";
   const std::size_t mat_separator_size = mat_separator.size();
 
+  namespace prefix{
+    const std::string main = "main";
+    const std::string main_bound = "main_bound";
+    const std::string debris = "debris";
+    const std::string debris_bound = "debris_bound";
+    const std::string animated = "";
+  } // namespace prefix
+
   namespace obj_name{
     const std::string main = "main";
     const std::string weapon = "weapon";

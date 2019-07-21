@@ -107,7 +107,9 @@ void m3d_to_wavefront_obj_model::mechos_m3d_to_wavefront_objs()
   }
   if(flags & m3d_to_obj_flag::extract_bound_model)
   {
-    c3d_to_wavefront_obj("main_bound", nullptr, c3d::c3d_type::bound);
+    c3d_to_wavefront_obj(wavefront_obj::prefix::main_bound,
+                         nullptr,
+                         c3d::c3d_type::bound);
   }
   else
   {
@@ -173,7 +175,7 @@ void m3d_to_wavefront_obj_model::mechos_m3d_to_wavefront_objs()
 
 
 
-  save_c3d_as_wavefront_obj(main_models, "main");
+  save_c3d_as_wavefront_obj(main_models, wavefront_obj::prefix::main);
 
   save_file_cfg_m3d(main_models[wavefront_obj::obj_name::main],
                     &debris_models);
@@ -228,7 +230,7 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
       main_models,
       main_models[wavefront_obj::obj_name::main].rcm);
   }
-  save_c3d_as_wavefront_obj(main_models, "main");
+  save_c3d_as_wavefront_obj(main_models, wavefront_obj::prefix::main);
 
   if(n_wheels)
   {
@@ -256,7 +258,9 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
   */
   if(flags & m3d_to_obj_flag::extract_bound_model)
   {
-    c3d_to_wavefront_obj("main_bound", nullptr, c3d::c3d_type::bound);
+    c3d_to_wavefront_obj(wavefront_obj::prefix::main_bound,
+                         nullptr,
+                         c3d::c3d_type::bound);
   }
   else
   {
@@ -324,7 +328,9 @@ void m3d_to_wavefront_obj_model::animated_a3d_to_wavefront_objs()
         models[cur_animated],
         models[cur_animated][wavefront_obj::obj_name::main].rcm);
     }
-    save_c3d_as_wavefront_obj(models[cur_animated], "", &cur_animated);
+    save_c3d_as_wavefront_obj(models[cur_animated],
+                              wavefront_obj::prefix::animated,
+                              &cur_animated);
   }
   save_file_cfg_a3d(models);
 }
@@ -369,7 +375,7 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
       main_models, main_models[wavefront_obj::obj_name::main].rcm);
   }
 
-  save_c3d_as_wavefront_obj(main_models, "main");
+  save_c3d_as_wavefront_obj(main_models, wavefront_obj::prefix::main);
 
   if(n_wheels)
   {
@@ -381,7 +387,9 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
 
   if(flags & m3d_to_obj_flag::extract_bound_model)
   {
-    c3d_to_wavefront_obj("main_bound", nullptr, c3d::c3d_type::bound);
+    c3d_to_wavefront_obj(wavefront_obj::prefix::main_bound,
+                         nullptr,
+                         c3d::c3d_type::bound);
   }
   else
   {
@@ -1204,15 +1212,17 @@ void m3d_to_wavefront_obj_model::save_m3d_debris_data(
 {
   for(std::size_t cur_debris = 0; cur_debris < n_debris; ++cur_debris)
   {
-    save_c3d_as_wavefront_obj(
-      (*debris_models)[cur_debris], "debris", &cur_debris);
+    save_c3d_as_wavefront_obj((*debris_models)[cur_debris],
+                              wavefront_obj::prefix::debris,
+                              &cur_debris);
   }
   if(debris_bound_models)
   {
     for(std::size_t cur_debris = 0; cur_debris < n_debris; ++cur_debris)
     {
-      save_c3d_as_wavefront_obj(
-        (*debris_bound_models)[cur_debris], "debris_bound", &cur_debris);
+      save_c3d_as_wavefront_obj((*debris_bound_models)[cur_debris],
+                                wavefront_obj::prefix::debris_bound,
+                                &cur_debris);
     }
   }
 }

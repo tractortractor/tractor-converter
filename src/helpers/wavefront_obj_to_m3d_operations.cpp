@@ -135,26 +135,29 @@ wavefront_obj_to_m3d_model::wavefront_obj_to_m3d_model(
 void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 {
   volInt::polyhedron cur_main_model =
-    read_obj_prefix("main", c3d::c3d_type::regular);
+    read_obj_prefix(wavefront_obj::prefix::main, c3d::c3d_type::regular);
 
   volInt::polyhedron cur_main_bound_model;
   volInt::polyhedron *cur_main_bound_model_ptr = nullptr;
   if(!(flags & obj_to_m3d_flag::generate_bound_models))
   {
-    cur_main_bound_model = read_obj_prefix("main_bound", c3d::c3d_type::bound);
+    cur_main_bound_model =
+      read_obj_prefix(wavefront_obj::prefix::main_bound, c3d::c3d_type::bound);
     cur_main_bound_model_ptr = &cur_main_bound_model;
   }
 
 
   std::deque<volInt::polyhedron> debris_models =
-    read_objs_with_prefix("debris", c3d::c3d_type::regular);
+    read_objs_with_prefix(wavefront_obj::prefix::debris,
+                          c3d::c3d_type::regular);
 
   std::deque<volInt::polyhedron> debris_bound_models;
   std::deque<volInt::polyhedron> *debris_bound_models_ptr = nullptr;
   if(!(flags & obj_to_m3d_flag::generate_bound_models))
   {
     debris_bound_models =
-      read_objs_with_prefix("debris_bound", c3d::c3d_type::bound);
+      read_objs_with_prefix(wavefront_obj::prefix::debris_bound,
+                            c3d::c3d_type::bound);
     debris_bound_models_ptr = &debris_bound_models;
   }
 
@@ -372,13 +375,14 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
 {
   volInt::polyhedron cur_main_model =
-    read_obj_prefix("main", c3d::c3d_type::regular);
+    read_obj_prefix(wavefront_obj::prefix::main, c3d::c3d_type::regular);
 
   volInt::polyhedron cur_main_bound_model;
   volInt::polyhedron *cur_main_bound_model_ptr = nullptr;
   if(!(flags & obj_to_m3d_flag::generate_bound_models))
   {
-    cur_main_bound_model = read_obj_prefix("main_bound", c3d::c3d_type::bound);
+    cur_main_bound_model =
+      read_obj_prefix(wavefront_obj::prefix::main_bound, c3d::c3d_type::bound);
     cur_main_bound_model_ptr = &cur_main_bound_model;
   }
 
@@ -472,7 +476,8 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
 void wavefront_obj_to_m3d_model::animated_wavefront_objs_to_a3d()
 {
   std::deque<volInt::polyhedron> animated_models =
-    read_objs_with_prefix("", c3d::c3d_type::regular);
+    read_objs_with_prefix(wavefront_obj::prefix::animated,
+                          c3d::c3d_type::regular);
 
 
   // Must be called before call to remove_polygons() and get_a3d_header_data().
@@ -533,13 +538,14 @@ void wavefront_obj_to_m3d_model::animated_wavefront_objs_to_a3d()
 void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
 {
   volInt::polyhedron cur_main_model =
-    read_obj_prefix("main", c3d::c3d_type::regular);
+    read_obj_prefix(wavefront_obj::prefix::main, c3d::c3d_type::regular);
 
   volInt::polyhedron cur_main_bound_model;
   volInt::polyhedron *cur_main_bound_model_ptr = nullptr;
   if(!(flags & obj_to_m3d_flag::generate_bound_models))
   {
-    cur_main_bound_model = read_obj_prefix("main_bound", c3d::c3d_type::bound);
+    cur_main_bound_model =
+      read_obj_prefix(wavefront_obj::prefix::main_bound, c3d::c3d_type::bound);
     cur_main_bound_model_ptr = &cur_main_bound_model;
   }
 
@@ -2848,7 +2854,7 @@ void wavefront_obj_to_m3d_model::m3d_mechos_generate_bound(
       gen_bound_area_threshold,
       wheel_params_extremes_ptr);
   new_main_bound.wavefront_obj_path =
-    file_prefix_to_path("main_bound").string();
+    file_prefix_to_path(wavefront_obj::prefix::main_bound).string();
 
   new_main_bound.calculate_c3d_properties();
 
@@ -2863,7 +2869,8 @@ void wavefront_obj_to_m3d_model::m3d_mechos_generate_bound(
     new_debris_bounds[cur_debris].offset_point() =
       (*debris_models)[cur_debris].offset_point();
     new_debris_bounds[cur_debris].wavefront_obj_path =
-      file_prefix_to_path("debris_bound", &cur_debris).string();
+      file_prefix_to_path(wavefront_obj::prefix::debris_bound,
+                          &cur_debris).string();
 
     new_debris_bounds[cur_debris].calculate_c3d_properties();
   }
@@ -2881,7 +2888,7 @@ void wavefront_obj_to_m3d_model::m3d_non_mechos_generate_bound(
       gen_bound_layers_num,
       gen_bound_area_threshold);
   new_main_bound.wavefront_obj_path =
-    file_prefix_to_path("main_bound").string();
+    file_prefix_to_path(wavefront_obj::prefix::main_bound).string();
 
   new_main_bound.calculate_c3d_properties();
 }
