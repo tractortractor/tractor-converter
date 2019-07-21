@@ -202,6 +202,9 @@ protected:
 
 
 
+  std::string file_prefix_to_filename(const std::string &prefix,
+                                      const std::size_t *model_num = nullptr);
+
   template<typename WHEELS_CONTAINER>
   void merge_helper_reserve_space_in_main(
     volInt::polyhedron *main_model,

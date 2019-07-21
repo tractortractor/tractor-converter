@@ -626,6 +626,15 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
 
 
 
+boost::filesystem::path
+  wavefront_obj_to_m3d_model::file_prefix_to_path(const std::string &prefix,
+                                                  const std::size_t *model_num)
+{
+  return input_file_path / file_prefix_to_filename(prefix, model_num);
+}
+
+
+
 void wavefront_obj_to_m3d_model::read_file_cfg_helper_overwrite_volume(
   volInt::polyhedron &model,
   const double custom_volume)
@@ -1079,13 +1088,10 @@ volInt::polyhedron wavefront_obj_to_m3d_model::read_obj(
 
 
 volInt::polyhedron wavefront_obj_to_m3d_model::read_obj_prefix(
-  const std::string &filename_prefix,
+  const std::string &prefix,
   c3d::c3d_type cur_c3d_type)
 {
-  boost::filesystem::path obj_input_file_path =
-    input_file_path /
-    (input_file_path.filename().string() + "_" + filename_prefix + ".obj");
-
+  boost::filesystem::path obj_input_file_path = file_prefix_to_path(prefix);
   return read_obj(obj_input_file_path, cur_c3d_type);
 }
 
@@ -1097,23 +1103,10 @@ std::deque<volInt::polyhedron>
     c3d::c3d_type cur_c3d_type)
 {
   std::deque<volInt::polyhedron> models_to_return;
-  std::string full_prefix;
-  if(prefix.empty())
-  {
-    full_prefix = model_name + "_";
-  }
-  else
-  {
-    full_prefix = model_name + "_" + prefix + "_";
-  }
-
-  std::size_t to_reserve = 0;
 
   for(std::size_t cur_model = 0; ; ++cur_model)
   {
-    boost::filesystem::path cur_path =
-      input_file_path /
-      (full_prefix + std::to_string(cur_model + 1) + ".obj");
+    boost::filesystem::path cur_path = file_prefix_to_path(prefix, &cur_model);
     try
     {
       models_to_return.push_back(read_obj(cur_path, cur_c3d_type));

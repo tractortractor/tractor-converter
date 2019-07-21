@@ -107,7 +107,7 @@ void m3d_to_wavefront_obj_model::mechos_m3d_to_wavefront_objs()
   }
   if(flags & m3d_to_obj_flag::extract_bound_model)
   {
-    c3d_to_wavefront_obj("_main_bound", c3d::c3d_type::bound);
+    c3d_to_wavefront_obj("main_bound", nullptr, c3d::c3d_type::bound);
   }
   else
   {
@@ -173,7 +173,7 @@ void m3d_to_wavefront_obj_model::mechos_m3d_to_wavefront_objs()
 
 
 
-  save_c3d_as_wavefront_obj(main_models, "_main");
+  save_c3d_as_wavefront_obj(main_models, "main");
 
   save_file_cfg_m3d(main_models[wavefront_obj::main_obj_name], &debris_models);
 }
@@ -227,7 +227,7 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
       main_models,
       main_models[wavefront_obj::main_obj_name].rcm);
   }
-  save_c3d_as_wavefront_obj(main_models, "_main");
+  save_c3d_as_wavefront_obj(main_models, "main");
 
   if(n_wheels)
   {
@@ -255,7 +255,7 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
   */
   if(flags & m3d_to_obj_flag::extract_bound_model)
   {
-    c3d_to_wavefront_obj("_main_bound", c3d::c3d_type::bound);
+    c3d_to_wavefront_obj("main_bound", nullptr, c3d::c3d_type::bound);
   }
   else
   {
@@ -323,9 +323,7 @@ void m3d_to_wavefront_obj_model::animated_a3d_to_wavefront_objs()
         models[cur_animated],
         models[cur_animated][wavefront_obj::main_obj_name].rcm);
     }
-    save_c3d_as_wavefront_obj(
-      models[cur_animated],
-      "_" + std::to_string(cur_animated + 1));
+    save_c3d_as_wavefront_obj(models[cur_animated], "", &cur_animated);
   }
   save_file_cfg_a3d(models);
 }
@@ -370,7 +368,7 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
       main_models, main_models[wavefront_obj::main_obj_name].rcm);
   }
 
-  save_c3d_as_wavefront_obj(main_models, "_main");
+  save_c3d_as_wavefront_obj(main_models, "main");
 
   if(n_wheels)
   {
@@ -382,7 +380,7 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
 
   if(flags & m3d_to_obj_flag::extract_bound_model)
   {
-    c3d_to_wavefront_obj("_main_bound", c3d::c3d_type::bound);
+    c3d_to_wavefront_obj("main_bound", nullptr, c3d::c3d_type::bound);
   }
   else
   {
@@ -399,6 +397,17 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
   }
 
   save_file_cfg_m3d(main_models[wavefront_obj::main_obj_name]);
+}
+
+
+
+
+
+boost::filesystem::path
+  m3d_to_wavefront_obj_model::file_prefix_to_path(const std::string &prefix,
+                                                  const std::size_t *model_num)
+{
+  return output_dir_path / file_prefix_to_filename(prefix, model_num);
 }
 
 
@@ -604,11 +613,11 @@ volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
 
 void m3d_to_wavefront_obj_model::save_c3d_as_wavefront_obj(
   std::unordered_map<std::string, volInt::polyhedron> &c3d_models,
-  const std::string &output_file_prefix)
+  const std::string &prefix,
+  const std::size_t *model_num)
 {
-  boost::filesystem::path file_to_save = output_dir_path;
-  file_to_save.append(model_name + output_file_prefix + ".obj",
-                      boost::filesystem::path::codecvt());
+  boost::filesystem::path file_to_save =
+    file_prefix_to_path(prefix, model_num);
 
   c3d_models[wavefront_obj::main_obj_name].bodyColorOffset = body_color_offset;
   c3d_models[wavefront_obj::main_obj_name].bodyColorShift = body_color_shift;
@@ -626,27 +635,29 @@ void m3d_to_wavefront_obj_model::save_c3d_as_wavefront_obj(
 
 void m3d_to_wavefront_obj_model::save_c3d_as_wavefront_obj(
   volInt::polyhedron &c3d_model,
-  const std::string &output_file_prefix)
+  const std::string &prefix,
+  const std::size_t *model_num)
 {
     // TEST
 //  std::cout << "-----------------------------" << '\n';
-//  std::cout << "Volume of " << output_file_prefix << " of " <<
+//  std::cout << "Volume of " << prefix << " of " <<
 //    input_file_path.string() << '\n';
 //  std::cout << c3d_model.check_volume() << '\n';
 
   std::unordered_map<std::string, volInt::polyhedron> c3d_models
     {{wavefront_obj::main_obj_name, c3d_model}};
-  save_c3d_as_wavefront_obj(c3d_models, output_file_prefix);
+  save_c3d_as_wavefront_obj(c3d_models, prefix, model_num);
 }
 
 
 
 void m3d_to_wavefront_obj_model::c3d_to_wavefront_obj(
-  const std::string &output_file_prefix,
+  const std::string &prefix,
+  const std::size_t *model_num,
   c3d::c3d_type cur_c3d_type)
 {
   volInt::polyhedron c3d_model = read_c3d(cur_c3d_type);
-  save_c3d_as_wavefront_obj(c3d_model, output_file_prefix);
+  save_c3d_as_wavefront_obj(c3d_model, prefix, model_num);
 }
 
 
@@ -1191,16 +1202,14 @@ void m3d_to_wavefront_obj_model::save_m3d_debris_data(
   for(std::size_t cur_debris = 0; cur_debris < n_debris; ++cur_debris)
   {
     save_c3d_as_wavefront_obj(
-      (*debris_models)[cur_debris],
-      "_debris_" + std::to_string(cur_debris + 1));
+      (*debris_models)[cur_debris], "debris", &cur_debris);
   }
   if(debris_bound_models)
   {
     for(std::size_t cur_debris = 0; cur_debris < n_debris; ++cur_debris)
     {
       save_c3d_as_wavefront_obj(
-        (*debris_bound_models)[cur_debris],
-        "_debris_bound_" + std::to_string(cur_debris + 1));
+        (*debris_bound_models)[cur_debris], "debris_bound", &cur_debris);
     }
   }
 }

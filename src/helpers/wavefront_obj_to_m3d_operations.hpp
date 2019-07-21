@@ -205,6 +205,11 @@ private:
   double prm_scale_size;
 
 
+  boost::filesystem::path file_prefix_to_path(
+    const std::string &prefix,
+    const std::size_t *model_num = nullptr);
+
+
   void read_file_cfg_helper_overwrite_volume(
     volInt::polyhedron &model,
     const double custom_volume);
@@ -220,7 +225,7 @@ private:
     const boost::filesystem::path &obj_input_file_path,
     c3d::c3d_type cur_c3d_type);
   volInt::polyhedron read_obj_prefix(
-    const std::string &filename_prefix,
+    const std::string &prefix,
     c3d::c3d_type cur_c3d_type);
   std::deque<volInt::polyhedron> read_objs_with_prefix(
     const std::string &prefix,

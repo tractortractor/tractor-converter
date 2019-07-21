@@ -60,6 +60,31 @@ vangers_model::vangers_model(
 
 
 
+std::string vangers_model::file_prefix_to_filename(
+  const std::string &prefix,
+  const std::size_t *model_num)
+{
+  std::string full_prefix;
+  if(prefix.empty())
+  {
+    full_prefix = model_name;
+  }
+  else
+  {
+    full_prefix = model_name + "_" + prefix;
+  }
+  std::string model_num_string;
+  if(model_num)
+  {
+    model_num_string = "_" + std::to_string(*model_num + 1);
+  }
+  return full_prefix + model_num_string + ".obj";
+}
+
+
+
+
+
 void vangers_model::merge_helper_move_model_into_main(
   volInt::polyhedron &main_model,
   volInt::polyhedron &model_to_move,

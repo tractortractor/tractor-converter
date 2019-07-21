@@ -101,6 +101,12 @@ private:
 
 
 
+  boost::filesystem::path file_prefix_to_path(
+    const std::string &prefix,
+    const std::size_t *model_num = nullptr);
+
+
+
   template<typename SOURCE, typename DESTINATION>
   DESTINATION read_var_from_m3d()
   {
@@ -211,11 +217,14 @@ private:
 
   void save_c3d_as_wavefront_obj(
     std::unordered_map<std::string, volInt::polyhedron> &c3d_models,
-    const std::string &output_file_prefix);
+    const std::string &prefix,
+    const std::size_t *model_num = nullptr);
   void save_c3d_as_wavefront_obj(volInt::polyhedron &c3d_model,
-                                 const std::string &output_file_prefix);
+                                 const std::string &prefix,
+                                 const std::size_t *model_num = nullptr);
   // Executes "read_c3d" and then "save_c3d_as_wavefront_obj" functions.
-  void c3d_to_wavefront_obj(const std::string &output_file_prefix,
+  void c3d_to_wavefront_obj(const std::string &prefix,
+                            const std::size_t *model_num,
                             c3d::c3d_type cur_c3d_type);
   void read_m3d_header_data();
   void read_a3d_header_data();
