@@ -218,13 +218,10 @@ void save_file(const std::string &path_string,
                const bitflag<file_flag> flags,
                const std::string &file_name_error)
 {
-  write_to_file(boost::filesystem::path(path_string),
-                bytes_to_write,
-                flags,
-                0,
-                0,
-                write_all_dummy_size,
-                file_name_error);
+  save_file(boost::filesystem::path(path_string),
+            bytes_to_write,
+            flags,
+            file_name_error);
 }
 
 
