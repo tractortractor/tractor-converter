@@ -355,8 +355,8 @@ volInt::polyhedron raw_obj_to_volInt_model(
 
   // attrib.vertices and attrib.norms are std::vector<double>.
   // Each 3 double numbers = 1 vertex.
-  int num_verts = attrib.vertices.size() / volInt::axes_num;
-  int num_vert_norms = attrib.normals.size() / volInt::axes_num;
+  std::size_t num_verts = attrib.vertices.size() / volInt::axes_num;
+  std::size_t num_vert_norms = attrib.normals.size() / volInt::axes_num;
 
   int num_faces = 0;
   for(const auto &shape : shapes)
@@ -512,14 +512,14 @@ volInt::polyhedron raw_obj_to_volInt_model(
   std::vector<int> out_of_range_wheels;
   missed_wheels.reserve(n_wheels);
   out_of_range_wheels.reserve(n_wheels);
-  for(int cur_wheel = 0; cur_wheel < n_wheels; ++cur_wheel)
+  for(std::size_t cur_wheel = 0; cur_wheel < n_wheels; ++cur_wheel)
   {
     if(!volInt_model.wheels.count(cur_wheel))
     {
       missed_wheels.push_back(cur_wheel);
     }
   }
-  for(int cur_wheel : volInt_model.wheels)
+  for(std::size_t cur_wheel : volInt_model.wheels)
   {
     if(cur_wheel >= n_wheels)
     {
@@ -531,11 +531,11 @@ volInt::polyhedron raw_obj_to_volInt_model(
   {
     std::string missed_wheels_str;
     std::string out_of_range_wheels_str;
-    for(int missed_wheel : missed_wheels)
+    for(std::size_t missed_wheel : missed_wheels)
     {
       missed_wheels_str.append(std::to_string(missed_wheel + 1) + "\n");
     }
-    for(int out_of_range_wheel : out_of_range_wheels)
+    for(std::size_t out_of_range_wheel : out_of_range_wheels)
     {
       out_of_range_wheels_str.append(
         std::to_string(out_of_range_wheel + 1) + "\n");
@@ -559,25 +559,21 @@ volInt::polyhedron raw_obj_to_volInt_model(
 
   // Writing data to volInt::polyhedron.
   std::size_t cur_vert_pos = 0;
-  for(int cur_vertex = 0;
-      cur_vertex < num_verts;
-      ++cur_vertex)
+  for(std::size_t vert_ind = 0; vert_ind < num_verts; ++vert_ind)
   {
     for(std::size_t coord_el = 0; coord_el < volInt::axes_num; ++coord_el)
     {
-      volInt_model.verts[cur_vertex][coord_el] = attrib.vertices[cur_vert_pos];
+      volInt_model.verts[vert_ind][coord_el] = attrib.vertices[cur_vert_pos];
       ++cur_vert_pos;
     }
   }
 
   std::size_t cur_vert_norm_pos = 0;
-  for(int cur_vert_normal = 0;
-      cur_vert_normal < num_vert_norms;
-      ++cur_vert_normal)
+  for(std::size_t norm_ind = 0; norm_ind < num_vert_norms; ++norm_ind)
   {
     for(std::size_t coord_el = 0; coord_el < volInt::axes_num; ++coord_el)
     {
-      volInt_model.vertNorms[cur_vert_normal][coord_el] =
+      volInt_model.vertNorms[norm_ind][coord_el] =
         attrib.normals[cur_vert_norm_pos];
       ++cur_vert_norm_pos;
     }

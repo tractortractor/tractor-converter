@@ -189,7 +189,7 @@ void vangers_model::merge_main_model_with_weapons(
   bitflag<merge_with_weapons_flag> flags) const
 {
   // inserting weapon models into main model
-  for(int cur_weapon_num = 0;
+  for(std::size_t cur_weapon_num = 0;
       cur_weapon_num < m3d::weapon_slot::max_slots;
       ++cur_weapon_num)
   {

@@ -211,12 +211,12 @@ protected:
     const WHEELS_CONTAINER *steer_wheels_models = nullptr,
     const WHEELS_CONTAINER *non_steer_ghost_wheels_models = nullptr) const
   {
-    int new_main_model_num_verts = main_model->numVerts;
-    int new_main_model_num_vert_norms = main_model->numVertNorms;
-    int new_main_model_num_poly = main_model->numFaces;
+    std::size_t new_main_model_num_verts = main_model->numVerts;
+    std::size_t new_main_model_num_vert_norms = main_model->numVertNorms;
+    std::size_t new_main_model_num_poly = main_model->numFaces;
     if(n_wheels)
     {
-      for(int cur_wheel_num = 0;
+      for(std::size_t cur_wheel_num = 0;
           cur_wheel_num < cur_wheel_data.size();
           ++cur_wheel_num)
       {
@@ -278,7 +278,7 @@ protected:
     WHEELS_CONTAINER *non_steer_ghost_wheels_models = nullptr) const
   {
     // inserting steering wheels into main model
-    for(int cur_wheel_num = 0;
+    for(std::size_t cur_wheel_num = 0;
         cur_wheel_num < cur_wheel_data.size();
         ++cur_wheel_num)
     {

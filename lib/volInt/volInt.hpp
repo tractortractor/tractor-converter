@@ -767,11 +767,11 @@ typedef struct polyhedron {
 
   double ref_angle;
 
-  std::unordered_set<int> wheels;
-  std::unordered_set<int> wheels_steer;
-  std::unordered_set<int> wheels_non_steer;
-  std::unordered_set<int> wheels_ghost;
-  std::unordered_set<int> wheels_non_ghost;
+  std::unordered_set<std::size_t> wheels;
+  std::unordered_set<std::size_t> wheels_steer;
+  std::unordered_set<std::size_t> wheels_non_steer;
+  std::unordered_set<std::size_t> wheels_ghost;
+  std::unordered_set<std::size_t> wheels_non_ghost;
 
   // Holds wheel id in case model itself is a wheel.
   // Otherwise value is less than 0.

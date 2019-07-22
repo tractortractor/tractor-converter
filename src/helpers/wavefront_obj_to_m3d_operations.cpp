@@ -514,7 +514,7 @@ void wavefront_obj_to_m3d_model::animated_wavefront_objs_to_a3d()
   m3d_data_cur_pos = 0;
 
   write_a3d_header_data();
-  for(int i = 0; i < n_models; ++i)
+  for(std::size_t i = 0; i < n_models; ++i)
   {
     write_c3d(animated_models[i]);
   }
@@ -1206,7 +1206,7 @@ std::vector<double> wavefront_obj_to_m3d_model::get_medium_vert(
   }
   else
   {
-    for(int vert_n = 0; vert_n < poly.numVerts; ++vert_n)
+    for(std::size_t vert_n = 0; vert_n < poly.numVerts; ++vert_n)
     {
       volInt::vector_plus_self(medium_vert, model.verts[poly.verts[vert_n]]);
     }
@@ -1226,9 +1226,9 @@ void wavefront_obj_to_m3d_model::write_vertex(const std::vector<double> &vert)
 void wavefront_obj_to_m3d_model::write_vertices(
   const volInt::polyhedron &model)
 {
-  for(int cur_vert = 0; cur_vert < model.numVerts; ++cur_vert)
+  for(std::size_t vert_ind = 0; vert_ind < model.numVerts; ++vert_ind)
   {
-    write_vertex(model.verts[cur_vert]);
+    write_vertex(model.verts[vert_ind]);
   }
 }
 
@@ -1249,9 +1249,9 @@ void wavefront_obj_to_m3d_model::write_normal(
 
 void wavefront_obj_to_m3d_model::write_normals(const volInt::polyhedron &model)
 {
-  for(int cur_norm = 0; cur_norm < model.numVertNorms; ++cur_norm)
+  for(std::size_t norm_ind = 0; norm_ind < model.numVertNorms; ++norm_ind)
   {
-    write_normal(model.vertNorms[cur_norm]);
+    write_normal(model.vertNorms[norm_ind]);
   }
 }
 
@@ -1276,19 +1276,19 @@ void wavefront_obj_to_m3d_model::write_polygon(
 //      vert_n < poly.numVerts;
 //      ++vert_n)
   // Note the reverse order of vertices.
-  for(int vert_n = poly.numVerts - 1;
-      vert_n != -1;
-      --vert_n)
+  for(std::size_t vert_f_ind = 0, vert_f_ind_r = poly.numVerts - 1;
+      vert_f_ind < poly.numVerts;
+      ++vert_f_ind, --vert_f_ind_r)
   {
-    write_var_to_m3d<int, int>(poly.verts[vert_n]);
-    write_var_to_m3d<int, int>(poly.vertNorms[vert_n]);
+    write_var_to_m3d<int, int>(poly.verts[vert_f_ind_r]);
+    write_var_to_m3d<int, int>(poly.vertNorms[vert_f_ind_r]);
   }
 }
 
 void wavefront_obj_to_m3d_model::write_polygons(
   const volInt::polyhedron &model)
 {
-  for(int cur_poly_n = 0; cur_poly_n < model.numFaces; ++cur_poly_n)
+  for(std::size_t cur_poly_n = 0; cur_poly_n < model.numFaces; ++cur_poly_n)
   {
     write_polygon(model, model.faces[cur_poly_n]);
   }
@@ -1393,7 +1393,7 @@ void wavefront_obj_to_m3d_model::write_m3d_wheel_data(
 void wavefront_obj_to_m3d_model::write_m3d_wheels_data(
   std::unordered_map<int, volInt::polyhedron> &wheels_models)
 {
-  for(int wheel_id = 0; wheel_id < n_wheels; ++wheel_id)
+  for(std::size_t wheel_id = 0; wheel_id < n_wheels; ++wheel_id)
   {
     write_m3d_wheel_data(wheels_models, wheel_id);
   }
@@ -1413,7 +1413,7 @@ void wavefront_obj_to_m3d_model::write_m3d_debris_data(
   std::deque<volInt::polyhedron> &debris_models,
   std::deque<volInt::polyhedron> &debris_bound_models)
 {
-  for(int debris_num = 0; debris_num < n_debris; ++debris_num)
+  for(std::size_t debris_num = 0; debris_num < n_debris; ++debris_num)
   {
     write_m3d_debris_data(debris_models[debris_num],
                           debris_bound_models[debris_num]);
@@ -1494,33 +1494,28 @@ std::vector<point*>
 
   std::pair<int, int> vert_indices(0, 0);
 
-  for(int cur_poly_num = 0; cur_poly_num < model.numFaces; ++cur_poly_num)
+  for(std::size_t poly_ind = 0; poly_ind < model.numFaces; ++poly_ind)
   {
-    volInt::face &cur_poly = model.faces[cur_poly_num];
+    volInt::face &cur_poly = model.faces[poly_ind];
     if(cur_poly.color_id == color_id &&
        (wheel_weapon_id < 0 || cur_poly.wheel_weapon_id == wheel_weapon_id))
     {
-      for(int cur_vert_num = 0;
-          cur_vert_num < model.numVertsPerPoly;
-          ++cur_vert_num)
+      for(std::size_t v_f_ind = 0; v_f_ind < model.numVertsPerPoly; ++v_f_ind)
       {
         // ref_vert_one_ind is std::pair<int, int>
         // first is position of polygon which contains vertex of reference.
         // second is vertex index in this polygon.
         if(reference_model->ref_vert_one_ind == vert_indices)
         {
-          ref_points[0] =
-            &model.verts[model.faces[cur_poly_num].verts[cur_vert_num]];
+          ref_points[0] = &model.verts[model.faces[poly_ind].verts[v_f_ind]];
         }
         else if(reference_model->ref_vert_two_ind == vert_indices)
         {
-          ref_points[1] =
-            &model.verts[model.faces[cur_poly_num].verts[cur_vert_num]];
+          ref_points[1] = &model.verts[model.faces[poly_ind].verts[v_f_ind]];
         }
         else if(reference_model->ref_vert_three_ind == vert_indices)
         {
-          ref_points[2] =
-            &model.verts[model.faces[cur_poly_num].verts[cur_vert_num]];
+          ref_points[2] = &model.verts[model.faces[poly_ind].verts[v_f_ind]];
         }
         ++vert_indices.second;
       }
@@ -1976,7 +1971,7 @@ std::unordered_map<int, volInt::polyhedron>
   std::unordered_map<int, std::size_t> cur_poly_nums;
   std::unordered_map<int, std::unordered_map<int, int>> vertices_maps;
   std::unordered_map<int, std::unordered_map<int, int>> norms_maps;
-  int verts_per_poly = main_model.faces[0].numVerts;
+  std::size_t v_per_poly = main_model.faces[0].numVerts;
   // TEST
 //  std::unordered_map<int, std::ofstream> test_poly_properties_ofstream;
 
@@ -2006,11 +2001,9 @@ std::unordered_map<int, volInt::polyhedron>
 
   // Copying right polygons to wheel models
   // and making verts and norms maps.
-  for(std::size_t cur_poly_num = 0;
-      cur_poly_num < main_model.numFaces;
-      ++cur_poly_num)
+  for(std::size_t poly_ind = 0; poly_ind < main_model.numFaces; ++poly_ind)
   {
-    volInt::face &cur_poly = main_model.faces[cur_poly_num];
+    volInt::face &cur_poly = main_model.faces[poly_ind];
     if(cur_poly.color_id == c3d::color::string_to_id::wheel &&
        main_model.wheels_steer.count(cur_poly.wheel_weapon_id) &&
        main_model.wheels_non_ghost.count(cur_poly.wheel_weapon_id))
@@ -2036,42 +2029,40 @@ std::unordered_map<int, volInt::polyhedron>
       // and adding them if they are not.
       // Key of the map is original vertex/norm index.
       // Value of the map is new vertex/norm index.
-      for(std::size_t cur_vert_num = 0;
-          cur_vert_num < main_model.numVertsPerPoly;
-          ++cur_vert_num)
+      for(std::size_t v_f_ind = 0; v_f_ind < v_per_poly; ++v_f_ind)
       {
-        if(vertices_maps[wheel_n].count(cur_wheel_poly.verts[cur_vert_num]))
+        if(vertices_maps[wheel_n].count(cur_wheel_poly.verts[v_f_ind]))
         {
           // One of the keys of the map is equal to vertex index.
           // Changing index of vertex to value of the map entry.
-          cur_wheel_poly.verts[cur_vert_num] =
-            vertices_maps[wheel_n][cur_wheel_poly.verts[cur_vert_num]];
+          cur_wheel_poly.verts[v_f_ind] =
+            vertices_maps[wheel_n][cur_wheel_poly.verts[v_f_ind]];
         }
         else
         {
           // Vertex index is not found as key in the map.
           // Inserting new key-value pair in the map.
           // Changing index of vertex to size of the map.
-          cur_wheel_poly.verts[cur_vert_num] = cur_vert_nums[wheel_n];
-          vertices_maps[wheel_n][cur_poly.verts[cur_vert_num]] =
+          cur_wheel_poly.verts[v_f_ind] = cur_vert_nums[wheel_n];
+          vertices_maps[wheel_n][cur_poly.verts[v_f_ind]] =
             cur_vert_nums[wheel_n];
           ++cur_vert_nums[wheel_n];
         }
 
-        if(norms_maps[wheel_n].count(cur_wheel_poly.vertNorms[cur_vert_num]))
+        if(norms_maps[wheel_n].count(cur_wheel_poly.vertNorms[v_f_ind]))
         {
           // One of the keys of the map is equal to norm index.
           // Changing index of norm to value of the map entry.
-          cur_wheel_poly.vertNorms[cur_vert_num] =
-            norms_maps[wheel_n][cur_wheel_poly.vertNorms[cur_vert_num]];
+          cur_wheel_poly.vertNorms[v_f_ind] =
+            norms_maps[wheel_n][cur_wheel_poly.vertNorms[v_f_ind]];
         }
         else
         {
           // Norm index is not found as key in the map.
           // Inserting new key-value pair in the map.
           // Changing index of norm to size of the map.
-          cur_wheel_poly.vertNorms[cur_vert_num] = cur_norm_nums[wheel_n];
-          norms_maps[wheel_n][cur_poly.vertNorms[cur_vert_num]] =
+          cur_wheel_poly.vertNorms[v_f_ind] = cur_norm_nums[wheel_n];
+          norms_maps[wheel_n][cur_poly.vertNorms[v_f_ind]] =
             cur_norm_nums[wheel_n];
           ++cur_norm_nums[wheel_n];
         }
@@ -2092,9 +2083,8 @@ std::unordered_map<int, volInt::polyhedron>
       cur_wheel_model.numVerts = vertices_maps[wheel_steer_num].size();
       cur_wheel_model.numVertNorms = norms_maps[wheel_steer_num].size();
       cur_wheel_model.numFaces = cur_wheel_model.faces.size();
-      cur_wheel_model.numVertTotal =
-        cur_wheel_model.numFaces * cur_wheel_model.faces[0].numVerts;
-      cur_wheel_model.numVertsPerPoly = cur_wheel_model.faces[0].numVerts;
+      cur_wheel_model.numVertTotal = cur_wheel_model.numFaces * v_per_poly;
+      cur_wheel_model.numVertsPerPoly = v_per_poly;
 
       cur_wheel_model.verts =
         std::vector<std::vector<double>>(cur_wheel_model.numVerts);
@@ -3097,14 +3087,14 @@ void wavefront_obj_to_m3d_model::remove_polygons_helper_erase_regular(
 
 
 
-std::vector<int>
+std::vector<std::size_t>
   wavefront_obj_to_m3d_model::remove_polygons_helper_create_ind_change_map(
-    int size,
-    std::unordered_set<int> &verts_to_keep)
+    std::size_t size,
+    std::unordered_set<std::size_t> &verts_to_keep)
 {
-  std::vector<int> ret(size, 0);
-  int number_skip = 0;
-  for(int cur_vert = 0; cur_vert < size; ++cur_vert)
+  std::vector<std::size_t> ret(size, 0);
+  std::size_t number_skip = 0;
+  for(std::size_t cur_vert = 0; cur_vert < size; ++cur_vert)
   {
     if(!verts_to_keep.count(cur_vert))
     {
@@ -3121,8 +3111,8 @@ void wavefront_obj_to_m3d_model::remove_polygons(
   volInt::polyhedron &model,
   remove_polygons_model model_type)
 {
-  std::unordered_set<int> verts_to_keep;
-  std::unordered_set<int> norms_to_keep;
+  std::unordered_set<std::size_t> verts_to_keep;
+  std::unordered_set<std::size_t> norms_to_keep;
   verts_to_keep.reserve(model.verts.size());
   norms_to_keep.reserve(model.vertNorms.size());
 
@@ -3144,16 +3134,16 @@ void wavefront_obj_to_m3d_model::remove_polygons(
 
 
   // Getting list of vertices and normals to erase.
-  for(int cur_poly_n = 0; cur_poly_n < model.numFaces; ++cur_poly_n)
+  for(std::size_t cur_poly_n = 0; cur_poly_n < model.numFaces; ++cur_poly_n)
   {
-    for(int cur_vert = 0; cur_vert < model.numVertsPerPoly; ++cur_vert)
+    for(std::size_t cur_vert = 0; cur_vert < model.numVertsPerPoly; ++cur_vert)
     {
       verts_to_keep.insert(model.faces[cur_poly_n].verts[cur_vert]);
       norms_to_keep.insert(model.faces[cur_poly_n].vertNorms[cur_vert]);
     }
   }
 
-  int cur_vert_n = 0;
+  std::size_t cur_vert_n = 0;
   model.verts.erase(
     std::remove_if(
       model.verts.begin(), model.verts.end(),
@@ -3164,7 +3154,7 @@ void wavefront_obj_to_m3d_model::remove_polygons(
     ),
     model.verts.end()
   );
-  int cur_norm_n = 0;
+  std::size_t cur_norm_n = 0;
   model.vertNorms.erase(
     std::remove_if(
       model.vertNorms.begin(), model.vertNorms.end(),
@@ -3179,10 +3169,10 @@ void wavefront_obj_to_m3d_model::remove_polygons(
 
   // Updating all existing polygons' indexes
   // since vertices and normals were deleted.
-  std::vector<int> new_verts_ind_change_map =
+  std::vector<std::size_t> new_verts_ind_change_map =
     remove_polygons_helper_create_ind_change_map(model.numVerts,
                                                  verts_to_keep);
-  std::vector<int> new_norms_ind_change_map =
+  std::vector<std::size_t> new_norms_ind_change_map =
     remove_polygons_helper_create_ind_change_map(model.numVertNorms,
                                                  norms_to_keep);
   for(auto &&cur_poly : model.faces)
@@ -3199,9 +3189,9 @@ void wavefront_obj_to_m3d_model::remove_polygons(
 
   // TEST
   /*
-  for(int cur_poly_n = 0; cur_poly_n < model.numFaces; ++cur_poly_n)
+  for(std::size_t cur_poly_n = 0; cur_poly_n < model.numFaces; ++cur_poly_n)
   {
-    for(int cur_vert = 0; cur_vert < model.numVertsPerPoly; ++cur_vert)
+    for(std::size_t cur_vert = 0; cur_vert < model.numVertsPerPoly; ++cur_vert)
     {
       if(model.faces[cur_poly_n].verts[cur_vert] < 0 ||
          model.faces[cur_poly_n].verts[cur_vert] >= model.verts.size())
@@ -3263,7 +3253,7 @@ void create_game_lst(
   // TEST
 //std::cout << "max_model: " << max_model << '\n';
 //std::cout << "max_size: " << max_size << '\n';
-  for(int cur_model = 0; cur_model < max_model; ++cur_model)
+  for(std::size_t cur_model = 0; cur_model < max_model; ++cur_model)
   {
     const int model_num = cur_cfg_writer.get_next_value<int>("ModelNum");
     // TEST

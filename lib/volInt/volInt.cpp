@@ -412,9 +412,8 @@ std::vector<double> vector_middle(
 
 
 
-bool vector_equal(
-  const std::vector<double> &first,
-  const std::vector<double> &second)
+bool vector_equal(const std::vector<double> &first,
+                  const std::vector<double> &second)
 {
   for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
   {
@@ -456,9 +455,8 @@ std::vector<double> vector_cross_product(const std::vector<double> &first,
 
 
 
-double vector_angle(
-  const std::vector<double> &first,
-  const std::vector<double> &second)
+double vector_angle(const std::vector<double> &first,
+                    const std::vector<double> &second)
 {
   double length = vector_length(first) * vector_length(second);
   double dot_product = vector_dot_product(first, second);
@@ -991,25 +989,21 @@ void polyhedron::reverse_polygons_orientation()
 {
   for(std::size_t cur_poly = 0; cur_poly < numFaces; ++cur_poly)
   {
-    std::vector<int> newVerts(numVertsPerPoly, 0);
-    std::vector<int> newVertNorms(numVertsPerPoly, 0);
-    for(int cur_orig_vertex = 0, cur_new_vertex = numVertsPerPoly - 1;
-        cur_orig_vertex < numVertsPerPoly;
-        ++cur_orig_vertex, --cur_new_vertex)
+    std::vector<std::size_t> newVerts(numVertsPerPoly, 0);
+    std::vector<std::size_t> newVertNorms(numVertsPerPoly, 0);
+    for(std::size_t orig_vert_f_ind = 0, new_vert_f_ind = numVertsPerPoly - 1;
+        orig_vert_f_ind < numVertsPerPoly;
+        ++orig_vert_f_ind, --new_vert_f_ind)
     {
-      newVerts[cur_new_vertex] =
-        faces[cur_poly].verts[cur_orig_vertex];
-      newVertNorms[cur_new_vertex] =
-        faces[cur_poly].vertNorms[cur_orig_vertex];
+      newVerts[new_vert_f_ind] =
+        faces[cur_poly].verts[orig_vert_f_ind];
+      newVertNorms[new_vert_f_ind] =
+        faces[cur_poly].vertNorms[orig_vert_f_ind];
     }
-    for(int cur_vertex = 0;
-        cur_vertex < numVertsPerPoly;
-        ++cur_vertex)
+    for(std::size_t vert_f_ind = 0; vert_f_ind < numVertsPerPoly; ++vert_f_ind)
     {
-      faces[cur_poly].verts[cur_vertex] =
-        newVerts[cur_vertex];
-      faces[cur_poly].vertNorms[cur_vertex] =
-        newVertNorms[cur_vertex];
+      faces[cur_poly].verts[vert_f_ind] = newVerts[vert_f_ind];
+      faces[cur_poly].vertNorms[vert_f_ind] = newVertNorms[vert_f_ind];
     }
   }
 }
@@ -1022,9 +1016,9 @@ std::vector<double> polyhedron::face_calc_normal(std::size_t face_ind)
   std::vector<double> normal(axes_num, 0.0);
   for(std::size_t cur_vert = 0; cur_vert < numVertsPerPoly; ++cur_vert)
   {
-    std::vector<double> current =
+    const std::vector<double> &current =
       verts[cur_face.verts[cur_vert]];
-    std::vector<double> next =
+    const std::vector<double> &next =
       verts[cur_face.verts[(cur_vert+1)%numVertsPerPoly]];
     for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
     {
@@ -1112,7 +1106,7 @@ double polyhedron::get_vertex_angle(std::size_t face_ind, std::size_t vert_ind)
 {
   face &cur_face = faces[face_ind];
   std::size_t prev_ind =
-    (vert_ind - 1 + cur_face.numVerts) % cur_face.numVerts;
+    (vert_ind + cur_face.numVerts - 1) % cur_face.numVerts;
   std::size_t next_ind =
     (vert_ind + 1) % cur_face.numVerts;
   std::vector<double> &prev_vertex =
@@ -1416,7 +1410,7 @@ std::vector<const face*> polyhedron::get_polygons_by_color(
 {
   std::vector<const face*> tmp_polygons;
   tmp_polygons.reserve(numFaces);
-  for(int cur_poly = 0; cur_poly < numFaces; ++cur_poly)
+  for(std::size_t cur_poly = 0; cur_poly < numFaces; ++cur_poly)
   {
     if(faces[cur_poly].color_id == color_id_arg)
     {
@@ -1434,7 +1428,7 @@ std::vector<const face*> polyhedron::get_polygons_by_ids(
 {
   std::vector<const face*> tmp_polygons;
   tmp_polygons.reserve(numFaces);
-  for(int cur_poly = 0; cur_poly < numFaces; ++cur_poly)
+  for(std::size_t cur_poly = 0; cur_poly < numFaces; ++cur_poly)
   {
     if(faces[cur_poly].color_id        == color_id_arg &&
        faces[cur_poly].wheel_weapon_id == wheel_weapon_id_arg)
@@ -1634,19 +1628,16 @@ void polyhedron::set_color_id(unsigned int new_color_id,
 // Getting two points which are distant enough from each other by x and z.
 bool polyhedron::find_ref_points()
 {
-  int verts_per_poly = faces[0].numVerts;
+  std::size_t n_faces = numFaces;
+  std::size_t v_per_poly = faces[0].numVerts;
 
 
-  for(int cur_poly_one_num = 0;
-      cur_poly_one_num < numFaces;
-      ++cur_poly_one_num)
+  for(std::size_t poly_1_ind = 0; poly_1_ind < n_faces; ++poly_1_ind)
   {
-    for(int cur_vert_one_num = 0;
-        cur_vert_one_num < verts_per_poly;
-        ++cur_vert_one_num)
+    for(std::size_t v_1_ind = 0; v_1_ind < v_per_poly; ++v_1_ind)
     {
-      ref_vert_one_ind.first = cur_poly_one_num;
-      ref_vert_one_ind.second = cur_vert_one_num;
+      ref_vert_one_ind.first = poly_1_ind;
+      ref_vert_one_ind.second = v_1_ind;
       ref_vert_one =
         &verts.at(
           faces[ref_vert_one_ind.first].verts[ref_vert_one_ind.second]);
@@ -1654,16 +1645,12 @@ bool polyhedron::find_ref_points()
       // Finding second vert which is far enough from first one by x or z.
       // It's needed to find rotation angle around y axis
       // to get rotation of weapon.
-      for(int cur_poly_two_num = 0;
-          cur_poly_two_num < numFaces;
-          ++cur_poly_two_num)
+      for(std::size_t poly_2_ind = 0; poly_2_ind < n_faces; ++poly_2_ind)
       {
-        for(int cur_vert_two_num = 0;
-            cur_vert_two_num < verts_per_poly;
-            ++cur_vert_two_num)
+        for(std::size_t v_2_ind = 0; v_2_ind < v_per_poly; ++v_2_ind)
         {
           const std::vector<double> *cur_point =
-            &verts.at(faces[cur_poly_two_num].verts[cur_vert_two_num]);
+            &verts.at(faces[poly_2_ind].verts[v_2_ind]);
 
           // TEST
           /*
@@ -1680,24 +1667,19 @@ bool polyhedron::find_ref_points()
                 std::abs(rel_to_one[2]) > distinct_distance) &&
              std::abs(rel_to_one[1]) > distinct_distance)
           {
-            ref_vert_two_ind.first = cur_poly_two_num;
-            ref_vert_two_ind.second = cur_vert_two_num;
+            ref_vert_two_ind.first = poly_2_ind;
+            ref_vert_two_ind.second = v_2_ind;
             ref_vert_two = cur_point;
 
             // Finding third vert which is not collinear
             // to vert one and vert two.
             // Needed to check if the model was rotated by other axes.
-            for(int cur_poly_three_num = 0;
-                cur_poly_three_num < numFaces;
-                ++cur_poly_three_num)
+            for(std::size_t poly_3_ind = 0; poly_3_ind < n_faces; ++poly_3_ind)
             {
-              for(int cur_vert_three_num = 0;
-                  cur_vert_three_num < verts_per_poly;
-                  ++cur_vert_three_num)
+              for(std::size_t v_3_ind = 0; v_3_ind < v_per_poly; ++v_3_ind)
               {
                 const std::vector<double> *cur_point =
-                  &verts.at(faces[cur_poly_three_num].
-                    verts[cur_vert_three_num]);
+                  &verts.at(faces[poly_3_ind].verts[v_3_ind]);
 
                 double x1 = (*ref_vert_two)[0] - (*ref_vert_one)[0];
                 double x2 = (*cur_point)[0] - (*ref_vert_one)[0];
@@ -1728,8 +1710,8 @@ bool polyhedron::find_ref_points()
                      std::abs(x1*z2 - x2*z1) < sqr_distinct_distance &&
                      std::abs(y1*z2 - y2*z1) < sqr_distinct_distance))
                 {
-                  ref_vert_three_ind.first = cur_poly_three_num;
-                  ref_vert_three_ind.second = cur_vert_three_num;
+                  ref_vert_three_ind.first = poly_3_ind;
+                  ref_vert_three_ind.second = v_3_ind;
                   ref_vert_three = cur_point;
 
                   // TEST
@@ -1739,7 +1721,6 @@ bool polyhedron::find_ref_points()
                 }
               }
             }
-
           }
         }
       }
@@ -1928,7 +1909,7 @@ void polyhedron::calculate_c3d_properties()
   /*
   double expected_volume = 0.0;
 
-  for(int cur_poly = 0; cur_poly < numFaces; ++cur_poly)
+  for(std::size_t cur_poly = 0; cur_poly < numFaces; ++cur_poly)
   {
     if(numVertsPerPoly == 3)
     {

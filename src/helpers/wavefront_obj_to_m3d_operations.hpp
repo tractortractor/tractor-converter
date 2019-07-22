@@ -496,9 +496,9 @@ private:
   void remove_polygons_helper_erase_mechos(volInt::polyhedron &main_model);
   void remove_polygons_helper_erase_weapons(volInt::polyhedron &main_model);
   void remove_polygons_helper_erase_regular(volInt::polyhedron &model);
-  std::vector<int> remove_polygons_helper_create_ind_change_map(
-    int size,
-    std::unordered_set<int> &verts_to_keep);
+  std::vector<std::size_t> remove_polygons_helper_create_ind_change_map(
+    std::size_t size,
+    std::unordered_set<std::size_t> &verts_to_keep);
   void remove_polygons(volInt::polyhedron &main_model,
                        remove_polygons_model model_type);
 };

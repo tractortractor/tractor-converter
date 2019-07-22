@@ -435,7 +435,7 @@ std::vector<double> m3d_to_wavefront_obj_model::read_vertex()
 
 void m3d_to_wavefront_obj_model::read_vertices(volInt::polyhedron &model)
 {
-  for(int cur_vertex = 0; cur_vertex < model.numVerts; ++cur_vertex)
+  for(std::size_t cur_vertex = 0; cur_vertex < model.numVerts; ++cur_vertex)
   {
     model.verts[cur_vertex] = read_vertex();
   }
@@ -461,9 +461,9 @@ std::vector<double> m3d_to_wavefront_obj_model::read_normal(
 
 void m3d_to_wavefront_obj_model::read_normals(volInt::polyhedron &model)
 {
-  for(int cur_normal = 0; cur_normal < model.numVertNorms; ++cur_normal)
+  for(std::size_t norm_ind = 0; norm_ind < model.numVertNorms; ++norm_ind)
   {
-    model.vertNorms[cur_normal] = read_normal();
+    model.vertNorms[norm_ind] = read_normal();
   }
 }
 
@@ -514,12 +514,12 @@ volInt::face m3d_to_wavefront_obj_model::read_polygon(
     read_vec_var_from_m3d_scaled<char, double>(volInt::axes_num);
 
   // Note the reverse order of vertices.
-  for(int cur_poly_vertex = numVerts - 1;
-      cur_poly_vertex != -1;
-      --cur_poly_vertex)
+  for(std::size_t vert_f_ind = 0, vert_f_ind_r = numVerts - 1;
+      vert_f_ind < numVerts;
+      ++vert_f_ind, --vert_f_ind_r)
   {
-    poly.verts[cur_poly_vertex] = read_var_from_m3d<int, int>();
-    poly.vertNorms[cur_poly_vertex] = read_var_from_m3d<int, int>();
+    poly.verts[vert_f_ind_r] = read_var_from_m3d<int, int>();
+    poly.vertNorms[vert_f_ind_r] = read_var_from_m3d<int, int>();
   }
 
   return poly;
@@ -527,7 +527,7 @@ volInt::face m3d_to_wavefront_obj_model::read_polygon(
 
 void m3d_to_wavefront_obj_model::read_polygons(volInt::polyhedron &model)
 {
-  for(int cur_poly = 0; cur_poly < model.numFaces; ++cur_poly)
+  for(std::size_t cur_poly = 0; cur_poly < model.numFaces; ++cur_poly)
   {
     model.faces[cur_poly] = read_polygon(model, cur_poly);
   }
@@ -728,7 +728,7 @@ std::vector<volInt::polyhedron>
   wheel_models.reserve(n_wheels);
 
   cur_wheel_data = std::vector<wheel_data>(n_wheels);
-  for(int cur_wheel_num = 0; cur_wheel_num < n_wheels; ++cur_wheel_num)
+  for(std::size_t cur_wheel_num = 0; cur_wheel_num < n_wheels; ++cur_wheel_num)
   {
     read_m3d_wheel_data(wheel_models, cur_wheel_num);
   }
@@ -805,12 +805,12 @@ void m3d_to_wavefront_obj_model::mark_wheels(
   volInt::polyhedron &main_model,
   const std::vector<volInt::polyhedron> &steer_wheels_models)
 {
-  std::size_t cur_wheel_data_size = cur_wheel_data.size();
-  for(std::size_t wheel_ind = 0; wheel_ind < cur_wheel_data_size; ++wheel_ind)
+  std::size_t cur_w_data_size = cur_wheel_data.size();
+  for(std::size_t wheel_ind = 0; wheel_ind < cur_w_data_size; ++wheel_ind)
   {
     main_model.wheels.insert(wheel_ind);
   }
-  for(std::size_t wheel_ind = 0; wheel_ind < cur_wheel_data_size; ++wheel_ind)
+  for(std::size_t wheel_ind = 0; wheel_ind < cur_w_data_size; ++wheel_ind)
   {
     if(cur_wheel_data[wheel_ind].steer)
     {
@@ -859,7 +859,7 @@ void m3d_to_wavefront_obj_model::mark_wheels(
 //        wheels_centers_size = wheels_centers.size();
 //      model_wheel_center_num < wheels_centers_size;
 //      ++model_wheel_center_num)
-    for(int wheel_ind = 0; wheel_ind < cur_wheel_data_size; ++wheel_ind)
+    for(std::size_t wheel_ind = 0; wheel_ind < cur_w_data_size; ++wheel_ind)
     {
       if(!cur_wheel_data[wheel_ind].steer)
       {
@@ -907,7 +907,7 @@ void m3d_to_wavefront_obj_model::mark_wheels(
 
   // Marking ghost wheels.
   non_steer_ghost_wheels_num = 0;
-  for(std::size_t wheel_ind = 0; wheel_ind < cur_wheel_data_size; ++wheel_ind)
+  for(std::size_t wheel_ind = 0; wheel_ind < cur_w_data_size; ++wheel_ind)
   {
     // If there is no group found for wheel center it's a ghost wheel.
     if(cur_wheel_data[wheel_ind].steer)
@@ -1063,7 +1063,7 @@ void m3d_to_wavefront_obj_model::move_weapon_model(
 void m3d_to_wavefront_obj_model::add_weapons_to_models_map(
   std::unordered_map<std::string, volInt::polyhedron> &models_map) const
 {
-  for(int cur_weapon_num = 0;
+  for(std::size_t cur_weapon_num = 0;
       cur_weapon_num < m3d::weapon_slot::max_slots;
       ++cur_weapon_num)
   {
@@ -1144,12 +1144,12 @@ void m3d_to_wavefront_obj_model::read_m3d_debris_data(
     debris_models_to_reserve += 1;
   }
   debris_bound_models.reserve(n_debris);
-  for(int debris_num = 0; debris_num < n_debris; ++debris_num)
+  for(std::size_t debris_num = 0; debris_num < n_debris; ++debris_num)
   {
     debris_models[debris_num].reserve(debris_models_to_reserve);
   }
 
-  for(int debris_num = 0; debris_num < n_debris; ++debris_num)
+  for(std::size_t debris_num = 0; debris_num < n_debris; ++debris_num)
   {
     read_m3d_debris_data(debris_models,
                          debris_bound_models,
@@ -1183,7 +1183,7 @@ void m3d_to_wavefront_obj_model::move_debris_to_offset(
     &debris_models,
   std::vector<volInt::polyhedron> &debris_bound_models)
 {
-  for(int debris_num = 0; debris_num < n_debris; ++debris_num)
+  for(std::size_t debris_num = 0; debris_num < n_debris; ++debris_num)
   {
     move_debris_to_offset(debris_models[debris_num],
                           debris_bound_models[debris_num]);
@@ -1587,7 +1587,7 @@ std::unordered_map<std::string, double> read_scales_and_copy_game_lst(
   // TEST
 //std::cout << "max_model: " << max_model << '\n';
 //std::cout << "max_size: " << max_size << '\n';
-  for(int cur_model = 0; cur_model < max_model; ++cur_model)
+  for(std::size_t cur_model = 0; cur_model < max_model; ++cur_model)
   {
     const int model_num = cur_cfg_reader.get_next_value<int>("ModelNum");
     // TEST
