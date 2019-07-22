@@ -1026,12 +1026,13 @@ std::vector<double> polyhedron::face_calc_normal(std::size_t face_ind)
       verts[cur_face.verts[cur_vert]];
     std::vector<double> next =
       verts[cur_face.verts[(cur_vert+1)%numVertsPerPoly]];
-    normal[VOLINT_X] += (current[VOLINT_Y] - next[VOLINT_Y]) *
-                        (current[VOLINT_Z] + next[VOLINT_Z]);
-    normal[VOLINT_Y] += (current[VOLINT_Z] - next[VOLINT_Z]) *
-                        (current[VOLINT_X] + next[VOLINT_X]);
-    normal[VOLINT_Z] += (current[VOLINT_X] - next[VOLINT_X]) *
-                        (current[VOLINT_Y] + next[VOLINT_Y]);
+    for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+    {
+      const std::vector<std::size_t> &axes =
+        axes_by_plane_continuous[cur_coord];
+      normal[cur_coord] += (current[axes[0]] - next[axes[0]]) *
+                           (current[axes[1]] + next[axes[1]]);
+    }
   }
   return normal;
 }
@@ -1041,10 +1042,11 @@ std::vector<double> polyhedron::face_calc_normal(std::size_t face_ind)
 double polyhedron::face_calc_offset_w(std::size_t face_ind)
 {
   face &cur_face = faces[face_ind];
-  double offset_w;
-  offset_w = - cur_face.norm[VOLINT_X] * verts[cur_face.verts[0]][VOLINT_X]
-             - cur_face.norm[VOLINT_Y] * verts[cur_face.verts[0]][VOLINT_Y]
-             - cur_face.norm[VOLINT_Z] * verts[cur_face.verts[0]][VOLINT_Z];
+  double offset_w = 0.0;
+  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+  {
+    offset_w -= cur_face.norm[cur_coord] * verts[cur_face.verts[0]][cur_coord];
+  }
   return offset_w;
 }
 
@@ -1784,7 +1786,7 @@ bool polyhedron::find_ref_points()
 
   ref_vert_two_rel_to_one = vector_minus((*ref_vert_two), (*ref_vert_one));
   ref_vert_three_rel_to_one = vector_minus((*ref_vert_three), (*ref_vert_one));
-  
+
 
   ref_angle = std::atan2((*ref_vert_two)[0] - (*ref_vert_one)[0],
                          (*ref_vert_two)[2] - (*ref_vert_one)[2]);
@@ -1865,35 +1867,33 @@ void polyhedron::calculate_c3d_properties()
 
   if(!rcm_overwritten)
   {
-    /* compute center of mass */
-    rcm[VOLINT_X] = T1[VOLINT_X] / volume;
-    rcm[VOLINT_Y] = T1[VOLINT_Y] / volume;
-    rcm[VOLINT_Z] = T1[VOLINT_Z] / volume;
+    // Compute center of mass.
+    for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+    {
+      rcm[cur_coord] = T1[cur_coord] / volume;
+    }
   }
 
   if(!J_overwritten)
   {
-    /* compute inertia tensor */
-    J[VOLINT_X][VOLINT_X] = density * (T2[VOLINT_Y] + T2[VOLINT_Z]);
-    J[VOLINT_Y][VOLINT_Y] = density * (T2[VOLINT_Z] + T2[VOLINT_X]);
-    J[VOLINT_Z][VOLINT_Z] = density * (T2[VOLINT_X] + T2[VOLINT_Y]);
-    J[VOLINT_X][VOLINT_Y] = J[VOLINT_Y][VOLINT_X] = -density * TP[VOLINT_X];
-    J[VOLINT_Y][VOLINT_Z] = J[VOLINT_Z][VOLINT_Y] = -density * TP[VOLINT_Y];
-    J[VOLINT_Z][VOLINT_X] = J[VOLINT_X][VOLINT_Z] = -density * TP[VOLINT_Z];
-
-    /* translate inertia tensor to center of mass */
-    J[VOLINT_X][VOLINT_X] -= mass * (rcm[VOLINT_Y] * rcm[VOLINT_Y] +
-                             rcm[VOLINT_Z] * rcm[VOLINT_Z]);
-    J[VOLINT_Y][VOLINT_Y] -= mass * (rcm[VOLINT_Z] * rcm[VOLINT_Z] +
-                             rcm[VOLINT_X] * rcm[VOLINT_X]);
-    J[VOLINT_Z][VOLINT_Z] -= mass * (rcm[VOLINT_X] * rcm[VOLINT_X] +
-                             rcm[VOLINT_Y] * rcm[VOLINT_Y]);
-    J[VOLINT_X][VOLINT_Y] = J[VOLINT_Y][VOLINT_X] +=
-      mass * rcm[VOLINT_X] * rcm[VOLINT_Y];
-    J[VOLINT_Y][VOLINT_Z] = J[VOLINT_Z][VOLINT_Y] +=
-      mass * rcm[VOLINT_Y] * rcm[VOLINT_Z];
-    J[VOLINT_Z][VOLINT_X] = J[VOLINT_X][VOLINT_Z] +=
-      mass * rcm[VOLINT_Z] * rcm[VOLINT_X];
+    // Compute inertia tensor.
+    for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+    {
+      const std::vector<std::size_t> &axes =
+        axes_by_plane_continuous[cur_coord];
+      J[cur_coord][cur_coord] = density * (T2[axes[0]] + T2[axes[1]]);
+      J[axes[0]][axes[1]] = J[axes[1]][axes[0]] = -density * TP[axes[0]];
+    }
+    // Translate inertia tensor to center of mass.
+    for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
+    {
+      const std::vector<std::size_t> &axes =
+        axes_by_plane_continuous[cur_coord];
+      J[cur_coord][cur_coord] -=
+        mass * (rcm[axes[0]] * rcm[axes[0]] + rcm[axes[1]] * rcm[axes[1]]);
+      J[axes[0]][axes[1]] = J[axes[1]][axes[0]] +=
+        mass * rcm[axes[0]] * rcm[axes[1]];
+    }
   }
 
 
@@ -1946,11 +1946,11 @@ void polyhedron::calculate_c3d_properties()
 
       std::cout << "expected flat_normal poly " << cur_poly << ": " <<
         flat_normal[0] << ", " <<
-        flat_normal[1] << ", "  << 
+        flat_normal[1] << ", " <<
         flat_normal[2] << '\n';
       std::cout << "flat_normal poly " << cur_poly << ": " <<
         faces[cur_poly].norm[0] << ", " <<
-        faces[cur_poly].norm[1] << ", "  << 
+        faces[cur_poly].norm[1] << ", " <<
         faces[cur_poly].norm[2] << '\n';
     }
 
