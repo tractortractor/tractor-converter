@@ -9,13 +9,12 @@ namespace helpers{
 
 sicher_cfg_reader::sicher_cfg_reader(
   std::string &&str_arg,
-  std::size_t pos_arg,
   const std::string &input_file_path_str_arg,
   const std::string &input_file_name_error_arg)
 : m_str(std::move(str_arg)),
   input_file_path_str(input_file_path_str_arg),
   input_file_name_error(input_file_name_error_arg),
-  pos(&m_str[pos_arg]),
+  pos(&m_str[0]),
   end_pos(&m_str[m_str.size()])
 {
 }
@@ -111,12 +110,10 @@ const std::string &sicher_cfg_reader::str()
 
 sicher_cfg_writer::sicher_cfg_writer(
   std::string &&str_arg,
-  std::size_t pos_arg,
   const std::string &input_file_path_str_arg,
   const std::string &input_file_name_error_arg,
   std::size_t size_increase)
 : sicher_cfg_reader(std::move(str_arg),
-                    pos_arg,
                     input_file_path_str_arg,
                     input_file_name_error_arg)
 {

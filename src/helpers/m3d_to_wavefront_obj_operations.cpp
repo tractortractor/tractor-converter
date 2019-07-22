@@ -1579,7 +1579,6 @@ std::unordered_map<std::string, double> read_scales_and_copy_game_lst(
               input_file_name_error);
 
   sicher_cfg_reader cur_cfg_reader(std::move(game_lst_data),
-                                   0,
                                    lst_filepath.string(),
                                    input_file_name_error);
   const int max_model = cur_cfg_reader.get_next_value<int>("NumModel");
@@ -1639,7 +1638,6 @@ double read_scale_and_copy_prm(
               input_file_name_error);
 
   sicher_cfg_reader cur_cfg_reader(std::move(prm_data),
-                                   0,
                                    prm_filepath.string(),
                                    input_file_name_error);
 

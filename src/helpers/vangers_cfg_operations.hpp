@@ -39,7 +39,6 @@ class sicher_cfg_reader
 public:
 
   sicher_cfg_reader(std::string &&str_arg,
-                    std::size_t pos_arg,
                     const std::string &input_file_path_str_arg,
                     const std::string &input_file_name_error_arg);
 
@@ -74,7 +73,6 @@ class sicher_cfg_writer : public sicher_cfg_reader
 public:
 
   sicher_cfg_writer(std::string &&str_arg,
-                    std::size_t pos_arg,
                     const std::string &input_file_path_str_arg,
                     const std::string &input_file_name_error_arg,
                     std::size_t size_increase);

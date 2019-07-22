@@ -3243,7 +3243,6 @@ void create_game_lst(
 
   sicher_cfg_writer cur_cfg_writer(
     std::move(orig_game_lst_data),
-    0,
     input_file_path_arg.string(),
     input_file_name_error_arg,
     non_mechos_scale_sizes_arg->size() * sicher_game_lst_int_size_increase);
@@ -3322,7 +3321,6 @@ void create_prm(
 
   sicher_cfg_writer cur_cfg_writer(
     std::move(orig_prm_data),
-    0,
     input_file_path_arg.string(),
     input_file_name_error_arg,
     sicher_prm_float_size_increase);
