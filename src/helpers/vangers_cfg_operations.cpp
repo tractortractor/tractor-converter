@@ -1,9 +1,143 @@
-#include "vangers_cfg_operations.hpp"
+﻿#include "vangers_cfg_operations.hpp"
 
 
 
 namespace tractor_converter{
 namespace helpers{
+
+
+
+exception::raw_uncompress_error::raw_uncompress_error(
+  const char *err_msg_arg,
+  int zlib_err_code_arg)
+: m_zlib_err_code(zlib_err_code_arg)
+{
+  switch(zlib_err_code())
+  {
+    case Z_VERSION_ERROR:
+      m_zlib_string += "zlib version mismatch.";
+      break;
+    case Z_STREAM_ERROR:
+      m_zlib_string += "Internal stream error.";
+      break;
+    case Z_MEM_ERROR:
+      m_zlib_string += "Not enough memory.";
+      break;
+    case Z_BUF_ERROR:
+      m_zlib_string += "Not enough room in the output buffer.";
+      break;
+    case Z_DATA_ERROR:
+      m_zlib_string += "Error data.";
+      break;
+  }
+  if(err_msg_arg)
+  {
+    m_zlib_string += "\n" + std::string(err_msg_arg);
+  }
+}
+
+const char* exception::raw_uncompress_error::what() const noexcept
+{
+  return m_zlib_string.c_str();
+}
+
+int exception::raw_uncompress_error::zlib_err_code() const noexcept
+{
+  return m_zlib_err_code;
+}
+
+
+
+std::string raw_uncompress(std::size_t decompressed_size,
+                           std::string &compressed_str)
+{
+  std::string decompressed_str(decompressed_size, '\0');
+  std::size_t compressed_size = compressed_str.size();
+
+  z_stream stream;
+  int err;
+  const uInt max = static_cast<uInt>(-1);
+  uLong len, left;
+
+  len = compressed_size;
+  if(decompressed_size)
+  {
+    left = decompressed_size;
+  }
+  else
+  {
+    left = 1;
+    decompressed_str = std::string(1, '\0');
+  }
+
+  stream.next_in = reinterpret_cast<Bytef*>(&compressed_str[0]);
+  stream.avail_in = 0;
+  stream.zalloc = static_cast<alloc_func>(Z_NULL);
+  stream.zfree = static_cast<free_func>(Z_NULL);
+  stream.opaque = static_cast<voidpf>(Z_NULL);
+
+  // -MAX_WBITS - because of negative value,
+  // inflate() treats input as raw DEFLATE compression.
+  err = inflateInit2(&stream, -MAX_WBITS);
+  if (err != Z_OK)
+  {
+    throw exception::raw_uncompress_error(stream.msg, err);
+  }
+
+  stream.next_out = reinterpret_cast<Bytef*>(&decompressed_str[0]);
+  stream.avail_out = 0;
+
+  do
+  {
+    if(stream.avail_out == 0)
+    {
+      stream.avail_out =
+        left > static_cast<uLong>(max) ? max : static_cast<uInt>(left);
+      left -= stream.avail_out;
+    }
+    if(stream.avail_in == 0)
+    {
+      stream.avail_in =
+        len > static_cast<uLong>(max) ? max : static_cast<uInt>(len);
+      len -= stream.avail_in;
+    }
+    err = inflate(&stream, Z_NO_FLUSH);
+  }
+  while(err == Z_OK);
+
+
+
+  if(stream.total_out && err == Z_BUF_ERROR)
+  {
+    left = 1;
+  }
+
+  inflateEnd(&stream);
+
+  err = err == Z_STREAM_END ? Z_OK :
+        err == Z_NEED_DICT ? Z_DATA_ERROR  :
+        err == Z_BUF_ERROR && left + stream.avail_out ? Z_DATA_ERROR :
+        err;
+
+  if(err != Z_OK)
+  {
+    throw exception::raw_uncompress_error(stream.msg, err);
+  }
+
+  decompressed_str.resize(stream.total_out);
+  return decompressed_str;
+}
+
+
+
+unsigned int xzip_crypt::crt(unsigned int &val)
+{
+  val ^= val >> 3;
+  val ^= val << 28;
+  val &= 0x7FFFFFFF;
+
+  return val;
+}
 
 
 
@@ -17,6 +151,55 @@ sicher_cfg_reader::sicher_cfg_reader(
   pos(&m_str[0]),
   end_pos(&m_str[m_str.size()])
 {
+}
+
+
+
+void sicher_cfg_reader::decrypt()
+{
+  std::uint32_t key =
+    raw_bytes_to_num<std::uint32_t>(m_str, xzip_crypt::key_pos);
+
+  key *= xzip_crypt::key::multiplier;
+  key |= xzip_crypt::key::bin_or;
+
+  m_str.erase(0, xzip_crypt::enc_beg_pos);
+  pos = &m_str[0];
+
+  for(char& cur_char : m_str)
+  {
+    cur_char ^= xzip_crypt::crt(key);
+  }
+}
+
+void sicher_cfg_reader::decompress()
+{
+  std::int16_t label =
+    raw_bytes_to_num<std::int16_t>(m_str, xzip_decompress::label_pos);
+  std::size_t decompressed_size =
+    raw_bytes_to_num<std::uint32_t>(m_str, xzip_decompress::decomp_size_pos);
+  decompressed_size += xzip_decompress::add_decomp_size;
+
+  m_str.erase(0, xzip_decompress::comp_beg_pos);
+  pos = &m_str[0];
+
+  // If label = 0 then file is not compressed.
+  if(label)
+  {
+    try
+    {
+      m_str = raw_uncompress(decompressed_size, m_str);
+    }
+    catch(exception::raw_uncompress_error &e)
+    {
+      throw std::runtime_error(
+        input_file_name_error + " file " +
+        input_file_path_str + " failed to decompress.\n" +
+        e.what());
+    }
+    pos = &m_str[0];
+    end_pos = &m_str[m_str.size()];
+  }
 }
 
 

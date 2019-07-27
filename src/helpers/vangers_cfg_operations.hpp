@@ -3,7 +3,10 @@
 
 #include "defines.hpp"
 
+#include "raw_num_operations.hpp"
 #include "to_string_precision.hpp"
+
+#include <zlib.h>
 
 #include <exception>
 #include <stdexcept>
@@ -12,10 +15,54 @@
 #include <cwctype>
 #include <cstring>
 #include <string>
-//#include <vector>
 
 namespace tractor_converter{
 namespace helpers{
+
+
+
+namespace exception{
+  class raw_uncompress_error : public virtual std::exception
+  {
+    public:
+    raw_uncompress_error(const char *err_msg, int zlib_err_code);
+    const char* what() const noexcept;
+    int zlib_err_code() const noexcept;
+
+    private:
+    std::string m_zlib_string;
+    int m_zlib_err_code;
+  };
+} // namespace exception
+
+
+
+std::string raw_uncompress(std::size_t decompressed_size,
+                           const std::string &compressed);
+
+
+
+namespace xzip_crypt{
+  const std::size_t key_pos = sizeof(char);
+  const std::size_t enc_beg_pos = key_pos + sizeof(unsigned int);
+
+  namespace key{
+    const unsigned int multiplier = 6386891;
+    const unsigned int bin_or = 1;
+  } // namespace key
+
+  unsigned int crt(unsigned int &val);
+} // namespace xzip_crypt
+
+
+
+namespace xzip_decompress {
+  const std::size_t label_pos = 0;
+  const std::size_t decomp_size_pos = sizeof(short int);
+  const std::size_t comp_beg_pos = decomp_size_pos + sizeof(unsigned int);
+
+  const std::size_t add_decomp_size = 12;
+} // namespace xzip_decompress
 
 
 
@@ -58,6 +105,9 @@ protected:
   std::string input_file_name_error;
 
 private:
+
+  void decrypt();
+  void decompress();
 
   template<typename T>
   T get_next_value_helper_convert_str();
