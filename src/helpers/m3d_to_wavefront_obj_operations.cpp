@@ -1581,14 +1581,17 @@ std::unordered_map<std::string, double> read_scales_and_copy_game_lst(
   sicher_cfg_reader cur_cfg_reader(std::move(game_lst_data),
                                    lst_filepath.string(),
                                    input_file_name_error);
-  const int max_model = cur_cfg_reader.get_next_value<int>("NumModel");
-  const int max_size = cur_cfg_reader.get_next_value<int>("MaxSize");
+  const int max_model =
+    cur_cfg_reader.get_next_value<int>(van_cfg_key::game_lst::NumModel);
+  const int max_size =
+    cur_cfg_reader.get_next_value<int>(van_cfg_key::game_lst::MaxSize);
   // TEST
 //std::cout << "max_model: " << max_model << '\n';
 //std::cout << "max_size: " << max_size << '\n';
   for(std::size_t cur_model = 0; cur_model < max_model; ++cur_model)
   {
-    const int model_num = cur_cfg_reader.get_next_value<int>("ModelNum");
+    const int model_num =
+      cur_cfg_reader.get_next_value<int>(van_cfg_key::game_lst::ModelNum);
     // TEST
 //  std::cout << "cur_model: " << cur_model << '\n';
 //  std::cout << "model_num: " << model_num << '\n';
@@ -1596,19 +1599,25 @@ std::unordered_map<std::string, double> read_scales_and_copy_game_lst(
     {
       throw std::runtime_error(
         input_file_name_error + " file " +
-        lst_filepath.string() + " unexpected ModelNum " +
+        lst_filepath.string() + " unexpected " +
+        van_cfg_key::game_lst::ModelNum + " " +
         std::to_string(model_num) + ".\n" +
         "Expected " + std::to_string(cur_model) + ".\n" +
-        "ModelNum values must be placed " +
-        "in order from 0 to (NumModel - 1).\n" +
-        "ModelNum is current model, NumModel is total number of models.\n");
+        van_cfg_key::game_lst::ModelNum +
+        " values must be placed " +
+        "in order from 0 to (" + van_cfg_key::game_lst::NumModel + " - 1).\n" +
+        van_cfg_key::game_lst::ModelNum +
+        " is current model, " + van_cfg_key::game_lst::NumModel +
+        " is total number of models.\n");
     }
     const std::string model_name =
-      cur_cfg_reader.get_next_value<std::string>("Name");
+      cur_cfg_reader.get_next_value<std::string>(van_cfg_key::game_lst::Name);
     const double scale_size =
-      cur_cfg_reader.get_next_value<double>("Size") / max_size;
+      cur_cfg_reader.get_next_value<double>(van_cfg_key::game_lst::Size) /
+      max_size;
     const std::string name_id =
-      cur_cfg_reader.get_next_value<std::string>("NameID");
+      cur_cfg_reader.get_next_value<std::string>(
+        van_cfg_key::game_lst::NameID);
     scale_sizes[boost::filesystem::path(model_name).stem().string()] =
       scale_size;
   }
@@ -1641,7 +1650,8 @@ double read_scale_and_copy_prm(
                                    prm_filepath.string(),
                                    input_file_name_error);
 
-  double scale_size = cur_cfg_reader.get_next_value<double>("scale_size:");
+  double scale_size =
+    cur_cfg_reader.get_next_value<double>(van_cfg_key::prm::scale_size);
 
   boost::filesystem::path file_to_save = output_dir_path;
   if(prm_filepath.filename().string() == "default.prm")

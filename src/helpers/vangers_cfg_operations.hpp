@@ -21,6 +21,26 @@ namespace helpers{
 
 
 
+namespace van_cfg_key{
+
+  namespace game_lst{
+    const std::string NumModel = "NumModel";
+    const std::string MaxSize =  "MaxSize";
+    const std::string ModelNum = "ModelNum";
+    const std::string Name =     "Name";
+    const std::string Size =     "Size";
+    const std::string NameID =   "NameID";
+  } // namespace game_lst
+
+  namespace prm{
+    const std::string delimiter =  ":";
+    const std::string scale_size = "scale_size" + delimiter;
+  } // namespace prm
+
+} // namespace van_cfg_key
+
+
+
 namespace exception{
   class raw_uncompress_error : public virtual std::exception
   {

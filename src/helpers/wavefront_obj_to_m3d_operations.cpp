@@ -3247,14 +3247,17 @@ void create_game_lst(
     input_file_name_error_arg,
     non_mechos_scale_sizes_arg->size() * sicher_game_lst_int_size_increase);
 
-  const int max_model = cur_cfg_writer.get_next_value<int>("NumModel");
-  const int max_size = cur_cfg_writer.get_next_value<int>("MaxSize");
+  const int max_model =
+    cur_cfg_writer.get_next_value<int>(van_cfg_key::game_lst::NumModel);
+  const int max_size =
+    cur_cfg_writer.get_next_value<int>(van_cfg_key::game_lst::MaxSize);
   // TEST
 //std::cout << "max_model: " << max_model << '\n';
 //std::cout << "max_size: " << max_size << '\n';
   for(std::size_t cur_model = 0; cur_model < max_model; ++cur_model)
   {
-    const int model_num = cur_cfg_writer.get_next_value<int>("ModelNum");
+    const int model_num =
+      cur_cfg_writer.get_next_value<int>(van_cfg_key::game_lst::ModelNum);
     // TEST
 //  std::cout << "cur_model: " << cur_model << '\n';
 //  std::cout << "model_num: " << model_num << '\n';
@@ -3262,15 +3265,18 @@ void create_game_lst(
     {
       throw std::runtime_error(
         input_file_name_error_arg + " file " +
-        input_file_path_arg.string() + " unexpected ModelNum " +
+        input_file_path_arg.string() + " unexpected " +
+        van_cfg_key::game_lst::ModelNum + " " +
         std::to_string(model_num) + ".\n" +
         "Expected " + std::to_string(cur_model) + ".\n" +
-        "Note: ModelNum values must be placed " +
-        "in order from 0 to (NumModel - 1).\n" +
-        "ModelNum is current model, NumModel is total number of models.\n");
+        van_cfg_key::game_lst::ModelNum +
+        " values must be placed " +
+        "in order from 0 to (" + van_cfg_key::game_lst::NumModel + " - 1).\n" +
+        van_cfg_key::game_lst::ModelNum + " is current model, " +
+        van_cfg_key::game_lst::NumModel + " is total number of models.\n");
     }
     const std::string model_path =
-      cur_cfg_writer.get_next_value<std::string>("Name");
+      cur_cfg_writer.get_next_value<std::string>(van_cfg_key::game_lst::Name);
     const std::string model_name =
       boost::filesystem::path(model_path).stem().string();
 
@@ -3284,7 +3290,9 @@ void create_game_lst(
       const double scale_size = (*non_mechos_scale_sizes_arg).at(model_name);
       const int scale_size_game_lst =
         round_half_to_even<double, int>(scale_size * max_size);
-      cur_cfg_writer.overwrite_next_value("Size", scale_size_game_lst, "%i");
+      cur_cfg_writer.overwrite_next_value(van_cfg_key::game_lst::Size,
+                                          scale_size_game_lst,
+                                          "%i");
     }
   }
 
@@ -3326,7 +3334,7 @@ void create_prm(
     sicher_prm_float_size_increase);
 
   cur_cfg_writer.overwrite_next_value(
-    "scale_size:",
+    van_cfg_key::prm::scale_size,
     scale_size,
     sprintf_float_sicher_cfg_format);
   cur_cfg_writer.write_until_end();
