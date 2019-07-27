@@ -146,11 +146,17 @@ sicher_cfg_reader::sicher_cfg_reader(
   const std::string &input_file_path_str_arg,
   const std::string &input_file_name_error_arg)
 : m_str(std::move(str_arg)),
-  input_file_path_str(input_file_path_str_arg),
-  input_file_name_error(input_file_name_error_arg),
   pos(&m_str[0]),
-  end_pos(&m_str[m_str.size()])
+  end_pos(&m_str[m_str.size()]),
+  input_file_path_str(input_file_path_str_arg),
+  input_file_name_error(input_file_name_error_arg)
 {
+  // If first byte = 0 then file is compressed and encrypted.
+  if(!*pos)
+  {
+    decrypt();
+    decompress();
+  }
 }
 
 
