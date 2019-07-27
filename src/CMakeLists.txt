@@ -22,6 +22,9 @@ FIND_PACKAGE(Boost ${BOOST_MIN_VERSION} REQUIRED
 #SET(BOOST_LIBS_TO_USE ${Boost_LIBRARIES})
 
 
+FIND_PACKAGE(ZLIB REQUIRED)
+
+
 
 SET(TRACTOR_CONVERTER_SOURCES
 
@@ -125,6 +128,7 @@ add_executable(tractor_converter
 # include dirs
 target_include_directories(tractor_converter SYSTEM
   PRIVATE ${Boost_INCLUDE_DIRS}
+  PRIVATE ${ZLIB_INCLUDE_DIR}
   )
 
 target_include_directories(tractor_converter
@@ -159,6 +163,7 @@ target_include_directories(tractor_converter
 # libraries linking
 target_link_libraries(tractor_converter PUBLIC
   ${Boost_LIBRARIES}
+  ${ZLIB_LIBRARIES}
   volInt
   alphanum
   tinyobjloader
