@@ -21,16 +21,16 @@ double scale_from_map(
     if(type == scale_from_map_type::mechos)
     {
       bogus_file /=
-        boost::filesystem::path("resource") /
-        boost::filesystem::path("m3d") /
-        boost::filesystem::path("mechous") /
+        boost::filesystem::path(helpers::folder::resource) /
+        boost::filesystem::path(helpers::folder::m3d) /
+        boost::filesystem::path(helpers::folder::mechous) /
         boost::filesystem::path(to_lookup_str_name).append(
-          ".prm",
+          helpers::ext::prm,
           boost::filesystem::path::codecvt());
     }
     else if(type == scale_from_map_type::non_mechos)
     {
-      bogus_file /= boost::filesystem::path("game.lst");
+      bogus_file /= boost::filesystem::path(helpers::file::game_lst);
     }
     if(boost::filesystem::exists(bogus_file))
     {
@@ -256,7 +256,7 @@ void vangers_3d_model_to_obj_mode(
         boost::filesystem::recursive_directory_iterator(source_dir))
     {
       if(boost::filesystem::is_regular_file(entry.status()) &&
-         entry.path().filename() == "game.lst")
+         entry.path().filename() == helpers::file::game_lst)
       {
         boost::filesystem::path rel_to_input_file =
           entry.path().lexically_relative(source_dir);
@@ -276,8 +276,8 @@ void vangers_3d_model_to_obj_mode(
     // Getting list of paths with prm, m3d and a3d files.
     for(auto &&game_dir : vangers_game_dirs)
     {
-      boost::filesystem::path resource_folder_name("resource");
-      boost::filesystem::path m3d_folder_name("m3d");
+      boost::filesystem::path resource_folder_name(helpers::folder::resource);
+      boost::filesystem::path m3d_folder_name(helpers::folder::m3d);
       boost::filesystem::path input_resource =
         game_dir.second.root.input / resource_folder_name;
       boost::filesystem::path output_resource =
@@ -324,35 +324,39 @@ void vangers_3d_model_to_obj_mode(
 
           if(helpers::vangers_3d_tree_folders.count(parent_dir))
           {
-            if(parent_dir == "mechous" && file_ext == ".prm")
+            if(parent_dir == helpers::folder::mechous &&
+               file_ext ==   helpers::ext::prm)
             {
               game_dir.second.mechous_prm[file_name].input =
                 entry.path();
               game_dir.second.mechous_prm[file_name].output =
                 parent_abs_out_path;
             }
-            else if(parent_dir == "mechous" && file_ext == ".m3d")
+            else if(parent_dir == helpers::folder::mechous &&
+                    file_ext ==   helpers::ext::m3d)
             {
               game_dir.second.mechous_m3d[file_name].input =
                 entry.path();
               game_dir.second.mechous_m3d[file_name].output =
                 parent_abs_out_path;
             }
-            else if(parent_dir == "weapon" && file_ext == ".m3d")
+            else if(parent_dir == helpers::folder::weapon &&
+                    file_ext ==   helpers::ext::m3d)
             {
               game_dir.second.weapon_m3d[file_name].input =
                 entry.path();
               game_dir.second.weapon_m3d[file_name].output =
                 parent_abs_out_path;
             }
-            else if(parent_dir == "animated" && file_ext == ".a3d")
+            else if(parent_dir == helpers::folder::animated &&
+                    file_ext ==   helpers::ext::a3d)
             {
               game_dir.second.animated_a3d[file_name].input =
                 entry.path();
               game_dir.second.animated_a3d[file_name].output =
                 parent_abs_out_path;
             }
-            else if(file_ext == ".m3d")
+            else if(file_ext == helpers::ext::m3d)
             {
               game_dir.second.other_m3d[file_name].input =
                 entry.path();

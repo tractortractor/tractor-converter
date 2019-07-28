@@ -275,7 +275,8 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 
 
   boost::filesystem::path file_to_save = output_m3d_path;
-  file_to_save.append(model_name + ".m3d", boost::filesystem::path::codecvt());
+  file_to_save.append(model_name + ext::m3d,
+                      boost::filesystem::path::codecvt());
   save_file(file_to_save,
             m3d_data,
             file_flag::binary,
@@ -284,11 +285,11 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 
 
   boost::filesystem::path prm_file_input = input_m3d_path;
-  prm_file_input.append(model_name + ".prm",
+  prm_file_input.append(model_name + ext::prm,
                         boost::filesystem::path::codecvt());
 
   boost::filesystem::path prm_file_output = output_m3d_path;
-  prm_file_output.append(model_name + ".prm",
+  prm_file_output.append(model_name + ext::prm,
                          boost::filesystem::path::codecvt());
 
   create_prm(prm_file_input,
@@ -437,7 +438,8 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
 
 
   boost::filesystem::path file_to_save = output_m3d_path;
-  file_to_save.append(model_name + ".m3d", boost::filesystem::path::codecvt());
+  file_to_save.append(model_name + ext::m3d,
+                      boost::filesystem::path::codecvt());
   save_file(file_to_save,
             m3d_data,
             file_flag::binary,
@@ -522,7 +524,8 @@ void wavefront_obj_to_m3d_model::animated_wavefront_objs_to_a3d()
 
 
   boost::filesystem::path file_to_save = output_m3d_path;
-  file_to_save.append(model_name + ".a3d", boost::filesystem::path::codecvt());
+  file_to_save.append(model_name + ext::a3d,
+                      boost::filesystem::path::codecvt());
   save_file(file_to_save,
             m3d_data,
             file_flag::binary,
@@ -597,7 +600,8 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
 
 
   boost::filesystem::path file_to_save = output_m3d_path;
-  file_to_save.append(model_name + ".m3d", boost::filesystem::path::codecvt());
+  file_to_save.append(model_name + ext::m3d,
+                      boost::filesystem::path::codecvt());
   save_file(file_to_save,
             m3d_data,
             file_flag::binary,
@@ -2668,11 +2672,11 @@ void wavefront_obj_to_m3d_model::get_scale_helper_set_scale_from_rmax()
     std::cout << "3d_scale_cap is written to ";
     if(non_mechos_scale_sizes)
     {
-      std::cout << "game.lst";
+      std::cout << file::game_lst;
     }
     else
     {
-      std::cout << model_name << ".prm";
+      std::cout << model_name << ext::prm;
     }
     std::cout << " file instead of calculated scale_size." << '\n';
     prm_lst_scale_size = scale_cap;

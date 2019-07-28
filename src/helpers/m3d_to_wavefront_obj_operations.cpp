@@ -1654,7 +1654,7 @@ double read_scale_and_copy_prm(
     cur_cfg_reader.get_next_value<double>(van_cfg_key::prm::scale_size);
 
   boost::filesystem::path file_to_save = output_dir_path;
-  if(prm_filepath.filename().string() == "default.prm")
+  if(prm_filepath.filename().string() == file::default_prm)
   {
     file_to_save /= prm_filepath.filename();
   }

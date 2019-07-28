@@ -190,7 +190,7 @@ void obj_to_vangers_3d_model_mode(
         boost::filesystem::recursive_directory_iterator(source_dir))
     {
       if(boost::filesystem::is_regular_file(entry.status()) &&
-         entry.path().filename() == "game.lst")
+         entry.path().filename() == helpers::file::game_lst)
       {
         boost::filesystem::path rel_to_input_file =
           entry.path().lexically_relative(source_dir);
@@ -210,8 +210,8 @@ void obj_to_vangers_3d_model_mode(
     // Getting list of paths with prm, m3d and a3d files.
     for(auto &&game_dir : vangers_game_dirs)
     {
-      boost::filesystem::path resource_folder_name("resource");
-      boost::filesystem::path m3d_folder_name("m3d");
+      boost::filesystem::path resource_folder_name(helpers::folder::resource);
+      boost::filesystem::path m3d_folder_name(helpers::folder::m3d);
       boost::filesystem::path input_resource =
         game_dir.second.root.input / resource_folder_name;
       boost::filesystem::path output_resource =
@@ -249,21 +249,21 @@ void obj_to_vangers_3d_model_mode(
 
           if(helpers::vangers_3d_tree_folders.count(parent_dir))
           {
-            if(parent_dir == "mechous")
+            if(parent_dir == helpers::folder::mechous)
             {
               game_dir.second.mechous_m3d[dir_name].input =
                 entry.path();
               game_dir.second.mechous_m3d[dir_name].output =
                 parent_abs_out_path;
             }
-            else if(parent_dir == "weapon")
+            else if(parent_dir == helpers::folder::weapon)
             {
               game_dir.second.weapon_m3d[dir_name].input =
                 entry.path();
               game_dir.second.weapon_m3d[dir_name].output =
                 parent_abs_out_path;
             }
-            else if(parent_dir == "animated")
+            else if(parent_dir == helpers::folder::animated)
             {
               game_dir.second.animated_a3d[dir_name].input =
                 entry.path();
