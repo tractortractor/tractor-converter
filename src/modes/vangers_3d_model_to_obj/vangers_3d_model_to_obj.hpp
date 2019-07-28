@@ -14,6 +14,7 @@
 #include "tiny_obj_loader.h"
 
 #include <boost/program_options.hpp>
+#include <boost/filesystem.hpp>
 
 #include <exception>
 #include <stdexcept>
