@@ -247,10 +247,7 @@ void obj_to_vangers_3d_model_mode(
             entry.path().parent_path().filename().string();
           std::string dir_name = entry.path().filename().string();
 
-          if(std::find(helpers::vangers_3d_tree_folders.begin(),
-                       helpers::vangers_3d_tree_folders.end(),
-                       parent_dir) !=
-             helpers::vangers_3d_tree_folders.end())
+          if(helpers::vangers_3d_tree_folders.count(parent_dir))
           {
             if(parent_dir == "mechous")
             {

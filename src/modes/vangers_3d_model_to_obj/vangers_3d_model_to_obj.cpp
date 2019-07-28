@@ -322,10 +322,7 @@ void vangers_3d_model_to_obj_mode(
           std::string file_ext =
             entry.path().extension().string();
 
-          if(std::find(helpers::vangers_3d_tree_folders.begin(),
-                       helpers::vangers_3d_tree_folders.end(),
-                       parent_dir) !=
-             helpers::vangers_3d_tree_folders.end())
+          if(helpers::vangers_3d_tree_folders.count(parent_dir))
           {
             if(parent_dir == "mechous" && file_ext == ".prm")
             {

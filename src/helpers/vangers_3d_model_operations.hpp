@@ -53,7 +53,7 @@ const std::string sprintf_float_per_file_cfg_format =
 
 
 
-const std::vector<std::string> vangers_3d_tree_folders
+const std::unordered_set<std::string> vangers_3d_tree_folders
 {
   "ammun",
   "animated",
