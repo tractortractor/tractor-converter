@@ -14,13 +14,14 @@ double scale_from_map(
   scale_from_map_type type,
   double default_scale)
 {
-  std::string to_lookup_str_name = to_lookup_path.stem().string();
+  std::string to_lookup_str_name =
+    boost::algorithm::to_lower_copy(to_lookup_path.stem().string());
   if(!scale_sizes.count(to_lookup_str_name))
   {
-    boost::filesystem::path bogus_file = input_game_dir_root;
+    boost::filesystem::path bogus_file_rel_root;
     if(type == scale_from_map_type::mechos)
     {
-      bogus_file /=
+      bogus_file_rel_root =
         boost::filesystem::path(helpers::folder::resource) /
         boost::filesystem::path(helpers::folder::m3d) /
         boost::filesystem::path(helpers::folder::mechous) /
@@ -30,14 +31,19 @@ double scale_from_map(
     }
     else if(type == scale_from_map_type::non_mechos)
     {
-      bogus_file /= boost::filesystem::path(helpers::file::game_lst);
+      bogus_file_rel_root = boost::filesystem::path(helpers::file::game_lst);
     }
-    if(boost::filesystem::exists(bogus_file))
+
+    boost::filesystem::path bogus_file =
+      helpers::filepath_case_insensitive_part_get(input_game_dir_root,
+                                                  bogus_file_rel_root);
+    if(bogus_file.string().size())
     {
 //    throw std::runtime_error(
 //      input_file_name_error + " file " + bogus_file.string() +
 //      " have unspecified scale_size for " +
 //      to_lookup_path.string() + " file.");
+      std::cout << '\n';
       std::cout << (input_file_name_error + " file " + bogus_file.string() +
         " have unspecified scale_size for " + to_lookup_path.string() +
         " file. Default scale " + std::to_string(default_scale) +
@@ -46,6 +52,7 @@ double scale_from_map(
     }
     else
     {
+      bogus_file = input_game_dir_root / bogus_file_rel_root;
 //    throw std::runtime_error(
 //      input_file_name_error + " file " + bogus_file.string() +
 //      " doesn't exist but needed to provide scale_size for " +
@@ -256,7 +263,8 @@ void vangers_3d_model_to_obj_mode(
         boost::filesystem::recursive_directory_iterator(source_dir))
     {
       if(boost::filesystem::is_regular_file(entry.status()) &&
-         entry.path().filename() == helpers::file::game_lst)
+         boost::algorithm::to_lower_copy(entry.path().filename().string()) ==
+           helpers::file::game_lst)
       {
         boost::filesystem::path rel_to_input_file =
           entry.path().lexically_relative(source_dir);
@@ -278,12 +286,15 @@ void vangers_3d_model_to_obj_mode(
     {
       boost::filesystem::path resource_folder_name(helpers::folder::resource);
       boost::filesystem::path m3d_folder_name(helpers::folder::m3d);
+
       boost::filesystem::path input_resource =
-        game_dir.second.root.input / resource_folder_name;
+        helpers::filepath_case_insensitive_part_get(game_dir.second.root.input,
+                                                    resource_folder_name);
       boost::filesystem::path output_resource =
         game_dir.second.root.output / resource_folder_name;
       boost::filesystem::path input_resource_m3d =
-        input_resource / m3d_folder_name;
+        helpers::filepath_case_insensitive_part_get(input_resource,
+                                                    m3d_folder_name);
       boost::filesystem::path output_resource_m3d =
         output_resource / m3d_folder_name;
 
@@ -304,8 +315,10 @@ void vangers_3d_model_to_obj_mode(
       {
         boost::filesystem::path rel_to_input_path =
           entry.path().lexically_relative(source_dir);
+        boost::filesystem::path rel_to_input_path_lowercase =
+          boost::algorithm::to_lower_copy(rel_to_input_path.string());
         boost::filesystem::path abs_out_path =
-          output_dir / rel_to_input_path;
+          output_dir / rel_to_input_path_lowercase;
         boost::filesystem::path parent_abs_out_path =
           abs_out_path.parent_path();
         if(boost::filesystem::is_directory(entry.status()) &&
@@ -315,52 +328,53 @@ void vangers_3d_model_to_obj_mode(
         }
         else if(boost::filesystem::is_regular_file(entry.status()))
         {
-          std::string parent_dir =
-            entry.path().parent_path().filename().string();
-          std::string file_name =
-            entry.path().filename().string();
-          std::string file_ext =
-            entry.path().extension().string();
+          std::string out_parent_dir =
+            boost::algorithm::to_lower_copy(
+              entry.path().parent_path().filename().string());
+          std::string out_file_name =
+            boost::algorithm::to_lower_copy(entry.path().filename().string());
+          std::string out_file_ext =
+            boost::algorithm::to_lower_copy(entry.path().extension().string());
 
-          if(helpers::vangers_3d_tree_folders.count(parent_dir))
+          if(helpers::vangers_3d_tree_folders.count(out_parent_dir))
           {
-            if(parent_dir == helpers::folder::mechous &&
-               file_ext ==   helpers::ext::prm)
+            if(out_parent_dir == helpers::folder::mechous &&
+               out_file_ext ==   helpers::ext::prm)
             {
-              game_dir.second.mechous_prm[file_name].input =
+              game_dir.second.mechous_prm[out_file_name].input =
                 entry.path();
-              game_dir.second.mechous_prm[file_name].output =
+              game_dir.second.mechous_prm[out_file_name].output =
                 parent_abs_out_path;
             }
-            else if(parent_dir == helpers::folder::mechous &&
-                    file_ext ==   helpers::ext::m3d)
+            else if(out_parent_dir == helpers::folder::mechous &&
+                    out_file_ext ==   helpers::ext::m3d)
             {
-              game_dir.second.mechous_m3d[file_name].input =
+              game_dir.second.mechous_m3d[out_file_name].input =
                 entry.path();
-              game_dir.second.mechous_m3d[file_name].output =
+              game_dir.second.mechous_m3d[out_file_name].output =
                 parent_abs_out_path;
             }
-            else if(parent_dir == helpers::folder::weapon &&
-                    file_ext ==   helpers::ext::m3d)
+            else if(out_parent_dir == helpers::folder::weapon &&
+                    out_file_ext ==   helpers::ext::m3d)
             {
-              game_dir.second.weapon_m3d[file_name].input =
+              game_dir.second.weapon_m3d[out_file_name].input =
                 entry.path();
-              game_dir.second.weapon_m3d[file_name].output =
+              game_dir.second.weapon_m3d[out_file_name].output =
                 parent_abs_out_path;
             }
-            else if(parent_dir == helpers::folder::animated &&
-                    file_ext ==   helpers::ext::a3d)
+            else if(out_parent_dir == helpers::folder::animated &&
+                    out_file_ext ==   helpers::ext::a3d)
             {
-              game_dir.second.animated_a3d[file_name].input =
+              game_dir.second.animated_a3d[out_file_name].input =
                 entry.path();
-              game_dir.second.animated_a3d[file_name].output =
+              game_dir.second.animated_a3d[out_file_name].output =
                 parent_abs_out_path;
             }
-            else if(file_ext == helpers::ext::m3d)
+            else if(out_file_ext == helpers::ext::m3d)
             {
-              game_dir.second.other_m3d[file_name].input =
+              game_dir.second.other_m3d[out_file_name].input =
                 entry.path();
-              game_dir.second.other_m3d[file_name].output =
+              game_dir.second.other_m3d[out_file_name].output =
                 parent_abs_out_path;
             }
           }
@@ -459,7 +473,10 @@ void vangers_3d_model_to_obj_mode(
       std::unordered_map<std::string, double> mechos_scale_sizes;
       for(const auto &prm_io_paths : game_dir.second.mechous_prm)
       {
-        mechos_scale_sizes[prm_io_paths.second.input.stem().string()] =
+        std::string m3d_filename_lowercase =
+          boost::algorithm::to_lower_copy(
+            prm_io_paths.second.input.stem().string());
+        mechos_scale_sizes[m3d_filename_lowercase] =
           helpers::read_scale_and_copy_prm(prm_io_paths.second.input,
                                            prm_io_paths.second.output,
                                            "source_dir",

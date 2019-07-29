@@ -21,7 +21,8 @@ m3d_to_wavefront_obj_model::m3d_to_wavefront_obj_model(
   bitflag<m3d_to_obj_flag> flags_arg)
 : vangers_model(
     input_m3d_path_arg,
-    output_m3d_path_arg / input_m3d_path_arg.stem(),
+    output_m3d_path_arg /
+      boost::algorithm::to_lower_copy(input_m3d_path_arg.stem().string()),
     input_file_name_error_arg,
     output_file_name_error_arg,
     example_weapon_model_arg,
@@ -31,7 +32,7 @@ m3d_to_wavefront_obj_model::m3d_to_wavefront_obj_model(
   float_precision_objs(float_precision_objs_arg),
   flags(flags_arg)
 {
-  model_name = input_m3d_path.stem().string();
+  model_name = boost::algorithm::to_lower_copy(input_m3d_path.stem().string());
 
   scale_size = scale_size_arg;
 
@@ -1610,20 +1611,23 @@ std::unordered_map<std::string, double> read_scales_and_copy_game_lst(
         " is current model, " + van_cfg_key::game_lst::NumModel +
         " is total number of models.\n");
     }
-    const std::string model_name =
+    std::string model_game_path =
       cur_cfg_reader.get_next_value<std::string>(van_cfg_key::game_lst::Name);
+    boost::algorithm::to_lower(model_game_path);
+    std::replace(model_game_path.begin(), model_game_path.end(), '\\', '/');
     const double scale_size =
       cur_cfg_reader.get_next_value<double>(van_cfg_key::game_lst::Size) /
       max_size;
     const std::string name_id =
       cur_cfg_reader.get_next_value<std::string>(
         van_cfg_key::game_lst::NameID);
-    scale_sizes[boost::filesystem::path(model_name).stem().string()] =
+    scale_sizes[boost::filesystem::path(model_game_path).stem().string()] =
       scale_size;
   }
 
-  boost::filesystem::path file_to_save = output_dir_path;
-  file_to_save /= lst_filepath.filename();
+  boost::filesystem::path file_to_save =
+    output_dir_path /
+    boost::algorithm::to_lower_copy(lst_filepath.filename().string());
   save_file(file_to_save,
             cur_cfg_reader.str(),
             file_flag::binary,
@@ -1653,16 +1657,19 @@ double read_scale_and_copy_prm(
   double scale_size =
     cur_cfg_reader.get_next_value<double>(van_cfg_key::prm::scale_size);
 
-  boost::filesystem::path file_to_save = output_dir_path;
-  if(prm_filepath.filename().string() == file::default_prm)
+  boost::filesystem::path file_to_save;
+  boost::filesystem::path prm_filename_lowercase =
+    boost::algorithm::to_lower_copy(prm_filepath.filename().string());
+  if(prm_filename_lowercase.string() == file::default_prm)
   {
-    file_to_save /= prm_filepath.filename();
+    file_to_save = output_dir_path / prm_filename_lowercase;
   }
   else
   {
-    boost::filesystem::path dir_to_save = file_to_save / prm_filepath.stem();
+    boost::filesystem::path dir_to_save =
+      output_dir_path / prm_filename_lowercase.stem();
     boost::filesystem::create_directory(dir_to_save);
-    file_to_save = dir_to_save / prm_filepath.filename();
+    file_to_save = dir_to_save / prm_filename_lowercase;
   }
   save_file(file_to_save,
             cur_cfg_reader.str(),

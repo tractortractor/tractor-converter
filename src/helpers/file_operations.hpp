@@ -6,6 +6,7 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include <exception>
 #include <stdexcept>
@@ -111,6 +112,12 @@ void save_file(const std::string &path_string,
 
 boost::filesystem::path get_directory(const std::string &path_string,
                                       const std::string &dir_name_error);
+
+
+
+boost::filesystem::path filepath_case_insensitive_part_get(
+  const boost::filesystem::path &case_sensitive_part,
+  const boost::filesystem::path &case_insensitive_part);
 
 } // namespace helpers
 } // namespace tractor_converter

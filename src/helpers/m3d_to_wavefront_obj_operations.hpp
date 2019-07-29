@@ -18,6 +18,7 @@
 
 #include <boost/filesystem.hpp>
 //#include <boost/filesystem/fstream.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include <exception>
 #include <stdexcept>

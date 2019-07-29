@@ -252,5 +252,31 @@ boost::filesystem::path get_directory(const std::string &path_string,
 
 
 
+
+
+boost::filesystem::path filepath_case_insensitive_part_get(
+  const boost::filesystem::path &case_sensitive_part,
+  const boost::filesystem::path &case_insensitive_part)
+{
+  std::string case_insensitive_lowercase_str =
+    boost::algorithm::to_lower_copy(case_insensitive_part.string());
+
+  for(const auto &entry :
+      boost::filesystem::recursive_directory_iterator(case_sensitive_part))
+  {
+    boost::filesystem::path rel_path_to_cmp =
+      entry.path().lexically_relative(case_sensitive_part);
+    std::string rel_path_to_cmp_lowercase_str =
+      boost::algorithm::to_lower_copy(rel_path_to_cmp.string());
+    if(rel_path_to_cmp_lowercase_str == case_insensitive_lowercase_str)
+    {
+      return entry.path();
+    }
+  }
+  return boost::filesystem::path();
+}
+
+
+
 } // namespace helpers
 } // namespace tractor_converter
