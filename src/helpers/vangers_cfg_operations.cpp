@@ -77,9 +77,9 @@ std::string raw_uncompress(std::size_t decompressed_size,
   stream.opaque = static_cast<voidpf>(Z_NULL);
 
   // -MAX_WBITS - because of negative value,
-  // inflate() treats input as raw DEFLATE compression.
+  //              inflate() treats input as raw DEFLATE compression.
   err = inflateInit2(&stream, -MAX_WBITS);
-  if (err != Z_OK)
+  if(err != Z_OK)
   {
     throw exception::raw_uncompress_error(stream.msg, err);
   }
@@ -137,6 +137,16 @@ unsigned int xzip_crypt::crt(unsigned int &val)
   val &= 0x7FFFFFFF;
 
   return val;
+}
+
+
+
+std::string fix_game_lst_path(std::string path)
+{
+  boost::algorithm::to_lower(path);
+  std::replace(path.begin(), path.end(),
+               win_dir_separator, unix_dir_separator);
+  return path;
 }
 
 
@@ -210,36 +220,24 @@ void sicher_cfg_reader::decompress()
 
 
 
-template<> int sicher_cfg_reader::get_next_value_helper_convert_str<int>()
+template<>
+void sicher_cfg_reader::skip_spaces_until_value<std::string>()
 {
-  return std::strtol(pos, &pos, 0);
-}
-
-template<> double
-  sicher_cfg_reader::get_next_value_helper_convert_str<double>()
-{
-  return std::strtod(pos, &pos);
-}
-
-template<> std::string
-  sicher_cfg_reader::get_next_value_helper_convert_str<std::string>()
-{
-  while(std::iswspace(*pos))
+  for(; pos < end_pos; ++pos)
   {
-    if(pos > end_pos)
+    if(!std::iswspace(*pos))
     {
-      throw std::runtime_error(
-        input_file_name_error + " file " +
-        input_file_path_str +
-        " unexpected end of the file while attempting to read string value.");
+      break;
     }
-    ++pos;
   }
+}
 
-  char *value_beg_pos = pos;
+
+
+void sicher_cfg_reader::move_pos_after_str_value()
+{
   if(*pos == '"')
   {
-    ++value_beg_pos;
     for(; pos < end_pos; ++pos)
     {
       if(*pos == '"' || (std::iswspace(*pos) && *pos != ' ' && *pos != '\t'))
@@ -258,6 +256,33 @@ template<> std::string
       }
     }
   }
+}
+
+
+
+template<>
+int sicher_cfg_reader::get_cur_pos_value_str<int>()
+{
+  return std::strtol(pos, &pos, 0);
+}
+
+template<>
+double sicher_cfg_reader::get_cur_pos_value_str<double>()
+{
+  return std::strtod(pos, &pos);
+}
+
+template<>
+std::string sicher_cfg_reader::get_cur_pos_value_str<std::string>()
+{
+  skip_spaces_until_value<std::string>();
+
+  char *value_beg_pos = pos;
+  if(*pos == '"')
+  {
+    ++value_beg_pos;
+  }
+  move_pos_after_str_value();
 
   return std::string(value_beg_pos,
                      static_cast<std::size_t>(pos - value_beg_pos));
@@ -265,32 +290,90 @@ template<> std::string
 
 
 
+char *sicher_cfg_reader::get_pos_of_next_value(const std::string &value_name)
+{
+  char *seach_pos = pos;
+  while(true)
+  {
+    char *value_name_beg = std::strstr(seach_pos, value_name.c_str());
+    if(!value_name_beg)
+    {
+      return nullptr;
+    }
+
+    char *value_name_end = value_name_beg + value_name.size();
+    if(value_name_end > end_pos)
+    {
+      return nullptr;
+    }
+
+    if(std::iswspace(*(value_name_beg - 1)) &&
+       std::iswspace(*(value_name_end)))
+    {
+      return value_name_end;
+    }
+
+    seach_pos = value_name_end;
+  }
+}
+
+
+
 void sicher_cfg_reader::move_pos_to_value(const std::string &value_name)
 {
-  pos = std::strstr(pos, value_name.c_str()) + value_name.size();
+  pos = get_pos_of_next_value(value_name);
+  if(!pos)
+  {
+    throw std::runtime_error(
+      input_file_name_error + " file " + input_file_path_str + ". " +
+      "Can't find next key \"" + value_name + "\".");
+  }
 }
 
 
 
-template<typename T>
-T sicher_cfg_reader::get_next_value(const std::string &value_name)
+bool sicher_cfg_reader::check_next_value(const std::string &value_name)
 {
-  move_pos_to_value(value_name);
-  return get_next_value_helper_convert_str<T>();
+  return get_pos_of_next_value(value_name);
 }
 
-template int sicher_cfg_reader::get_next_value<int>(
-  const std::string &value_name);
-template double sicher_cfg_reader::get_next_value<double>(
-  const std::string &value_name);
-template std::string sicher_cfg_reader::get_next_value<std::string>(
-  const std::string &value_name);
+
+
+void sicher_cfg_reader::fix_game_lst_paths()
+{
+  sicher_cfg_writer game_lst_writer(std::move(m_str),
+                                    input_file_path_str,
+                                    input_file_name_error,
+                                    m_str.size());
+
+  for(const auto &path_key : van_cfg_key::game_lst::path_vars)
+  {
+    while(game_lst_writer.check_next_value(path_key))
+    {
+      std::string path =
+        game_lst_writer.get_next_value_keep_pos<std::string>(path_key);
+      std::string fixed_path = fix_game_lst_path(path);
+      game_lst_writer.overwrite_next_value(path_key, fixed_path);
+    }
+  }
+
+  game_lst_writer.write_until_end();
+
+  m_str = game_lst_writer.extract_out_str();
+  pos = &m_str[0];
+  end_pos = &m_str[m_str.size()];
+}
 
 
 
 const std::string &sicher_cfg_reader::str()
 {
   return m_str;
+}
+
+std::string &&sicher_cfg_reader::extract_str()
+{
+  return std::move(m_str);
 }
 
 
@@ -301,13 +384,13 @@ sicher_cfg_writer::sicher_cfg_writer(
   std::string &&str_arg,
   const std::string &input_file_path_str_arg,
   const std::string &input_file_name_error_arg,
-  std::size_t size_increase)
+  std::size_t size_increase_arg)
 : sicher_cfg_reader(std::move(str_arg),
                     input_file_path_str_arg,
                     input_file_name_error_arg)
 {
-  m_out_str.reserve(m_str.size() + size_increase);
-  copied_pos = &m_str[0];
+  m_out_str.reserve(m_str.size() + size_increase_arg);
+  non_copied_pos = &m_str[0];
 }
 
 
@@ -316,9 +399,9 @@ void sicher_cfg_writer::write_until_pos()
 {
   m_out_str.append(
     m_str,
-    static_cast<std::size_t>(copied_pos - &m_str[0]),
-    static_cast<std::size_t>(pos - copied_pos));
-  copied_pos = pos;
+    static_cast<std::size_t>(non_copied_pos - &m_str[0]),
+    static_cast<std::size_t>(pos - non_copied_pos));
+  non_copied_pos = pos;
 }
 
 
@@ -327,86 +410,74 @@ void sicher_cfg_writer::write_until_end()
 {
   m_out_str.append(
     m_str,
-    static_cast<std::size_t>(copied_pos - &m_str[0]),
-    static_cast<std::size_t>(const_cast<char*>(end_pos) - copied_pos));
-  copied_pos = const_cast<char*>(end_pos);
+    static_cast<std::size_t>(non_copied_pos - &m_str[0]),
+    static_cast<std::size_t>(const_cast<char*>(end_pos) - non_copied_pos));
+  non_copied_pos = const_cast<char*>(end_pos);
 }
 
 
 
-template<> void
-  sicher_cfg_writer::overwrite_next_value_helper_append_value<int>(
-    const int &value,
-    const std::string &format)
+template<>
+void sicher_cfg_writer::append_value<int>(const int &value,
+                                          const std::string &format)
 {
   to_string_precision<int>(value, format, m_out_str);
 }
 
 
 
-template<> void
-  sicher_cfg_writer::overwrite_next_value_helper_append_value<double>(
-    const double &value,
-    const std::string &format)
+template<>
+void sicher_cfg_writer::append_value<double>(const double &value,
+                                             const std::string &format)
 {
   to_string_precision<double>(value, format, m_out_str);
 }
 
 
 
-template<> void
-  sicher_cfg_writer::overwrite_next_value_helper_move_pos_after_value<int>()
+template<>
+void sicher_cfg_writer::append_value<std::string>(const std::string &value,
+                                                  const std::string &format)
+{
+  m_out_str.append(value);
+}
+
+
+
+template<>
+void sicher_cfg_writer::move_pos_after_value<int>()
 {
   std::strtol(pos, &pos, 0);
 }
 
 
 
-template<> void
-  sicher_cfg_writer::overwrite_next_value_helper_move_pos_after_value<double>()
+template<>
+void sicher_cfg_writer::move_pos_after_value<double>()
 {
   std::strtod(pos, &pos);
 }
 
 
 
-template<typename T>
-void sicher_cfg_writer::overwrite_next_value(const std::string &value_name,
-                                             T value,
-                                             const std::string &format)
+template<>
+void sicher_cfg_writer::move_pos_after_value<std::string>()
 {
-  move_pos_to_value(value_name);
-  while(std::iswspace(*pos))
-  {
-    if(pos > end_pos)
-    {
-      throw std::runtime_error(
-        input_file_name_error +
-        " file " + input_file_path_str +
-        " unexpected end of the file while attempting to overwrite value.");
-    }
-    ++pos;
-  }
-  write_until_pos();
-
-  overwrite_next_value_helper_append_value<T>(value, format);
-
-  overwrite_next_value_helper_move_pos_after_value<T>();
-  copied_pos = pos;
+  move_pos_after_str_value();
 }
-
-
-
-template void sicher_cfg_writer::overwrite_next_value<int>(
-  const std::string &value_name, int value, const std::string &format);
-template void sicher_cfg_writer::overwrite_next_value<double>(
-  const std::string &value_name, double value, const std::string &format);
 
 
 
 const std::string &sicher_cfg_writer::out_str()
 {
   return m_out_str;
+}
+
+
+
+std::string &&sicher_cfg_writer::extract_out_str()
+{
+  return std::move(m_out_str);
 }
 
 
