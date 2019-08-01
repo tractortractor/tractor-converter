@@ -283,6 +283,16 @@ void obj_to_vangers_3d_model_mode(
             boost::filesystem::copy_directory(entry.path(), abs_out_path);
           }
         }
+        else
+        {
+          if(entry.path().filename().string() == helpers::file::default_prm)
+          {
+            boost::filesystem::copy_file(
+              entry.path(),
+              abs_out_path,
+              boost::filesystem::copy_option::overwrite_if_exists);
+          }
+        }
       }
     }
 
