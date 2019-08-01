@@ -1582,6 +1582,8 @@ std::unordered_map<std::string, double> read_scales_and_copy_game_lst(
   sicher_cfg_reader cur_cfg_reader(std::move(game_lst_data),
                                    lst_filepath.string(),
                                    input_file_name_error);
+  cur_cfg_reader.fix_game_lst_paths();
+
   const int max_model =
     cur_cfg_reader.get_next_value<int>(van_cfg_key::game_lst::NumModel);
   const int max_size =
@@ -1611,10 +1613,8 @@ std::unordered_map<std::string, double> read_scales_and_copy_game_lst(
         " is current model, " + van_cfg_key::game_lst::NumModel +
         " is total number of models.\n");
     }
-    std::string model_game_path =
+    const std::string model_game_path =
       cur_cfg_reader.get_next_value<std::string>(van_cfg_key::game_lst::Name);
-    boost::algorithm::to_lower(model_game_path);
-    std::replace(model_game_path.begin(), model_game_path.end(), '\\', '/');
     const double scale_size =
       cur_cfg_reader.get_next_value<double>(van_cfg_key::game_lst::Size) /
       max_size;
