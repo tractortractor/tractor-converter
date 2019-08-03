@@ -43,14 +43,14 @@ void obj_to_vangers_3d_model_mode(
       options["generate_bound_layers_num"].as<std::size_t>();
     double gen_bound_area_threshold =
       options["generate_bound_area_threshold"].as<double>();
-    if(gen_bound_area_threshold > defines::gen_bound_area_threshold_max)
+    if(gen_bound_area_threshold > option::max::gen_bound_area_threshold)
     {
       std::cout << "generate_bound_area_threshold " <<
         gen_bound_area_threshold << " is more than expected max " <<
-        defines::gen_bound_area_threshold_max << '\n';
+        option::max::gen_bound_area_threshold << '\n';
       std::cout << "generate_bound_area_threshold is set to " <<
-        defines::gen_bound_area_threshold_max << '\n';
-      gen_bound_area_threshold = defines::gen_bound_area_threshold_max;
+        option::max::gen_bound_area_threshold << '\n';
+      gen_bound_area_threshold = option::max::gen_bound_area_threshold;
     }
 
     helpers::bitflag<helpers::obj_to_m3d_flag> obj_to_m3d_flags;
@@ -87,7 +87,7 @@ void obj_to_vangers_3d_model_mode(
       std::cout << "Invalid \"c3d_default_material\" option " <<
         c3d_default_material_str << '\n';
       std::cout << e.what() << '\n';
-      std::cout << "Using " << defines::c3d_default_material <<
+      std::cout << "Using " << option::default_val::default_c3d_material <<
         " as default." << '\n';
 
       std::cout << "Valid materials:" << '\n';
@@ -102,7 +102,7 @@ void obj_to_vangers_3d_model_mode(
 
       c3d_default_material_id =
         c3d::color::ids.by<c3d::color::name>().at(
-          defines::c3d_default_material);
+          option::default_val::default_c3d_material);
     }
 
 

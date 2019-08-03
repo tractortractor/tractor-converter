@@ -3448,8 +3448,8 @@ void animated_wavefront_objs_to_a3d(
     c3d_default_material_id_arg,
     scale_cap_arg,
     max_smooth_angle_arg,
-    defines::default_gen_bound_layers_num,
-    defines::default_gen_bound_area_threshold,
+    option::default_val::gen_bound_layers_num,
+    option::default_val::gen_bound_area_threshold,
     flags_arg,
     non_mechos_scale_sizes_arg);
   cur_vangers_model.animated_wavefront_objs_to_a3d();

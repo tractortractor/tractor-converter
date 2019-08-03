@@ -354,18 +354,18 @@ boost::program_options::variables_map get_options(int ac, char** av)
 
       ("3d_obj_float_precision",
        boost::program_options::value<int>()->
-         default_value(defines::obj_float_precision),
+         default_value(option::default_val::obj_float_precision),
        ("\tPrecision of float numbers of output Wavefront object "
             "and material files.\n"
-        "\tDefaults to " + defines::obj_float_precision_str + ".\n"
+        "\tDefaults to " + option::default_val::obj_float_precision_str + ".\n"
         "\tUsed by \"vangers_3d_model_to_obj\" "
             "and \"create_wavefront_mtl\" modes.\n").c_str())
       ("3d_default_scale",
        boost::program_options::value<double>()->
-         default_value(defines::default_scale),
+         default_value(option::default_val::default_scale),
        ("\tIf there is no info about scale_size for some object "
             "in *.prm or game.lst configs, this value is used.\n"
-        "\tDefaults to " + defines::default_scale_str + ".\n"
+        "\tDefaults to " + option::default_val::default_scale_str + ".\n"
         "\tUsed by \"vangers_3d_model_to_obj\" mode.\n").c_str())
       ("m3d_weapon_file",
        boost::program_options::value<std::string>()->default_value(""),
@@ -431,20 +431,20 @@ boost::program_options::variables_map get_options(int ac, char** av)
        "\tUsed by \"vangers_3d_model_to_obj\" mode.\n")
       ("c3d_default_material",
        boost::program_options::value<std::string>()->
-         default_value(defines::c3d_default_material),
+         default_value(option::default_val::default_c3d_material),
        ("\tName of default material.\n"
         "\tIf polygon has unexpected material or no material, "
             "then default material is assigned to it.\n"
-        "\tDefaults to " + defines::c3d_default_material + ".\n"
+        "\tDefaults to " + option::default_val::default_c3d_material + ".\n"
         "\tUsed by \"obj_to_vangers_3d_model\" mode.\n").c_str())
       ("3d_scale_cap",
        boost::program_options::value<double>()->
-         default_value(defines::default_3d_scale_cap),
+         default_value(option::default_val::scale_cap),
        ("\tIf model scale is higher than this cap, "
             "it will be lowered to this cap.\n"
         "\tNeeded since the game can't properly render objects "
             "beyond certain scale_size under certain circumstances.\n"
-        "\tDefaults to " + defines::default_3d_scale_cap_str + ".\n"
+        "\tDefaults to " + option::default_val::scale_cap_str + ".\n"
         "\tUsed by \"obj_to_vangers_3d_model\" mode.\n").c_str())
       ("center_model",
        boost::program_options::bool_switch()->default_value(false),
@@ -462,7 +462,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
       ("max_smooth_angle",
        boost::program_options::value<std::string>()->
-         default_value(defines::default_max_smooth_angle),
+         default_value(option::default_val::max_smooth_angle),
        ("\tUsed when recalculating vertex normals.\n"
         "\tAngle is measured in radians by default.\n"
         "\tIf \"d\" character is found right after the number, "
@@ -470,7 +470,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
         "\tIf angle between normals of two connected polygons "
             "is lower than this value, they will be considered smooth "
             "relative to each other.\n"
-        "\tDefaults to " + defines::default_max_smooth_angle + ".\n"
+        "\tDefaults to " + option::default_val::max_smooth_angle + ".\n"
         "\tUsed by \"obj_to_vangers_3d_model\" mode.\n").c_str())
       ("generate_bound_models",
        boost::program_options::bool_switch()->default_value(false),
@@ -481,26 +481,28 @@ boost::program_options::variables_map get_options(int ac, char** av)
        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
       ("generate_bound_layers_num",
        boost::program_options::value<std::size_t>()->
-         default_value(defines::default_gen_bound_layers_num),
+         default_value(option::default_val::gen_bound_layers_num),
        ("\tUsed when generating bound model.\n"
         "\tMore layers will make generated bound model more precise.\n"
-        "\tDefaults to " + defines::default_gen_bound_layers_num_str + ".\n"
+        "\tDefaults to " +
+            option::default_val::gen_bound_layers_num_str + ".\n"
         "\tUsed by \"obj_to_vangers_3d_model\" mode.\n").c_str())
       ("generate_bound_area_threshold",
        boost::program_options::value<double>()->
-         default_value(defines::default_gen_bound_area_threshold),
+         default_value(option::default_val::gen_bound_area_threshold),
        ("\tUsed when generating bound model.\n"
         "\tWith higher values more parts of original model will be considered "
             "insignificant and will end up outside of generated bound.\n"
         "\tDefaults to " +
-            defines::default_gen_bound_area_threshold_str + ".\n"
-        "\tMaximum is " + defines::gen_bound_area_threshold_max_str + ".\n"
+            option::default_val::gen_bound_area_threshold_str + ".\n"
+        "\tMaximum is " +
+            option::max::gen_bound_area_threshold_str + ".\n"
         "\tUsed by \"obj_to_vangers_3d_model\" mode.\n").c_str())
       ("mtl_n_wheels",
        boost::program_options::value<std::size_t>()->
-         default_value(defines::default_mtl_n_wheels),
+         default_value(option::default_val::mtl_n_wheels),
        ("\tNumber of wheel materials to generate for *.mtl file.\n"
-        "\tDefaults to " + defines::default_mtl_n_wheels_str + ".\n"
+        "\tDefaults to " + option::default_val::mtl_n_wheels_str + ".\n"
         "\tUsed by \"create_wavefront_mtl\" mode.\n").c_str())
       ("mtl_body_offs",
        boost::program_options::value<std::vector<std::string>>(),
@@ -563,7 +565,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
                              error_handling::none))
     {
       std::cout << "Tractor converter program, version " <<
-        defines::version << "\n";
+        define::version << "\n";
       std::exit(EXIT_SUCCESS);
     }
 
