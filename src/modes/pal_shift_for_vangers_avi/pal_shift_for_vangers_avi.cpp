@@ -11,19 +11,21 @@ void pal_shift_for_vangers_avi_mode(
   {
     const std::vector<std::string> options_to_check =
     {
-      "source_dir",
-      "output_dir",
+      option::name::source_dir,
+      option::name::output_dir,
     };
     helpers::check_options(options, options_to_check);
 
 
 
     boost::filesystem::path source_dir =
-      helpers::get_directory(options["source_dir"].as<std::string>(),
-                             "source_dir");
+      helpers::get_directory(
+        options[option::name::source_dir].as<std::string>(),
+        option::name::source_dir);
     boost::filesystem::path output_dir =
-      helpers::get_directory(options["output_dir"].as<std::string>(),
-                             "output_dir");
+      helpers::get_directory(
+        options[option::name::output_dir].as<std::string>(),
+        option::name::output_dir);
 
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
     {
@@ -38,7 +40,7 @@ void pal_shift_for_vangers_avi_mode(
                              tga_default_pal_size/2,
                              0,
                              tga_default_pal_size/2,
-                             "source_dir");
+                             option::name::source_dir);
 
         boost::filesystem::path file_to_save = output_dir;
         file_to_save.append(file.path().stem().string() + ".pal",
@@ -46,7 +48,7 @@ void pal_shift_for_vangers_avi_mode(
         helpers::save_file(file_to_save,
                            output_pal,
                            helpers::file_flag::binary,
-                           "output_dir");
+                           option::name::output_dir);
       }
     }
   }

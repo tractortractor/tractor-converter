@@ -10,16 +10,16 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
   {
     const std::vector<std::string> options_to_check =
     {
-      "source_dir",
-      "output_dir",
+      option::name::source_dir,
+      option::name::output_dir,
     };
     helpers::check_options(options, options_to_check);
-    if(options["items_bmp"].as<bool>())
+    if(options[option::name::items_bmp].as<bool>())
     {
       const std::vector<std::string> items_options_to_check =
       {
-        "output_dir_through_map",
-        "map",
+        option::name::output_dir_through_map,
+        option::name::map,
       };
       helpers::check_options(options, items_options_to_check);
     }
@@ -27,28 +27,30 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
 
 
     boost::filesystem::path source_dir =
-      helpers::get_directory(options["source_dir"].as<std::string>(),
-                             "source_dir");
+      helpers::get_directory(
+        options[option::name::source_dir].as<std::string>(),
+        option::name::source_dir);
     boost::filesystem::path output_dir =
-      helpers::get_directory(options["output_dir"].as<std::string>(),
-                             "output_dir");
+      helpers::get_directory(
+        options[option::name::output_dir].as<std::string>(),
+        option::name::output_dir);
 
     std::string compare_map;
     boost::filesystem::path output_dir_through_map;
-    if(options["items_bmp"].as<bool>())
+    if(options[option::name::items_bmp].as<bool>())
     {
       compare_map =
         helpers::read_file(
-          options["map"].as<std::string>(),
+          options[option::name::map].as<std::string>(),
           helpers::file_flag::binary | helpers::file_flag::read_all,
           0,
           0,
           helpers::read_all_dummy_size,
-          "map");
+          option::name::map);
       output_dir_through_map =
         helpers::get_directory(
-          options["output_dir_through_map"].as<std::string>(),
-          "output_dir_through_map");
+          options[option::name::output_dir_through_map].as<std::string>(),
+          option::name::output_dir_through_map);
     }
 
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
@@ -63,7 +65,7 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
             0,
             0,
             helpers::read_all_dummy_size,
-            "source_dir");
+            option::name::source_dir);
 
         helpers::tga tga_image(bytes, 0, file.path().string());
 
@@ -81,7 +83,7 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
           real_start_of_bmp_no_coords - vangers_bmp_coords_size;
 
 
-        if(options["fix_null_bytes_and_direction"].as<bool>())
+        if(options[option::name::fix_null_bytes_and_direction].as<bool>())
         {
           // Changing all bytes with value
           // which is not used by palette into null bytes.
@@ -188,11 +190,11 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
           real_start_of_bmp,
           0,
           vangers_bmp_size,
-          "output_dir");
+          option::name::output_dir);
 
 
 
-        if(options["items_bmp"].as<bool>())
+        if(options[option::name::items_bmp].as<bool>())
         {
           std::string mapped_bytes;
           mapped_bytes.resize(vangers_bmp_size, '\0');
@@ -218,7 +220,7 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
           helpers::save_file(file_to_save_mapped,
                              mapped_bytes,
                              helpers::file_flag::binary,
-                             "output_dir_through_map");
+                             option::name::output_dir_through_map);
         }
       }
     }

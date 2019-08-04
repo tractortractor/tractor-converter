@@ -11,22 +11,25 @@ void tga_replace_pal_mode(
   {
     const std::vector<std::string> options_to_check =
     {
-      "source_dir",
-      "output_dir",
-      "pal_dir",
+      option::name::source_dir,
+      option::name::output_dir,
+      option::name::pal_dir,
     };
     helpers::check_options(options,options_to_check);
 
 
     boost::filesystem::path source_dir =
-      helpers::get_directory(options["source_dir"].as<std::string>(),
-                             "source_dir");
+      helpers::get_directory(
+        options[option::name::source_dir].as<std::string>(),
+        option::name::source_dir);
     boost::filesystem::path output_dir =
-      helpers::get_directory(options["output_dir"].as<std::string>(),
-                             "output_dir");
+      helpers::get_directory(
+        options[option::name::output_dir].as<std::string>(),
+        option::name::output_dir);
     boost::filesystem::path pal_dir =
-      helpers::get_directory(options["pal_dir"].as<std::string>(),
-                             "pal_dir");
+      helpers::get_directory(
+        options[option::name::pal_dir].as<std::string>(),
+        option::name::pal_dir);
 
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
     {
@@ -44,7 +47,7 @@ void tga_replace_pal_mode(
             original_start_of_image,
             0,
             helpers::read_all_dummy_size,
-            "source_dir");
+            option::name::source_dir);
 
         helpers::tga tga_image(bytes,
                                original_start_of_image,
@@ -60,7 +63,7 @@ void tga_replace_pal_mode(
             0,
             0,
             helpers::read_all_dummy_size,
-            "pal_dir");
+            option::name::pal_dir);
 
 
 
@@ -109,7 +112,7 @@ void tga_replace_pal_mode(
           new_start_of_image,
           0,
           size_of_file_to_write,
-          "output_dir");
+          option::name::output_dir);
       }
     }
   }

@@ -77,58 +77,62 @@ void vangers_3d_model_to_obj_mode(
   {
     const std::vector<std::string> options_to_check =
     {
-      "source_dir",
-      "output_dir"
+      option::name::source_dir,
+      option::name::output_dir,
     };
     helpers::check_options(options, options_to_check);
 
 
 
     boost::filesystem::path source_dir =
-      helpers::get_directory(options["source_dir"].as<std::string>(),
-                             "source_dir");
+      helpers::get_directory(
+        options[option::name::source_dir].as<std::string>(),
+        option::name::source_dir);
     boost::filesystem::path output_dir =
-      helpers::get_directory(options["output_dir"].as<std::string>(),
-                             "output_dir");
+      helpers::get_directory(
+        options[option::name::output_dir].as<std::string>(),
+        option::name::output_dir);
     int wavefront_float_precision =
-      options["3d_obj_float_precision"].as<int>();
-    double default_scale = options["3d_default_scale"].as<double>();
-    std::string m3d_weapon_file = options["m3d_weapon_file"].as<std::string>();
+      options[option::name::obj_float_precision].as<int>();
+    double default_scale =
+      options[option::name::default_scale].as<double>();
+    std::string m3d_weapon_file =
+      options[option::name::m3d_weapon_file].as<std::string>();
     boost::filesystem::path weapon_attachment_point_file =
       boost::filesystem::system_complete(
-        options["weapon_attachment_point_file"].as<std::string>());
+        options[option::name::weapon_attachment_point_file].as<std::string>());
     boost::filesystem::path ghost_wheel_file =
       boost::filesystem::system_complete(
-        options["ghost_wheel_file"].as<std::string>());
+        options[option::name::ghost_wheel_file].as<std::string>());
     boost::filesystem::path center_of_mass_file =
       boost::filesystem::system_complete(
-        options["center_of_mass_file"].as<std::string>());
+        options[option::name::center_of_mass_file].as<std::string>());
     boost::filesystem::path wavefront_mtl =
       boost::filesystem::system_complete(
-        options["wavefront_mtl"].as<std::string>());
+        options[option::name::wavefront_mtl].as<std::string>());
 
     helpers::bitflag<helpers::m3d_to_obj_flag> m3d_to_obj_flags;
-    if(options["extract_bound_model"].as<bool>())
+    if(options[option::name::extract_bound_model].as<bool>())
     {
       m3d_to_obj_flags |=
         helpers::m3d_to_obj_flag::extract_bound_model;
     }
-    if(options["extract_nonexistent_weapons"].as<bool>())
+    if(options[option::name::extract_nonexistent_weapons].as<bool>())
     {
       m3d_to_obj_flags |=
         helpers::m3d_to_obj_flag::extract_nonexistent_weapons;
     }
-    if(options["use_custom_volume_by_default"].as<bool>())
+    if(options[option::name::use_custom_volume_by_default].as<bool>())
     {
       m3d_to_obj_flags |=
         helpers::m3d_to_obj_flag::use_custom_volume_by_default;
     }
-    if(options["use_custom_rcm_by_default"].as<bool>())
+    if(options[option::name::use_custom_rcm_by_default].as<bool>())
     {
       m3d_to_obj_flags |=
         helpers::m3d_to_obj_flag::use_custom_rcm_by_default;
     }
-    if(options["use_custom_J_by_default"].as<bool>())
+    if(options[option::name::use_custom_J_by_default].as<bool>())
     {
       m3d_to_obj_flags |=
         helpers::m3d_to_obj_flag::use_custom_J_by_default;
@@ -139,7 +143,7 @@ void vangers_3d_model_to_obj_mode(
     if(wavefront_float_precision < volInt::min_float_precision)
     {
       throw std::runtime_error(
-        "3d_obj_float_precision must be at least " +
+        option::name::obj_float_precision + " must be at least " +
         std::to_string(volInt::min_float_precision) + ".\n");
     }
 
@@ -153,7 +157,7 @@ void vangers_3d_model_to_obj_mode(
       weapon_attachment_point_model =
         helpers::raw_obj_to_volInt_model(
           weapon_attachment_point_file,
-          "weapon_attachment_point_file",
+          option::name::weapon_attachment_point_file,
           c3d::c3d_type::regular,
           c3d::color::string_to_id::attachment_point);
       weapon_attachment_point_model_ptr = &weapon_attachment_point_model;
@@ -194,7 +198,7 @@ void vangers_3d_model_to_obj_mode(
       ghost_wheel_model =
         helpers::raw_obj_to_volInt_model(
           ghost_wheel_file,
-          "ghost_wheel_file",
+          option::name::ghost_wheel_file,
           c3d::c3d_type::regular,
           c3d::color::string_to_id::wheel);
       ghost_wheel_model_ptr = &ghost_wheel_model;
@@ -214,7 +218,7 @@ void vangers_3d_model_to_obj_mode(
 
     volInt::polyhedron center_of_mass_model;
     volInt::polyhedron *center_of_mass_model_ptr;
-    if(options["extract_center_of_mass"].as<bool>())
+    if(options[option::name::extract_center_of_mass].as<bool>())
     {
       try
       {
@@ -222,7 +226,7 @@ void vangers_3d_model_to_obj_mode(
         center_of_mass_model =
           helpers::raw_obj_to_volInt_model(
             center_of_mass_file,
-            "center_of_mass_file",
+            option::name::center_of_mass_file,
             c3d::c3d_type::regular,
             c3d::color::string_to_id::center_of_mass);
         center_of_mass_model_ptr = &center_of_mass_model;
@@ -456,8 +460,8 @@ void vangers_3d_model_to_obj_mode(
       std::unordered_map<std::string, double> non_mechos_scale_sizes =
         helpers::read_scales_and_copy_game_lst(game_dir.second.game_lst.input,
                                                game_dir.second.game_lst.output,
-                                               "source_dir",
-                                               "output_dir");
+                                               option::name::source_dir,
+                                               option::name::output_dir);
       // TEST
       /*
       for(const auto &non_mechos_scale_size : non_mechos_scale_sizes)
@@ -479,8 +483,8 @@ void vangers_3d_model_to_obj_mode(
         mechos_scale_sizes[m3d_filename_lowercase] =
           helpers::read_scale_and_copy_prm(prm_io_paths.second.input,
                                            prm_io_paths.second.output,
-                                           "source_dir",
-                                           "output_dir");
+                                           option::name::source_dir,
+                                           option::name::output_dir);
       }
       // TEST
       /*
@@ -500,7 +504,7 @@ void vangers_3d_model_to_obj_mode(
         double scale_size = scale_from_map(non_mechos_scale_sizes,
                                            m3d_io_paths.second.input,
                                            game_dir.second.root.input,
-                                           "source_dir",
+                                           option::name::source_dir,
                                            scale_from_map_type::non_mechos,
                                            default_scale);
 
@@ -508,8 +512,8 @@ void vangers_3d_model_to_obj_mode(
           helpers::weapon_m3d_to_wavefront_objs(
             m3d_io_paths.second.input,
             m3d_io_paths.second.output,
-            "source_dir",
-            "output_dir",
+            option::name::source_dir,
+            option::name::output_dir,
             weapon_attachment_point_model_ptr,
             center_of_mass_model_ptr,
             scale_size,
@@ -530,8 +534,8 @@ void vangers_3d_model_to_obj_mode(
         std::cout << "Generated mechos *.obj files " <<
           "should not be converted back to *.m3d since there will be " <<
           "no data about weapons' positions." << '\n';
-        std::cout << "You should change m3d_weapon_file option " <<
-          "to one of the following:" << '\n';
+        std::cout << "You should change " << option::name::m3d_weapon_file <<
+          " option to one of the following:" << '\n';
         for(const auto &weapons_model : weapons_models)
         {
           std::cout << weapons_model.first << '\n';
@@ -546,15 +550,15 @@ void vangers_3d_model_to_obj_mode(
         double scale_size = scale_from_map(mechos_scale_sizes,
                                            m3d_io_paths.second.input,
                                            game_dir.second.root.input,
-                                           "source_dir",
+                                           option::name::source_dir,
                                            scale_from_map_type::mechos,
                                            default_scale);
 
         helpers::mechos_m3d_to_wavefront_objs(
           m3d_io_paths.second.input,
           m3d_io_paths.second.output,
-          "source_dir",
-          "output_dir",
+          option::name::source_dir,
+          option::name::output_dir,
           mechos_weapon_model_ptr,
           ghost_wheel_model_ptr,
           center_of_mass_model_ptr,
@@ -569,15 +573,15 @@ void vangers_3d_model_to_obj_mode(
         double scale_size = scale_from_map(non_mechos_scale_sizes,
                                            a3d_io_paths.second.input,
                                            game_dir.second.root.input,
-                                           "source_dir",
+                                           option::name::source_dir,
                                            scale_from_map_type::non_mechos,
                                            default_scale);
 
         helpers::animated_a3d_to_wavefront_objs(
           a3d_io_paths.second.input,
           a3d_io_paths.second.output,
-          "source_dir",
-          "output_dir",
+          option::name::source_dir,
+          option::name::output_dir,
           center_of_mass_model_ptr,
           scale_size,
           wavefront_float_precision,
@@ -590,15 +594,15 @@ void vangers_3d_model_to_obj_mode(
         double scale_size = scale_from_map(non_mechos_scale_sizes,
                                            m3d_io_paths.second.input,
                                            game_dir.second.root.input,
-                                           "source_dir",
+                                           option::name::source_dir,
                                            scale_from_map_type::non_mechos,
                                            default_scale);
 
         helpers::other_m3d_to_wavefront_objs(
           m3d_io_paths.second.input,
           m3d_io_paths.second.output,
-          "source_dir",
-          "output_dir",
+          option::name::source_dir,
+          option::name::output_dir,
           center_of_mass_model_ptr,
           scale_size,
           wavefront_float_precision,
@@ -620,7 +624,7 @@ void vangers_3d_model_to_obj_mode(
       {
         std::cout << '\n';
         std::cout <<
-          ("Failed to copy wavefront_mtl file " +
+          ("Failed to copy " + option::name::wavefront_mtl + " file " +
            wavefront_mtl.string() + " to " + where_to_save_mtl.string() +
            ". Exception caught: " + e.what()) << '\n';
       }

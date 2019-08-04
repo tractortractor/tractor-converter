@@ -10,20 +10,20 @@ void bmp_to_tga_mode(const boost::program_options::variables_map options)
   {
     const std::vector<std::string> options_to_check =
     {
-      "source_dir",
-      "output_dir",
+      option::name::source_dir,
+      option::name::output_dir,
     };
     helpers::check_options(options, options_to_check);
 
     std::vector<std::string> pal_options_to_check;
     pal_options_to_check.reserve(1);
-    if(options["pal_for_each_file"].as<bool>())
+    if(options[option::name::pal_for_each_file].as<bool>())
     {
-      pal_options_to_check.push_back("pal_dir");
+      pal_options_to_check.push_back(option::name::pal_dir);
     }
     else
     {
-      pal_options_to_check.push_back("pal");
+      pal_options_to_check.push_back(option::name::pal);
     }
     helpers::check_options(options, pal_options_to_check);
 
@@ -32,28 +32,31 @@ void bmp_to_tga_mode(const boost::program_options::variables_map options)
     boost::filesystem::path palette_dir;
 
     boost::filesystem::path source_dir = 
-      helpers::get_directory(options["source_dir"].as<std::string>(),
-                             "source_dir");
-    if(options["pal_for_each_file"].as<bool>())
+      helpers::get_directory(
+        options[option::name::source_dir].as<std::string>(),
+        option::name::source_dir);
+    if(options[option::name::pal_for_each_file].as<bool>())
     {
       palette_dir =
-        helpers::get_directory(options["pal_dir"].as<std::string>(),
-                               "pal_dir");
+        helpers::get_directory(
+          options[option::name::pal_dir].as<std::string>(),
+          option::name::pal_dir);
     }
     else
     {
       palette =
         helpers::read_file(
-          options["pal"].as<std::string>(),
+          options[option::name::pal].as<std::string>(),
           helpers::file_flag::binary | helpers::file_flag::read_all,
           0,
           0,
           helpers::read_all_dummy_size,
-          "pal");
+          option::name::pal);
     }
     boost::filesystem::path output_dir =
-      helpers::get_directory(options["output_dir"].as<std::string>(),
-                             "output_dir");
+      helpers::get_directory(
+        options[option::name::output_dir].as<std::string>(),
+        option::name::output_dir);
 
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
     {
@@ -67,7 +70,7 @@ void bmp_to_tga_mode(const boost::program_options::variables_map options)
             tga_default_header_and_pal_size - vangers_bmp_coords_size,
             0,
             helpers::read_all_dummy_size,
-            "source_dir");
+            option::name::source_dir);
 
         std::string current_coords =
           bytes.substr(
@@ -75,7 +78,7 @@ void bmp_to_tga_mode(const boost::program_options::variables_map options)
             vangers_bmp_coords_size);
 
 
-        if(options["pal_for_each_file"].as<bool>())
+        if(options[option::name::pal_for_each_file].as<bool>())
         {
           boost::filesystem::path palette_file = palette_dir;
           palette_file.append(
@@ -88,7 +91,7 @@ void bmp_to_tga_mode(const boost::program_options::variables_map options)
               0,
               0,
               helpers::read_all_dummy_size,
-              "pal_dir");
+              option::name::pal_dir);
         }
 
 
@@ -108,7 +111,7 @@ void bmp_to_tga_mode(const boost::program_options::variables_map options)
         helpers::save_file(file_to_save,
                            bytes,
                            helpers::file_flag::binary,
-                           "output_dir");
+                           option::name::output_dir);
       }
     }
   }

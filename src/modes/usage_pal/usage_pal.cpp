@@ -104,34 +104,36 @@ void usage_pal_mode(const boost::program_options::variables_map options)
   {
     const std::vector<std::string> options_to_check =
     {
-      "source_dir",
+      option::name::source_dir,
     };
     helpers::check_options(options, options_to_check);
 
     std::vector<std::string> usage_pal_options_to_check;
     usage_pal_options_to_check.reserve(1);
-    if(options["usage_pal_for_each_file"].as<bool>())
+    if(options[option::name::usage_pal_for_each_file].as<bool>())
     {
-      usage_pal_options_to_check.push_back("output_dir");
+      usage_pal_options_to_check.push_back(option::name::output_dir);
     }
     else
     {
-      usage_pal_options_to_check.push_back("output_file");
+      usage_pal_options_to_check.push_back(option::name::output_file);
     }
     helpers::check_options(options, usage_pal_options_to_check);
 
 
 
     boost::filesystem::path source_dir =
-      helpers::get_directory(options["source_dir"].as<std::string>(),
-                             "source_dir");
+      helpers::get_directory(
+        options[option::name::source_dir].as<std::string>(),
+        option::name::source_dir);
 
     boost::filesystem::path output_dir;
-    if(options["usage_pal_for_each_file"].as<bool>())
+    if(options[option::name::usage_pal_for_each_file].as<bool>())
     {
       output_dir =
-        helpers::get_directory(options["output_dir"].as<std::string>(),
-                               "output_dir");
+        helpers::get_directory(
+          options[option::name::output_dir].as<std::string>(),
+          option::name::output_dir);
     }
 
     std::vector<int> used_characters(tga_default_colors_num_in_pal, 0);
@@ -151,7 +153,7 @@ void usage_pal_mode(const boost::program_options::variables_map options)
             0,
             4,
             helpers::read_all_dummy_size,
-            "source_dir");
+            option::name::source_dir);
 
         for(char& bmp_byte : bmp_map)
         {
@@ -159,10 +161,10 @@ void usage_pal_mode(const boost::program_options::variables_map options)
             static_cast<std::size_t>(static_cast<unsigned char>(bmp_byte))];
         }
 
-        if(options["usage_pal_for_each_file"].as<bool>())
+        if(options[option::name::usage_pal_for_each_file].as<bool>())
         {
           boost::filesystem::path file_to_save = output_dir;
-          if(options["readable_output"].as<bool>())
+          if(options[option::name::readable_output].as<bool>())
           {
             file_to_save.append(file.path().stem().string() + ".txt",
                                 boost::filesystem::path::codecvt());
@@ -172,25 +174,27 @@ void usage_pal_mode(const boost::program_options::variables_map options)
             file_to_save.append(file.path().stem().string() + ".pal",
                                 boost::filesystem::path::codecvt());
           }
-          usage_pal_mode_save_output(file_to_save,
-                                     used_characters,
-                                     options["readable_output"].as<bool>(),
-                                     "output_dir");
+          usage_pal_mode_save_output(
+            file_to_save,
+            used_characters,
+            options[option::name::readable_output].as<bool>(),
+            option::name::output_dir);
           // delete all values
           std::fill(used_characters.begin(), used_characters.end(), 0);
         }
       }
     }
 
-    if(!options["usage_pal_for_each_file"].as<bool>())
+    if(!options[option::name::usage_pal_for_each_file].as<bool>())
     {
       boost::filesystem::path file_to_save =
         boost::filesystem::system_complete(
-          options["output_file"].as<std::string>());
-      usage_pal_mode_save_output(file_to_save,
-                                 used_characters,
-                                 options["readable_output"].as<bool>(),
-                                 "output_file");
+          options[option::name::output_file].as<std::string>());
+      usage_pal_mode_save_output(
+        file_to_save,
+        used_characters,
+        options[option::name::readable_output].as<bool>(),
+        option::name::output_file);
     }
   }
   catch(std::exception &)

@@ -26,9 +26,9 @@ void compare_bmp_escave_outside_mode(
   {
     const std::vector<std::string> options_to_check =
     {
-      "source_dir",
-      "dir_to_compare",
-      "output_file",
+      option::name::source_dir,
+      option::name::dir_to_compare,
+      option::name::output_file,
     };
     helpers::check_options(options,options_to_check);
 
@@ -36,12 +36,12 @@ void compare_bmp_escave_outside_mode(
 
     boost::filesystem::path source_dir =
       helpers::get_directory(
-        options["source_dir"].as<std::string>(),
-        "source_dir");
+        options[option::name::source_dir].as<std::string>(),
+        option::name::source_dir);
     boost::filesystem::path dir_to_compare =
       helpers::get_directory(
-        options["dir_to_compare"].as<std::string>(),
-        "dir_to_compare");
+        options[option::name::dir_to_compare].as<std::string>(),
+        option::name::dir_to_compare);
 
     // Have 256 elements for each possible value of source_dir byte.
     // For each element there is vector of matched bytes of dir_to_compare
@@ -62,7 +62,7 @@ void compare_bmp_escave_outside_mode(
             0,
             4,
             helpers::read_all_dummy_size,
-            "source_dir");
+            option::name::source_dir);
 
         boost::filesystem::path file_to_compare = dir_to_compare;
         file_to_compare.append(
@@ -75,7 +75,7 @@ void compare_bmp_escave_outside_mode(
             0,
             4,
             helpers::read_all_dummy_size,
-            "dir_to_compare");
+            option::name::dir_to_compare);
 
         for(std::size_t current_byte_num = 0,
               source_file_size = bmp_bytes_source.size();
@@ -102,7 +102,7 @@ void compare_bmp_escave_outside_mode(
 
 
     // Getting human readable map.
-    if(options["readable_output"].as<bool>())
+    if(options[option::name::readable_output].as<bool>())
     {
       std::string compare_bytes_map_readable;
       // 256 bytes total *
@@ -131,10 +131,10 @@ void compare_bmp_escave_outside_mode(
         compare_bytes_map_readable.push_back('\r');
         compare_bytes_map_readable.push_back('\n');
       }
-      helpers::save_file(options["output_file"].as<std::string>(),
+      helpers::save_file(options[option::name::output_file].as<std::string>(),
                          compare_bytes_map_readable,
                          helpers::file_flag::binary,
-                         "output_file");
+                         option::name::output_file);
     }
     // getting machine readable map
     else
@@ -169,10 +169,10 @@ void compare_bmp_escave_outside_mode(
             most_frequent_pair_for_source_byte->first);
         }
       }
-      helpers::save_file(options["output_file"].as<std::string>(),
+      helpers::save_file(options[option::name::output_file].as<std::string>(),
                          source_compare_bytes_map,
                          helpers::file_flag::binary,
-                         "output_file");
+                         option::name::output_file);
     }
 
   }

@@ -132,27 +132,29 @@ void create_wavefront_mtl_mode(
   {
     const std::vector<std::string> options_to_check =
     {
-      "source_dir",
-      "output_dir"
+      option::name::source_dir,
+      option::name::output_dir,
     };
     helpers::check_options(options, options_to_check);
 
 
 
     boost::filesystem::path source_dir =
-      helpers::get_directory(options["source_dir"].as<std::string>(),
-                             "source_dir");
+      helpers::get_directory(
+        options[option::name::source_dir].as<std::string>(),
+        option::name::source_dir);
     boost::filesystem::path output_dir =
-      helpers::get_directory(options["output_dir"].as<std::string>(),
-                             "output_dir");
+      helpers::get_directory(
+        options[option::name::output_dir].as<std::string>(),
+        option::name::output_dir);
     int wavefront_float_precision =
-      options["3d_obj_float_precision"].as<int>();
+      options[option::name::obj_float_precision].as<int>();
     std::size_t n_wheels =
-      options["mtl_n_wheels"].as<std::size_t>();
+      options[option::name::mtl_n_wheels].as<std::size_t>();
 
     std::vector<std::string> additional_body_offsets_str =
       helpers::get_vec_str_option(options,
-                                  "mtl_body_offs",
+                                  option::name::mtl_body_offs,
                                   error_handling::none);
 
     c3d::color::offset_map additional_body_offsets =
@@ -181,7 +183,7 @@ void create_wavefront_mtl_mode(
                              0,
                              0,
                              tga_default_pal_size,
-                             "source_dir");
+                             option::name::source_dir);
 
 
 
@@ -317,7 +319,7 @@ void create_wavefront_mtl_mode(
         helpers::save_file(file_to_save,
                            mtl_file,
                            helpers::file_flag::none,
-                           "output_dir");
+                           option::name::output_dir);
       }
     }
   }

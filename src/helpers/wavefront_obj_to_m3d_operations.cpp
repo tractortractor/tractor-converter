@@ -2666,10 +2666,10 @@ void wavefront_obj_to_m3d_model::get_scale_helper_set_scale_from_rmax()
   if(prm_lst_scale_size - scale_cap > volInt::distinct_distance)
   {
     std::cout << '\n';
-    std::cout << "3d_scale_cap " << scale_cap <<
+    std::cout << option::name::scale_cap << " " << scale_cap <<
       " is lower than calculated scale_size " << prm_lst_scale_size <<
       " of " << input_m3d_path << " model." << '\n';
-    std::cout << "3d_scale_cap is written to ";
+    std::cout << option::name::scale_cap << " is written to ";
     if(non_mechos_scale_sizes)
     {
       std::cout << file::game_lst;

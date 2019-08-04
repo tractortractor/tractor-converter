@@ -11,22 +11,25 @@ void tga_merge_unused_pal_mode(
   {
     const std::vector<std::string> options_to_check =
     {
-      "source_dir",
-      "output_dir",
-      "unused_pals_dir",
+      option::name::source_dir,
+      option::name::output_dir,
+      option::name::unused_pals_dir,
     };
     helpers::check_options(options,options_to_check);
 
 
     boost::filesystem::path source_dir =
-      helpers::get_directory(options["source_dir"].as<std::string>(),
-                             "source_dir");
+      helpers::get_directory(
+        options[option::name::source_dir].as<std::string>(),
+        option::name::source_dir);
     boost::filesystem::path output_dir =
-      helpers::get_directory(options["output_dir"].as<std::string>(),
-                             "output_dir");
+      helpers::get_directory(
+        options[option::name::output_dir].as<std::string>(),
+        option::name::output_dir);
     boost::filesystem::path unused_pals_dir =
-      helpers::get_directory(options["unused_pals_dir"].as<std::string>(),
-                             "unused_pals_dir");
+      helpers::get_directory(
+        options[option::name::unused_pals_dir].as<std::string>(),
+        option::name::unused_pals_dir);
 
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
     {
@@ -44,7 +47,7 @@ void tga_merge_unused_pal_mode(
             original_start_of_image,
             0,
             helpers::read_all_dummy_size,
-            "source_dir");
+            option::name::source_dir);
 
         helpers::tga tga_image(bytes,
                                original_start_of_image,
@@ -60,7 +63,7 @@ void tga_merge_unused_pal_mode(
             0,
             0,
             helpers::read_all_dummy_size,
-            "unused_pals_dir");
+            option::name::unused_pals_dir);
 
 
 
@@ -239,7 +242,7 @@ void tga_merge_unused_pal_mode(
 //      helpers::save_file(file_to_save,
 //                         bytes,
 //                         helpers::file_flag::binary,
-//                         "output_dir");
+//                         option::name::output_dir);
         std::size_t size_of_file_to_write =
           tga_header_size +
           tga_image.ID_field_length +
@@ -252,7 +255,7 @@ void tga_merge_unused_pal_mode(
           new_start_of_image,
           0,
           size_of_file_to_write,
-          "output_dir");
+          option::name::output_dir);
       }
     }
   }

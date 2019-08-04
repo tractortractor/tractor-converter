@@ -10,9 +10,12 @@ int main(int argc, char** argv)
     const boost::program_options::variables_map options =
       tractor_converter::get_options(argc, argv);
 
-    tractor_converter::helpers::check_option(options, "mode");
+    tractor_converter::helpers::check_option(
+      options,
+      tractor_converter::option::name::mode);
 
-    const std::string current_mode = options["mode"].as<std::string>();
+    const std::string current_mode =
+      options[tractor_converter::option::name::mode].as<std::string>();
     if(current_mode == "usage_pal")
     {
       tractor_converter::usage_pal_mode(options);

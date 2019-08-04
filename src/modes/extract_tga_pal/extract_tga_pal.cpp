@@ -10,8 +10,8 @@ void extract_tga_pal_mode(const boost::program_options::variables_map options)
   {
     const std::vector<std::string> options_to_check =
     {
-      "source_dir",
-      "output_dir",
+      option::name::source_dir,
+      option::name::output_dir,
     };
     helpers::check_options(options,options_to_check);
 
@@ -19,12 +19,12 @@ void extract_tga_pal_mode(const boost::program_options::variables_map options)
 
     boost::filesystem::path source_dir =
       helpers::get_directory(
-        options["source_dir"].as<std::string>(),
-        "source_dir");
+        options[option::name::source_dir].as<std::string>(),
+        option::name::source_dir);
     boost::filesystem::path output_dir =
       helpers::get_directory(
-        options["output_dir"].as<std::string>(),
-        "output_dir");
+        options[option::name::output_dir].as<std::string>(),
+        option::name::output_dir);
 
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
     {
@@ -38,7 +38,7 @@ void extract_tga_pal_mode(const boost::program_options::variables_map options)
             0,
             0,
             helpers::read_all_dummy_size,
-            "source_dir");
+            option::name::source_dir);
 
 
 
@@ -67,7 +67,7 @@ void extract_tga_pal_mode(const boost::program_options::variables_map options)
           tga_image.pal_start_pos,
           0,
           tga_default_pal_size,
-          "output_dir");
+          option::name::output_dir);
       }
     }
   }

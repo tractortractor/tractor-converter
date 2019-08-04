@@ -13,27 +13,31 @@ void remove_not_used_pal_mode(
   {
     const std::vector<std::string> options_to_check =
     {
-      "source_dir",
-      "output_dir",
-      "output_dir_unused",
-      "usage_pals_dir",
+      option::name::source_dir,
+      option::name::output_dir,
+      option::name::output_dir_unused,
+      option::name::usage_pals_dir,
     };
     helpers::check_options(options,options_to_check);
 
 
 
     boost::filesystem::path source_dir =
-      helpers::get_directory(options["source_dir"].as<std::string>(),
-                             "source_dir");
+      helpers::get_directory(
+        options[option::name::source_dir].as<std::string>(),
+        option::name::source_dir);
     boost::filesystem::path output_dir =
-      helpers::get_directory(options["output_dir"].as<std::string>(),
-                             "output_dir");
+      helpers::get_directory(
+        options[option::name::output_dir].as<std::string>(),
+        option::name::output_dir);
     boost::filesystem::path output_dir_unused =
-      helpers::get_directory(options["output_dir_unused"].as<std::string>(),
-                             "output_dir_unused");
+      helpers::get_directory(
+        options[option::name::output_dir_unused].as<std::string>(),
+        option::name::output_dir_unused);
     boost::filesystem::path usage_pals_dir =
-      helpers::get_directory(options["usage_pals_dir"].as<std::string>(),
-                             "usage_pals_dir");
+      helpers::get_directory(
+        options[option::name::usage_pals_dir].as<std::string>(),
+        option::name::usage_pals_dir);
 
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
     {
@@ -47,7 +51,7 @@ void remove_not_used_pal_mode(
             0,
             0,
             helpers::read_all_dummy_size,
-            "source_dir");
+            option::name::source_dir);
 
         boost::filesystem::path usage_pal_file = usage_pals_dir;
         usage_pal_file.append(file.path().stem().string() + ".pal",
@@ -59,7 +63,7 @@ void remove_not_used_pal_mode(
             0,
             0,
             helpers::read_all_dummy_size,
-            "usage_pals_dir");
+            option::name::usage_pals_dir);
 
 
         std::string pal_used(tga_default_pal_size, '\0');
@@ -91,7 +95,7 @@ void remove_not_used_pal_mode(
         helpers::save_file(file_to_save,
                            pal_used,
                            helpers::file_flag::binary,
-                           "output_dir");
+                           option::name::output_dir);
 
         boost::filesystem::path file_to_save_unused = output_dir_unused;
         file_to_save_unused.append(file.path().stem().string() + ".pal",
@@ -99,7 +103,7 @@ void remove_not_used_pal_mode(
         helpers::save_file(file_to_save_unused,
                            pal_unused,
                            helpers::file_flag::binary,
-                           "output_dir_unused");
+                           option::name::output_dir_unused);
       }
     }
   }

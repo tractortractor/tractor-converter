@@ -13,58 +13,60 @@ void obj_to_vangers_3d_model_mode(
   {
     const std::vector<std::string> options_to_check =
     {
-      "source_dir",
-      "output_dir"
+      option::name::source_dir,
+      option::name::output_dir,
     };
     helpers::check_options(options, options_to_check);
 
 
 
     boost::filesystem::path source_dir =
-      helpers::get_directory(options["source_dir"].as<std::string>(),
-                             "source_dir");
+      helpers::get_directory(
+        options[option::name::source_dir].as<std::string>(),
+        option::name::source_dir);
     boost::filesystem::path output_dir =
-      helpers::get_directory(options["output_dir"].as<std::string>(),
-                             "output_dir");
+      helpers::get_directory(
+        options[option::name::output_dir].as<std::string>(),
+        option::name::output_dir);
     boost::filesystem::path weapon_attachment_point_file =
       boost::filesystem::system_complete(
-        options["weapon_attachment_point_file"].as<std::string>());
+        options[option::name::weapon_attachment_point_file].as<std::string>());
     boost::filesystem::path center_of_mass_file =
       boost::filesystem::system_complete(
-        options["center_of_mass_file"].as<std::string>());
+        options[option::name::center_of_mass_file].as<std::string>());
     std::string c3d_default_material_str =
-      options["c3d_default_material"].as<std::string>();
-    double scale_cap = options["3d_scale_cap"].as<double>();
+      options[option::name::default_c3d_material].as<std::string>();
+    double scale_cap = options[option::name::scale_cap].as<double>();
     double max_smooth_angle =
       helpers::get_angle_option(options,
-                                "max_smooth_angle",
+                                option::name::max_smooth_angle,
                                 error_handling::throw_exception);
     std::size_t gen_bound_layers_num =
-      options["generate_bound_layers_num"].as<std::size_t>();
+      options[option::name::gen_bound_layers_num].as<std::size_t>();
     double gen_bound_area_threshold =
-      options["generate_bound_area_threshold"].as<double>();
+      options[option::name::gen_bound_area_threshold].as<double>();
     if(gen_bound_area_threshold > option::max::gen_bound_area_threshold)
     {
-      std::cout << "generate_bound_area_threshold " <<
+      std::cout << option::name::gen_bound_area_threshold << " " <<
         gen_bound_area_threshold << " is more than expected max " <<
         option::max::gen_bound_area_threshold << '\n';
-      std::cout << "generate_bound_area_threshold is set to " <<
+      std::cout << option::name::gen_bound_area_threshold << " is set to " <<
         option::max::gen_bound_area_threshold << '\n';
       gen_bound_area_threshold = option::max::gen_bound_area_threshold;
     }
 
     helpers::bitflag<helpers::obj_to_m3d_flag> obj_to_m3d_flags;
-    if(options["center_model"].as<bool>())
+    if(options[option::name::center_model].as<bool>())
     {
       obj_to_m3d_flags |=
         helpers::obj_to_m3d_flag::center_model;
     }
-    if(options["recalculate_vertex_normals"].as<bool>())
+    if(options[option::name::recalculate_vertex_normals].as<bool>())
     {
       obj_to_m3d_flags |=
         helpers::obj_to_m3d_flag::recalculate_vertex_normals;
     }
-    if(options["generate_bound_models"].as<bool>())
+    if(options[option::name::gen_bound_models].as<bool>())
     {
       obj_to_m3d_flags |=
         helpers::obj_to_m3d_flag::generate_bound_models;
@@ -114,7 +116,7 @@ void obj_to_vangers_3d_model_mode(
       weapon_attachment_point_model =
         helpers::raw_obj_to_volInt_model(
           weapon_attachment_point_file,
-          "weapon_attachment_point_file",
+          option::name::weapon_attachment_point_file,
           c3d::c3d_type::regular,
           c3d::color::string_to_id::attachment_point);
       weapon_attachment_point_model_ptr = &weapon_attachment_point_model;
@@ -153,7 +155,7 @@ void obj_to_vangers_3d_model_mode(
       center_of_mass_model =
         helpers::raw_obj_to_volInt_model(
           center_of_mass_file,
-          "center_of_mass_file",
+          option::name::center_of_mass_file,
           c3d::c3d_type::regular,
           c3d::color::string_to_id::center_of_mass);
       center_of_mass_model_ptr = &center_of_mass_model;
@@ -318,8 +320,8 @@ void obj_to_vangers_3d_model_mode(
             helpers::weapon_wavefront_objs_to_m3d(
               m3d_io_paths.second.input,
               m3d_io_paths.second.output,
-              "source_dir",
-              "output_dir",
+              option::name::source_dir,
+              option::name::output_dir,
               weapon_attachment_point_model_ptr,
               center_of_mass_model_ptr,
               c3d_default_material_id,
@@ -340,7 +342,7 @@ void obj_to_vangers_3d_model_mode(
         {
           std::cout << '\n';
           std::cout << "Failed to load weapon files " <<
-            "from source_dir *.obj directory " <<
+            "from " << option::name::source_dir << " *.obj directory " <<
             m3d_io_paths.second.input.string() <<
             " and save them as *.m3d file in output_dir directory " <<
             m3d_io_paths.second.output.string() << '\n';
@@ -364,8 +366,8 @@ void obj_to_vangers_3d_model_mode(
           helpers::mechos_wavefront_objs_to_m3d(
             m3d_io_paths.second.input,
             m3d_io_paths.second.output,
-            "source_dir",
-            "output_dir",
+            option::name::source_dir,
+            option::name::output_dir,
             mechos_weapon_model_ptr,
             weapon_attachment_point_model_ptr,
             center_of_mass_model_ptr,
@@ -387,7 +389,7 @@ void obj_to_vangers_3d_model_mode(
         {
           std::cout << '\n';
           std::cout << "Failed to load mechos files " <<
-            "from source_dir *.obj directory " <<
+            "from " << option::name::source_dir << " *.obj directory " <<
             m3d_io_paths.second.input.string() <<
             " and save them as *.m3d file in output_dir directory " <<
             m3d_io_paths.second.output.string() << '\n';
@@ -403,8 +405,8 @@ void obj_to_vangers_3d_model_mode(
           helpers::animated_wavefront_objs_to_a3d(
             a3d_io_paths.second.input,
             a3d_io_paths.second.output,
-            "source_dir",
-            "output_dir",
+            option::name::source_dir,
+            option::name::output_dir,
             center_of_mass_model_ptr,
             c3d_default_material_id,
             scale_cap,
@@ -422,7 +424,7 @@ void obj_to_vangers_3d_model_mode(
         {
           std::cout << '\n';
           std::cout << "Failed to load animated files " <<
-            "from source_dir *.obj directory " <<
+            "from " << option::name::source_dir << " *.obj directory " <<
             a3d_io_paths.second.input.string() <<
             " and save them as *.a3d file in output_dir directory " <<
             a3d_io_paths.second.output.string() << '\n';
@@ -438,8 +440,8 @@ void obj_to_vangers_3d_model_mode(
           helpers::other_wavefront_objs_to_m3d(
             m3d_io_paths.second.input,
             m3d_io_paths.second.output,
-            "source_dir",
-            "output_dir",
+            option::name::source_dir,
+            option::name::output_dir,
             center_of_mass_model_ptr,
             c3d_default_material_id,
             scale_cap,
@@ -459,7 +461,7 @@ void obj_to_vangers_3d_model_mode(
         {
           std::cout << '\n';
           std::cout << "Failed to load files " <<
-            "from source_dir *.obj directory " <<
+            "from " << option::name::source_dir << " *.obj directory " <<
             m3d_io_paths.second.input.string() <<
             " and save them as *.m3d file in output_dir directory " <<
             m3d_io_paths.second.output.string() << '\n';
@@ -471,8 +473,8 @@ void obj_to_vangers_3d_model_mode(
 
       helpers::create_game_lst(game_dir.second.game_lst.input,
                                game_dir.second.game_lst.output,
-                               "source_dir",
-                               "output_dir",
+                               option::name::source_dir,
+                               option::name::output_dir,
                                non_mechos_scale_sizes_ptr);
     }
   }
