@@ -345,16 +345,19 @@ boost::program_options::variables_map get_options(int ac, char** av)
        boost::program_options::value<std::string>(),
        "\tFile where to output.\n")
       ((option::name::readable_output + ",r").c_str(),
-       boost::program_options::bool_switch()->default_value(false),
+       boost::program_options::bool_switch()->
+         default_value(option::default_val::readable_output),
        "\tGenerate human readable output instead of one usable by programs.\n"
        "\tUsed by \"usage_pal\" and \"compare_bmp_escave_outside\" modes.\n")
       (option::name::reversed.c_str(),
-       boost::program_options::bool_switch()->default_value(false),
+       boost::program_options::bool_switch()->
+         default_value(option::default_val::reversed),
        "\tConvert other way around.\n"
        "\tUsed by \"vangers_pal_to_tga_pal\" mode.\n")
 
       (option::name::usage_pal_for_each_file.c_str(),
-       boost::program_options::bool_switch()->default_value(false),
+       boost::program_options::bool_switch()->
+         default_value(option::default_val::usage_pal_for_each_file),
        "\tCreate usage palette for each *.bmp file "
            "instead of just one for all.\n"
        "\tUsed by \"usage_pal\" mode.\n")
@@ -371,7 +374,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
        "\tWhere to search for unused colors palettes.\n"
        "\tUsed by \"tga_merge_unused_pal\" mode.\n")
       (option::name::pal_for_each_file.c_str(),
-       boost::program_options::bool_switch()->default_value(false),
+       boost::program_options::bool_switch()->
+         default_value(option::default_val::pal_for_each_file),
        ("\tWhether to use single palette specified by "
             "\"" + option::name::pal + "\" option "
             "or folder with palette for each file "
@@ -390,7 +394,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
        "\tDirectory with *.bmp files to compare against source directory.\n"
        "\tUsed by \"compare_bmp_escave_outside\" mode.\n")
       (option::name::items_bmp.c_str(),
-       boost::program_options::bool_switch()->default_value(false),
+       boost::program_options::bool_switch()->
+         default_value(option::default_val::items_bmp),
        ("\tConverting item files so 2 *.bmp "
             "should be created for each *.tga file.\n"
         "\t\"" + option::name::map + "\" and "
@@ -407,7 +412,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "generated with \"compare_bmp_escave_outside\" map.\n"
        "\tUsed by \"tga_to_bmp\" mode.\n")
       (option::name::fix_null_bytes_and_direction.c_str(),
-       boost::program_options::bool_switch()->default_value(false),
+       boost::program_options::bool_switch()->
+         default_value(option::default_val::fix_null_bytes_and_direction),
        "\tIf null bytes got changed to never used color "
            "or image got rotated/flipped, "
            "specify this option to deal with those problems.\n"
@@ -416,105 +422,110 @@ boost::program_options::variables_map get_options(int ac, char** av)
       (option::name::obj_float_precision.c_str(),
        boost::program_options::value<int>()->
          default_value(option::default_val::obj_float_precision),
-       ("\tPrecision of float numbers of output Wavefront object "
-            "and material files.\n"
-        "\tDefaults to " + option::default_val::obj_float_precision_str + ".\n"
-        "\tUsed by \"vangers_3d_model_to_obj\" "
-            "and \"create_wavefront_mtl\" modes.\n").c_str())
+       "\tPrecision of float numbers of output Wavefront object "
+           "and material files.\n"
+       "\tUsed by \"vangers_3d_model_to_obj\" "
+           "and \"create_wavefront_mtl\" modes.\n")
       (option::name::default_scale.c_str(),
        boost::program_options::value<double>()->
          default_value(option::default_val::default_scale),
-       ("\tIf there is no info about scale_size for some object "
-            "in *.prm or game.lst configs, this value is used.\n"
-        "\tDefaults to " + option::default_val::default_scale_str + ".\n"
-        "\tUsed by \"vangers_3d_model_to_obj\" mode.\n").c_str())
+       "\tIf there is no info about scale_size for some object "
+           "in *.prm or game.lst configs, this value is used.\n"
+       "\tUsed by \"vangers_3d_model_to_obj\" mode.\n")
       (option::name::m3d_weapon_file.c_str(),
-       boost::program_options::value<std::string>()->default_value(""),
+       boost::program_options::value<std::string>()->
+         default_value(option::default_val::m3d_weapon_file),
        "\tName of *.m3d file which contains weapon model.\n"
        "\tThis model is used to indicate positions "
            "of weapons slots on mechos models.\n"
-       "\tDefaults to empty string.\n"
        "\tUsed by \"vangers_3d_model_to_obj\".\n")
       (option::name::weapon_attachment_point_file.c_str(),
-       boost::program_options::value<std::string>()->default_value(""),
+       boost::program_options::value<std::string>()->
+         default_value(option::default_val::weapon_attachment_point_file),
        "\tPath to Wavefront *.obj file.\n"
        "\tThis *.obj model is used to indicate position of attachment point "
            "in weapons models.\n"
-       "\tDefaults to empty string.\n"
        "\tUsed by \"vangers_3d_model_to_obj\" and "
            "\"obj_to_vangers_3d_model\" modes.\n")
       (option::name::ghost_wheel_file.c_str(),
-       boost::program_options::value<std::string>()->default_value(""),
+       boost::program_options::value<std::string>()->
+         default_value(option::default_val::ghost_wheel_file),
        "\tPath to Wavefront *.obj file.\n"
        "\tThis *.obj model is used to indicate "
            "position of wheels with no polygons.\n"
-       "\tDefaults to empty string.\n"
        "\tUsed by \"vangers_3d_model_to_obj\" mode.\n")
       (option::name::extract_bound_model.c_str(),
-       boost::program_options::bool_switch()->default_value(false),
+       boost::program_options::bool_switch()->
+         default_value(option::default_val::extract_bound_model),
        "\tExtract bound models from *.m3d files.\n"
        "\tUsed by \"vangers_3d_model_to_obj\" mode.\n")
       (option::name::extract_center_of_mass.c_str(),
-       boost::program_options::bool_switch()->default_value(false),
+       boost::program_options::bool_switch()->
+         default_value(option::default_val::extract_center_of_mass),
        "\tExtract center of mass from *.m3d/*.a3d file and mark it.\n"
        "\tUsed by \"vangers_3d_model_to_obj\" mode.\n")
       (option::name::center_of_mass_file.c_str(),
-       boost::program_options::value<std::string>()->default_value(""),
+       boost::program_options::value<std::string>()->
+         default_value(option::default_val::center_of_mass_file),
        "\tPath to Wavefront *.obj file.\n"
        "\tThis *.obj model is used to indicate position "
            "of extracted center of mass.\n"
-       "\tDefaults to empty string.\n"
        "\tUsed by \"vangers_3d_model_to_obj\" and "
            "\"obj_to_vangers_3d_model\" modes.\n")
       (option::name::wavefront_mtl.c_str(),
-       boost::program_options::value<std::string>()->default_value(""),
+       boost::program_options::value<std::string>()->
+         default_value(option::default_val::wavefront_mtl),
        "\tPath to *.mtl file for generated *.obj files.\n"
        "\tCopied to output directories.\n"
        "\tUsed by \"vangers_3d_model_to_obj\" mode.\n")
       (option::name::extract_nonexistent_weapons.c_str(),
-       boost::program_options::bool_switch()->default_value(false),
+       boost::program_options::bool_switch()->
+         default_value(option::default_val::extract_nonexistent_weapons),
        "\tExtract weapons even when they are marked as nonexistent.\n"
        "\tUsed by \"vangers_3d_model_to_obj\" mode.\n")
       (option::name::use_custom_volume_by_default.c_str(),
-       boost::program_options::bool_switch()->default_value(false),
+       boost::program_options::bool_switch()->
+         default_value(option::default_val::use_custom_volume_by_default),
        "\tGenerate per-file configs with uncommented "
            "custom volume options.\n"
        "\tUsed by \"vangers_3d_model_to_obj\" mode.\n")
       (option::name::use_custom_rcm_by_default.c_str(),
-       boost::program_options::bool_switch()->default_value(false),
+       boost::program_options::bool_switch()->
+         default_value(option::default_val::use_custom_rcm_by_default),
        "\tGenerate per-file configs with uncommented "
            "custom center of mass options.\n"
        "\tUsed by \"vangers_3d_model_to_obj\" mode.\n")
       (option::name::use_custom_J_by_default.c_str(),
-       boost::program_options::bool_switch()->default_value(false),
+       boost::program_options::bool_switch()->
+         default_value(option::default_val::use_custom_J_by_default),
        "\tGenerate per-file configs with uncommented "
            "custom inertia tensor options.\n"
        "\tUsed by \"vangers_3d_model_to_obj\" mode.\n")
       (option::name::default_c3d_material.c_str(),
        boost::program_options::value<std::string>()->
          default_value(option::default_val::default_c3d_material),
-       ("\tName of default material.\n"
-        "\tIf polygon has unexpected material or no material, "
-            "then default material is assigned to it.\n"
-        "\tDefaults to " + option::default_val::default_c3d_material + ".\n"
-        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n").c_str())
+       "\tName of default material.\n"
+       "\tIf polygon has unexpected material or no material, "
+           "then default material is assigned to it.\n"
+       "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
       (option::name::scale_cap.c_str(),
        boost::program_options::value<double>()->
          default_value(option::default_val::scale_cap),
-       ("\tIf model scale is higher than this cap, "
-            "it will be lowered to this cap.\n"
-        "\tNeeded since the game can't properly render objects "
-            "beyond certain scale_size under certain circumstances.\n"
-        "\tDefaults to " + option::default_val::scale_cap_str + ".\n"
-        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n").c_str())
+       "\tIf model scale is higher than this cap, "
+           "it will be lowered to this cap.\n"
+       "\tNeeded since the game can't properly render objects "
+           "beyond certain scale_size under certain circumstances.\n"
+       "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
       (option::name::center_model.c_str(),
-       boost::program_options::bool_switch()->default_value(false),
+       boost::program_options::bool_switch()->
+         default_value(option::default_val::center_model),
        "\tAutomatically move model to center of extreme points.\n"
        "\tShould be always turned on to ensure proper position of "
            "in-game xyzmax bounding box and rmax bounding sphere.\n"
        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
       (option::name::recalculate_vertex_normals.c_str(),
-       boost::program_options::bool_switch()->default_value(false),
+       boost::program_options::bool_switch()->
+         default_value(option::default_val::recalculate_vertex_normals),
        "\tRecalculate vertex normals.\n"
        "\tShould be always turned on unless "
            "vertex normals were manually set specifically for this game.\n"
@@ -524,17 +535,17 @@ boost::program_options::variables_map get_options(int ac, char** av)
       (option::name::max_smooth_angle.c_str(),
        boost::program_options::value<std::string>()->
          default_value(option::default_val::max_smooth_angle),
-       ("\tUsed when recalculating vertex normals.\n"
-        "\tAngle is measured in radians by default.\n"
-        "\tIf \"d\" character is found right after the number, "
-            "value is measured in degrees.\n"
-        "\tIf angle between normals of two connected polygons "
-            "is lower than this value, they will be considered smooth "
-            "relative to each other.\n"
-        "\tDefaults to " + option::default_val::max_smooth_angle + ".\n"
-        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n").c_str())
+       "\tUsed when recalculating vertex normals.\n"
+       "\tAngle is measured in radians by default.\n"
+       "\tIf \"d\" character is found right after the number, "
+           "value is measured in degrees.\n"
+       "\tIf angle between normals of two connected polygons "
+           "is lower than this value, they will be considered smooth "
+           "relative to each other.\n"
+       "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
       (option::name::gen_bound_models.c_str(),
-       boost::program_options::bool_switch()->default_value(false),
+       boost::program_options::bool_switch()->
+         default_value(option::default_val::gen_bound_models),
        "\tAutomatically generate bound models.\n"
        "\tShould be always turned on unless "
            "bound models were manually edited.\n"
@@ -543,28 +554,23 @@ boost::program_options::variables_map get_options(int ac, char** av)
       (option::name::gen_bound_layers_num.c_str(),
        boost::program_options::value<std::size_t>()->
          default_value(option::default_val::gen_bound_layers_num),
-       ("\tUsed when generating bound model.\n"
-        "\tMore layers will make generated bound model more precise.\n"
-        "\tDefaults to " +
-            option::default_val::gen_bound_layers_num_str + ".\n"
-        "\tUsed by \"obj_to_vangers_3d_model\" mode.\n").c_str())
+       "\tUsed when generating bound model.\n"
+       "\tMore layers will make generated bound model more precise.\n"
+       "\tUsed by \"obj_to_vangers_3d_model\" mode.\n")
       (option::name::gen_bound_area_threshold.c_str(),
        boost::program_options::value<double>()->
          default_value(option::default_val::gen_bound_area_threshold),
        ("\tUsed when generating bound model.\n"
         "\tWith higher values more parts of original model will be considered "
             "insignificant and will end up outside of generated bound.\n"
-        "\tDefaults to " +
-            option::default_val::gen_bound_area_threshold_str + ".\n"
         "\tMaximum is " +
             option::max::gen_bound_area_threshold_str + ".\n"
         "\tUsed by \"obj_to_vangers_3d_model\" mode.\n").c_str())
       (option::name::mtl_n_wheels.c_str(),
        boost::program_options::value<std::size_t>()->
          default_value(option::default_val::mtl_n_wheels),
-       ("\tNumber of wheel materials to generate for *.mtl file.\n"
-        "\tDefaults to " + option::default_val::mtl_n_wheels_str + ".\n"
-        "\tUsed by \"create_wavefront_mtl\" mode.\n").c_str())
+       "\tNumber of wheel materials to generate for *.mtl file.\n"
+       "\tUsed by \"create_wavefront_mtl\" mode.\n")
       (option::name::mtl_body_offs.c_str(),
        boost::program_options::value<std::vector<std::string>>(),
        "\tBody materials to create.\n"

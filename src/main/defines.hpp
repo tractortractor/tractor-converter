@@ -67,33 +67,35 @@ namespace option{
   } // namespace name
 
   namespace default_val{
-    const std::string config = "tractor_converter.cfg";
-
-    const int obj_float_precision = 6;
-    const std::string obj_float_precision_str =
-      std::to_string(obj_float_precision);
-
-    const double default_scale = 0.195313;
-    const std::string default_scale_str = std::to_string(default_scale);
-
-    const std::string default_c3d_material = "body_red";
-
-    const double scale_cap = 0.560547;
-    const std::string scale_cap_str =
-      std::to_string(scale_cap);
-
-    const std::string max_smooth_angle = "30d";
-
-    const std::size_t gen_bound_layers_num = 100;
-    const std::string gen_bound_layers_num_str =
-      std::to_string(gen_bound_layers_num);
-
-    const double gen_bound_area_threshold = 0.25;
-    const std::string gen_bound_area_threshold_str =
-      std::to_string(gen_bound_area_threshold);
-
-    const std::size_t mtl_n_wheels = 50;
-    const std::string mtl_n_wheels_str = std::to_string(mtl_n_wheels);
+    const std::string config =                       "tractor_converter.cfg";
+    const bool readable_output =                     false;
+    const bool reversed =                            false;
+    const bool usage_pal_for_each_file =             false;
+    const bool pal_for_each_file =                   false;
+    const bool items_bmp =                           false;
+    const bool fix_null_bytes_and_direction =        false;
+    const int obj_float_precision =                  6;
+    const double default_scale =                     0.195313;
+    const std::string m3d_weapon_file =              "";
+    const std::string weapon_attachment_point_file = "";
+    const std::string ghost_wheel_file =             "";
+    const bool extract_bound_model =                 false;
+    const bool extract_center_of_mass =              false;
+    const std::string center_of_mass_file =          "";
+    const std::string wavefront_mtl =                "";
+    const bool extract_nonexistent_weapons =         false;
+    const bool use_custom_volume_by_default =        false;
+    const bool use_custom_rcm_by_default =           false;
+    const bool use_custom_J_by_default =             false;
+    const std::string default_c3d_material =         "body_red";
+    const double scale_cap =                         0.560547;
+    const bool center_model =                        false;
+    const bool recalculate_vertex_normals =          false;
+    const std::string max_smooth_angle =             "30d";
+    const bool gen_bound_models =                    false;
+    const std::size_t gen_bound_layers_num =         100;
+    const double gen_bound_area_threshold =          0.25;
+    const std::size_t mtl_n_wheels =                 50;
   } // namespace default_val
 
   namespace max{
