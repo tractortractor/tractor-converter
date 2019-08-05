@@ -2262,7 +2262,8 @@ polyhedron polyhedron::extr_inds_to_bound(
     if(wheel_params_extremes)
     {
       for(std::size_t cur_axis = 0;
-          cur_axis < generate_bound::model::min_verts_to_adjust_by_wheel.size();
+          cur_axis <
+            generate_bound::model::min_verts_to_adjust_by_wheel.size();
           ++cur_axis)
       {
         double min_value = wheel_params_extremes->min()[cur_axis];
