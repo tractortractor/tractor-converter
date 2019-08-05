@@ -54,7 +54,8 @@ void pal_shift_for_vangers_avi_mode(
   }
   catch(std::exception &)
   {
-    std::cout << "pal_shift_for_vangers_avi mode failed" << '\n';
+    std::cout << mode::name::pal_shift_for_vangers_avi <<
+      " mode failed" << '\n';
     throw;
   }
 }

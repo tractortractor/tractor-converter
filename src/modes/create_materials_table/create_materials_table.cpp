@@ -334,7 +334,7 @@ void create_materials_table_mode(
   }
   catch(std::exception &)
   {
-    std::cout << "create_wavefront_mtl mode failed" << '\n';
+    std::cout << mode::name::create_materials_table << " mode failed" << '\n';
     throw;
   }
 }

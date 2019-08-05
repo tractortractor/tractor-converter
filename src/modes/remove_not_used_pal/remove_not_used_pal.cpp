@@ -109,7 +109,7 @@ void remove_not_used_pal_mode(
   }
   catch(std::exception &)
   {
-    std::cout << "remove_not_used_pal mode failed" << '\n';
+    std::cout << mode::name::remove_not_used_pal << " mode failed" << '\n';
     throw;
   }
 }

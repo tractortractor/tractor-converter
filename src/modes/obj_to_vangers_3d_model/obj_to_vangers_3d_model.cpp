@@ -480,7 +480,7 @@ void obj_to_vangers_3d_model_mode(
   }
   catch(std::exception &)
   {
-    std::cout << "obj_to_vangers_3d_model mode failed" << '\n';
+    std::cout << mode::name::obj_to_vangers_3d_model << " mode failed" << '\n';
     throw;
   }
 }

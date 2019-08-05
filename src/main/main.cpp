@@ -16,59 +16,67 @@ int main(int argc, char** argv)
 
     const std::string current_mode =
       options[tractor_converter::option::name::mode].as<std::string>();
-    if(current_mode == "usage_pal")
+    if(current_mode == tractor_converter::mode::name::usage_pal)
     {
       tractor_converter::usage_pal_mode(options);
     }
-    else if(current_mode == "remove_not_used_pal")
+    else if(current_mode == tractor_converter::mode::name::remove_not_used_pal)
     {
       tractor_converter::remove_not_used_pal_mode(options);
     }
-    else if(current_mode == "tga_merge_unused_pal")
+    else if(current_mode ==
+            tractor_converter::mode::name::tga_merge_unused_pal)
     {
       tractor_converter::tga_merge_unused_pal_mode(options);
     }
-    else if(current_mode == "tga_replace_pal")
+    else if(current_mode == tractor_converter::mode::name::tga_replace_pal)
     {
       tractor_converter::tga_replace_pal_mode(options);
     }
-    else if(current_mode == "extract_tga_pal")
+    else if(current_mode == tractor_converter::mode::name::extract_tga_pal)
     {
       tractor_converter::extract_tga_pal_mode(options);
     }
-    else if (current_mode == "vangers_pal_to_tga_pal")
+    else if(current_mode ==
+            tractor_converter::mode::name::vangers_pal_to_tga_pal)
     {
       tractor_converter::vangers_pal_to_tga_pal_mode(options);
     }
-    else if (current_mode == "pal_shift_for_vangers_avi")
+    else if(current_mode ==
+            tractor_converter::mode::name::pal_shift_for_vangers_avi)
     {
       tractor_converter::pal_shift_for_vangers_avi_mode(options);
     }
-    else if(current_mode == "compare_bmp_escave_outside")
+    else if(current_mode ==
+            tractor_converter::mode::name::cmp_bmp_escave_outside)
     {
       tractor_converter::compare_bmp_escave_outside_mode(options);
     }
-    else if(current_mode == "bmp_to_tga")
+    else if(current_mode == tractor_converter::mode::name::bmp_to_tga)
     {
       tractor_converter::bmp_to_tga_mode(options);
     }
-    else if(current_mode == "tga_to_bmp")
+    else if(current_mode == tractor_converter::mode::name::tga_to_bmp)
     {
       tractor_converter::tga_to_bmp_mode(options);
     }
-    else if(current_mode == "vangers_3d_model_to_obj")
+    else if(current_mode ==
+            tractor_converter::mode::name::vangers_3d_model_to_obj)
     {
       tractor_converter::vangers_3d_model_to_obj_mode(options);
     }
-    else if(current_mode == "obj_to_vangers_3d_model")
+    else if(current_mode ==
+            tractor_converter::mode::name::obj_to_vangers_3d_model)
     {
       tractor_converter::obj_to_vangers_3d_model_mode(options);
     }
-    else if(current_mode == "create_wavefront_mtl")
+    else if(current_mode ==
+            tractor_converter::mode::name::create_wavefront_mtl)
     {
       tractor_converter::create_wavefront_mtl_mode(options);
     }
-    else if(current_mode == "create_materials_table")
+    else if(current_mode ==
+            tractor_converter::mode::name::create_materials_table)
     {
       tractor_converter::create_materials_table_mode(options);
     }

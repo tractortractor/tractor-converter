@@ -117,7 +117,7 @@ void bmp_to_tga_mode(const boost::program_options::variables_map options)
   }
   catch(std::exception &)
   {
-    std::cout << "bmp_to_tga mode failed" << '\n';
+    std::cout << mode::name::bmp_to_tga << " mode failed" << '\n';
     throw;
   }
 }

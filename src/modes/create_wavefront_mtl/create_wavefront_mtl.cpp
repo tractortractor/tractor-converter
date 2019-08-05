@@ -325,7 +325,7 @@ void create_wavefront_mtl_mode(
   }
   catch(std::exception &)
   {
-    std::cout << "create_wavefront_mtl mode failed" << '\n';
+    std::cout << mode::name::create_wavefront_mtl << " mode failed" << '\n';
     throw;
   }
 }

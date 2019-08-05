@@ -261,7 +261,7 @@ void tga_merge_unused_pal_mode(
   }
   catch(std::exception &)
   {
-    std::cout << "tga_merge_unused_pal mode failed" << '\n';
+    std::cout << mode::name::tga_merge_unused_pal << " mode failed" << '\n';
     throw;
   }
 }

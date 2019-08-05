@@ -82,7 +82,7 @@ void vangers_pal_to_tga_pal_mode(
   }
   catch(std::exception &)
   {
-    std::cout << "vangers_pal_to_tga_pal mode failed" << '\n';
+    std::cout << mode::name::vangers_pal_to_tga_pal << " mode failed" << '\n';
     throw;
   }
 }

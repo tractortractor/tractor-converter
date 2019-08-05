@@ -106,6 +106,25 @@ namespace option{
 
 } // namespace option
 
+namespace mode{
+  namespace name{
+    const std::string usage_pal =                 "usage_pal";
+    const std::string remove_not_used_pal =       "remove_not_used_pal";
+    const std::string tga_merge_unused_pal =      "tga_merge_unused_pal";
+    const std::string tga_replace_pal =           "tga_replace_pal";
+    const std::string extract_tga_pal =           "extract_tga_pal";
+    const std::string vangers_pal_to_tga_pal =    "vangers_pal_to_tga_pal";
+    const std::string pal_shift_for_vangers_avi = "pal_shift_for_vangers_avi";
+    const std::string cmp_bmp_escave_outside =    "compare_bmp_escave_outside";
+    const std::string bmp_to_tga =                "bmp_to_tga";
+    const std::string tga_to_bmp =                "tga_to_bmp";
+    const std::string vangers_3d_model_to_obj =   "vangers_3d_model_to_obj";
+    const std::string obj_to_vangers_3d_model =   "obj_to_vangers_3d_model";
+    const std::string create_wavefront_mtl =      "create_wavefront_mtl";
+    const std::string create_materials_table =    "create_materials_table";
+  } // namespace name
+} // namespace mode
+
 // For helpers.
 enum class error_handling{none, throw_exception};
 

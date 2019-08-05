@@ -118,7 +118,8 @@ void tga_replace_pal_mode(
   }
   catch(std::exception &)
   {
-    std::cout << "tga_replace_pal_mode mode failed" << '\n';
+    std::cout << tractor_converter::mode::name::tga_replace_pal <<
+      " mode failed" << '\n';
     throw;
   }
 }

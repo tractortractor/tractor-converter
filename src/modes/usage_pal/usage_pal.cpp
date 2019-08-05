@@ -199,7 +199,7 @@ void usage_pal_mode(const boost::program_options::variables_map options)
   }
   catch(std::exception &)
   {
-    std::cout << "usage_pal mode failed" << '\n';
+    std::cout << mode::name::usage_pal << " mode failed" << '\n';
     throw;
   }
 }

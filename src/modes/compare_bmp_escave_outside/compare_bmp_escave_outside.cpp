@@ -178,7 +178,8 @@ void compare_bmp_escave_outside_mode(
   }
   catch(std::exception &)
   {
-    std::cout << "compare_bmp_escave_outside mode failed" << '\n';
+    std::cout << mode::name::cmp_bmp_escave_outside <<
+      " mode failed" << '\n';
     throw;
   }
 }
