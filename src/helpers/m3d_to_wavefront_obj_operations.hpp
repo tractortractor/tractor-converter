@@ -61,6 +61,13 @@ const std::size_t per_file_cfg_expected_animated_el_size = 1000;
 
 
 
+const std::unordered_set<std::string> inertia_tensor_sensitive_models =
+  {
+    "f1", // Fish.
+  };
+
+
+
 class m3d_to_wavefront_obj_model : vangers_model
 {
 public:

@@ -1315,9 +1315,8 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
     "# Overwrite inertia tensor matrix for main model "
       "when custom matrix is supplied.\n"
     "# Used in many calculations.\n");
-  // Special handling for fishes since they are sensitive to inertia tensor.
   if(!(flags & m3d_to_obj_flag::use_custom_J_by_default) &&
-     model_name != "f1")
+     !inertia_tensor_sensitive_models.count(model_name))
   {
     conf_data_to_save.push_back('#');
   }
