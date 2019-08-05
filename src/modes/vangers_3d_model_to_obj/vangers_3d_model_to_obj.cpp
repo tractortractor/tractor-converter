@@ -99,16 +99,16 @@ void vangers_3d_model_to_obj_mode(
     std::string m3d_weapon_file =
       options[option::name::m3d_weapon_file].as<std::string>();
     boost::filesystem::path weapon_attachment_point_file =
-      boost::filesystem::system_complete(
+      boost::filesystem::canonical(
         options[option::name::weapon_attachment_point_file].as<std::string>());
     boost::filesystem::path ghost_wheel_file =
-      boost::filesystem::system_complete(
+      boost::filesystem::canonical(
         options[option::name::ghost_wheel_file].as<std::string>());
     boost::filesystem::path center_of_mass_file =
-      boost::filesystem::system_complete(
+      boost::filesystem::canonical(
         options[option::name::center_of_mass_file].as<std::string>());
     boost::filesystem::path wavefront_mtl =
-      boost::filesystem::system_complete(
+      boost::filesystem::canonical(
         options[option::name::wavefront_mtl].as<std::string>());
 
     helpers::bitflag<helpers::m3d_to_obj_flag> m3d_to_obj_flags;
