@@ -141,7 +141,7 @@ void usage_pal_mode(const boost::program_options::variables_map options)
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
     {
       if(boost::filesystem::is_regular_file(file.status()) &&
-         file.path().extension().string() == ".bmp")
+         file.path().extension().string() == ext::bmp)
       {
         std::string bmp_map;
         // First 4 bytes indicate width and height of BMP file
@@ -171,7 +171,7 @@ void usage_pal_mode(const boost::program_options::variables_map options)
           }
           else
           {
-            file_to_save.append(file.path().stem().string() + ".pal",
+            file_to_save.append(file.path().stem().string() + ext::pal,
                                 boost::filesystem::path::codecvt());
           }
           usage_pal_mode_save_output(

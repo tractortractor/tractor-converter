@@ -34,7 +34,7 @@ void tga_merge_unused_pal_mode(
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
     {
       if(boost::filesystem::is_regular_file(file.status()) &&
-         file.path().extension().string() == ".tga")
+         file.path().extension().string() == ext::tga)
       {
         // Leaving extra 768 bytes at the beginning of
         // *.tga file string to move header here in case
@@ -54,7 +54,7 @@ void tga_merge_unused_pal_mode(
                                file.path().string());
 
         boost::filesystem::path unused_pal_file = unused_pals_dir;
-        unused_pal_file.append(file.path().stem().string() + ".pal",
+        unused_pal_file.append(file.path().stem().string() + ext::pal,
                                boost::filesystem::path::codecvt());
         std::string unused_pal =
           helpers::read_file(
@@ -237,7 +237,7 @@ void tga_merge_unused_pal_mode(
 
 
         boost::filesystem::path file_to_save = output_dir;
-        file_to_save.append(file.path().stem().string() + ".tga",
+        file_to_save.append(file.path().stem().string() + ext::tga,
                             boost::filesystem::path::codecvt());
 //      helpers::save_file(file_to_save,
 //                         bytes,

@@ -34,7 +34,7 @@ void tga_replace_pal_mode(
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
     {
       if(boost::filesystem::is_regular_file(file.status()) &&
-         file.path().extension().string() == ".tga")
+         file.path().extension().string() == ext::tga)
       {
         // Leaving extra 768 bytes at the beginning of
         // *.tga file string to move header here in case
@@ -54,7 +54,7 @@ void tga_replace_pal_mode(
                                file.path().string());
 
         boost::filesystem::path new_pal_file = pal_dir;
-        new_pal_file.append(file.path().stem().string() + ".pal",
+        new_pal_file.append(file.path().stem().string() + ext::pal,
                             boost::filesystem::path::codecvt());
         std::string new_pal =
           helpers::read_file(
@@ -98,7 +98,7 @@ void tga_replace_pal_mode(
 
 
         boost::filesystem::path file_to_save = output_dir;
-        file_to_save.append(file.path().stem().string() + ".tga",
+        file_to_save.append(file.path().stem().string() + ext::tga,
                             boost::filesystem::path::codecvt());
         std::size_t size_of_file_to_write =
           tga_header_size +

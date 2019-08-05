@@ -353,7 +353,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
     {{wavefront_obj::obj_name::main, cur_main_model}};
   save_volInt_as_wavefront_obj(
     cur_main_model_map,
-    output_m3d_path.parent_path() / (model_name + "_test.obj"),
+    output_m3d_path.parent_path() / (model_name + "_test" + ext::obj),
     "test");
   for(const auto &wheel_model : wheels_models)
   {
@@ -365,7 +365,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
         (model_name +
            "_wheel_steer_" +
            std::to_string(wheel_model.first) +
-           ".obj"),
+           ext::obj),
       "test");
   }
   */
@@ -460,7 +460,7 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
 //std::cout << "z_off: " << cur_main_model.z_off() << '\n';
 //save_volInt_as_wavefront_obj(
 //  cur_main_model,
-//  output_m3d_path.parent_path() / (model_name + "_test.obj"),
+//  output_m3d_path.parent_path() / (model_name + "_test" + ext::obj),
 //  "test");
 
 
@@ -2376,11 +2376,13 @@ void wavefront_obj_to_m3d_model::get_a3d_header_data(
   if(!n_models)
   {
     boost::filesystem::path first_model_path =
-      (input_m3d_path / (model_name + "_1.obj"));
+      (input_m3d_path / (model_name + "_1" + ext::obj));
     throw std::runtime_error(
       input_file_name_error + " file " +
-      first_model_path.string() + " is not valid *.obj model." + '\n' +
-      "Expecting first model of *.a3d to be valid." + '\n');
+      first_model_path.string() + " is not valid " + ext::readable::obj +
+      " model." + '\n' +
+      "Expecting first model of " + ext::readable::a3d +
+      " to be valid." + '\n');
   }
 
   for(auto &&model : *models)
@@ -3233,8 +3235,10 @@ void create_game_lst(
 
   // TEST
   /*
-  std::cout << "game.lst input path: " << input_file_path_arg.string() << '\n';
-  std::cout << "game.lst output path: " << where_to_save_arg.string() << '\n';
+  std::cout << file::game_lst <<
+    " input path: " << input_file_path_arg.string() << '\n';
+  std::cout << file::game_lst <<
+    " output path: " << where_to_save_arg.string() << '\n';
   */
 
   std::string orig_game_lst_data =

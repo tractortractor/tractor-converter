@@ -29,7 +29,7 @@ void extract_tga_pal_mode(const boost::program_options::variables_map options)
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
     {
       if(boost::filesystem::is_regular_file(file.status()) &&
-         file.path().extension().string() == ".tga")
+         file.path().extension().string() == ext::tga)
       {
         std::string bytes =
           helpers::read_file(
@@ -58,7 +58,7 @@ void extract_tga_pal_mode(const boost::program_options::variables_map options)
 
 
         boost::filesystem::path file_to_save = output_dir;
-        file_to_save.append(file.path().stem().string() + ".pal",
+        file_to_save.append(file.path().stem().string() + ext::pal,
                             boost::filesystem::path::codecvt());
         helpers::write_to_file(
           file_to_save,

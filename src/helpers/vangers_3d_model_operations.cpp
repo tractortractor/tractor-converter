@@ -78,7 +78,7 @@ std::string vangers_model::file_prefix_to_filename(
   {
     model_num_string = "_" + std::to_string(*model_num + 1);
   }
-  return full_prefix + model_num_string + ".obj";
+  return full_prefix + model_num_string + ext::obj;
 }
 
 

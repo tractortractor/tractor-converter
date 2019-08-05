@@ -125,6 +125,59 @@ namespace mode{
   } // namespace name
 } // namespace mode
 
+namespace folder{
+  const std::string resource = "resource";
+    const std::string m3d =      "m3d";
+      const std::string ammun =    "ammun";
+      const std::string animated = "animated";
+      const std::string fauna =    "fauna";
+      const std::string items =    "items";
+      const std::string mechous =  "mechous";
+      const std::string unique =   "unique";
+      const std::string weapon =   "weapon";
+} // namespace folder
+
+namespace ext{
+  const std::string delimiter = ".";
+  const std::string m3d =       delimiter + "m3d";
+  const std::string a3d =       delimiter + "a3d";
+  const std::string prm =       delimiter + "prm";
+  const std::string lst =       delimiter + "lst";
+
+  const std::string obj =       delimiter + "obj";
+  const std::string mtl =       delimiter + "mtl";
+
+  const std::string tga =       delimiter + "tga";
+  const std::string bmp =       delimiter + "bmp";
+  const std::string pal =       delimiter + "pal";
+
+  const std::string html =      delimiter + "html";
+
+  namespace readable{
+    const std::string prefix =        "*";
+    const std::string m3d =           prefix + ext::m3d;
+    const std::string a3d =           prefix + ext::a3d;
+    const std::string m3d_and_a3d =   m3d + "/" + a3d;
+    const std::string prm =           prefix + ext::prm;
+    const std::string lst =           prefix + ext::lst;
+
+    const std::string obj =           prefix + ext::obj;
+    const std::string wavefront_obj = "Wavefront " + prefix + ext::obj;
+    const std::string mtl =           prefix + ext::mtl;
+
+    const std::string tga =           prefix + ext::tga;
+    const std::string bmp =           prefix + ext::bmp;
+    const std::string pal =           prefix + ext::pal;
+
+    const std::string html =          prefix + ext::html;
+  } // namespace readable
+} // namespace ext
+
+namespace file{
+  const std::string game_lst =    "game" + ext::lst;
+  const std::string default_prm = "default" + ext::prm;
+} // namespace file
+
 // For helpers.
 enum class error_handling{none, throw_exception};
 

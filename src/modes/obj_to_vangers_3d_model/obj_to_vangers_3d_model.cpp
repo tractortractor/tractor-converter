@@ -128,8 +128,8 @@ void obj_to_vangers_3d_model_mode(
           weapon_attachment_point_file.string() << '\n';
         std::cout << '\n';
         std::cout << "Can't find 3 reference vertices." << '\n';
-        std::cout << "Generated *.m3d mechos and weapon files " <<
-          "will have incorrect attachment point data." << '\n';
+        std::cout << "Generated " << ext::readable::m3d << " mechos and " <<
+          "weapon files will have incorrect attachment point data." << '\n';
         std::cout << '\n';
         weapon_attachment_point_model_ptr = nullptr;
       }
@@ -139,7 +139,8 @@ void obj_to_vangers_3d_model_mode(
       std::cout << '\n';
       std::cout << "Failed to get weapon attachment point model: " <<
         e.what() << '\n';
-      std::cout << "Generated *.m3d mechos and weapon files may have " <<
+      std::cout << "Generated " << ext::readable::m3d <<
+        " mechos and weapon files may have " <<
         "incorrect weapon attachment point data." << '\n';
       weapon_attachment_point_model_ptr = nullptr;
     }
@@ -167,8 +168,8 @@ void obj_to_vangers_3d_model_mode(
           center_of_mass_file.string() << '\n';
         std::cout << '\n';
         std::cout << "Can't find 3 reference vertices." << '\n';
-        std::cout << "Generated *.m3d and *.a3d files " <<
-          "will not have custom center of mass." << '\n';
+        std::cout << "Generated " << ext::readable::m3d_and_a3d <<
+          " files will not have custom center of mass." << '\n';
         std::cout << '\n';
         center_of_mass_model_ptr = nullptr;
       }
@@ -178,7 +179,7 @@ void obj_to_vangers_3d_model_mode(
       std::cout << '\n';
       std::cout << "Failed to get center of mass model: " << e.what() << '\n';
       std::cout << "Center of mass marker will not be used " <<
-        "for generation of *.m3d/*.a3d files." << '\n';
+        "for generation of " + ext::readable::m3d_and_a3d + " files." << '\n';
       center_of_mass_model_ptr = nullptr;
     }
 
@@ -192,7 +193,7 @@ void obj_to_vangers_3d_model_mode(
         boost::filesystem::recursive_directory_iterator(source_dir))
     {
       if(boost::filesystem::is_regular_file(entry.status()) &&
-         entry.path().filename() == helpers::file::game_lst)
+         entry.path().filename() == file::game_lst)
       {
         boost::filesystem::path rel_to_input_file =
           entry.path().lexically_relative(source_dir);
@@ -212,8 +213,8 @@ void obj_to_vangers_3d_model_mode(
     // Getting list of paths with prm, m3d and a3d files.
     for(auto &&game_dir : vangers_game_dirs)
     {
-      boost::filesystem::path resource_folder_name(helpers::folder::resource);
-      boost::filesystem::path m3d_folder_name(helpers::folder::m3d);
+      boost::filesystem::path resource_folder_name(folder::resource);
+      boost::filesystem::path m3d_folder_name(folder::m3d);
       boost::filesystem::path input_resource =
         game_dir.second.root.input / resource_folder_name;
       boost::filesystem::path output_resource =
@@ -251,21 +252,21 @@ void obj_to_vangers_3d_model_mode(
 
           if(helpers::vangers_3d_tree_folders.count(parent_dir))
           {
-            if(parent_dir == helpers::folder::mechous)
+            if(parent_dir == folder::mechous)
             {
               game_dir.second.mechous_m3d[dir_name].input =
                 entry.path();
               game_dir.second.mechous_m3d[dir_name].output =
                 parent_abs_out_path;
             }
-            else if(parent_dir == helpers::folder::weapon)
+            else if(parent_dir == folder::weapon)
             {
               game_dir.second.weapon_m3d[dir_name].input =
                 entry.path();
               game_dir.second.weapon_m3d[dir_name].output =
                 parent_abs_out_path;
             }
-            else if(parent_dir == helpers::folder::animated)
+            else if(parent_dir == folder::animated)
             {
               game_dir.second.animated_a3d[dir_name].input =
                 entry.path();
@@ -287,7 +288,7 @@ void obj_to_vangers_3d_model_mode(
         }
         else
         {
-          if(entry.path().filename().string() == helpers::file::default_prm)
+          if(entry.path().filename().string() == file::default_prm)
           {
             boost::filesystem::copy_file(
               entry.path(),
@@ -342,9 +343,11 @@ void obj_to_vangers_3d_model_mode(
         {
           std::cout << '\n';
           std::cout << "Failed to load weapon files " <<
-            "from " << option::name::source_dir << " *.obj directory " <<
+            "from " << option::name::source_dir << " " <<
+            ext::readable::obj << " directory " <<
             m3d_io_paths.second.input.string() <<
-            " and save them as *.m3d file in output_dir directory " <<
+            " and save them as " << ext::readable::m3d <<
+            " file in " << option::name::output_dir << " directory " <<
             m3d_io_paths.second.output.string() << '\n';
           std::cout << e.what() << '\n';
         }
@@ -389,9 +392,11 @@ void obj_to_vangers_3d_model_mode(
         {
           std::cout << '\n';
           std::cout << "Failed to load mechos files " <<
-            "from " << option::name::source_dir << " *.obj directory " <<
+            "from " << option::name::source_dir << " " <<
+            ext::readable::obj << " directory " <<
             m3d_io_paths.second.input.string() <<
-            " and save them as *.m3d file in output_dir directory " <<
+            " and save them as " << ext::readable::m3d <<
+            " file in " << option::name::output_dir << " directory " <<
             m3d_io_paths.second.output.string() << '\n';
           std::cout << e.what() << '\n';
         }
@@ -424,9 +429,11 @@ void obj_to_vangers_3d_model_mode(
         {
           std::cout << '\n';
           std::cout << "Failed to load animated files " <<
-            "from " << option::name::source_dir << " *.obj directory " <<
+            "from " << option::name::source_dir << " " <<
+            ext::readable::obj << " directory " <<
             a3d_io_paths.second.input.string() <<
-            " and save them as *.a3d file in output_dir directory " <<
+            " and save them as " << ext::readable::a3d <<
+            " file in " << option::name::output_dir << " directory " <<
             a3d_io_paths.second.output.string() << '\n';
           std::cout << e.what() << '\n';
         }
@@ -461,9 +468,11 @@ void obj_to_vangers_3d_model_mode(
         {
           std::cout << '\n';
           std::cout << "Failed to load files " <<
-            "from " << option::name::source_dir << " *.obj directory " <<
+            "from " << option::name::source_dir << " " <<
+            ext::readable::obj << " directory " <<
             m3d_io_paths.second.input.string() <<
-            " and save them as *.m3d file in output_dir directory " <<
+            " and save them as " << ext::readable::m3d <<
+            " file in " << option::name::output_dir << " directory " <<
             m3d_io_paths.second.output.string() << '\n';
           std::cout << e.what() << '\n';
         }

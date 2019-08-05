@@ -106,12 +106,14 @@ void raw_obj_to_volInt_helper_get_body_color(
     throw std::runtime_error(
       "Error while loading " + input_file_name_error +
       " file " + input_file_path_arg.string() +
-      " as wavefront *.obj. Several body colors detected: offset " +
+      " as " + ext::readable::wavefront_obj + ". "
+      "Several body colors detected: offset " +
       std::to_string(volInt_model.bodyColorOffset) + ", shift " +
       std::to_string(volInt_model.bodyColorShift) + " and offset " +
       std::to_string(new_color_offset) + ", shift " +
       std::to_string(new_color_shift) +
-      ". Only one unique body color is allowed per *.m3d model.");
+      ". Only one unique body color is allowed per " +
+      ext::readable::m3d_and_a3d + " model.");
   }
   volInt_model.bodyColorOffset = new_color_offset;
   volInt_model.bodyColorShift = new_color_shift;
@@ -124,7 +126,7 @@ void raw_obj_to_volInt_helper_get_body_color(
     throw std::runtime_error(
       "Error while loading " + input_file_name_error +
       " file " + input_file_path_arg.string() +
-      " as wavefront *.obj. Body color offset " +
+      " as " + ext::readable::wavefront_obj + ". Body color offset " +
       std::to_string(volInt_model.bodyColorOffset) +
       " or body color shift " +
       std::to_string(volInt_model.bodyColorShift) +
@@ -212,7 +214,7 @@ void raw_obj_to_volInt_helper_get_wheel_properties(
       throw std::runtime_error(
         "Error while loading " + input_file_name_error +
         " file " + input_file_path_arg.string() +
-        " as wavefront *.obj. " +
+        " as " + ext::readable::wavefront_obj + ". " +
         "There are steer and non-steer materials of wheel " +
         std::to_string(cur_wheel_id) +
         ". Wheel must be either steer or non-steer.");
@@ -224,7 +226,7 @@ void raw_obj_to_volInt_helper_get_wheel_properties(
       throw std::runtime_error(
         "Error while loading " + input_file_name_error +
         " file " + input_file_path_arg.string() +
-        " as wavefront *.obj. " +
+        " as " + ext::readable::wavefront_obj + ". " +
         "There are ghost and non-ghost materials of wheel " +
         std::to_string(cur_wheel_id) +
         ". Wheel must be either ghost or non-ghost.");
@@ -251,7 +253,7 @@ void raw_obj_to_volInt_helper_get_weapon_num(
     throw std::runtime_error(
       "Error while loading " + input_file_name_error +
       " file " + input_file_path_arg.string() +
-      " as wavefront *.obj. ID of weapon material " +
+      " as " + ext::readable::wavefront_obj + ". ID of weapon material " +
       std::to_string(tiny_obj_id_to_wheel_weapon_id[mat]) +
       " is more than max weapon slot " +
       std::to_string(m3d::weapon_slot::max_slots) + ".");
@@ -277,7 +279,8 @@ void raw_obj_to_volInt_helper_get_attachment_point_num(
     throw std::runtime_error(
       "Error while loading " + input_file_name_error +
       " file " + input_file_path_arg.string() +
-      " as wavefront *.obj. ID of attachment point material " +
+      " as " + ext::readable::wavefront_obj + ". "
+      "ID of attachment point material " +
       std::to_string(tiny_obj_id_to_wheel_weapon_id[mat]) +
       " is more than max weapon slot " +
       std::to_string(m3d::weapon_slot::max_slots) + ".");
@@ -336,7 +339,8 @@ volInt::polyhedron raw_obj_to_volInt_model(
     throw std::runtime_error(
       "Error while loading " + input_file_name_error +
       " file " + input_file_path_arg.string() +
-      " as wavefront *.obj. tiny_obj_loader error: " + err);
+      " as " + ext::readable::wavefront_obj + ". "
+      "tiny_obj_loader error: " + err);
   }
 
   if(!ret)
@@ -344,7 +348,8 @@ volInt::polyhedron raw_obj_to_volInt_model(
     throw std::runtime_error(
       "Error while loading " + input_file_name_error +
       " file " + input_file_path_arg.string() +
-      " as wavefront *.obj. tinyobj::LoadObj returned false.");
+      " as " + ext::readable::wavefront_obj + ". "
+      "tinyobj::LoadObj returned false.");
   }
 
 
@@ -375,7 +380,7 @@ volInt::polyhedron raw_obj_to_volInt_model(
         throw std::runtime_error(
           "Error while loading " + input_file_name_error +
           " file " + input_file_path_arg.string() +
-          " as wavefront *.obj. Expected " +
+          " as " + ext::readable::wavefront_obj + ". Expected " +
           expected_n_verts_per_poly_err_str +
           " object with " +
           std::to_string(

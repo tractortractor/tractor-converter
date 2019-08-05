@@ -32,7 +32,7 @@ namespace wavefront_obj{
   // 2 "g " + 2 newline
   const std::size_t base_obj_name_size = 2 + 2;
 
-  const std::string mtl_filename = "object_materials.mtl";
+  const std::string mtl_filename = "object_materials" + ext::mtl;
   // 19 "mtllib ../../../../" + mtl_filename.size() + 2 '\n'
   const std::size_t mtl_reference_size = 19 + mtl_filename.size() + 2;
 

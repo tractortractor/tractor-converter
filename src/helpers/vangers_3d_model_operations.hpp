@@ -53,31 +53,6 @@ const std::string sprintf_float_per_file_cfg_format =
 
 
 
-namespace folder {
-  const std::string resource = "resource";
-    const std::string m3d =      "m3d";
-      const std::string ammun =    "ammun";
-      const std::string animated = "animated";
-      const std::string fauna =    "fauna";
-      const std::string items =    "items";
-      const std::string mechous =  "mechous";
-      const std::string unique =   "unique";
-      const std::string weapon =   "weapon";
-} // namespace folder
-
-namespace ext {
-  const std::string delimiter = ".";
-  const std::string m3d =       delimiter + "m3d";
-  const std::string a3d =       delimiter + "a3d";
-  const std::string prm =       delimiter + "prm";
-  const std::string lst =       delimiter + "lst";
-} // namespace ext
-
-namespace file {
-  const std::string game_lst =    "game" + ext::lst;
-  const std::string default_prm = "default" + ext::prm;
-} // namespace file
-
 const std::unordered_set<std::string> vangers_3d_tree_folders
 {
   folder::ammun,

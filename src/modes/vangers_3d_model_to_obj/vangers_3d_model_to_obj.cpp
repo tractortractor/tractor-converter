@@ -22,16 +22,16 @@ double scale_from_map(
     if(type == scale_from_map_type::mechos)
     {
       bogus_file_rel_root =
-        boost::filesystem::path(helpers::folder::resource) /
-        boost::filesystem::path(helpers::folder::m3d) /
-        boost::filesystem::path(helpers::folder::mechous) /
+        boost::filesystem::path(folder::resource) /
+        boost::filesystem::path(folder::m3d) /
+        boost::filesystem::path(folder::mechous) /
         boost::filesystem::path(to_lookup_str_name).append(
-          helpers::ext::prm,
+          ext::prm,
           boost::filesystem::path::codecvt());
     }
     else if(type == scale_from_map_type::non_mechos)
     {
-      bogus_file_rel_root = boost::filesystem::path(helpers::file::game_lst);
+      bogus_file_rel_root = boost::filesystem::path(file::game_lst);
     }
 
     boost::filesystem::path bogus_file =
@@ -169,9 +169,10 @@ void vangers_3d_model_to_obj_mode(
           weapon_attachment_point_file.string() << '\n';
         std::cout << '\n';
         std::cout << "Can't find 3 reference vertices." << '\n';
-        std::cout << "Generated weapon and mechos *.obj files " << 
-          "should not be converted back to *.m3d since there will be " <<
-          "no data about weapons' attachment points." << '\n';
+        std::cout << "Generated weapon and mechos " << ext::readable::obj <<
+          " files should not be converted back to " << ext::readable::m3d <<
+          " since there will be no data about " <<
+          "weapons' attachment points." << '\n';
         std::cout << '\n';
         weapon_attachment_point_model_ptr = nullptr;
       }
@@ -181,8 +182,9 @@ void vangers_3d_model_to_obj_mode(
       std::cout << '\n';
       std::cout << "Failed to get weapon attachment point model: " <<
         e.what() << '\n';
-      std::cout << "Generated weapon and mechos *.obj files " <<
-        "should not be converted back to *.m3d since there will be " <<
+      std::cout << "Generated weapon and mechos " << ext::readable::obj <<
+        " files  should not be converted back to " <<
+        ext::readable::m3d << " since there will be " <<
         "no data about weapons' attachment points." << '\n';
       weapon_attachment_point_model_ptr = nullptr;
     }
@@ -268,7 +270,7 @@ void vangers_3d_model_to_obj_mode(
     {
       if(boost::filesystem::is_regular_file(entry.status()) &&
          boost::algorithm::to_lower_copy(entry.path().filename().string()) ==
-           helpers::file::game_lst)
+           file::game_lst)
       {
         boost::filesystem::path rel_to_input_file =
           entry.path().lexically_relative(source_dir);
@@ -288,8 +290,8 @@ void vangers_3d_model_to_obj_mode(
     // Getting list of paths with prm, m3d and a3d files.
     for(auto &&game_dir : vangers_game_dirs)
     {
-      boost::filesystem::path resource_folder_name(helpers::folder::resource);
-      boost::filesystem::path m3d_folder_name(helpers::folder::m3d);
+      boost::filesystem::path resource_folder_name(folder::resource);
+      boost::filesystem::path m3d_folder_name(folder::m3d);
 
       boost::filesystem::path input_resource =
         helpers::filepath_case_insensitive_part_get(game_dir.second.root.input,
@@ -342,39 +344,39 @@ void vangers_3d_model_to_obj_mode(
 
           if(helpers::vangers_3d_tree_folders.count(out_parent_dir))
           {
-            if(out_parent_dir == helpers::folder::mechous &&
-               out_file_ext ==   helpers::ext::prm)
+            if(out_parent_dir == folder::mechous &&
+               out_file_ext ==   ext::prm)
             {
               game_dir.second.mechous_prm[out_file_name].input =
                 entry.path();
               game_dir.second.mechous_prm[out_file_name].output =
                 parent_abs_out_path;
             }
-            else if(out_parent_dir == helpers::folder::mechous &&
-                    out_file_ext ==   helpers::ext::m3d)
+            else if(out_parent_dir == folder::mechous &&
+                    out_file_ext ==   ext::m3d)
             {
               game_dir.second.mechous_m3d[out_file_name].input =
                 entry.path();
               game_dir.second.mechous_m3d[out_file_name].output =
                 parent_abs_out_path;
             }
-            else if(out_parent_dir == helpers::folder::weapon &&
-                    out_file_ext ==   helpers::ext::m3d)
+            else if(out_parent_dir == folder::weapon &&
+                    out_file_ext ==   ext::m3d)
             {
               game_dir.second.weapon_m3d[out_file_name].input =
                 entry.path();
               game_dir.second.weapon_m3d[out_file_name].output =
                 parent_abs_out_path;
             }
-            else if(out_parent_dir == helpers::folder::animated &&
-                    out_file_ext ==   helpers::ext::a3d)
+            else if(out_parent_dir == folder::animated &&
+                    out_file_ext ==   ext::a3d)
             {
               game_dir.second.animated_a3d[out_file_name].input =
                 entry.path();
               game_dir.second.animated_a3d[out_file_name].output =
                 parent_abs_out_path;
             }
-            else if(out_file_ext == helpers::ext::m3d)
+            else if(out_file_ext == ext::m3d)
             {
               game_dir.second.other_m3d[out_file_name].input =
                 entry.path();
@@ -531,9 +533,9 @@ void vangers_3d_model_to_obj_mode(
         std::cout << '\n';
         std::cout << "Failed to get example weapon model: " <<
           m3d_weapon_file << '\n';
-        std::cout << "Generated mechos *.obj files " <<
-          "should not be converted back to *.m3d since there will be " <<
-          "no data about weapons' positions." << '\n';
+        std::cout << "Generated mechos " << ext::readable::obj <<
+          " files should not be converted back to " << ext::readable::m3d <<
+          " since there will be no data about weapons' positions." << '\n';
         std::cout << "You should change " << option::name::m3d_weapon_file <<
           " option to one of the following:" << '\n';
         for(const auto &weapons_model : weapons_models)

@@ -30,7 +30,7 @@ void pal_shift_for_vangers_avi_mode(
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
     {
       if(boost::filesystem::is_regular_file(file.status()) &&
-         file.path().extension().string() == ".pal")
+         file.path().extension().string() == ext::pal)
       {
         // Reading first half of the palette from file
         // and writing it to second half of the palette of source_pal string.
@@ -43,7 +43,7 @@ void pal_shift_for_vangers_avi_mode(
                              option::name::source_dir);
 
         boost::filesystem::path file_to_save = output_dir;
-        file_to_save.append(file.path().stem().string() + ".pal",
+        file_to_save.append(file.path().stem().string() + ext::pal,
                             boost::filesystem::path::codecvt());
         helpers::save_file(file_to_save,
                            output_pal,

@@ -42,7 +42,7 @@ void remove_not_used_pal_mode(
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
     {
       if(boost::filesystem::is_regular_file(file.status()) &&
-         file.path().extension().string() == ".pal")
+         file.path().extension().string() == ext::pal)
       {
         std::string orig_pal =
           helpers::read_file(
@@ -54,7 +54,7 @@ void remove_not_used_pal_mode(
             option::name::source_dir);
 
         boost::filesystem::path usage_pal_file = usage_pals_dir;
-        usage_pal_file.append(file.path().stem().string() + ".pal",
+        usage_pal_file.append(file.path().stem().string() + ext::pal,
                               boost::filesystem::path::codecvt());
         std::string usage_pal =
           helpers::read_file(
@@ -90,7 +90,7 @@ void remove_not_used_pal_mode(
         }
 
         boost::filesystem::path file_to_save = output_dir;
-        file_to_save.append(file.path().stem().string() + ".pal",
+        file_to_save.append(file.path().stem().string() + ext::pal,
                             boost::filesystem::path::codecvt());
         helpers::save_file(file_to_save,
                            pal_used,
@@ -98,7 +98,7 @@ void remove_not_used_pal_mode(
                            option::name::output_dir);
 
         boost::filesystem::path file_to_save_unused = output_dir_unused;
-        file_to_save_unused.append(file.path().stem().string() + ".pal",
+        file_to_save_unused.append(file.path().stem().string() + ext::pal,
                                    boost::filesystem::path::codecvt());
         helpers::save_file(file_to_save_unused,
                            pal_unused,

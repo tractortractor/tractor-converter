@@ -43,8 +43,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "\n"
            "\n"
            "\n\tusage_pal - Create black-and-white color palette to indicate "
-               "which colors are used for Vangers *.bmp files in " +
-               option::name::source_dir + "."
+               "which colors are used for Vangers " + ext::readable::bmp +
+               " files in " + option::name::source_dir + "."
              "\n"
              "\nBy default, creates one usage palette for all files."
              "\n\"" + option::name::output_file + "\" "
@@ -71,7 +71,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
              "\nThose unused colors are still needed to display text "
                  "and other game elements properly."
              "\nAfter performing all changes, you should merge unused "
-                 "palette back to *.tga image with " +
+                 "palette back to " + ext::readable::tga + " image with " +
                  mode::name::tga_merge_unused_pal + " mode."
              "\n"
              "\n\"" + option::name::source_dir + "\", "
@@ -82,8 +82,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "\n"
            "\n"
            "\n"
-           "\n\ttga_merge_unused_pal - Merge palette of *.tga file "
-               "with unused colors palette."
+           "\n\ttga_merge_unused_pal - Merge palette of " +
+               ext::readable::tga + " file with unused colors palette."
              "\n\"" + option::name::source_dir + "\", "
                  "\"" + option::name::output_dir + "\" and "
                  "\"" + option::name::unused_pals_dir + "\" "
@@ -91,7 +91,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "\n"
            "\n"
            "\n"
-           "\n\ttga_replace_pal - Replace palette of *.tga file "
+           "\n\ttga_replace_pal - Replace palette of " +
+               ext::readable::tga + " file "
                "with color palette from \"" + option::name::pal_dir + "\"."
              "\n\"" + option::name::source_dir + "\", "
                  "\"" + option::name::output_dir + "\" and "
@@ -100,7 +101,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "\n"
            "\n"
            "\n"
-           "\n\textract_tga_pal - Get raw palettes from *.tga files."
+           "\n\textract_tga_pal - Get raw palettes from " +
+               ext::readable::tga + " files."
              "\n\"" + option::name::source_dir + "\" and "
                  "\"" + option::name::output_dir + "\" "
                  "options must be specified."
@@ -108,11 +110,12 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "\n"
            "\n"
            "\n\tvangers_pal_to_tga_pal - Convert Vangers palettes "
-               "to normal *.tga ones."
+               "to normal " + ext::readable::tga + " ones."
              "\nPalette files in \"" + option::name::source_dir + "\" "
-                 "must have *.pal extension."
+                 "must have " + ext::readable::pal + " extension."
              "\nSpecify \"" + option::name::reversed + "\" "
-                 "option to convert *.tga palettes to Vangers ones."
+                 "option to convert " + ext::readable::tga +
+                 " palettes to Vangers ones."
              "\n\"" + option::name::source_dir + "\" "
                  "and \"" + option::name::output_dir + "\" "
                  "options must be specified."
@@ -123,7 +126,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
                "Move colors from 0-127 to 128-255, "
                "overwrite 0-127 with zero colors."
              "\nPalette files in \"" + option::name::source_dir + "\" "
-                 "must have *.pal extension."
+                 "must have " + ext::readable::pal + " extension."
              "\n\"" + option::name::source_dir + "\" and "
                  "\"" + option::name::output_dir + "\" "
                  "options must be specified."
@@ -131,7 +134,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "\n"
            "\n"
            "\n\tcompare_bmp_escave_outside - Compare values of bytes "
-               "in *.bmp images for escave and non-escave files."
+               "in " + ext::readable::bmp +
+               " images for escave and non-escave files."
              "\nCreate map to indicate which bytes of source files "
                  "match bytes of compared files."
              "\nSpecify \"" + option::name::readable_output + "\" option "
@@ -143,24 +147,26 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "\n"
            "\n"
            "\n"
-           "\n\tbmp_to_tga - Convert Vangers *.bmp files "
-               "from " + option::name::source_dir + " folder to *.tga files."
+           "\n\tbmp_to_tga - Convert Vangers " + ext::readable::bmp +
+               " files from " + option::name::source_dir +
+               " folder to " + ext::readable::tga + " files."
              "\n"
-             "\nAll input *.pal files must be converted from Vangers format "
-                 "to normal one with "
+             "\nAll input " + ext::readable::pal +
+                 " files must be converted from "
+                 "Vangers format to normal one with "
                  "\"" + mode::name::vangers_pal_to_tga_pal + "\" mode."
              "\n"
              "\nBy default, \"" + option::name::pal + "\" "
-                 "option must be used to specify "
-                 "single palette to use for all *.bmp files."
+                 "option must be used to specify single palette "
+                 "to use for all " + ext::readable::bmp + " files."
              "\n"
              "\nIf \"" + option::name::pal_for_each_file + "\" "
                  "option is specified, \"" + option::name::pal_dir + "\" "
                  "must be specified instead of \"" + option::name::pal + "\"."
-             "\nIn this case, for each *.bmp file in "
+             "\nIn this case, for each " + ext::readable::bmp + " file in "
                  "\"" + option::name::source_dir + "\", "
-                 "there must be *.pal file with same name in "
-                 "\"" + option::name::pal_dir + "\"."
+                 "there must be " + ext::readable::pal +
+                 " file with same name in \"" + option::name::pal_dir + "\"."
              "\n"
              "\n\"" + option::name::source_dir + "\" and "
                  "\"" + option::name::output_dir + "\" "
@@ -168,7 +174,9 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "\n"
            "\n"
            "\n"
-           "\n\ttga_to_bmp - Convert *.tga images to Vangers *.bmp ones."
+           "\n\ttga_to_bmp - Convert " +
+               ext::readable::tga + " images to Vangers " +
+               ext::readable::bmp + " ones."
              "\nRLE compression is not supported."
              "\n"
              "\nSpecify \"" + option::name::items_bmp + "\" "
@@ -177,7 +185,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
                  "one used inside escave and one used outside."
              "\nOutput of \"" + mode::name::cmp_bmp_escave_outside + "\" "
                  "mode should be used to create those 2 images "
-                 "from each *.tga file."
+                 "from each " + ext::readable::tga + " file."
              "\n"
              "\nSpecify "
                  "\"" + option::name::fix_null_bytes_and_direction + "\" "
@@ -196,44 +204,53 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "\n"
            "\n"
            "\n"
-           "\n\tvangers_3d_model_to_obj - Convert Vangers *.m3d and *.a3d "
-               "models into Wavefront *.obj ones."
+           "\n\tvangers_3d_model_to_obj - Convert Vangers " +
+               ext::readable::m3d_and_a3d + " models into " +
+               ext::readable::wavefront_obj + " ones."
              "\nFor each game directory found in "
                  "\"" + option::name::source_dir + "\", output directory in "
                  "\"" + option::name::output_dir + "\" is created."
              "\n"
-             "\nEach *.m3d/*.a3d file contains multiple 3d objects."
-             "\nFor each *.m3d/*.a3d file, folder with all enclosed models "
-                 "in Wavefront object format is created."
+             "\nEach " + ext::readable::m3d_and_a3d +
+                 " file contains multiple 3d objects."
+             "\nFor each " + ext::readable::m3d_and_a3d +
+                 " file, folder with all enclosed models "
+                 "in " + ext::readable::wavefront_obj + " format is created."
              "\n"
              "\nSpecify \"" + option::name::obj_float_precision + "\" "
                  "option to change precision "
-                 "of float numbers of output *.obj files."
+                 "of float numbers of output " + ext::readable::obj + " files."
              "\nSpecify \"" + option::name::default_scale + "\" "
                  "option to set scale for objects "
                  "for which there is no scale info "
-                 "in *.prm and game.lst files."
+                 "in " + ext::readable::prm + " and " +
+                 file::game_lst + " files."
              "\nUse \"" + option::name::m3d_weapon_file + "\" "
-                 "option to specify name of *.m3d "
-                 "weapon model to insert into mechos models "
+                 "option to specify name of " + ext::readable::m3d +
+                 " weapon model to insert into mechos models "
                  "to indicate positions of weapons."
              "\nUse \"" + option::name::weapon_attachment_point_file + "\" "
-                 "option to specify path to Wavefront *.obj file which "
+                 "option to specify path to " +
+                 ext::readable::wavefront_obj + " file which "
                  "contains model to be inserted into weapon model to "
                  "indicate weapon attachment point."
              "\nUse \"" + option::name::ghost_wheel_file + "\" option "
-                 "to specify path to Wavefront *.obj file which contains "
+                 "to specify path to " +
+                 ext::readable::wavefront_obj + " file which contains "
                  "model to be inserted in place of wheels with no polygons."
              "\nSpecify \"" + option::name::extract_bound_model + "\" "
-                 "option to extract bound models of *.m3d files."
+                 "option to extract bound models of " +
+                 ext::readable::m3d + " files."
              "\nSpecify \"" + option::name::extract_center_of_mass + "\" "
-                 "option to mark center of mass found in *.m3d/*.a3d file."
+                 "option to mark center of mass found in " +
+                 ext::readable::m3d_and_a3d + " file."
              "\nUse \"" + option::name::center_of_mass_file + "\" "
-                 "to specify path to Wavefront *.obj file "
-                 "which contains model which will mark center of mass."
+                 "to specify path to " + ext::readable::wavefront_obj +
+                 " file which contains model which will mark center of mass."
              "\nSpecify \"" + option::name::wavefront_mtl + "\" "
-                 "option to copy *.mtl file to output folders "
-                 "so generated *.obj files will refer to it."
+                 "option to copy " + ext::readable::mtl +
+                 " file to output folders, so generated " +
+                 ext::readable::obj + " files will refer to it."
              "\nSpecify \"" + option::name::extract_nonexistent_weapons + "\" "
                  "option to extract weapons which are marked as nonexistent."
              "\nSpecify "
@@ -253,21 +270,28 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "\n"
            "\n"
            "\n"
-           "\n\tobj_to_vangers_3d_model - Convert Wavefront *.obj models "
-               "into Vangers *.m3d and *.a3d models."
+           "\n\tobj_to_vangers_3d_model - Convert " +
+               ext::readable::wavefront_obj + " models into Vangers " +
+               ext::readable::m3d_and_a3d + " models."
              "\nFor each game directory found in "
                  "\"" + option::name::source_dir + "\", this mode creates "
                  "output directory in \"" + option::name::output_dir + "\"."
              "\n"
-             "\nEach directory with multiple Wavefront *.obj files "
-                 "is converted into single *.m3d or *.a3d file."
+             "\nEach directory with multiple " +
+                 ext::readable::wavefront_obj +
+                 " files is converted into single " +
+                 ext::readable::m3d_and_a3d + " file."
              "\n"
              "\nUse \"" + option::name::weapon_attachment_point_file + "\" "
-                 "option to specify path to Wavefront *.obj file "
-                 "which was used while converting to *.obj."
+                 "option to specify path to weapon attachment point " +
+                 ext::readable::obj +
+                 " file which was used while converting to " +
+                 ext::readable::obj + "."
              "\nUse \"" + option::name::center_of_mass_file + "\" "
-                 "option to specify path to Wavefront *.obj file "
-                 "which was used while converting to *.obj."
+                 "option to specify path to center of mass " +
+                 ext::readable::obj +
+                 " file which was used while converting to " +
+                 ext::readable::obj + "."
              "\nUse \"" + option::name::default_c3d_material + "\" "
                  "option to specify default material for polygons "
                  "which have no material or unexpected one."
@@ -293,23 +317,24 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "\n"
            "\n"
            "\n"
-           "\n\tcreate_wavefront_mtl - Create *.mtl file for *.obj files "
-               "generated with "
+           "\n\tcreate_wavefront_mtl - Create " + ext::readable::mtl +
+               " file for " + ext::readable::obj + " files generated with "
                "\"" + mode::name::vangers_3d_model_to_obj + "\"."
-             "\nWorlds' *.pal files are expected as input."
+             "\nWorlds' " + ext::readable::pal +
+                 " files are expected as input."
              "\nThey should be supplied with this program."
              "\n"
-             "\nFor each *.pal file found in "
-                 "\"" + option::name::source_dir + "\", "
-                 "*.mtl file is generated in "
+             "\nFor each " + ext::readable::pal + " file found in "
+                 "\"" + option::name::source_dir + "\", " +
+                 ext::readable::mtl + " file is generated in "
                  "\"" + option::name::output_dir + "\"."
              "\n"
-             "\nSpecify \"" + option::name::obj_float_precision + "\" "
-                 "option to change precision "
-                 "of float numbers of output *.mtl files."
-             "\nSpecify \"" + option::name::mtl_n_wheels + "\" "
+             "\nUse \"" + option::name::obj_float_precision + "\" "
+                 "option to change precision of float numbers "
+                 "of output " + ext::readable::mtl + " files."
+             "\nUse \"" + option::name::mtl_n_wheels + "\" "
                  "option to set number of generated wheel materials."
-             "\nSpecify \"" + option::name::mtl_body_offs + "\" "
+             "\nUse \"" + option::name::mtl_body_offs + "\" "
                  "option to add additional body materials."
              "\n"
              "\n\"" + option::name::source_dir + "\" and "
@@ -318,17 +343,18 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "\n"
            "\n"
            "\n"
-           "\n\tcreate_materials_table - Create *.html table file "
-               "which shows exact material colors."
-             "\nWorlds' *.pal files are expected as input."
+           "\n\tcreate_materials_table - Create " + ext::readable::html +
+               " table file which shows exact material colors."
+             "\nWorlds' " + ext::readable::pal +
+                 " files are expected as input."
              "\nThey should be supplied with this program."
              "\n"
-             "\nFor each *.pal file found in "
-                 "\"" + option::name::source_dir + "\", "
-                 "*.html file is generated in "
+             "\nFor each " + ext::readable::pal + " file found in "
+                 "\"" + option::name::source_dir + "\", " +
+                 ext::readable::html + " file is generated in "
                  "\"" + option::name::output_dir + "\"."
              "\n"
-             "\nSpecify \"" + option::name::mtl_body_offs + "\" "
+             "\nUse \"" + option::name::mtl_body_offs + "\" "
                  "option to add additional body materials."
              "\n"
              "\n\"" + option::name::source_dir + "\" and "
@@ -365,8 +391,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
       (option::name::usage_pal_for_each_file.c_str(),
        boost::program_options::bool_switch()->
          default_value(option::default_val::usage_pal_for_each_file),
-       ("\tCreate usage palette for each *.bmp file "
-            "instead of just one for all.\n"
+       ("\tCreate usage palette for each " + ext::readable::bmp +
+            " file instead of just one for all.\n"
         "\tUsed by \"" + mode::name::usage_pal + "\" mode.\n").c_str())
       (option::name::output_dir_unused.c_str(),
        boost::program_options::value<std::string>(),
@@ -392,7 +418,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
         "\tUsed by \"" + mode::name::bmp_to_tga + "\" mode.\n").c_str())
       (option::name::pal.c_str(),
        boost::program_options::value<std::string>(),
-       ("\tColor palette to form *.tga files from Vangers *.bmp ones.\n"
+       ("\tColor palette to form " + ext::readable::tga +
+            " files from Vangers " + ext::readable::bmp + " ones.\n"
         "\tUsed by \"" + mode::name::bmp_to_tga + "\" mode.\n").c_str())
       (option::name::pal_dir.c_str(),
        boost::program_options::value<std::string>(),
@@ -401,14 +428,15 @@ boost::program_options::variables_map get_options(int ac, char** av)
             "\"" + mode::name::tga_replace_pal + "\" modes.\n").c_str())
       (option::name::dir_to_compare.c_str(),
        boost::program_options::value<std::string>(),
-       ("\tDirectory with *.bmp files to compare against source directory.\n"
+       ("\tDirectory with " + ext::readable::bmp +
+            " files to compare against source directory.\n"
         "\tUsed by \"" + mode::name::cmp_bmp_escave_outside + "\" "
             "mode.\n").c_str())
       (option::name::items_bmp.c_str(),
        boost::program_options::bool_switch()->
          default_value(option::default_val::items_bmp),
-       ("\tConverting item files so 2 *.bmp "
-            "should be created for each *.tga file.\n"
+       ("\tConverting item files so 2 " + ext::readable::bmp +
+            " should be created for each " + ext::readable::tga + " file.\n"
         "\t\"" + option::name::map + "\" and "
             "\"" + option::name::output_dir_through_map + "\" "
             "must be specified in this case.\n"
@@ -420,7 +448,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
         "\tUsed by \"" + mode::name::tga_to_bmp + "\" mode.\n").c_str())
       (option::name::output_dir_through_map.c_str(),
        boost::program_options::value<std::string>(),
-       ("\tDirectory where to output *.bmp files generated with "
+       ("\tDirectory where to output " + ext::readable::bmp +
+            " files generated with "
             "\"" + mode::name::cmp_bmp_escave_outside + "\" map.\n"
         "\tUsed by \"" + mode::name::tga_to_bmp + "\" mode.\n").c_str())
       (option::name::fix_null_bytes_and_direction.c_str(),
@@ -434,21 +463,24 @@ boost::program_options::variables_map get_options(int ac, char** av)
       (option::name::obj_float_precision.c_str(),
        boost::program_options::value<int>()->
          default_value(option::default_val::obj_float_precision),
-       ("\tPrecision of float numbers of output Wavefront object "
-            "and material files.\n"
+       ("\tPrecision of float numbers of output " +
+            ext::readable::wavefront_obj + " and " +
+            ext::readable::mtl + " files.\n"
         "\tUsed by \"" + mode::name::vangers_3d_model_to_obj + "\" and "
             "\"" + mode::name::create_wavefront_mtl + "\" modes.\n").c_str())
       (option::name::default_scale.c_str(),
        boost::program_options::value<double>()->
          default_value(option::default_val::default_scale),
        ("\tIf there is no info about scale_size for some object "
-            "in *.prm or game.lst configs, this value is used.\n"
+            "in " + ext::readable::prm + " or " +
+            file::game_lst + " configs, this value is used.\n"
         "\tUsed by \"" + mode::name::vangers_3d_model_to_obj + "\" "
             "mode.\n").c_str())
       (option::name::m3d_weapon_file.c_str(),
        boost::program_options::value<std::string>()->
          default_value(option::default_val::m3d_weapon_file),
-       ("\tName of *.m3d file which contains weapon model.\n"
+       ("\tName of " + ext::readable::m3d +
+            " file which contains weapon model.\n"
         "\tThis model is used to indicate positions "
             "of weapons slots on mechos models.\n"
         "\tUsed by \"" + mode::name::vangers_3d_model_to_obj + "\" "
@@ -456,37 +488,38 @@ boost::program_options::variables_map get_options(int ac, char** av)
       (option::name::weapon_attachment_point_file.c_str(),
        boost::program_options::value<std::string>()->
          default_value(option::default_val::weapon_attachment_point_file),
-       ("\tPath to Wavefront *.obj file.\n"
-        "\tThis *.obj model is used to indicate position of attachment point "
-            "in weapons models.\n"
+       ("\tPath to " + ext::readable::wavefront_obj + " file.\n"
+        "\tThis " + ext::readable::obj + " model is used to indicate "
+            "position of attachment point in weapons models.\n"
         "\tUsed by \"" + mode::name::vangers_3d_model_to_obj + "\" and "
             "\"" + mode::name::obj_to_vangers_3d_model + "\" "
             "modes.\n").c_str())
       (option::name::ghost_wheel_file.c_str(),
        boost::program_options::value<std::string>()->
          default_value(option::default_val::ghost_wheel_file),
-       ("\tPath to Wavefront *.obj file.\n"
-        "\tThis *.obj model is used to indicate "
+       ("\tPath to " + ext::readable::wavefront_obj + " file.\n"
+        "\tThis " + ext::readable::obj + " model is used to indicate "
             "position of wheels with no polygons.\n"
         "\tUsed by \"" + mode::name::vangers_3d_model_to_obj + "\" "
             "mode.\n").c_str())
       (option::name::extract_bound_model.c_str(),
        boost::program_options::bool_switch()->
          default_value(option::default_val::extract_bound_model),
-       ("\tExtract bound models from *.m3d files.\n"
+       ("\tExtract bound models from " + ext::readable::m3d + " files.\n"
         "\tUsed by \"" + mode::name::vangers_3d_model_to_obj + "\" "
             "mode.\n").c_str())
       (option::name::extract_center_of_mass.c_str(),
        boost::program_options::bool_switch()->
          default_value(option::default_val::extract_center_of_mass),
-       ("\tExtract center of mass from *.m3d/*.a3d file and mark it.\n"
+       ("\tExtract center of mass from " +
+            ext::readable::m3d_and_a3d + " file and mark it.\n"
         "\tUsed by \"" + mode::name::vangers_3d_model_to_obj + "\" "
             "mode.\n").c_str())
       (option::name::center_of_mass_file.c_str(),
        boost::program_options::value<std::string>()->
          default_value(option::default_val::center_of_mass_file),
-       ("\tPath to Wavefront *.obj file.\n"
-        "\tThis *.obj model is used to indicate position "
+       ("\tPath to " + ext::readable::wavefront_obj + " file.\n"
+        "\tThis " + ext::readable::obj + " model is used to indicate position "
             "of extracted center of mass.\n"
         "\tUsed by \"" + mode::name::vangers_3d_model_to_obj + "\" and "
             "\"" + mode::name::obj_to_vangers_3d_model + "\" "
@@ -494,7 +527,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
       (option::name::wavefront_mtl.c_str(),
        boost::program_options::value<std::string>()->
          default_value(option::default_val::wavefront_mtl),
-       ("\tPath to *.mtl file for generated *.obj files.\n"
+       ("\tPath to " + ext::readable::mtl + " file for generated " +
+            ext::readable::obj + " files.\n"
         "\tCopied to output directories.\n"
         "\tUsed by \"" + mode::name::vangers_3d_model_to_obj + "\" "
             "mode.\n").c_str())
@@ -578,7 +612,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
        ("\tAutomatically generate bound models.\n"
         "\tShould be always turned on unless "
             "bound models were manually edited.\n"
-        "\t*.obj bound models are ignored if turned on.\n"
+        "\t" + ext::readable::obj + " bound models are ignored if turned on.\n"
         "\tUsed by \"" + mode::name::obj_to_vangers_3d_model + "\" "
             "mode.\n").c_str())
       (option::name::gen_bound_layers_num.c_str(),
@@ -601,7 +635,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
       (option::name::mtl_n_wheels.c_str(),
        boost::program_options::value<std::size_t>()->
          default_value(option::default_val::mtl_n_wheels),
-       ("\tNumber of wheel materials to generate for *.mtl file.\n"
+       ("\tNumber of wheel materials to generate for " +
+            ext::readable::mtl + " file.\n"
         "\tUsed by \"" + mode::name::create_wavefront_mtl + "\" "
             "mode.\n").c_str())
       (option::name::mtl_body_offs.c_str(),
