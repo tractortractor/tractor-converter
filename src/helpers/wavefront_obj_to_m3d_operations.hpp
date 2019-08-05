@@ -179,7 +179,7 @@ public:
     const volInt::polyhedron *weapon_attachment_point_arg,
     const volInt::polyhedron *center_of_mass_model_arg,
     double max_weapons_radius_arg,
-    unsigned int c3d_default_material_id_arg,
+    unsigned int default_c3d_material_id_arg,
     double scale_cap_arg,
     double max_smooth_angle_arg,
     std::size_t gen_bound_layers_num_arg,
@@ -195,7 +195,7 @@ public:
 private:
 
   const double max_weapons_radius;
-  unsigned int c3d_default_material_id;
+  unsigned int default_c3d_material_id;
   double scale_cap;
   double max_smooth_angle;
   std::size_t gen_bound_layers_num;
@@ -528,7 +528,7 @@ void mechos_wavefront_objs_to_m3d(
   const volInt::polyhedron *weapon_attachment_point_model_arg,
   const volInt::polyhedron *center_of_mass_model_arg,
   double max_weapons_radius_arg,
-  unsigned int c3d_default_material_id_arg,
+  unsigned int default_c3d_material_id_arg,
   double scale_cap_arg,
   double max_smooth_angle_arg,
   std::size_t gen_bound_layers_num_arg,
@@ -542,7 +542,7 @@ volInt::polyhedron weapon_wavefront_objs_to_m3d(
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *weapon_attachment_point_arg,
   const volInt::polyhedron *center_of_mass_model_arg,
-  unsigned int c3d_default_material_id_arg,
+  unsigned int default_c3d_material_id_arg,
   double scale_cap_arg,
   double max_smooth_angle_arg,
   std::size_t gen_bound_layers_num_arg,
@@ -556,7 +556,7 @@ void animated_wavefront_objs_to_a3d(
   const std::string &input_file_name_error_arg,
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *center_of_mass_model_arg,
-  unsigned int c3d_default_material_id_arg,
+  unsigned int default_c3d_material_id_arg,
   double scale_cap_arg,
   double max_smooth_angle_arg,
   bitflag<obj_to_m3d_flag> flags_arg,
@@ -568,7 +568,7 @@ void other_wavefront_objs_to_m3d(
   const std::string &input_file_name_error_arg,
   const std::string &output_file_name_error_arg,
   const volInt::polyhedron *center_of_mass_model_arg,
-  unsigned int c3d_default_material_id_arg,
+  unsigned int default_c3d_material_id_arg,
   double scale_cap_arg,
   double max_smooth_angle_arg,
   std::size_t gen_bound_layers_num_arg,

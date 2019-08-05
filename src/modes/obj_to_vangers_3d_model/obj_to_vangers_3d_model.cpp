@@ -34,7 +34,7 @@ void obj_to_vangers_3d_model_mode(
     boost::filesystem::path center_of_mass_file =
       boost::filesystem::system_complete(
         options[option::name::center_of_mass_file].as<std::string>());
-    std::string c3d_default_material_str =
+    std::string default_c3d_material_str =
       options[option::name::default_c3d_material].as<std::string>();
     double scale_cap = options[option::name::scale_cap].as<double>();
     double max_smooth_angle =
@@ -72,12 +72,12 @@ void obj_to_vangers_3d_model_mode(
         helpers::obj_to_m3d_flag::generate_bound_models;
     }
 
-    unsigned int c3d_default_material_id;
+    unsigned int default_c3d_material_id;
     try
     {
-      c3d_default_material_id =
-        c3d::color::ids.by<c3d::color::name>().at(c3d_default_material_str);
-      if(c3d_default_material_id >= c3d::color::string_to_id::max_colors_ids)
+      default_c3d_material_id =
+        c3d::color::ids.by<c3d::color::name>().at(default_c3d_material_str);
+      if(default_c3d_material_id >= c3d::color::string_to_id::max_colors_ids)
       {
         throw std::runtime_error(
           "Material is valid but should not be used as default.");
@@ -86,8 +86,8 @@ void obj_to_vangers_3d_model_mode(
     catch(std::exception &e)
     {
       std::cout << '\n';
-      std::cout << "Invalid \"c3d_default_material\" option " <<
-        c3d_default_material_str << '\n';
+      std::cout << "Invalid \"default_c3d_material\" option " <<
+        default_c3d_material_str << '\n';
       std::cout << e.what() << '\n';
       std::cout << "Using " << option::default_val::default_c3d_material <<
         " as default." << '\n';
@@ -102,7 +102,7 @@ void obj_to_vangers_3d_model_mode(
       }
       std::cout << '\n';
 
-      c3d_default_material_id =
+      default_c3d_material_id =
         c3d::color::ids.by<c3d::color::name>().at(
           option::default_val::default_c3d_material);
     }
@@ -325,7 +325,7 @@ void obj_to_vangers_3d_model_mode(
               option::name::output_dir,
               weapon_attachment_point_model_ptr,
               center_of_mass_model_ptr,
-              c3d_default_material_id,
+              default_c3d_material_id,
               scale_cap,
               max_smooth_angle,
               gen_bound_layers_num,
@@ -375,7 +375,7 @@ void obj_to_vangers_3d_model_mode(
             weapon_attachment_point_model_ptr,
             center_of_mass_model_ptr,
             max_weapons_radius,
-            c3d_default_material_id,
+            default_c3d_material_id,
             scale_cap,
             max_smooth_angle,
             gen_bound_layers_num,
@@ -413,7 +413,7 @@ void obj_to_vangers_3d_model_mode(
             option::name::source_dir,
             option::name::output_dir,
             center_of_mass_model_ptr,
-            c3d_default_material_id,
+            default_c3d_material_id,
             scale_cap,
             max_smooth_angle,
             obj_to_m3d_flags,
@@ -450,7 +450,7 @@ void obj_to_vangers_3d_model_mode(
             option::name::source_dir,
             option::name::output_dir,
             center_of_mass_model_ptr,
-            c3d_default_material_id,
+            default_c3d_material_id,
             scale_cap,
             max_smooth_angle,
             gen_bound_layers_num,
