@@ -543,7 +543,7 @@ void vangers_3d_model_to_obj_mode(
           std::cout << weapons_model.first << '\n';
         }
         std::cout << '\n';
-        mechos_weapon_model_ptr = NULL;
+        mechos_weapon_model_ptr = nullptr;
       }
 
 

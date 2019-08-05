@@ -58,7 +58,7 @@ template<> double parse_per_file_cfg_option<double>(
   const std::string &input)
 {
   char* cur_pos = const_cast<char*>(&input[0]);
-  return std::strtod(cur_pos, NULL);
+  return std::strtod(cur_pos, nullptr);
 }
 
 template<> std::vector<double> parse_per_file_cfg_multiple_options<double>(
