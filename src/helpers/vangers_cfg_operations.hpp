@@ -104,16 +104,12 @@ namespace xzip_decompress {
 
 
 
-const std::string sprintf_int_sicher_cfg_format = "%i";
-
-const int sprintf_float_sicher_cfg_format_precision = 6;
-
-const std::string sprintf_float_sicher_cfg_format =
-  "%." + std::to_string(sprintf_float_sicher_cfg_format_precision) + "g";
-
-
-//const std::string sprintf_float_sicher_cfg_format =
-//"%." + std::to_string(float_precision_sicher_cfg) + "e";
+namespace sicher_cfg_format{
+  const std::string sprintf_int = "%i";
+  const int sprintf_float_precision = 6;
+  const std::string sprintf_float =
+    "%." + std::to_string(sprintf_float_precision) + "g";
+} // namespace sicher_cfg_format
 
 
 
@@ -209,7 +205,7 @@ public:
   void overwrite_next_value(const std::string &value_name,
                             const T &value,
                             const std::string &format =
-                              sprintf_float_sicher_cfg_format)
+                              sicher_cfg_format::sprintf_float)
   {
     move_pos_to_value(value_name);
     overwrite_cur_pos_value(value, format);

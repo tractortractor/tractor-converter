@@ -3344,7 +3344,7 @@ void create_prm(
   cur_cfg_writer.overwrite_next_value(
     van_cfg_key::prm::scale_size,
     scale_size,
-    sprintf_float_sicher_cfg_format);
+    sicher_cfg_format::sprintf_float);
   cur_cfg_writer.write_until_end();
 
   save_file(where_to_save_arg,
