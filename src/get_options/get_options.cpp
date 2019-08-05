@@ -461,7 +461,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
         "\tUsed by \"" + mode::name::tga_to_bmp + "\" mode.\n").c_str())
 
       (option::name::obj_float_precision.c_str(),
-       boost::program_options::value<int>()->
+       boost::program_options::value<unsigned int>()->
          default_value(option::default_val::obj_float_precision),
        ("\tPrecision of float numbers of output " +
             ext::readable::wavefront_obj + " and " +

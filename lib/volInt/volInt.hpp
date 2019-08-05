@@ -305,7 +305,7 @@ const int sicher_angle_Pi = 2048; // "1 << Pi_len" where "Pi_len = 11".
 
 
 
-const int min_float_precision = 3;
+const unsigned int min_float_precision = 3;
 const double distinct_distance =
   1.0/std::pow(10, min_float_precision);
 //const double distinct_distance = 1.0e-3;

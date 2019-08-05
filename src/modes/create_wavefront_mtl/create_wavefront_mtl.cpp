@@ -147,8 +147,8 @@ void create_wavefront_mtl_mode(
       helpers::get_directory(
         options[option::name::output_dir].as<std::string>(),
         option::name::output_dir);
-    int wavefront_float_precision =
-      options[option::name::obj_float_precision].as<int>();
+    unsigned int wavefront_float_precision =
+      options[option::name::obj_float_precision].as<unsigned int>();
     std::size_t n_wheels =
       options[option::name::mtl_n_wheels].as<std::size_t>();
 

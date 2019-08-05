@@ -92,8 +92,8 @@ void vangers_3d_model_to_obj_mode(
       helpers::get_directory(
         options[option::name::output_dir].as<std::string>(),
         option::name::output_dir);
-    int wavefront_float_precision =
-      options[option::name::obj_float_precision].as<int>();
+    unsigned int wavefront_float_precision =
+      options[option::name::obj_float_precision].as<unsigned int>();
     double default_scale =
       options[option::name::default_scale].as<double>();
     std::string m3d_weapon_file =

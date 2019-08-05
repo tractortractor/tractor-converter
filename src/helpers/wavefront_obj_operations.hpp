@@ -35,7 +35,7 @@
 namespace tractor_converter{
 namespace helpers{
 
-const std::size_t float_precision_objs_default = 6;
+const unsigned int float_precision_objs_default = 6;
 
 const std::string float_precision_objs_string_default =
   "%." + std::to_string(float_precision_objs_default) + "f";

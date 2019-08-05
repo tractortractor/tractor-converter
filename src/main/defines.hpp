@@ -74,7 +74,7 @@ namespace option{
     const bool pal_for_each_file =                   false;
     const bool items_bmp =                           false;
     const bool fix_null_bytes_and_direction =        false;
-    const int obj_float_precision =                  6;
+    const unsigned int obj_float_precision =         6;
     const double default_scale =                     0.195313;
     const std::string m3d_weapon_file =              "";
     const std::string weapon_attachment_point_file = "";
