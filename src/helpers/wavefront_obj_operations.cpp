@@ -824,58 +824,38 @@ void save_volInt_as_wavefront_obj(
           obj_data.append(
             "usemtl body_offset_" +
             std::to_string(c3d_model.second.bodyColorOffset) +
-            "_shift_" + std::to_string(c3d_model.second.bodyColorShift) +
-            '\n');
-        }
-        else if(c3d_model.second.faces[cur_poly_num].color_id ==
-                c3d::color::string_to_id::wheel)
-        {
-          obj_data.append("usemtl wheel");
-          if(cur_poly_wheel_id != volInt::invalid::wheel_id)
-          {
-            if(c3d_model.second.wheels_steer.count(cur_poly_wheel_id))
-            {
-              obj_data.append("_steer");
-            }
-            if(c3d_model.second.wheels_ghost.count(cur_poly_wheel_id))
-            {
-              obj_data.append("_ghost");
-            }
-            obj_data.append(
-              "_" + std::to_string(cur_poly_wheel_id + 1));
-          }
-          obj_data.push_back('\n');
-        }
-        else if(c3d_model.second.faces[cur_poly_num].color_id ==
-                c3d::color::string_to_id::weapon)
-        {
-          obj_data.append("usemtl weapon");
-          if(cur_poly_weapon_id != volInt::invalid::weapon_id)
-          {
-            obj_data.append(
-              "_" + std::to_string(cur_poly_weapon_id + 1));
-          }
-          obj_data.push_back('\n');
-        }
-        else if(c3d_model.second.faces[cur_poly_num].color_id ==
-                c3d::color::string_to_id::attachment_point)
-        {
-          obj_data.append("usemtl attachment_point");
-          if(cur_poly_weapon_id != volInt::invalid::weapon_id)
-          {
-            obj_data.append(
-              "_" + std::to_string(cur_poly_weapon_id + 1));
-          }
-          obj_data.push_back('\n');
+            "_shift_" + std::to_string(c3d_model.second.bodyColorShift));
         }
         else
         {
           obj_data.append(
             "usemtl " +
             c3d::color::ids.by<c3d::color::id>().at(
-              c3d_model.second.faces[cur_poly_num].color_id) +
-            '\n');
+              c3d_model.second.faces[cur_poly_num].color_id));
         }
+
+        if(cur_poly_wheel_id != volInt::invalid::wheel_id)
+        {
+          obj_data.append("_wheel");
+          if(c3d_model.second.wheels_steer.count(cur_poly_wheel_id))
+          {
+            obj_data.append("_steer");
+          }
+          if(c3d_model.second.wheels_ghost.count(cur_poly_wheel_id))
+          {
+            obj_data.append("_ghost");
+          }
+          obj_data.append(
+            "_" + std::to_string(cur_poly_wheel_id + 1));
+        }
+        else if(cur_poly_weapon_id != volInt::invalid::weapon_id)
+        {
+          obj_data.append(
+            "_weapon_" + std::to_string(cur_poly_weapon_id + 1));
+        }
+
+        obj_data.push_back('\n');
+
         previous_color_id =  c3d_model.second.faces[cur_poly_num].color_id;
         previous_wheel_id =  cur_poly_wheel_id;
         previous_weapon_id = cur_poly_weapon_id;
