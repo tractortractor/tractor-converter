@@ -706,20 +706,23 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
     // allowed in config file.
     boost::program_options::options_description config("per_file_cfg");
     config.add_options()
-      ("overwrite_volume_main",
-       boost::program_options::bool_switch()->default_value(false),
+      (option::per_file::name::overwrite_volume_main.c_str(),
+       boost::program_options::bool_switch()->
+         default_value(option::per_file::default_val::overwrite_volume_main),
        "Overwrite volume for main model when custom volume is supplied.")
-      ("custom_center_of_mass_main",
-       boost::program_options::bool_switch()->default_value(false),
+      (option::per_file::name::custom_center_of_mass_main.c_str(),
+       boost::program_options::bool_switch()->default_value(
+         option::per_file::default_val::custom_center_of_mass_main),
        "Use center of mass mark to get custom center of mass for main model.")
-      ("overwrite_inertia_tensor_main",
-       boost::program_options::bool_switch()->default_value(false),
+      (option::per_file::name::overwrite_inertia_tensor_main.c_str(),
+       boost::program_options::bool_switch()->default_value(
+         option::per_file::default_val::overwrite_inertia_tensor_main),
        "Overwrite inertia tensor matrix for main model "
          "when custom matrix is supplied.")
-      ("custom_volume_main",
+      (option::per_file::name::custom_volume_main.c_str(),
        boost::program_options::value<std::string>(),
        "Custom volume for main model.")
-      ("custom_inertia_tensor_main",
+      (option::per_file::name::custom_inertia_tensor_main.c_str(),
        boost::program_options::value<std::vector<std::string>>(),
        "Custom inertia tensor matrix for main model.")
     ;
@@ -727,15 +730,18 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
     if(debris_models && debris_models->size())
     {
       config.add_options()
-        ("overwrite_volume_debris",
-         boost::program_options::bool_switch()->default_value(false),
+        (option::per_file::name::overwrite_volume_debris.c_str(),
+         boost::program_options::bool_switch()->default_value(
+           option::per_file::default_val::overwrite_volume_debris),
          "Overwrite volume for debris models when custom volume is supplied.")
-        ("custom_center_of_mass_debris",
-         boost::program_options::bool_switch()->default_value(false),
+        (option::per_file::name::custom_center_of_mass_debris.c_str(),
+         boost::program_options::bool_switch()->default_value(
+           option::per_file::default_val::custom_center_of_mass_debris),
          "Use center of mass mark to get custom center of mass "
            "for debris models.")
-        ("overwrite_inertia_tensor_debris",
-         boost::program_options::bool_switch()->default_value(false),
+        (option::per_file::name::overwrite_inertia_tensor_debris.c_str(),
+         boost::program_options::bool_switch()->default_value(
+           option::per_file::default_val::overwrite_inertia_tensor_debris),
          "Overwrite inertia tensor matrix for debris models "
            "when custom matrix is supplied.")
       ;
@@ -745,12 +751,13 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
           ++cur_debris)
       {
         config.add_options()
-          (("custom_volume_debris_" + std::to_string(cur_debris + 1)).c_str(),
+          ((option::per_file::name::custom_volume_debris + "_" +
+              std::to_string(cur_debris + 1)).c_str(),
            boost::program_options::value<std::string>(),
            ("Custom volume for debris model " +
               std::to_string(cur_debris + 1) + ".").c_str())
-          (("custom_inertia_tensor_debris_" + std::to_string(cur_debris + 1)).
-             c_str(),
+          ((option::per_file::name::custom_inertia_tensor_debris + "_" +
+              std::to_string(cur_debris + 1)).c_str(),
            boost::program_options::value<std::vector<std::string>>(),
            ("Custom inertia tensor matrix for debris model " +
               std::to_string(cur_debris + 1) + ".").c_str())
@@ -779,15 +786,15 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
 
 
 
-    if(vm["overwrite_volume_main"].as<bool>())
+    if(vm[option::per_file::name::overwrite_volume_main].as<bool>())
     {
       const double custom_volume_main =
         parse_per_file_cfg_option<double>(
-          vm["custom_volume_main"].as<std::string>());
+          vm[option::per_file::name::custom_volume_main].as<std::string>());
       read_file_cfg_helper_overwrite_volume(main_model, custom_volume_main);
     }
 
-    if(vm["custom_center_of_mass_main"].as<bool>())
+    if(vm[option::per_file::name::custom_center_of_mass_main].as<bool>())
     {
       try
       {
@@ -804,14 +811,15 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
       }
     }
 
-    if(vm["overwrite_inertia_tensor_main"].as<bool>())
+    if(vm[option::per_file::name::overwrite_inertia_tensor_main].as<bool>())
     {
-      if(vm.count("custom_inertia_tensor_main"))
+      if(vm.count(option::per_file::name::custom_inertia_tensor_main))
       {
         // 9 doubles to describe 3x3 inertia tensor matrix.
         const std::vector<double> custom_J_main =
           parse_per_file_cfg_multiple_options<double>(
-            vm["custom_inertia_tensor_main"].as<std::vector<std::string>>());
+            vm[option::per_file::name::custom_inertia_tensor_main].
+              as<std::vector<std::string>>());
         if(custom_J_main.size() == J_cfg_num_of_values)
         {
           read_file_cfg_helper_overwrite_J(main_model, custom_J_main);
@@ -820,8 +828,8 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
         {
           std::cout <<
             "In config file " << config_file_str <<
-            " unexpected number of values specified " <<
-            "for custom_inertia_tensor_main" << '\n';
+            " unexpected number of values specified for " <<
+            option::per_file::name::custom_inertia_tensor_main << '\n';
           std::cout <<
             "Expected " << std::to_string(J_cfg_num_of_values) <<
             ", got  " << custom_J_main.size() << '\n';
@@ -834,7 +842,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
 
     if(debris_models && debris_models->size())
     {
-      if(vm["overwrite_volume_debris"].as<bool>())
+      if(vm[option::per_file::name::overwrite_volume_debris].as<bool>())
       {
         for(std::size_t cur_debris = 0,
               debris_models_size = debris_models->size();
@@ -842,7 +850,8 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
             ++cur_debris)
         {
           std::string cur_custom_volume_option =
-            "custom_volume_debris_" + std::to_string(cur_debris + 1);
+            option::per_file::name::custom_volume_debris + "_" +
+            std::to_string(cur_debris + 1);
           if(vm.count(cur_custom_volume_option))
           {
             const double custom_volume_debris =
@@ -854,7 +863,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
         }
       }
 
-      if(vm["custom_center_of_mass_debris"].as<bool>())
+      if(vm[option::per_file::name::custom_center_of_mass_debris].as<bool>())
       {
         for(std::size_t cur_debris = 0,
               debris_models_size = debris_models->size();
@@ -879,7 +888,8 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
         }
       }
 
-      if(vm["overwrite_inertia_tensor_debris"].as<bool>())
+      if(vm[option::per_file::name::overwrite_inertia_tensor_debris].
+           as<bool>())
       {
         for(std::size_t cur_debris = 0,
               debris_models_size = debris_models->size();
@@ -887,7 +897,8 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
             ++cur_debris)
         {
           std::string cur_custom_J_option =
-            "custom_inertia_tensor_debris_" + std::to_string(cur_debris + 1);
+            option::per_file::name::custom_inertia_tensor_debris + "_" +
+            std::to_string(cur_debris + 1);
           if(vm.count(cur_custom_J_option))
           {
             // 9 doubles to describe 3x3 inertia tensor matrix.
@@ -943,15 +954,18 @@ void wavefront_obj_to_m3d_model::read_file_cfg_a3d(
     // allowed in config file.
     boost::program_options::options_description config("per_file_cfg");
     config.add_options()
-      ("overwrite_volume_animated",
-       boost::program_options::bool_switch()->default_value(false),
+      (option::per_file::name::overwrite_volume_animated.c_str(),
+       boost::program_options::bool_switch()->default_value(
+         option::per_file::default_val::overwrite_volume_animated),
        "Overwrite volume for animated models when custom volume is supplied.")
-      ("custom_center_of_mass_animated",
-       boost::program_options::bool_switch()->default_value(false),
+      (option::per_file::name::custom_center_of_mass_animated.c_str(),
+       boost::program_options::bool_switch()->default_value(
+         option::per_file::default_val::custom_center_of_mass_animated),
        "Use center of mass mark to get custom center of mass "
          "for animated models.")
-      ("overwrite_inertia_tensor_animated",
-       boost::program_options::bool_switch()->default_value(false),
+      (option::per_file::name::overwrite_inertia_tensor_animated.c_str(),
+       boost::program_options::bool_switch()->default_value(
+         option::per_file::default_val::overwrite_inertia_tensor_animated),
        "Overwrite inertia tensor matrix for animated models "
          "when custom matrix is supplied.")
     ;
@@ -962,12 +976,12 @@ void wavefront_obj_to_m3d_model::read_file_cfg_a3d(
         ++cur_animated)
     {
       config.add_options()
-        (("custom_volume_animated_" +
+        ((option::per_file::name::custom_volume_animated + "_" +
             std::to_string(cur_animated + 1)).c_str(),
          boost::program_options::value<std::string>(),
          ("Custom volume for animated model " +
             std::to_string(cur_animated + 1) + ".").c_str())
-        (("custom_inertia_tensor_animated_" +
+        ((option::per_file::name::custom_inertia_tensor_animated + "_" +
             std::to_string(cur_animated + 1)).c_str(),
          boost::program_options::value<std::vector<std::string>>(),
          ("Custom inertia tensor matrix for animated model " +
@@ -992,7 +1006,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_a3d(
 
 
 
-    if(vm["overwrite_volume_animated"].as<bool>())
+    if(vm[option::per_file::name::overwrite_volume_animated].as<bool>())
     {
       for(std::size_t cur_animated = 0,
             animated_models_size = animated_models.size();
@@ -1000,7 +1014,8 @@ void wavefront_obj_to_m3d_model::read_file_cfg_a3d(
           ++cur_animated)
       {
         std::string cur_custom_volume_option =
-          "custom_volume_animated_" + std::to_string(cur_animated + 1);
+          option::per_file::name::custom_volume_animated + "_" +
+          std::to_string(cur_animated + 1);
         if(vm.count(cur_custom_volume_option))
         {
           const double custom_volume_animated =
@@ -1012,7 +1027,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_a3d(
       }
     }
 
-    if(vm["custom_center_of_mass_animated"].as<bool>())
+    if(vm[option::per_file::name::custom_center_of_mass_animated].as<bool>())
     {
       for(std::size_t cur_animated = 0,
             animated_models_size = animated_models.size();
@@ -1037,7 +1052,8 @@ void wavefront_obj_to_m3d_model::read_file_cfg_a3d(
       }
     }
 
-    if(vm["overwrite_inertia_tensor_animated"].as<bool>())
+    if(vm[option::per_file::name::overwrite_inertia_tensor_animated].
+         as<bool>())
     {
       for(std::size_t cur_animated = 0,
             animated_models_size = animated_models.size();
@@ -1045,7 +1061,8 @@ void wavefront_obj_to_m3d_model::read_file_cfg_a3d(
           ++cur_animated)
       {
         std::string cur_custom_J_option =
-          "custom_inertia_tensor_animated_" + std::to_string(cur_animated + 1);
+          option::per_file::name::custom_inertia_tensor_animated + "_" +
+          std::to_string(cur_animated + 1);
         if(vm.count(cur_custom_J_option))
         {
           // 9 doubles to describe 3x3 inertia tensor matrix.

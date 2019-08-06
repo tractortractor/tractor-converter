@@ -1292,7 +1292,8 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
   {
     conf_data_to_save.push_back('#');
   }
-  conf_data_to_save.append("overwrite_volume_main =\n");
+  conf_data_to_save.append(
+    option::per_file::name::overwrite_volume_main + " =\n");
 
 
   conf_data_to_save.append(
@@ -1307,7 +1308,8 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
   {
     conf_data_to_save.push_back('#');
   }
-  conf_data_to_save.append("custom_center_of_mass_main =\n");
+  conf_data_to_save.append(
+    option::per_file::name::custom_center_of_mass_main + " =\n");
 
 
   conf_data_to_save.append(
@@ -1320,13 +1322,14 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
   {
     conf_data_to_save.push_back('#');
   }
-  conf_data_to_save.append("overwrite_inertia_tensor_main =\n");
+  conf_data_to_save.append(
+    option::per_file::name::overwrite_inertia_tensor_main + " =\n");
 
 
   conf_data_to_save.append(
     "\n\n"
-    "# Custom volume for main model.\n"
-    "custom_volume_main = ");
+    "# Custom volume for main model.\n" +
+    option::per_file::name::custom_volume_main + " = ");
   to_string_precision<double>(
     main_model.volume,
     sprintf_float_per_file_cfg_format,
@@ -1340,7 +1343,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
   for(std::size_t cur_row = 0; cur_row < volInt::axes_num; ++cur_row)
   {
     conf_data_to_save.append(
-      "custom_inertia_tensor_main =");
+      option::per_file::name::custom_inertia_tensor_main + " =");
     for(std::size_t row_el = 0; row_el < volInt::axes_num; ++row_el)
     {
       conf_data_to_save.push_back(' ');
@@ -1367,7 +1370,8 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
     {
       conf_data_to_save.push_back('#');
     }
-    conf_data_to_save.append("overwrite_volume_debris =\n");
+    conf_data_to_save.append(
+      option::per_file::name::overwrite_volume_debris + " =\n");
 
     conf_data_to_save.append(
       "\n\n"
@@ -1381,7 +1385,8 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
     {
       conf_data_to_save.push_back('#');
     }
-    conf_data_to_save.append("custom_center_of_mass_debris =\n");
+    conf_data_to_save.append(
+      option::per_file::name::custom_center_of_mass_debris + " =\n");
 
     conf_data_to_save.append(
       "\n\n"
@@ -1392,7 +1397,8 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
     {
       conf_data_to_save.push_back('#');
     }
-    conf_data_to_save.append("overwrite_inertia_tensor_debris =\n");
+    conf_data_to_save.append(
+      option::per_file::name::overwrite_inertia_tensor_debris + " =\n");
 
 
     for(std::size_t cur_debris = 0,
@@ -1403,8 +1409,8 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
       conf_data_to_save.append(
         "\n\n"
         "# Custom volume for debris model " +
-          std::to_string(cur_debris + 1) + ".\n"
-        "custom_volume_debris_" +
+          std::to_string(cur_debris + 1) + ".\n" +
+        option::per_file::name::custom_volume_debris + "_" +
           std::to_string(cur_debris + 1) + " = ");
       to_string_precision<double>(
         (*debris_models)[cur_debris][wavefront_obj::obj_name::main].volume,
@@ -1420,7 +1426,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
       for(std::size_t cur_row = 0; cur_row < volInt::axes_num; ++cur_row)
       {
         conf_data_to_save.append(
-          "custom_inertia_tensor_debris_" +
+          option::per_file::name::custom_inertia_tensor_debris + "_" +
           std::to_string(cur_debris + 1) + " =");
         for(std::size_t row_el = 0; row_el < volInt::axes_num; ++row_el)
         {
@@ -1476,7 +1482,8 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
   {
     conf_data_to_save.push_back('#');
   }
-  conf_data_to_save.append("overwrite_volume_animated =\n");
+  conf_data_to_save.append(
+    option::per_file::name::overwrite_volume_animated + " =\n");
 
 
   conf_data_to_save.append(
@@ -1491,7 +1498,8 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
   {
     conf_data_to_save.push_back('#');
   }
-  conf_data_to_save.append("custom_center_of_mass_animated =\n");
+  conf_data_to_save.append(
+    option::per_file::name::custom_center_of_mass_animated + " =\n");
 
 
   conf_data_to_save.append("\n\n"
@@ -1502,7 +1510,8 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
   {
     conf_data_to_save.push_back('#');
   }
-  conf_data_to_save.append("overwrite_inertia_tensor_animated =\n");
+  conf_data_to_save.append(
+    option::per_file::name::overwrite_inertia_tensor_animated + " =\n");
 
 
   for(std::size_t cur_animated = 0,
@@ -1513,8 +1522,8 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
     conf_data_to_save.append(
       "\n\n"
       "# Custom volume for animated model " +
-        std::to_string(cur_animated + 1) + ".\n"
-      "custom_volume_animated_" +
+        std::to_string(cur_animated + 1) + ".\n" +
+      option::per_file::name::custom_volume_animated + "_" +
         std::to_string(cur_animated + 1) + " = ");
     to_string_precision<double>(
       animated_models[cur_animated][wavefront_obj::obj_name::main].volume,
@@ -1530,7 +1539,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
     for(std::size_t cur_row = 0; cur_row < volInt::axes_num; ++cur_row)
     {
       conf_data_to_save.append(
-        "custom_inertia_tensor_animated_" +
+        option::per_file::name::custom_inertia_tensor_animated + "_" +
         std::to_string(cur_animated + 1) + " =");
       for(std::size_t row_el = 0; row_el < volInt::axes_num; ++row_el)
       {

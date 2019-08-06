@@ -104,6 +104,57 @@ namespace option{
       std::to_string(gen_bound_area_threshold);
   } // namespace max
 
+
+
+  namespace per_file{
+
+    namespace name{
+      const std::string overwrite_volume_main = "overwrite_volume_main";
+      const std::string custom_center_of_mass_main =
+        "custom_center_of_mass_main";
+      const std::string overwrite_inertia_tensor_main =
+        "overwrite_inertia_tensor_main";
+      const std::string custom_volume_main = "custom_volume_main";
+      const std::string custom_inertia_tensor_main =
+        "custom_inertia_tensor_main";
+
+      const std::string overwrite_volume_debris =
+        "overwrite_volume_debris";
+      const std::string custom_center_of_mass_debris =
+        "custom_center_of_mass_debris";
+      const std::string overwrite_inertia_tensor_debris =
+        "overwrite_inertia_tensor_debris";
+      const std::string custom_volume_debris = "custom_volume_debris";
+      const std::string custom_inertia_tensor_debris =
+        "custom_inertia_tensor_debris";
+
+      const std::string overwrite_volume_animated =
+        "overwrite_volume_animated";
+      const std::string custom_center_of_mass_animated =
+        "custom_center_of_mass_animated";
+      const std::string overwrite_inertia_tensor_animated =
+        "overwrite_inertia_tensor_animated";
+      const std::string custom_volume_animated = "custom_volume_animated";
+      const std::string custom_inertia_tensor_animated =
+        "custom_inertia_tensor_animated";
+    } // namespace name
+
+    namespace default_val{
+      const bool overwrite_volume_main = false;
+      const bool custom_center_of_mass_main = false;
+      const bool overwrite_inertia_tensor_main = false;
+
+      const bool overwrite_volume_debris = false;
+      const bool custom_center_of_mass_debris = false;
+      const bool overwrite_inertia_tensor_debris = false;
+
+      const bool overwrite_volume_animated = false;
+      const bool custom_center_of_mass_animated = false;
+      const bool overwrite_inertia_tensor_animated = false;
+    } // namespace default_val
+
+  } // namespace per_file
+
 } // namespace option
 
 namespace mode{
