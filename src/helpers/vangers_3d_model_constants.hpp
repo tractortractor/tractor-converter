@@ -357,18 +357,18 @@ namespace c3d{
       (1000000, "virtual_object_ids_begin")
       (1000001, "center_of_mass")
       (1000002, "attachment_point")
+      (1000003, "invalid_color_id")
       (1999999, "virtual_object_ids_end")
-//    (1000002, "no_material")
       ;
 
 
 
-    const std::vector<unsigned int> wheel_weapon_color_ids
-    {
-      3,       // wheel
-      5,       // weapon
-      1000002, // attachment_point
-    };
+//    const std::vector<unsigned int> wheel_weapon_color_ids
+//    {
+//      3,       // wheel
+//      5,       // weapon
+//      1000002, // attachment_point
+//    };
 
 
     // c3d::color::string_to_id::
@@ -405,6 +405,7 @@ namespace c3d{
       const unsigned int virtual_object_ids_begin = 1000000;
       const unsigned int center_of_mass =           1000001;
       const unsigned int attachment_point =         1000002;
+      const unsigned int invalid_color_id =         1000003;
       const unsigned int virtual_object_ids_end =   1999999;
     }
 

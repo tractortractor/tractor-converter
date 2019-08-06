@@ -266,7 +266,7 @@ private:
 
   void move_weapon_model(std::vector<double> new_position,
                          double new_angle,
-                         int weapon_num,
+                         int weapon_id,
                          volInt::polyhedron &weapon_model) const;
 
   void add_weapons_to_models_map(

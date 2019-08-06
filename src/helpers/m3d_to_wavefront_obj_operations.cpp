@@ -850,7 +850,7 @@ void m3d_to_wavefront_obj_model::mark_wheels(
 //}
 
   // Trying to figure out which part of model is current non-steering wheel.
-  // Polygons which belong to this wheel are getting their "wheel_weapon_id"
+  // Polygons which belong to this wheel are getting their "wheel_id"
   // changed to ease material name generation.
   for(std::size_t model_wheel_center_num = 0,
         wheels_centers_size = wheels_centers.size();
@@ -890,7 +890,7 @@ void m3d_to_wavefront_obj_model::mark_wheels(
     for(auto cur_poly : wheels_groups[model_wheel_center_num])
     {
       // Assuming that volInt::face* points to polygon of non-const main_model.
-      const_cast<volInt::face*>(cur_poly)->wheel_weapon_id =
+      const_cast<volInt::face*>(cur_poly)->wheel_id =
         closest_wheel_data_num;
     }
 
@@ -992,7 +992,7 @@ volInt::polyhedron
 //  for(auto &&cur_poly : cur_ghost_wheel.faces)
 //  {
 //    cur_poly.color_id = c3d::color::string_to_id::weapon;
-//    cur_poly.wheel_weapon_id = wheel_id;
+//    cur_poly.wheel_id = wheel_id;
 //  }
 
   return cur_ghost_wheel;
@@ -1037,7 +1037,7 @@ void m3d_to_wavefront_obj_model::get_ghost_wheels(
 void m3d_to_wavefront_obj_model::move_weapon_model(
   std::vector<double> new_position,
   double new_angle,
-  int weapon_num,
+  int weapon_id,
   volInt::polyhedron &weapon_model) const
 {
   std::vector<double> weapon_offset = weapon_model.offset_point();
@@ -1047,7 +1047,9 @@ void m3d_to_wavefront_obj_model::move_weapon_model(
   volInt::vector_minus_self(new_position, weapon_offset);
 
   // Changing color_id for model.
-  weapon_model.set_color_id(c3d::color::string_to_id::weapon, weapon_num);
+  weapon_model.set_color_id(c3d::color::string_to_id::invalid_color_id,
+                            volInt::invalid::wheel_id,
+                            weapon_id);
 
 
 
@@ -1068,21 +1070,21 @@ void m3d_to_wavefront_obj_model::move_weapon_model(
 void m3d_to_wavefront_obj_model::add_weapons_to_models_map(
   std::unordered_map<std::string, volInt::polyhedron> &models_map) const
 {
-  for(std::size_t cur_weapon_num = 0;
-      cur_weapon_num < m3d::weapon_slot::max_slots;
-      ++cur_weapon_num)
+  for(std::size_t cur_weapon_id = 0;
+      cur_weapon_id < m3d::weapon_slot::max_slots;
+      ++cur_weapon_id)
   {
     if(flags & m3d_to_obj_flag::extract_nonexistent_weapons ||
-       cur_weapon_slot_data[cur_weapon_num].exists)
+       cur_weapon_slot_data[cur_weapon_id].exists)
     {
       std::string cur_model_name =
         wavefront_obj::obj_name::weapon + "_" +
-        std::to_string(cur_weapon_num + 1);
+        std::to_string(cur_weapon_id + 1);
       models_map[cur_model_name] = *example_weapon_model;
       move_weapon_model(
-        cur_weapon_slot_data[cur_weapon_num].R_slot,
-        cur_weapon_slot_data[cur_weapon_num].location_angle_of_slot,
-        cur_weapon_num,
+        cur_weapon_slot_data[cur_weapon_id].R_slot,
+        cur_weapon_slot_data[cur_weapon_id].location_angle_of_slot,
+        cur_weapon_id,
         models_map[cur_model_name]);
     }
   }

@@ -268,7 +268,8 @@ protected:
                                          volInt::polyhedron &model_to_move,
                                          std::vector<double> new_position,
                                          double new_angle,
-                                         int wheel_weapon_num,
+                                         int wheel_id,
+                                         int weapon_id,
                                          merge_model_type merge_type) const;
 
   template<typename WHEELS_CONTAINER>
@@ -292,6 +293,7 @@ protected:
           cur_wheel_data[cur_wheel_num].r,
           0.0,
           cur_wheel_num,
+          volInt::invalid::weapon_id,
           merge_model_type::wheel);
       }
       else if(non_steer_ghost_wheels_models &&
@@ -304,6 +306,7 @@ protected:
           cur_wheel_data[cur_wheel_num].r,
           0.0,
           cur_wheel_num,
+          volInt::invalid::weapon_id,
           merge_model_type::wheel);
       }
     }

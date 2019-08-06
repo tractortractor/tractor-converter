@@ -1509,7 +1509,8 @@ std::vector<point*>
     volInt::polyhedron &model,
     const volInt::polyhedron *reference_model,
     unsigned int color_id,
-    int wheel_weapon_id)
+    int wheel_id,
+    int weapon_id)
 {
   std::vector<point*> ref_points(3, nullptr);
 
@@ -1519,7 +1520,10 @@ std::vector<point*>
   {
     volInt::face &cur_poly = model.faces[poly_ind];
     if(cur_poly.color_id == color_id &&
-       (wheel_weapon_id < 0 || cur_poly.wheel_weapon_id == wheel_weapon_id))
+       (wheel_id == volInt::invalid::wheel_id ||
+          cur_poly.wheel_id == wheel_id) &&
+       (weapon_id == volInt::invalid::weapon_id ||
+          cur_poly.weapon_id == weapon_id))
     {
       for(std::size_t v_f_ind = 0; v_f_ind < model.numVertsPerPoly; ++v_f_ind)
       {
@@ -1575,9 +1579,13 @@ std::vector<point*>
       input_file_name_error + " file " + model.wavefront_obj_path + "\n" +
       "Can't find reference points for " +
       c3d::color::ids.by<c3d::color::id>().at(color_id));
-    if(wheel_weapon_id >= 0)
+    if(wheel_id != volInt::invalid::wheel_id)
     {
-      err_msg.append(" " + std::to_string(wheel_weapon_id + 1));
+      err_msg.append(", wheel_id: " + std::to_string(wheel_id + 1));
+    }
+    if(weapon_id != volInt::invalid::weapon_id)
+    {
+      err_msg.append(", weapon_id: " + std::to_string(weapon_id + 1));
     }
     err_msg.append(".\n");
     throw exception::model_ref_points_not_found(err_msg);
@@ -1844,6 +1852,7 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
           model,
           weapon_attachment_point,
           c3d::color::string_to_id::attachment_point,
+          volInt::invalid::wheel_id,
           cur_slot));
     }
     // If get_ref_points_for_part_of_model failed to find reference points.
@@ -2025,25 +2034,24 @@ std::unordered_map<int, volInt::polyhedron>
   for(std::size_t poly_ind = 0; poly_ind < main_model.numFaces; ++poly_ind)
   {
     volInt::face &cur_poly = main_model.faces[poly_ind];
-    if(cur_poly.color_id == c3d::color::string_to_id::wheel &&
-       main_model.wheels_steer.count(cur_poly.wheel_weapon_id) &&
-       main_model.wheels_non_ghost.count(cur_poly.wheel_weapon_id))
+    if(main_model.wheels_steer.count(cur_poly.wheel_id) &&
+       main_model.wheels_non_ghost.count(cur_poly.wheel_id))
     {
       volInt::polyhedron &cur_wheel_model =
-        wheels_steer_models[cur_poly.wheel_weapon_id];
-      int wheel_n = cur_poly.wheel_weapon_id;
+        wheels_steer_models[cur_poly.wheel_id];
+      int wheel_id = cur_poly.wheel_id;
 
       cur_wheel_model.faces.push_back(cur_poly);
       volInt::face &cur_wheel_poly =
-        cur_wheel_model.faces[cur_poly_nums[wheel_n]];
+        cur_wheel_model.faces[cur_poly_nums[wheel_id]];
       // TEST
-//    test_poly_properties_ofstream[wheel_n] << "cur_poly.norm[VOLINT_X]: " <<
+//    test_poly_properties_ofstream[wheel_id] << "cur_poly.norm[VOLINT_X]: " <<
 //      cur_poly.norm[VOLINT_X] << '\n';
-//    test_poly_properties_ofstream[wheel_n] << "cur_poly.norm[VOLINT_Y]: " <<
+//    test_poly_properties_ofstream[wheel_id] << "cur_poly.norm[VOLINT_Y]: " <<
 //      cur_poly.norm[VOLINT_Y] << '\n';
-//    test_poly_properties_ofstream[wheel_n] << "cur_poly.norm[VOLINT_Z]: " <<
+//    test_poly_properties_ofstream[wheel_id] << "cur_poly.norm[VOLINT_Z]: " <<
 //      cur_poly.norm[VOLINT_Z] << '\n';
-//    test_poly_properties_ofstream[wheel_n] << "cur_poly.w: " <<
+//    test_poly_properties_ofstream[wheel_id] << "cur_poly.w: " <<
 //      cur_poly.w << '\n';
 
       // Checking if vertices and norms indexes are already in the maps
@@ -2052,43 +2060,43 @@ std::unordered_map<int, volInt::polyhedron>
       // Value of the map is new vertex/norm index.
       for(std::size_t v_f_ind = 0; v_f_ind < v_per_poly; ++v_f_ind)
       {
-        if(vertices_maps[wheel_n].count(cur_wheel_poly.verts[v_f_ind]))
+        if(vertices_maps[wheel_id].count(cur_wheel_poly.verts[v_f_ind]))
         {
           // One of the keys of the map is equal to vertex index.
           // Changing index of vertex to value of the map entry.
           cur_wheel_poly.verts[v_f_ind] =
-            vertices_maps[wheel_n][cur_wheel_poly.verts[v_f_ind]];
+            vertices_maps[wheel_id][cur_wheel_poly.verts[v_f_ind]];
         }
         else
         {
           // Vertex index is not found as key in the map.
           // Inserting new key-value pair in the map.
           // Changing index of vertex to size of the map.
-          cur_wheel_poly.verts[v_f_ind] = cur_vert_nums[wheel_n];
-          vertices_maps[wheel_n][cur_poly.verts[v_f_ind]] =
-            cur_vert_nums[wheel_n];
-          ++cur_vert_nums[wheel_n];
+          cur_wheel_poly.verts[v_f_ind] = cur_vert_nums[wheel_id];
+          vertices_maps[wheel_id][cur_poly.verts[v_f_ind]] =
+            cur_vert_nums[wheel_id];
+          ++cur_vert_nums[wheel_id];
         }
 
-        if(norms_maps[wheel_n].count(cur_wheel_poly.vertNorms[v_f_ind]))
+        if(norms_maps[wheel_id].count(cur_wheel_poly.vertNorms[v_f_ind]))
         {
           // One of the keys of the map is equal to norm index.
           // Changing index of norm to value of the map entry.
           cur_wheel_poly.vertNorms[v_f_ind] =
-            norms_maps[wheel_n][cur_wheel_poly.vertNorms[v_f_ind]];
+            norms_maps[wheel_id][cur_wheel_poly.vertNorms[v_f_ind]];
         }
         else
         {
           // Norm index is not found as key in the map.
           // Inserting new key-value pair in the map.
           // Changing index of norm to size of the map.
-          cur_wheel_poly.vertNorms[v_f_ind] = cur_norm_nums[wheel_n];
-          norms_maps[wheel_n][cur_poly.vertNorms[v_f_ind]] =
-            cur_norm_nums[wheel_n];
-          ++cur_norm_nums[wheel_n];
+          cur_wheel_poly.vertNorms[v_f_ind] = cur_norm_nums[wheel_id];
+          norms_maps[wheel_id][cur_poly.vertNorms[v_f_ind]] =
+            cur_norm_nums[wheel_id];
+          ++cur_norm_nums[wheel_id];
         }
       }
-      ++cur_poly_nums[wheel_n];
+      ++cur_poly_nums[wheel_id];
     }
   }
 
@@ -2460,12 +2468,11 @@ void wavefront_obj_to_m3d_model::get_wheels_data(
 
   for(const auto &cur_poly : main_model.faces)
   {
-    if(cur_poly.color_id == c3d::color::string_to_id::wheel &&
-       main_model.wheels.count(cur_poly.wheel_weapon_id))
+    if(main_model.wheels.count(cur_poly.wheel_id))
     {
       for(const auto cur_vert_ind : cur_poly.verts)
       {
-        wheels_extreme_points[cur_poly.wheel_weapon_id].
+        wheels_extreme_points[cur_poly.wheel_id].
           get_most_extreme_cmp_cur(main_model.verts[cur_vert_ind]);
       }
     }
@@ -3050,11 +3057,9 @@ void wavefront_obj_to_m3d_model::remove_polygons_helper_erase_mechos(
       {
         if(poly.color_id == c3d::color::string_to_id::attachment_point ||
            poly.color_id == c3d::color::string_to_id::center_of_mass ||
-           (poly.color_id == c3d::color::string_to_id::weapon &&
-              poly.wheel_weapon_id >= 0) ||
-           (poly.color_id == c3d::color::string_to_id::wheel &&
-              (model.wheels_steer.count(poly.wheel_weapon_id) ||
-                 model.wheels_ghost.count(poly.wheel_weapon_id))))
+           poly.weapon_id != volInt::invalid::weapon_id ||
+           model.wheels_steer.count(poly.wheel_id) ||
+           model.wheels_ghost.count(poly.wheel_id))
         {
           return true;
         }

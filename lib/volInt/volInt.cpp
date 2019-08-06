@@ -814,7 +814,8 @@ void model_offset::set_z_off(double new_z_off)
 face::face(const face &other)
 : numVerts(other.numVerts),
   color_id(other.color_id),
-  wheel_weapon_id(other.wheel_weapon_id),
+  wheel_id(other.wheel_id),
+  weapon_id(other.weapon_id),
   norm(other.norm),
   w(other.w),
   verts(other.verts),
@@ -827,11 +828,12 @@ face::face(const face &other)
 face::face(int numVerts_arg)
 : numVerts(numVerts_arg),
   color_id(0),
-  wheel_weapon_id(-1),
+  wheel_id(invalid::wheel_id),
+  weapon_id(invalid::weapon_id),
   norm(std::vector<double>(axes_num, 0.0)),
   w(0.0),
-  verts(std::vector<int>(numVerts, -1)),
-  vertNorms(std::vector<int>(numVerts, -1))
+  verts(std::vector<int>(numVerts, invalid::vert_id)),
+  vertNorms(std::vector<int>(numVerts, invalid::vertNorm_id))
 {
 }
 
@@ -849,14 +851,14 @@ polyhedron::polyhedron()
   volume(0.0),
   rcm(axes_num, 0.0),
   J(axes_num, std::vector<double>(axes_num, 0.0)),
-  bodyColorOffset(-1),
-  bodyColorShift(-1),
-  ref_vert_one_ind(-1, -1),
+  bodyColorOffset(invalid::bodyColorOffset),
+  bodyColorShift(invalid::bodyColorShift),
+  ref_vert_one_ind(invalid::ref_vert_ind, invalid::ref_vert_ind),
   ref_vert_one(nullptr),
-  ref_vert_two_ind(-1, -1),
+  ref_vert_two_ind(invalid::ref_vert_ind, invalid::ref_vert_ind),
   ref_vert_two(nullptr),
   ref_angle(0.0),
-  wheel_id(-1),
+  wheel_id(invalid::wheel_id),
   volume_overwritten(false),
   rcm_overwritten(false),
   J_overwritten(false)
@@ -953,20 +955,20 @@ polyhedron::polyhedron(int numVerts_arg,
   volume(0.0),
   rcm(axes_num, 0.0),
   J(axes_num, std::vector<double>(axes_num, 0.0)),
-  bodyColorOffset(-1),
-  bodyColorShift(-1),
+  bodyColorOffset(invalid::bodyColorOffset),
+  bodyColorShift(invalid::bodyColorShift),
   verts(
     std::vector<std::vector<double>>(numVerts, std::vector<double>(axes_num))),
   vertNorms(
     std::vector<std::vector<double>>(numVertNorms,
                                      std::vector<double>(axes_num))),
   faces(std::vector<face>(numFaces, face(verts_per_poly_arg))),
-  ref_vert_one_ind(-1, -1),
+  ref_vert_one_ind(invalid::ref_vert_ind, invalid::ref_vert_ind),
   ref_vert_one(nullptr),
-  ref_vert_two_ind(-1, -1),
+  ref_vert_two_ind(invalid::ref_vert_ind, invalid::ref_vert_ind),
   ref_vert_two(nullptr),
   ref_angle(0.0),
-  wheel_id(-1),
+  wheel_id(invalid::wheel_id),
   volume_overwritten(false),
   rcm_overwritten(false),
   J_overwritten(false)
@@ -1424,14 +1426,16 @@ std::vector<const face*> polyhedron::get_polygons_by_color(
 
 std::vector<const face*> polyhedron::get_polygons_by_ids(
   unsigned int color_id_arg,
-  int wheel_weapon_id_arg) const
+  int wheel_id_arg,
+  int weapon_id_arg) const
 {
   std::vector<const face*> tmp_polygons;
   tmp_polygons.reserve(numFaces);
   for(std::size_t cur_poly = 0; cur_poly < numFaces; ++cur_poly)
   {
-    if(faces[cur_poly].color_id        == color_id_arg &&
-       faces[cur_poly].wheel_weapon_id == wheel_weapon_id_arg)
+    if(faces[cur_poly].color_id ==  color_id_arg &&
+       faces[cur_poly].wheel_id ==  wheel_id_arg &&
+       faces[cur_poly].weapon_id == weapon_id_arg)
     {
       tmp_polygons.push_back(&faces[cur_poly]);
     }
@@ -1481,10 +1485,11 @@ std::vector<const std::vector<double>*> polyhedron::get_vertices_by_color(
 
 std::vector<const std::vector<double>*> polyhedron::get_vertices_by_ids(
   unsigned int color_id,
-  int wheel_weapon_id) const
+  int wheel_id,
+  int weapon_id) const
 {
   std::vector<const face*> tmp_polygons =
-    get_polygons_by_ids(color_id, wheel_weapon_id);
+    get_polygons_by_ids(color_id, wheel_id, weapon_id);
   return get_vertices_by_polygons(tmp_polygons);
 }
 
@@ -1610,16 +1615,35 @@ void polyhedron::rotate_by_axis(double angle, rotation_axis axis)
 
 
 void polyhedron::set_color_id(unsigned int new_color_id,
-                              int new_wheel_weapon_num)
+                              int new_wheel_id,
+                              int new_weapon_id)
 {
-  for(auto &&cur_poly : faces)
+  if(new_color_id != color_ids::invalid_color_id)
   {
-    // If non-standard color id ended up in m3d model it must be preserved.
-    if(cur_poly.color_id < color_ids::max_colors_ids)
+    for(auto &&cur_poly : faces)
     {
-      cur_poly.color_id = new_color_id;
+      // If non-standard color id ended up in m3d model it must be preserved.
+      if(cur_poly.color_id < color_ids::max_colors_ids)
+      {
+        cur_poly.color_id = new_color_id;
+      }
     }
-    cur_poly.wheel_weapon_id = new_wheel_weapon_num;
+  }
+
+  if(new_wheel_id != volInt::invalid::wheel_id)
+  {
+    for(auto &&cur_poly : faces)
+    {
+      cur_poly.wheel_id = new_wheel_id;
+    }
+  }
+
+  if(new_weapon_id != volInt::invalid::weapon_id)
+  {
+    for(auto &&cur_poly : faces)
+    {
+      cur_poly.weapon_id = new_weapon_id;
+    }
   }
 }
 

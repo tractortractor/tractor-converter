@@ -89,6 +89,22 @@ namespace exception{
 
 
 
+namespace invalid{
+  const int vert_id =         -1;
+  const int vertNorm_id =     -1;
+
+  const int bodyColorOffset = -1;
+  const int bodyColorShift =  -1;
+
+  const int ref_vert_ind =    -1;
+
+  const int wheel_id =        -1;
+  const int weapon_id =       -1;
+  const int wheel_weapon_id = -1;
+} // namespace invalid
+
+
+
 enum class rotation_axis : std::size_t {x = 0, y = 1, z = 2};
 
 
@@ -331,9 +347,10 @@ const std::vector<std::vector<std::size_t>> axes_by_plane_continuous =
   };
 
 namespace color_ids {
-  const unsigned int zero_reserved =  0;
-  const unsigned int body =           1;
-  const unsigned int max_colors_ids = 25;
+  const unsigned int zero_reserved =    0;
+  const unsigned int body =             1;
+  const unsigned int max_colors_ids =   25;
+  const unsigned int invalid_color_id = 1000003;
 } // namespace color_ids
 
 namespace calc_norms{
@@ -574,11 +591,8 @@ typedef struct face {
 
   int numVerts;
   unsigned int color_id;
-  // In case color_id is "wheel" or "weapon"
-  // this value is used to keep id of wheel or weapon.
-  // During conversion to *.obj file it will be easier to
-  // generate material name for polygon.
-  int wheel_weapon_id;
+  int wheel_id;
+  int weapon_id;
 //  double norm[3];
   std::vector<double> norm;
   double w;
@@ -628,7 +642,8 @@ typedef struct polyhedron {
     get_polygons_by_color(unsigned int color_id) const;
   std::vector<const face*> get_polygons_by_ids(
     unsigned int color_id,
-    int wheel_weapon_id) const;
+    int wheel_id,
+    int weapon_id) const;
 
   std::vector<const std::vector<double>*> get_vertices_by_polygons(
     const std::vector<const face*> &model_polygons) const;
@@ -637,7 +652,8 @@ typedef struct polyhedron {
     unsigned int color_id) const;
   std::vector<const std::vector<double>*> get_vertices_by_ids(
     unsigned int color_id,
-    int wheel_weapon_id) const;
+    int wheel_id =  invalid::wheel_id,
+    int weapon_id = invalid::weapon_id) const;
 
   void move_model_to_point(const std::vector<double> &point);
   void move_model_to_point_inv_neg_vol(const std::vector<double> &point);
@@ -661,7 +677,9 @@ typedef struct polyhedron {
 
   void rotate_by_axis(double angle, rotation_axis axis);
 
-  void set_color_id(unsigned int new_color_id, int new_wheel_weapon_num = -1);
+  void set_color_id(unsigned int new_color_id,
+                    int new_wheel_id =  invalid::wheel_id,
+                    int new_weapon_id = invalid::weapon_id);
 
 
   bool find_ref_points();
@@ -774,7 +792,7 @@ typedef struct polyhedron {
   std::unordered_set<std::size_t> wheels_non_ghost;
 
   // Holds wheel id in case model itself is a wheel.
-  // Otherwise value is less than 0.
+  // Otherwise value is invalid::wheel_id which is -1.
   int wheel_id;
 
   // Used only when converting from *.obj to *.m3d/*.a3d.

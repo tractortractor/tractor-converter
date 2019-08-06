@@ -70,6 +70,14 @@ int raw_obj_to_volInt_helper_get_wheel_weapon_id(
   std::string mat_name,
   std::size_t mat_size);
 
+int raw_obj_to_volInt_helper_get_wheel_id(
+  std::string mat_name,
+  std::size_t mat_size);
+
+int raw_obj_to_volInt_helper_get_weapon_id(
+  std::string mat_name,
+  std::size_t mat_size);
+
 void raw_obj_to_volInt_helper_get_body_color(
   const boost::filesystem::path &input_file_path_arg,
   const std::string &input_file_name_error,
@@ -80,20 +88,20 @@ void raw_obj_to_volInt_helper_get_wheel_properties(
   const std::string &input_file_name_error,
   std::size_t mat,
   std::string mat_name,
-  std::vector<int> &tiny_obj_id_to_wheel_weapon_id,
+  std::vector<int> &tiny_obj_id_to_wheel_id,
   volInt::polyhedron &volInt_model);
 void raw_obj_to_volInt_helper_get_weapon_num(
   const boost::filesystem::path &input_file_path_arg,
   const std::string &input_file_name_error,
   std::size_t mat,
   std::string mat_name,
-  std::vector<int> &tiny_obj_id_to_wheel_weapon_id);
+  std::vector<int> &tiny_obj_id_to_weapon_id);
 void raw_obj_to_volInt_helper_get_attachment_point_num(
   const boost::filesystem::path &input_file_path_arg,
   const std::string &input_file_name_error,
   std::size_t mat,
   std::string mat_name,
-  std::vector<int> &tiny_obj_id_to_wheel_weapon_id);
+  std::vector<int> &tiny_obj_id_to_weapon_id);
 
 volInt::polyhedron raw_obj_to_volInt_model(
   const boost::filesystem::path &input_file_path_arg,

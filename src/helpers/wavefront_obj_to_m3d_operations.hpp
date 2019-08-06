@@ -387,7 +387,8 @@ private:
     volInt::polyhedron &model,
     const volInt::polyhedron *reference_model,
     unsigned int color_id,
-    int wheel_weapon_id = -1);
+    int wheel_id =  volInt::invalid::wheel_id,
+    int weapon_id = volInt::invalid::weapon_id);
 
   std::pair<point, point> get_compare_points(
     std::vector<point*> cur_ref_verts,
