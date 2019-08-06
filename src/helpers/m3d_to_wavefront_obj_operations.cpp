@@ -823,6 +823,9 @@ void m3d_to_wavefront_obj_model::mark_wheels(
     }
   }
 
+
+
+/*
   // Creating groups of non-steering wheels polygons.
   std::vector<const volInt::face*> non_steering_wheels_polygons =
     main_model.get_polygons_by_color(c3d::color::string_to_id::wheel);
@@ -903,6 +906,7 @@ void m3d_to_wavefront_obj_model::mark_wheels(
   // right after moving non-steering wheels.
   // Not really used but useful for debugging.
   main_model.faces_calc_params();
+*/
 
 
 
@@ -928,12 +932,12 @@ void m3d_to_wavefront_obj_model::mark_wheels(
     }
     else
     {
-      if(!main_model.wheels_non_ghost.count(wheel_ind))
-      {
-        cur_wheel_data[wheel_ind].ghost = 1;
-        main_model.wheels_ghost.insert(wheel_ind);
-        ++non_steer_ghost_wheels_num;
-      }
+//    if(!main_model.wheels_non_ghost.count(wheel_ind))
+//    {
+      cur_wheel_data[wheel_ind].ghost = 1;
+      main_model.wheels_ghost.insert(wheel_ind);
+      ++non_steer_ghost_wheels_num;
+//    }
     }
   }
 }
