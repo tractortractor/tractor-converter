@@ -64,7 +64,7 @@ int raw_obj_to_volInt_helper_get_weapon_id(
 
 
 
-void raw_obj_to_volInt_helper_get_body_color(
+std::size_t raw_obj_to_volInt_helper_get_body_color(
   const boost::filesystem::path &input_file_path_arg,
   const std::string &input_file_name_error,
   std::string mat_name,
@@ -73,11 +73,15 @@ void raw_obj_to_volInt_helper_get_body_color(
   // Checking if string is "body_offset_*_shift_*" string. * - integer.
   // Skipping color operations if it doesn't match.
 
+  std::size_t base_name_size = std::string("body").size();
+
   int new_color_offset = volInt::invalid::bodyColorOffset;
   int new_color_shift =  volInt::invalid::bodyColorShift;
 
   // Size of first integer.
   std::size_t offset_num_size;
+  // Size of second integer.
+  std::size_t shift_num_size;
   // Size of "body_offset_*_shift_".
   std::size_t body_mat_pre_shift_number_size;
 
@@ -86,7 +90,7 @@ void raw_obj_to_volInt_helper_get_body_color(
   // Checking if there is enough space for "body_offset_*".
   if(mat_name.size() < wavefront_obj::body_mat_str_el_1_size)
   {
-    return;
+    return base_name_size;
   }
   color_offset_str =
     mat_name.substr(wavefront_obj::body_mat_str_el_1_size);
@@ -97,13 +101,13 @@ void raw_obj_to_volInt_helper_get_body_color(
   // If there is no integer in place of * in "body_offset_*".
   catch(std::invalid_argument &)
   {
-    return;
+    return base_name_size;
   }
   // Size of "body_offset_*_shift_".
   body_mat_pre_shift_number_size =
     wavefront_obj::body_mat_str_el_1_size +
     offset_num_size +
-     wavefront_obj::body_mat_str_el_2_size;
+    wavefront_obj::body_mat_str_el_2_size;
   if(// Checking if there is enough space for "body_offset_*_shift_*".
      mat_name.size() < body_mat_pre_shift_number_size ||
      // Checking if there is "_shift_" part of string.
@@ -113,19 +117,19 @@ void raw_obj_to_volInt_helper_get_body_color(
                   wavefront_obj::body_mat_str_el_2.c_str(),
                   wavefront_obj::body_mat_str_el_2_size))
   {
-    return;
+    return base_name_size;
   }
   color_shift_str =
     mat_name.substr(body_mat_pre_shift_number_size);
   try
   {
     new_color_shift =
-      std::stoi(color_shift_str);
+      std::stoi(color_shift_str, &shift_num_size);
   }
   // If mat_name does not contain color_shift number.
   catch(std::invalid_argument &)
   {
-    return;
+    return base_name_size;
   }
 
 
@@ -166,6 +170,9 @@ void raw_obj_to_volInt_helper_get_body_color(
       " Color shift range: 0 - " +
       std::to_string(c3d::color::max_shift) + ".");
   }
+
+  base_name_size = body_mat_pre_shift_number_size + shift_num_size;
+  return base_name_size;
 }
 
 
@@ -173,29 +180,30 @@ void raw_obj_to_volInt_helper_get_body_color(
 void raw_obj_to_volInt_helper_get_wheel_properties(
   const boost::filesystem::path &input_file_path_arg,
   const std::string &input_file_name_error,
-  std::size_t mat,
+  std::size_t tiny_obj_mat_id,
   std::string mat_name,
+  std::size_t base_name_size,
   std::vector<int> &tiny_obj_id_to_wheel_id,
   volInt::polyhedron &volInt_model)
 {
-  std::size_t mat_size = wavefront_obj::wheel_mat_str_size;
+  std::size_t mat_size = base_name_size + wavefront_obj::wheel_mat_marker_size;
 
   bool steer = false;
   bool ghost = false;
 
   if(!std::strncmp(mat_name.c_str() + mat_size,
-                   wavefront_obj::wheel_steer_mat_str_el.c_str(),
-                   wavefront_obj::wheel_steer_mat_str_el_size))
+                   wavefront_obj::wheel_steer_mat_marker.c_str(),
+                   wavefront_obj::wheel_steer_mat_marker_size))
   {
-    mat_size += wavefront_obj::wheel_steer_mat_str_el_size;
+    mat_size += wavefront_obj::wheel_steer_mat_marker_size;
     steer = true;
   }
 
   if(!std::strncmp(mat_name.c_str() + mat_size,
-                   wavefront_obj::wheel_ghost_mat_str_el.c_str(),
-                   wavefront_obj::wheel_ghost_mat_str_el_size))
+                   wavefront_obj::wheel_ghost_mat_marker.c_str(),
+                   wavefront_obj::wheel_ghost_mat_marker_size))
   {
-    mat_size += wavefront_obj::wheel_ghost_mat_str_el_size;
+    mat_size += wavefront_obj::wheel_ghost_mat_marker_size;
     ghost = true;
   }
 
@@ -203,10 +211,10 @@ void raw_obj_to_volInt_helper_get_wheel_properties(
   if(!steer)
   {
     if(!std::strncmp(mat_name.c_str() + mat_size,
-                     wavefront_obj::wheel_steer_mat_str_el.c_str(),
-                     wavefront_obj::wheel_steer_mat_str_el_size))
+                     wavefront_obj::wheel_steer_mat_marker.c_str(),
+                     wavefront_obj::wheel_steer_mat_marker_size))
     {
-      mat_size += wavefront_obj::wheel_steer_mat_str_el_size;
+      mat_size += wavefront_obj::wheel_steer_mat_marker_size;
       steer = true;
     }
   }
@@ -214,7 +222,7 @@ void raw_obj_to_volInt_helper_get_wheel_properties(
   int cur_wheel_id = raw_obj_to_volInt_helper_get_wheel_id(mat_name, mat_size);
   if(cur_wheel_id >= 0)
   {
-    tiny_obj_id_to_wheel_id[mat] = cur_wheel_id;
+    tiny_obj_id_to_wheel_id[tiny_obj_mat_id] = cur_wheel_id;
 
     volInt_model.wheels.insert(cur_wheel_id);
 
@@ -267,49 +275,24 @@ void raw_obj_to_volInt_helper_get_wheel_properties(
 void raw_obj_to_volInt_helper_get_weapon_num(
   const boost::filesystem::path &input_file_path_arg,
   const std::string &input_file_name_error,
-  std::size_t mat,
+  std::size_t tiny_obj_mat_id,
   std::string mat_name,
+  std::size_t base_name_size,
   std::vector<int> &tiny_obj_id_to_weapon_id)
 {
-  tiny_obj_id_to_weapon_id[mat] =
-    raw_obj_to_volInt_helper_get_weapon_id(
-      mat_name,
-      wavefront_obj::weapon_mat_str_size);
-  if(tiny_obj_id_to_weapon_id[mat] >=
+  std::size_t mat_size =
+    base_name_size + wavefront_obj::weapon_mat_marker_size;
+
+  tiny_obj_id_to_weapon_id[tiny_obj_mat_id] =
+    raw_obj_to_volInt_helper_get_weapon_id(mat_name, mat_size);
+  if(tiny_obj_id_to_weapon_id[tiny_obj_mat_id] >=
      static_cast<int>(m3d::weapon_slot::max_slots))
   {
     throw std::runtime_error(
       "Error while loading " + input_file_name_error +
       " file " + input_file_path_arg.string() +
       " as " + ext::readable::wavefront_obj + ". ID of weapon material " +
-      std::to_string(tiny_obj_id_to_weapon_id[mat]) +
-      " is more than max weapon slot " +
-      std::to_string(m3d::weapon_slot::max_slots) + ".");
-  }
-}
-
-
-
-void raw_obj_to_volInt_helper_get_attachment_point_num(
-  const boost::filesystem::path &input_file_path_arg,
-  const std::string &input_file_name_error,
-  std::size_t mat,
-  std::string mat_name,
-  std::vector<int> &tiny_obj_id_to_weapon_id)
-{
-  tiny_obj_id_to_weapon_id[mat] =
-    raw_obj_to_volInt_helper_get_weapon_id(
-      mat_name,
-      wavefront_obj::attachment_point_mat_str_size);
-  if(tiny_obj_id_to_weapon_id[mat] >=
-     static_cast<int>(m3d::weapon_slot::max_slots))
-  {
-    throw std::runtime_error(
-      "Error while loading " + input_file_name_error +
-      " file " + input_file_path_arg.string() +
-      " as " + ext::readable::wavefront_obj + ". "
-      "ID of attachment point material " +
-      std::to_string(tiny_obj_id_to_weapon_id[mat]) +
+      std::to_string(tiny_obj_id_to_weapon_id[tiny_obj_mat_id]) +
       " is more than max weapon slot " +
       std::to_string(m3d::weapon_slot::max_slots) + ".");
   }
@@ -440,6 +423,7 @@ volInt::polyhedron raw_obj_to_volInt_model(
 
   for(std::size_t cur_mat = 0; cur_mat < materials_size; ++cur_mat)
   {
+    std::size_t base_name_size = 0;
     const std::string &cur_mat_name = materials[cur_mat].name;
     // Checking if first part of cur_mat_name is "body_offset_".
     if(!std::strncmp(cur_mat_name.c_str(),
@@ -448,56 +432,11 @@ volInt::polyhedron raw_obj_to_volInt_model(
     {
       // Assigning color ID.
       tiny_obj_id_to_color_id[cur_mat] = c3d::color::string_to_id::body;
-
-      raw_obj_to_volInt_helper_get_body_color(
-        input_file_path_arg,
-        input_file_name_error,
-        cur_mat_name,
-        volInt_model);
-    }
-    else if(!std::strncmp(cur_mat_name.c_str(),
-                          wavefront_obj::wheel_mat_str.c_str(),
-                          wavefront_obj::wheel_mat_str_size))
-    {
-      // Assigning color ID.
-      tiny_obj_id_to_color_id[cur_mat] = c3d::color::string_to_id::wheel;
-
-      raw_obj_to_volInt_helper_get_wheel_properties(
-        input_file_path_arg,
-        input_file_name_error,
-        cur_mat,
-        cur_mat_name,
-        tiny_obj_id_to_wheel_id,
-        volInt_model);
-    }
-    else if(!std::strncmp(cur_mat_name.c_str(),
-                          wavefront_obj::weapon_mat_str.c_str(),
-                          wavefront_obj::weapon_mat_str_size))
-    {
-      // Assigning color ID.
-      tiny_obj_id_to_color_id[cur_mat] = c3d::color::string_to_id::weapon;
-
-      raw_obj_to_volInt_helper_get_weapon_num(
-        input_file_path_arg,
-        input_file_name_error,
-        cur_mat,
-        cur_mat_name,
-        tiny_obj_id_to_weapon_id);
-    }
-    else if(!std::strncmp(cur_mat_name.c_str(),
-                          wavefront_obj::attachment_point_mat_str.c_str(),
-                          wavefront_obj::attachment_point_mat_str_size))
-    {
-      // Assigning color ID.
-      tiny_obj_id_to_color_id[cur_mat] =
-        c3d::color::string_to_id::attachment_point;
-
-      raw_obj_to_volInt_helper_get_attachment_point_num(
-        input_file_path_arg,
-        input_file_name_error,
-        cur_mat,
-        cur_mat_name,
-        tiny_obj_id_to_weapon_id);
+      base_name_size = raw_obj_to_volInt_helper_get_body_color(
+                         input_file_path_arg,
+                         input_file_name_error,
+                         cur_mat_name,
+                         volInt_model);
     }
     else
 //  else if(c3d::color::ids.by<c3d::color::name>().count(cur_mat_name))
@@ -521,12 +460,42 @@ volInt::polyhedron raw_obj_to_volInt_model(
           max_name_size = name_id_pair.first.size();
         }
       }
+      base_name_size = max_name_size;
     }
 //  else
 //  {
 //    // Assigning color ID.
 //    tiny_obj_id_to_color_id[cur_mat] = default_color_id;
 //  }
+
+
+    if(!std::strncmp(cur_mat_name.c_str() + base_name_size,
+                     wavefront_obj::wheel_mat_marker.c_str(),
+                     wavefront_obj::wheel_mat_marker_size))
+    {
+      // Assigning wheel ID.
+      raw_obj_to_volInt_helper_get_wheel_properties(
+        input_file_path_arg,
+        input_file_name_error,
+        cur_mat,
+        cur_mat_name,
+        base_name_size,
+        tiny_obj_id_to_wheel_id,
+        volInt_model);
+    }
+    else if(!std::strncmp(cur_mat_name.c_str() + base_name_size,
+                          wavefront_obj::weapon_mat_marker.c_str(),
+                          wavefront_obj::weapon_mat_marker_size))
+    {
+      // Assigning weapon ID.
+      raw_obj_to_volInt_helper_get_weapon_num(
+        input_file_path_arg,
+        input_file_name_error,
+        cur_mat,
+        cur_mat_name,
+        base_name_size,
+        tiny_obj_id_to_weapon_id);
+    }
   }
 
 
@@ -818,40 +787,44 @@ void save_volInt_as_wavefront_obj(
          cur_poly_wheel_id !=  previous_wheel_id ||
          cur_poly_weapon_id != previous_weapon_id)
       {
+        obj_data.append("usemtl ");
         if(c3d_model.second.faces[cur_poly_num].color_id ==
            c3d::color::string_to_id::body)
         {
           obj_data.append(
-            "usemtl body_offset_" +
+            wavefront_obj::body_mat_str_el_1 +
             std::to_string(c3d_model.second.bodyColorOffset) +
-            "_shift_" + std::to_string(c3d_model.second.bodyColorShift));
+            wavefront_obj::body_mat_str_el_2 +
+            std::to_string(c3d_model.second.bodyColorShift));
         }
         else
         {
           obj_data.append(
-            "usemtl " +
             c3d::color::ids.by<c3d::color::id>().at(
               c3d_model.second.faces[cur_poly_num].color_id));
         }
 
         if(cur_poly_wheel_id != volInt::invalid::wheel_id)
         {
-          obj_data.append("_wheel");
+          obj_data.append(wavefront_obj::wheel_mat_marker);
           if(c3d_model.second.wheels_steer.count(cur_poly_wheel_id))
           {
-            obj_data.append("_steer");
+            obj_data.append(wavefront_obj::wheel_steer_mat_marker);
           }
           if(c3d_model.second.wheels_ghost.count(cur_poly_wheel_id))
           {
-            obj_data.append("_ghost");
+            obj_data.append(wavefront_obj::wheel_ghost_mat_marker);
           }
           obj_data.append(
-            "_" + std::to_string(cur_poly_wheel_id + 1));
+            wavefront_obj::mat_separator +
+            std::to_string(cur_poly_wheel_id + 1));
         }
         else if(cur_poly_weapon_id != volInt::invalid::weapon_id)
         {
           obj_data.append(
-            "_weapon_" + std::to_string(cur_poly_weapon_id + 1));
+            wavefront_obj::weapon_mat_marker +
+            wavefront_obj::mat_separator +
+            std::to_string(cur_poly_weapon_id + 1));
         }
 
         obj_data.push_back('\n');

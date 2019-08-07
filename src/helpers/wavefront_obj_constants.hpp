@@ -43,21 +43,16 @@ namespace wavefront_obj{
   const std::string body_mat_str_el_2(mat_separator + "shift" + mat_separator);
   const std::size_t body_mat_str_el_2_size = body_mat_str_el_2.size();
 
-//const std::string wheel_steer_mat_str("wheel_steer_");
-//const std::size_t wheel_steer_mat_str_size = wheel_steer_mat_str.size();
-  const std::string wheel_mat_str("wheel");
-  const std::size_t wheel_mat_str_size = wheel_mat_str.size();
-  const std::string wheel_steer_mat_str_el(mat_separator + "steer");
-  const std::size_t wheel_steer_mat_str_el_size =
-    wheel_steer_mat_str_el.size();
-  const std::string wheel_ghost_mat_str_el(mat_separator + "ghost");
-  const std::size_t wheel_ghost_mat_str_el_size =
-    wheel_ghost_mat_str_el.size();
-  const std::string weapon_mat_str("weapon");
-  const std::size_t weapon_mat_str_size = weapon_mat_str.size();
-  const std::string attachment_point_mat_str("attachment_point");
-  const std::size_t attachment_point_mat_str_size =
-    attachment_point_mat_str.size();
+  const std::string wheel_mat_marker(mat_separator + "wheel");
+  const std::size_t wheel_mat_marker_size = wheel_mat_marker.size();
+  const std::string wheel_steer_mat_marker(mat_separator + "steer");
+  const std::size_t wheel_steer_mat_marker_size =
+    wheel_steer_mat_marker.size();
+  const std::string wheel_ghost_mat_marker(mat_separator + "ghost");
+  const std::size_t wheel_ghost_mat_marker_size =
+    wheel_ghost_mat_marker.size();
+  const std::string weapon_mat_marker(mat_separator + "weapon");
+  const std::size_t weapon_mat_marker_size = weapon_mat_marker.size();
 
 //const int default_float_precision = 6;
 
