@@ -282,11 +282,103 @@ namespace c3d{
 
 
   namespace color{
-    const int max_offset = 255;
-    const int max_shift = 7;
+    namespace string{
+      const std::string zero_reserved =            "zero_reserved";
+      const std::string body =                     "body";
+      const std::string window =                   "window";
+      const std::string wheel =                    "wheel";
+      const std::string defense =                  "defense";
+      const std::string weapon =                   "weapon";
+      const std::string tube =                     "tube";
+      const std::string body_red =                 "body_red";
+      const std::string body_blue =                "body_blue";
+      const std::string body_yellow =              "body_yellow";
+      const std::string body_gray =                "body_gray";
+      const std::string yellow_charged =           "yellow_charged";
+      const std::string material_0 =               "material_0";
+      const std::string material_1 =               "material_1";
+      const std::string material_2 =               "material_2";
+      const std::string material_3 =               "material_3";
+      const std::string material_4 =               "material_4";
+      const std::string material_5 =               "material_5";
+      const std::string material_6 =               "material_6";
+      const std::string material_7 =               "material_7";
+      const std::string black =                    "black";
+      const std::string body_green =               "body_green";
+      const std::string skyfarmer_kernoboo =       "skyfarmer_kernoboo";
+      const std::string skyfarmer_pipetka =        "skyfarmer_pipetka";
+      const std::string rotten_item =              "rotten_item";
+      // End of color id list in vangers source.
+      const std::string max_colors_ids =           "max_colors_ids";
 
-    const int default_offset = 128;
-    const int default_shift = 3;
+      // Doesn't exist in vangers source.
+      const std::string virtual_object_ids_begin = "virtual_object_ids_begin";
+      const std::string center_of_mass =           "center_of_mass";
+      const std::string attachment_point =         "attachment_point";
+      const std::string invalid_color_id =         "invalid_color_id";
+      const std::string virtual_object_ids_end =   "virtual_object_ids_end";
+    } // namespace string
+
+    namespace string_to_id{
+      const unsigned int zero_reserved =            0;
+      const unsigned int body =                     1;
+      const unsigned int window =                   2;
+      const unsigned int wheel =                    3;
+      const unsigned int defense =                  4;
+      const unsigned int weapon =                   5;
+      const unsigned int tube =                     6;
+      const unsigned int body_red =                 7;
+      const unsigned int body_blue =                8;
+      const unsigned int body_yellow =              9;
+      const unsigned int body_gray =                10;
+      const unsigned int yellow_charged =           11;
+      const unsigned int material_0 =               12;
+      const unsigned int material_1 =               13;
+      const unsigned int material_2 =               14;
+      const unsigned int material_3 =               15;
+      const unsigned int material_4 =               16;
+      const unsigned int material_5 =               17;
+      const unsigned int material_6 =               18;
+      const unsigned int material_7 =               19;
+      const unsigned int black =                    20;
+      const unsigned int body_green =               21;
+      const unsigned int skyfarmer_kernoboo =       22;
+      const unsigned int skyfarmer_pipetka =        23;
+      const unsigned int rotten_item =              24;
+      // End of color id list in vangers source.
+      const unsigned int max_colors_ids =           25;
+
+      // Doesn't exist in vangers source.
+      const unsigned int virtual_object_ids_begin = 1000000;
+      const unsigned int center_of_mass =           1000001;
+      const unsigned int attachment_point =         1000002;
+      const unsigned int invalid_color_id =         1000003;
+      const unsigned int virtual_object_ids_end =   1999999;
+    } // namespace string_to_id
+
+
+    namespace body{
+      namespace string{
+        const std::string separator = "_";
+        const std::string offset =    "offset";
+        const std::string shift =     "shift";
+        const std::string el_1 =
+          c3d::color::string::body + separator + offset + separator;
+        const std::string el_2 = separator + shift + separator;
+      } // namespace string
+      namespace max{
+        const int offset = 255;
+        const int shift = 7;
+      } // namespace max
+      namespace min{
+        const int offset = 0;
+        const int shift = 0;
+      } // namespace max
+      namespace default_val{
+        const int offset = 128;
+        const int shift = 3;
+      } // namespace max
+    } // namespace body
 
     struct id{};
     struct name{};
@@ -294,9 +386,9 @@ namespace c3d{
     typedef boost::bimaps::bimap
     <
       boost::bimaps::unordered_set_of<
-        boost::bimaps::tagged< unsigned int, id   > >,
+        boost::bimaps::tagged<unsigned int, id>>,
       boost::bimaps::unordered_set_of< boost::bimaps::tagged<
-        std::string , name > >,
+        std::string, name>>,
       boost::bimaps::unconstrained_set_of_relation
     > ids_type;
 
@@ -327,160 +419,114 @@ namespace c3d{
 
 
     const ids_type ids = boost::assign::list_of<ids_type::relation>
-      (0 , "zero_reserved")
-      (1 , "body")
-      (2 , "window")
-      (3 , "wheel")
-      (4 , "defense")
-      (5 , "weapon")
-      (6 , "tube")
-      (7 , "body_red")
-      (8 , "body_blue")
-      (9 , "body_yellow")
-      (10, "body_gray")
-      (11, "yellow_charged")
-      (12, "material_0")
-      (13, "material_1")
-      (14, "material_2")
-      (15, "material_3")
-      (16, "material_4")
-      (17, "material_5")
-      (18, "material_6")
-      (19, "material_7")
-      (20, "black")
-      (21, "body_green")
-      (22, "skyfarmer_kernoboo")
-      (23, "skyfarmer_pipetka")
-      (24, "rotten_item")
-      (25, "max_colors_ids") // end of color id list in vangers source
-      // doesn't exist in vangers source
-      (1000000, "virtual_object_ids_begin")
-      (1000001, "center_of_mass")
-      (1000002, "attachment_point")
-      (1000003, "invalid_color_id")
-      (1999999, "virtual_object_ids_end")
+      (string_to_id::zero_reserved, string::zero_reserved)
+      (string_to_id::body, string::body)
+      (string_to_id::window, string::window)
+      (string_to_id::wheel, string::wheel)
+      (string_to_id::defense, string::defense)
+      (string_to_id::weapon, string::weapon)
+      (string_to_id::tube, string::tube)
+      (string_to_id::body_red, string::body_red)
+      (string_to_id::body_blue, string::body_blue)
+      (string_to_id::body_yellow, string::body_yellow)
+      (string_to_id::body_gray, string::body_gray)
+      (string_to_id::yellow_charged, string::yellow_charged)
+      (string_to_id::material_0, string::material_0)
+      (string_to_id::material_1, string::material_1)
+      (string_to_id::material_2, string::material_2)
+      (string_to_id::material_3, string::material_3)
+      (string_to_id::material_4, string::material_4)
+      (string_to_id::material_5, string::material_5)
+      (string_to_id::material_6, string::material_6)
+      (string_to_id::material_7, string::material_7)
+      (string_to_id::black, string::black)
+      (string_to_id::body_green, string::body_green)
+      (string_to_id::skyfarmer_kernoboo, string::skyfarmer_kernoboo)
+      (string_to_id::skyfarmer_pipetka, string::skyfarmer_pipetka)
+      (string_to_id::rotten_item, string::rotten_item)
+      // End of color id list in vangers source.
+      (string_to_id::max_colors_ids, string::max_colors_ids)
+      // Doesn't exist in vangers source.
+      (string_to_id::virtual_object_ids_begin,
+         string::virtual_object_ids_begin)
+      (string_to_id::center_of_mass, string::center_of_mass)
+      (string_to_id::attachment_point, string::attachment_point)
+      (string_to_id::invalid_color_id, string::invalid_color_id)
+      (string_to_id::virtual_object_ids_end, string::virtual_object_ids_end)
       ;
-
-
-
-//    const std::vector<unsigned int> wheel_weapon_color_ids
-//    {
-//      3,       // wheel
-//      5,       // weapon
-//      1000002, // attachment_point
-//    };
-
-
-    // c3d::color::string_to_id::
-    namespace string_to_id
-    {
-      const unsigned int zero_reserved =            0;
-      const unsigned int body =                     1;
-      const unsigned int window =                   2;
-      const unsigned int wheel =                    3;
-      const unsigned int defense =                  4;
-      const unsigned int weapon =                   5;
-      const unsigned int tube =                     6;
-      const unsigned int body_red =                 7;
-      const unsigned int body_blue =                8;
-      const unsigned int body_yellow =              9;
-      const unsigned int body_gray =                10;
-      const unsigned int yellow_charged =           11;
-      const unsigned int material_0 =               12;
-      const unsigned int material_1 =               13;
-      const unsigned int material_2 =               14;
-      const unsigned int material_3 =               15;
-      const unsigned int material_4 =               16;
-      const unsigned int material_5 =               17;
-      const unsigned int material_6 =               18;
-      const unsigned int material_7 =               19;
-      const unsigned int black =                    20;
-      const unsigned int body_green =               21;
-      const unsigned int skyfarmer_kernoboo =       22;
-      const unsigned int skyfarmer_pipetka =        23;
-      const unsigned int rotten_item =              24;
-      const unsigned int max_colors_ids =           25; // end of color id list
-                                                        //   in vangers source
-      // doesn't exist in vangers source
-      const unsigned int virtual_object_ids_begin = 1000000;
-      const unsigned int center_of_mass =           1000001;
-      const unsigned int attachment_point =         1000002;
-      const unsigned int invalid_color_id =         1000003;
-      const unsigned int virtual_object_ids_end =   1999999;
-    }
 
 
 
     const std::vector<unsigned int> id_to_shift
     {
-      0, // (0 , "zero_reserved")
-      3, // (1 , "body")
-      4, // (2 , "window")
-      7, // (3 , "wheel")
-      4, // (4 , "defense")
-      3, // (5 , "weapon")
-      7, // (6 , "tube")
-      3, // (7 , "body_red")
-      3, // (8 , "body_blue")
-      3, // (9 , "body_yellow")
-      4, // (10, "body_gray")
-      4, // (11, "yellow_charged")
-      2, // (12, "material_0")
-      2, // (13, "material_1")
-      4, // (14, "material_2")
-      3, // (15, "material_3")
-      3, // (16, "material_4")
-      4, // (17, "material_5")
-      4, // (18, "material_6")
-      4, // (19, "material_7")
-      4, // (20, "black")
-      3, // (21, "body_green")
-      4, // (22, "skyfarmer_kernoboo")
-      4, // (23, "skyfarmer_pipetka")
-      4, // (24, "rotten_item")
+      0, // (0 , string::zero_reserved)
+      3, // (1 , string::body)
+      4, // (2 , string::window)
+      7, // (3 , string::wheel)
+      4, // (4 , string::defense)
+      3, // (5 , string::weapon)
+      7, // (6 , string::tube)
+      3, // (7 , string::body_red)
+      3, // (8 , string::body_blue)
+      3, // (9 , string::body_yellow)
+      4, // (10, string::body_gray)
+      4, // (11, string::yellow_charged)
+      2, // (12, string::material_0)
+      2, // (13, string::material_1)
+      4, // (14, string::material_2)
+      3, // (15, string::material_3)
+      3, // (16, string::material_4)
+      4, // (17, string::material_5)
+      4, // (18, string::material_6)
+      4, // (19, string::material_7)
+      4, // (20, string::black)
+      3, // (21, string::body_green)
+      4, // (22, string::skyfarmer_kernoboo)
+      4, // (23, string::skyfarmer_pipetka)
+      4, // (24, string::rotten_item)
     };
 
 
 
     const offset_map offsets
     {
-      {"zero_reserved",      {0  , 0}},
-//    {"body",               {128, 3}},
-      {"window",             {176, 4}},
-//    {"wheel",              {224, 7}},
-      {"defense",            {184, 4}},
-//    {"weapon",             {224, 3}},
-      {"tube",               {224, 7}},
-      {"body_red",           {128, 3}},
-      {"body_blue",          {144, 3}},
-      {"body_yellow",        {160, 3}},
-      {"body_gray",          {228, 4}},
-      {"yellow_charged",     {112, 4}},
-      {"material_0",         {0  , 2}},
-      {"material_1",         {32 , 2}},
-      {"material_2",         {64 , 4}},
-      {"material_3",         {72 , 3}},
-      {"material_4",         {88 , 3}},
-      {"material_5",         {104, 4}},
-      {"material_6",         {112, 4}},
-      {"material_7",         {120, 4}},
-      {"black",              {184, 4}},
-      {"body_green",         {240, 3}},
-      {"skyfarmer_kernoboo", {136, 4}},
-      {"skyfarmer_pipetka",  {128, 4}},
-      {"rotten_item",        {224, 4}},
+      {string::zero_reserved,      {0  , 0}},
+//    {string::body,               {128, 3}},
+      {string::window,             {176, 4}},
+//    {string::wheel,              {224, 7}},
+      {string::defense,            {184, 4}},
+//    {string::weapon,             {224, 3}},
+      {string::tube,               {224, 7}},
+      {string::body_red,           {128, 3}},
+      {string::body_blue,          {144, 3}},
+      {string::body_yellow,        {160, 3}},
+      {string::body_gray,          {228, 4}},
+      {string::yellow_charged,     {112, 4}},
+      {string::material_0,         {0  , 2}},
+      {string::material_1,         {32 , 2}},
+      {string::material_2,         {64 , 4}},
+      {string::material_3,         {72 , 3}},
+      {string::material_4,         {88 , 3}},
+      {string::material_5,         {104, 4}},
+      {string::material_6,         {112, 4}},
+      {string::material_7,         {120, 4}},
+      {string::black,              {184, 4}},
+      {string::body_green,         {240, 3}},
+      {string::skyfarmer_kernoboo, {136, 4}},
+      {string::skyfarmer_pipetka,  {128, 4}},
+      {string::rotten_item,        {224, 4}},
       // doesn't exist in vangers source
-//    {"center_of_mass",   {128, 4}},
-//    {"attachment_point",   {240, 4}},
+//    {string::center_of_mass,     {128, 4}},
+//    {string::attachment_point,   {240, 4}},
     };
     const offset_map default_body_offsets
     {
-      {"body_offset_0_shift_0",   {0  , 0}},
-      {"body_offset_34_shift_3",  {34 , 3}},
-      {"body_offset_128_shift_3", {128, 3}},
-      {"body_offset_144_shift_3", {144, 3}},
-      {"body_offset_145_shift_3", {145, 3}},
-      {"body_offset_160_shift_3", {160, 3}},
+      {body::string::el_1 + "0" +   body::string::el_2 + "0", {0  , 0}},
+      {body::string::el_1 + "34" +  body::string::el_2 + "3", {34 , 3}},
+      {body::string::el_1 + "128" + body::string::el_2 + "3", {128, 3}},
+      {body::string::el_1 + "144" + body::string::el_2 + "3", {144, 3}},
+      {body::string::el_1 + "145" + body::string::el_2 + "3", {145, 3}},
+      {body::string::el_1 + "160" + body::string::el_2 + "3", {160, 3}},
     };
 
     const offset_pair wheel_offset           {224, 7};

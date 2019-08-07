@@ -334,8 +334,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
                  "of output " + ext::readable::mtl + " files."
              "\nUse \"" + option::name::mtl_n_wheels + "\" "
                  "option to set number of generated wheel materials."
-             "\nUse \"" + option::name::mtl_body_offs + "\" "
-                 "option to add additional body materials."
+             "\nUse \"" + option::name::mtl_body_offs + "\" option to add "
+                 "additional " + c3d::color::string::body + " materials."
              "\n"
              "\n\"" + option::name::source_dir + "\" and "
                  "\"" + option::name::output_dir + "\" "
@@ -354,8 +354,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
                  ext::readable::html + " file is generated in "
                  "\"" + option::name::output_dir + "\"."
              "\n"
-             "\nUse \"" + option::name::mtl_body_offs + "\" "
-                 "option to add additional body materials."
+             "\nUse \"" + option::name::mtl_body_offs + "\" option to add "
+                 "additional " + c3d::color::string::body + " materials."
              "\n"
              "\n\"" + option::name::source_dir + "\" and "
                  "\"" + option::name::output_dir + "\" "
@@ -641,7 +641,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
             "mode.\n").c_str())
       (option::name::mtl_body_offs.c_str(),
        boost::program_options::value<std::vector<std::string>>(),
-       ("\tBody materials to create.\n"
+       ("\t" + c3d::color::string::body + " materials to create.\n"
         "\tMust be 2 integers delimited by any non-numeric character.\n"
         "\tExample config file entry:\n"
         "\tmtl_body_offs = 129_3\n"
@@ -649,7 +649,8 @@ boost::program_options::variables_map get_options(int ac, char** av)
         "\tExample config file entry:\n"
         "\tmtl_body_offs = 129_3\n"
         "\tmtl_body_offs = 130_3\n"
-        "\tMultiple body materials may be specified for one option.\n"
+        "\tMultiple " + c3d::color::string::body +
+            " materials may be specified for one option.\n"
         "\tThey must be delimited by any non-numeric character.\n"
         "\tExample config file entry:\n"
         "\tmtl_body_offs = 129_3;130_3\n"

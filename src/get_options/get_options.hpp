@@ -4,6 +4,7 @@
 #include "defines.hpp"
 
 #include "check_option.hpp"
+#include "vangers_3d_model_constants.hpp"
 
 #include <boost/program_options.hpp>
 

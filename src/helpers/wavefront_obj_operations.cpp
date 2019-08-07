@@ -73,7 +73,7 @@ std::size_t raw_obj_to_volInt_helper_get_body_color(
   // Checking if string is "body_offset_*_shift_*" string. * - integer.
   // Skipping color operations if it doesn't match.
 
-  std::size_t base_name_size = std::string("body").size();
+  std::size_t base_name_size = c3d::color::string::body.size();
 
   int new_color_offset = volInt::invalid::bodyColorOffset;
   int new_color_shift =  volInt::invalid::bodyColorShift;
@@ -141,34 +141,44 @@ std::size_t raw_obj_to_volInt_helper_get_body_color(
       "Error while loading " + input_file_name_error +
       " file " + input_file_path_arg.string() +
       " as " + ext::readable::wavefront_obj + ". "
-      "Several body colors detected: offset " +
-      std::to_string(volInt_model.bodyColorOffset) + ", shift " +
-      std::to_string(volInt_model.bodyColorShift) + " and offset " +
-      std::to_string(new_color_offset) + ", shift " +
+      "Several " + c3d::color::string::body + " colors detected: " +
+      c3d::color::body::string::offset + " " +
+      std::to_string(volInt_model.bodyColorOffset) + ", " +
+      c3d::color::body::string::shift + " " +
+      std::to_string(volInt_model.bodyColorShift) + " and " +
+      c3d::color::body::string::offset + " " +
+      std::to_string(new_color_offset) + ", " +
+      c3d::color::body::string::shift + " " +
       std::to_string(new_color_shift) +
-      ". Only one unique body color is allowed per " +
+      ". Only one unique " + c3d::color::string::body +
+      " color is allowed per " +
       ext::readable::m3d_and_a3d + " model.");
   }
   volInt_model.bodyColorOffset = new_color_offset;
   volInt_model.bodyColorShift = new_color_shift;
 
-  if(volInt_model.bodyColorOffset > c3d::color::max_offset ||
-     volInt_model.bodyColorShift > c3d::color::max_shift ||
-     volInt_model.bodyColorOffset < 0 ||
-     volInt_model.bodyColorShift < 0)
+  if(volInt_model.bodyColorOffset > c3d::color::body::max::offset ||
+     volInt_model.bodyColorShift  > c3d::color::body::max::shift ||
+     volInt_model.bodyColorOffset < c3d::color::body::min::offset ||
+     volInt_model.bodyColorShift  < c3d::color::body::min::shift)
   {
     throw std::runtime_error(
       "Error while loading " + input_file_name_error +
       " file " + input_file_path_arg.string() +
-      " as " + ext::readable::wavefront_obj + ". Body color offset " +
+      " as " + ext::readable::wavefront_obj + ". " +
+      c3d::color::string::body + " color " +
+      c3d::color::body::string::offset + " " +
       std::to_string(volInt_model.bodyColorOffset) +
-      " or body color shift " +
+      " or " + c3d::color::string::body + " color " +
+      c3d::color::body::string::shift + " " +
       std::to_string(volInt_model.bodyColorShift) +
       " is out of range." +
-      " Color offset range: 0 - " +
-      std::to_string(c3d::color::max_offset) + "." +
-      " Color shift range: 0 - " +
-      std::to_string(c3d::color::max_shift) + ".");
+      " Color " + c3d::color::body::string::offset + " range: " +
+      std::to_string(c3d::color::body::min::offset) + " - " +
+      std::to_string(c3d::color::body::max::offset) + "." +
+      " Color " + c3d::color::body::string::shift + " range: " +
+      std::to_string(c3d::color::body::min::shift) + " - " +
+      std::to_string(c3d::color::body::max::shift) + ".");
   }
 
   base_name_size = body_mat_pre_shift_number_size + shift_num_size;
@@ -500,13 +510,13 @@ volInt::polyhedron raw_obj_to_volInt_model(
 
 
 
-  if(volInt_model.bodyColorOffset > c3d::color::max_offset ||
-     volInt_model.bodyColorShift  > c3d::color::max_shift ||
-     volInt_model.bodyColorOffset < 0 ||
-     volInt_model.bodyColorShift  < 0)
+  if(volInt_model.bodyColorOffset > c3d::color::body::max::offset ||
+     volInt_model.bodyColorShift  > c3d::color::body::max::shift ||
+     volInt_model.bodyColorOffset < c3d::color::body::min::offset ||
+     volInt_model.bodyColorShift  < c3d::color::body::min::shift)
   {
-    volInt_model.bodyColorOffset = c3d::color::default_offset;
-    volInt_model.bodyColorShift  = c3d::color::default_shift;
+    volInt_model.bodyColorOffset = c3d::color::body::default_val::offset;
+    volInt_model.bodyColorShift  = c3d::color::body::default_val::shift;
   }
 
 

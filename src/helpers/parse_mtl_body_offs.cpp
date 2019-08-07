@@ -42,8 +42,10 @@ c3d::color::offset_map parse_mtl_body_offs(
       {
         break;
       }
-      body_offsets["body_offset_" + std::to_string(color_offset) +
-                   "_shift_" + std::to_string(color_shift)] =
+      body_offsets[c3d::color::body::string::el_1 +
+                   std::to_string(color_offset) +
+                   c3d::color::body::string::el_2 +
+                   std::to_string(color_shift)] =
         c3d::color::offset_pair(color_offset, color_shift);
     }
   }

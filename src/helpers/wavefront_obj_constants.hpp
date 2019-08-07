@@ -3,6 +3,8 @@
 
 #include "defines.hpp"
 
+#include "vangers_3d_model_constants.hpp"
+
 #include <string>
 
 namespace tractor_converter{
@@ -37,10 +39,9 @@ namespace wavefront_obj{
   const std::size_t mtl_reference_size = 19 + mtl_filename.size() + 2;
 
 
-  const std::string body_mat_str_el_1(
-    "body" + mat_separator + "offset" + mat_separator);
+  const std::string body_mat_str_el_1 = c3d::color::body::string::el_1;
   const std::size_t body_mat_str_el_1_size = body_mat_str_el_1.size();
-  const std::string body_mat_str_el_2(mat_separator + "shift" + mat_separator);
+  const std::string body_mat_str_el_2 = c3d::color::body::string::el_2;
   const std::size_t body_mat_str_el_2_size = body_mat_str_el_2.size();
 
   const std::string wheel_mat_marker(mat_separator + "wheel");
