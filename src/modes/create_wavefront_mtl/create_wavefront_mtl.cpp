@@ -194,19 +194,19 @@ void create_wavefront_mtl_mode(
         create_wavefront_mtl_mode_helper_read_colors(
           source_pal,
           mat_tables::regular_offsets,
-          colors_maps["regular"]);
+          colors_maps[mat_tables::append_order_el::regular]);
         create_wavefront_mtl_mode_helper_read_colors(
           source_pal,
           mat_tables::special_offsets,
-          colors_maps["special"]);
+          colors_maps[mat_tables::append_order_el::special]);
         create_wavefront_mtl_mode_helper_read_colors(
           source_pal,
           mat_tables::default_body_offsets,
-          colors_maps["default_body"]);
+          colors_maps[mat_tables::append_order_el::default_body]);
         create_wavefront_mtl_mode_helper_read_colors(
           source_pal,
           additional_body_offsets,
-          colors_maps["additional_body"]);
+          colors_maps[mat_tables::append_order_el::additional_body]);
 
         for(const auto &cur_base : mat_tables::mtl::append_order)
         {

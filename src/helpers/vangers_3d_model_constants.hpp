@@ -620,12 +620,19 @@ namespace mat_tables{
 
 
 
+  namespace append_order_el{
+    const std::string regular = "regular";
+    const std::string special = "special";
+    const std::string default_body = "default_body";
+    const std::string additional_body = "additional_body";
+  } // namespace append_order_el
+
   namespace html{
     const std::vector<std::string> append_order
       {
-        "regular",
-        "default_body",
-        "additional_body",
+        append_order_el::regular,
+        append_order_el::default_body,
+        append_order_el::additional_body,
       };
   } // namespace html
 
@@ -634,10 +641,10 @@ namespace mat_tables{
   namespace mtl{
     const std::vector<std::string> append_order
       {
-        "regular",
-        "special",
-        "default_body",
-        "additional_body",
+        append_order_el::regular,
+        append_order_el::special,
+        append_order_el::default_body,
+        append_order_el::additional_body,
       };
   } // namespace mtl
 

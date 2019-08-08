@@ -257,17 +257,17 @@ void create_materials_table_mode(
         create_materials_table_mode_helper_read_materials(
           source_pal,
           mat_tables::regular_offsets,
-          materials_maps["regular"]);
+          materials_maps[mat_tables::append_order_el::regular]);
 
         create_materials_table_mode_helper_read_materials(
           source_pal,
           mat_tables::default_body_offsets,
-          materials_maps["default_body"]);
+          materials_maps[mat_tables::append_order_el::default_body]);
 
         create_materials_table_mode_helper_read_materials(
           source_pal,
           additional_body_offsets,
-          materials_maps["additional_body"]);
+          materials_maps[mat_tables::append_order_el::additional_body]);
 
         std::string html_table_file;
         // Counting number of materials to be written in *.html file.
