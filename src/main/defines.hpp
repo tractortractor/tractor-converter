@@ -95,7 +95,7 @@ namespace option{
     const bool gen_bound_models =                    false;
     const std::size_t gen_bound_layers_num =         100;
     const double gen_bound_area_threshold =          0.25;
-    const std::size_t mtl_n_wheels =                 50;
+    const std::size_t mtl_n_wheels =                 10;
   } // namespace default_val
 
   namespace max{

@@ -50,7 +50,7 @@ const double &mtl_color::operator[](std::size_t to_retrieve) const
 
 mtl_color create_wavefront_mtl_helper_read_color(
   const std::string &data,
-  const c3d::color::offset_pair &offset_pair)
+  const mat_tables::offset_pair &offset_pair)
 {
   mtl_color color;
   // VANGERS SOURCE
@@ -89,7 +89,7 @@ mtl_color create_wavefront_mtl_helper_read_color(
 
 void create_wavefront_mtl_mode_helper_read_colors(
   const std::string &data,
-  const c3d::color::offset_map &offset_pair_map,
+  const mat_tables::offset_map &offset_pair_map,
   mtl_color_map &colors_map)
 {
   for(const auto &offset_pair : offset_pair_map)
@@ -157,7 +157,7 @@ void create_wavefront_mtl_mode(
                                   option::name::mtl_body_offs,
                                   error_handling::none);
 
-    c3d::color::offset_map additional_body_offsets =
+    mat_tables::offset_map additional_body_offsets =
       helpers::parse_mtl_body_offs(additional_body_offsets_str);
 
 
@@ -186,104 +186,69 @@ void create_wavefront_mtl_mode(
                              option::name::source_dir);
 
 
+        std::vector<std::string> mtl_append_order =
+          mat_tables::mtl::append_order;
 
         std::unordered_map<std::string, mtl_color_map> colors_maps;
 
         create_wavefront_mtl_mode_helper_read_colors(
           source_pal,
-          c3d::color::offsets,
+          mat_tables::regular_offsets,
           colors_maps["regular"]);
         create_wavefront_mtl_mode_helper_read_colors(
           source_pal,
-          c3d::color::default_body_offsets,
+          mat_tables::special_offsets,
+          colors_maps["special"]);
+        create_wavefront_mtl_mode_helper_read_colors(
+          source_pal,
+          mat_tables::default_body_offsets,
           colors_maps["default_body"]);
-
         create_wavefront_mtl_mode_helper_read_colors(
           source_pal,
           additional_body_offsets,
           colors_maps["additional_body"]);
 
-        mtl_color wheel_color =
-          create_wavefront_mtl_helper_read_color(
-            source_pal,
-            c3d::color::wheel_offset);
-        mtl_color weapon_color =
-          create_wavefront_mtl_helper_read_color(
-            source_pal,
-            c3d::color::weapon_offset);
-        mtl_color attachment_point_color =
-          create_wavefront_mtl_helper_read_color(
-            source_pal,
-            c3d::color::attachment_point_offset);
-        mtl_color center_of_mass_color =
-          create_wavefront_mtl_helper_read_color(
-            source_pal,
-            c3d::color::center_of_mass_offset);
-
-        colors_maps["wheel"]["wheel"] = wheel_color;
-        colors_maps["wheel_steer"]["wheel_steer"] = wheel_color;
-        colors_maps["wheel_ghost"]["wheel_ghost"] = wheel_color;
-        colors_maps["wheel_steer_ghost"]["wheel_steer_ghost"] =
-          wheel_color;
-        colors_maps["wheel_ghost_steer"]["wheel_ghost_steer"] =
-          wheel_color;
-        for(std::size_t cur_wheel = 0; cur_wheel < n_wheels; ++cur_wheel)
+        for(const auto &cur_base : mat_tables::mtl::append_order)
         {
-          colors_maps["wheel"]
-              ["wheel_" + std::to_string(cur_wheel + 1)] =
-            wheel_color;
-          colors_maps["wheel_steer"]
-              ["wheel_steer_" + std::to_string(cur_wheel + 1)] =
-            wheel_color;
-          colors_maps["wheel_ghost"]
-              ["wheel_ghost_" + std::to_string(cur_wheel + 1)] =
-            wheel_color;
-          colors_maps["wheel_steer_ghost"]
-              ["wheel_steer_ghost_" + std::to_string(cur_wheel + 1)] =
-            wheel_color;
-          colors_maps["wheel_ghost_steer"]
-              ["wheel_ghost_steer_" + std::to_string(cur_wheel + 1)] =
-            wheel_color;
+          for(const auto &wheel_marker : wheel_markers)
+          {
+            std::string cur_colors_maps_entry = cur_base + wheel_marker;
+            mtl_append_order.push_back(cur_colors_maps_entry);
+            for(const auto &name_mat_pair : colors_maps[cur_base])
+            {
+              for(std::size_t cur_wheel = 0; cur_wheel < n_wheels; ++cur_wheel)
+              {
+                colors_maps[cur_colors_maps_entry]
+                    [name_mat_pair.first + wheel_marker +
+                     wavefront_obj::mat_separator +
+                     std::to_string(cur_wheel + 1)] =
+                  name_mat_pair.second;
+              }
+            }
+          }
         }
 
-        colors_maps["weapon"]["weapon"] = weapon_color;
-        for(std::size_t cur_slot = 0;
-            cur_slot < m3d::weapon_slot::max_slots;
-            ++cur_slot)
+        for(const auto &cur_base : mat_tables::mtl::append_order)
         {
-          colors_maps["weapon"]["weapon_" + std::to_string(cur_slot + 1)] =
-            weapon_color;
+          std::string cur_colors_maps_entry =
+            cur_base + wavefront_obj::weapon_mat_marker;
+          mtl_append_order.push_back(cur_colors_maps_entry);
+          for(const auto &name_mat_pair : colors_maps[cur_base])
+          {
+            for(std::size_t cur_slot = 0;
+                cur_slot < m3d::weapon_slot::max_slots;
+                ++cur_slot)
+            {
+              colors_maps[cur_colors_maps_entry]
+                  [name_mat_pair.first + wavefront_obj::weapon_mat_marker +
+                   wavefront_obj::mat_separator +
+                   std::to_string(cur_slot + 1)] =
+                name_mat_pair.second;
+            }
+          }
         }
 
-        colors_maps["attachment_point"]["attachment_point"] =
-          attachment_point_color;
-        for(std::size_t cur_slot = 0;
-            cur_slot < m3d::weapon_slot::max_slots;
-            ++cur_slot)
-        {
-          colors_maps["attachment_point"]
-              ["attachment_point_" + std::to_string(cur_slot + 1)] =
-            attachment_point_color;
-        }
 
-        colors_maps["center_of_mass"]["center_of_mass"] = center_of_mass_color;
-
-
-
-        const std::vector<std::string> mtl_append_order
-        {
-          "regular",
-          "center_of_mass",
-          "weapon",
-          "attachment_point",
-          "default_body",
-          "additional_body",
-          "wheel",
-          "wheel_steer",
-          "wheel_ghost",
-          "wheel_steer_ghost",
-          "wheel_ghost_steer",
-        };
 
         std::string mtl_file;
         // Counting number of materials to be written in *.mtl file.

@@ -13,7 +13,7 @@
 namespace tractor_converter{
 namespace helpers{
 
-c3d::color::offset_map parse_mtl_body_offs(
+mat_tables::offset_map parse_mtl_body_offs(
   const std::vector<std::string> &body_offsets_str);
 
 } // namespace helpers

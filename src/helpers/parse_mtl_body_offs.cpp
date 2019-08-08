@@ -7,10 +7,10 @@ namespace helpers{
 
 
 
-c3d::color::offset_map parse_mtl_body_offs(
+mat_tables::offset_map parse_mtl_body_offs(
   const std::vector<std::string> &body_offsets_str)
 {
-  c3d::color::offset_map body_offsets;
+  mat_tables::offset_map body_offsets;
   for(const auto &offset_str : body_offsets_str)
   {
     std::size_t cur_pos = 0;
@@ -46,7 +46,7 @@ c3d::color::offset_map parse_mtl_body_offs(
                    std::to_string(color_offset) +
                    c3d::color::body::string::el_2 +
                    std::to_string(color_shift)] =
-        c3d::color::offset_pair(color_offset, color_shift);
+        mat_tables::offset_pair(color_offset, color_shift);
     }
   }
   return body_offsets;

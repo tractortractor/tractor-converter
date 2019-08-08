@@ -100,7 +100,7 @@ struct html_color
 
 
 
-struct html_material : public c3d::color::offset_pair
+struct html_material : public mat_tables::offset_pair
 {
   html_material();
 
@@ -110,7 +110,7 @@ struct html_material : public c3d::color::offset_pair
                 html_material_changes changes_arg);
 
   html_material(std::vector<html_color> colors_arg,
-                c3d::color::offset_pair pair_arg,
+                mat_tables::offset_pair pair_arg,
                 html_material_changes changes_arg);
 
   std::vector<html_color> colors;
@@ -125,11 +125,11 @@ typedef std::map<std::string, html_material, doj::alphanum_less<std::string>>
 
 html_material create_materials_table_mode_helper_read_material(
   const std::string &data,
-  const c3d::color::offset_pair &offset_pair);
+  const mat_tables::offset_pair &offset_pair);
 
 void create_materials_table_mode_helper_read_materials(
   const std::string &data,
-  const c3d::color::offset_map &offset_pair_map,
+  const mat_tables::offset_map &offset_pair_map,
   html_material_map &materials_map);
 
 void create_materials_table_mode_helper_write_materials(

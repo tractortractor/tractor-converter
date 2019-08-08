@@ -63,7 +63,7 @@ html_material::html_material(std::vector<html_color> colors_arg,
 }
 
 html_material::html_material(std::vector<html_color> colors_arg,
-                             c3d::color::offset_pair pair_arg,
+                             mat_tables::offset_pair pair_arg,
                              html_material_changes changes_arg)
 : offset_pair(pair_arg),
   colors(colors_arg),
@@ -75,7 +75,7 @@ html_material::html_material(std::vector<html_color> colors_arg,
 
 html_material create_materials_table_mode_helper_read_material(
   const std::string &data,
-  const c3d::color::offset_pair &offset_pair)
+  const mat_tables::offset_pair &offset_pair)
 {
   // VANGERS SOURCE
   // Simplified Vangers code to get end color:
@@ -134,7 +134,7 @@ html_material create_materials_table_mode_helper_read_material(
 
 void create_materials_table_mode_helper_read_materials(
   const std::string &data,
-  const c3d::color::offset_map &offset_pair_map,
+  const mat_tables::offset_map &offset_pair_map,
   html_material_map &materials_map)
 {
   for(const auto &offset_pair : offset_pair_map)
@@ -232,7 +232,7 @@ void create_materials_table_mode(
                                   option::name::mtl_body_offs,
                                   error_handling::none);
 
-    c3d::color::offset_map additional_body_offsets =
+    mat_tables::offset_map additional_body_offsets =
       helpers::parse_mtl_body_offs(additional_body_offsets_str);
 
 
@@ -256,24 +256,12 @@ void create_materials_table_mode(
 
         create_materials_table_mode_helper_read_materials(
           source_pal,
-          c3d::color::offsets,
+          mat_tables::regular_offsets,
           materials_maps["regular"]);
-
-        html_material wheel_colors =
-          create_materials_table_mode_helper_read_material(
-            source_pal,
-            c3d::color::wheel_offset);
-        html_material weapon_colors =
-          create_materials_table_mode_helper_read_material(
-            source_pal,
-            c3d::color::weapon_offset);
-
-        materials_maps["regular"]["wheel"] = wheel_colors;
-        materials_maps["regular"]["weapon"] = weapon_colors;
 
         create_materials_table_mode_helper_read_materials(
           source_pal,
-          c3d::color::default_body_offsets,
+          mat_tables::default_body_offsets,
           materials_maps["default_body"]);
 
         create_materials_table_mode_helper_read_materials(
@@ -281,20 +269,11 @@ void create_materials_table_mode(
           additional_body_offsets,
           materials_maps["additional_body"]);
 
-
-
-        const std::vector<std::string> html_append_order
-        {
-          "regular",
-          "default_body",
-          "additional_body",
-        };
-
         std::string html_table_file;
         // Counting number of materials to be written in *.html file.
         std::size_t mat_to_write = 0;
         std::size_t colors_to_write = 0;
-        for(const auto &cur_append : html_append_order)
+        for(const auto &cur_append : mat_tables::html::append_order)
         {
           for(const auto &material : materials_maps[cur_append])
           {
@@ -312,7 +291,7 @@ void create_materials_table_mode(
           html_table_footer_size);
 
         html_table_file.append(html_table_header);
-        for(const auto &cur_append : html_append_order)
+        for(const auto &cur_append : mat_tables::html::append_order)
         {
           create_materials_table_mode_helper_write_materials(
             materials_maps[cur_append],

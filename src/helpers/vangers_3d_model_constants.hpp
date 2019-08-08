@@ -393,30 +393,6 @@ namespace c3d{
     > ids_type;
 
 
-    struct offset_pair
-    {
-      offset_pair()
-      : offset(0), shift(0)
-      {
-      }
-
-      offset_pair(int offset_arg, int shift_arg)
-      : offset(offset_arg), shift(shift_arg)
-      {
-      }
-
-      offset_pair(std::initializer_list<int> l)
-      {
-        offset = *l.begin();
-        shift = *std::next(l.begin());
-      }
-
-      int offset;
-      int shift;
-    };
-
-    typedef std::unordered_map<std::string, offset_pair> offset_map;
-
 
     const ids_type ids = boost::assign::list_of<ids_type::relation>
       (string_to_id::zero_reserved, string::zero_reserved)
@@ -454,86 +430,6 @@ namespace c3d{
       (string_to_id::invalid_color_id, string::invalid_color_id)
       (string_to_id::virtual_object_ids_end, string::virtual_object_ids_end)
       ;
-
-
-
-    const std::vector<unsigned int> id_to_shift
-    {
-      0, // (0 , string::zero_reserved)
-      3, // (1 , string::body)
-      4, // (2 , string::window)
-      7, // (3 , string::wheel)
-      4, // (4 , string::defense)
-      3, // (5 , string::weapon)
-      7, // (6 , string::tube)
-      3, // (7 , string::body_red)
-      3, // (8 , string::body_blue)
-      3, // (9 , string::body_yellow)
-      4, // (10, string::body_gray)
-      4, // (11, string::yellow_charged)
-      2, // (12, string::material_0)
-      2, // (13, string::material_1)
-      4, // (14, string::material_2)
-      3, // (15, string::material_3)
-      3, // (16, string::material_4)
-      4, // (17, string::material_5)
-      4, // (18, string::material_6)
-      4, // (19, string::material_7)
-      4, // (20, string::black)
-      3, // (21, string::body_green)
-      4, // (22, string::skyfarmer_kernoboo)
-      4, // (23, string::skyfarmer_pipetka)
-      4, // (24, string::rotten_item)
-    };
-
-
-
-    const offset_map offsets
-    {
-      {string::zero_reserved,      {0  , 0}},
-//    {string::body,               {128, 3}},
-      {string::window,             {176, 4}},
-//    {string::wheel,              {224, 7}},
-      {string::defense,            {184, 4}},
-//    {string::weapon,             {224, 3}},
-      {string::tube,               {224, 7}},
-      {string::body_red,           {128, 3}},
-      {string::body_blue,          {144, 3}},
-      {string::body_yellow,        {160, 3}},
-      {string::body_gray,          {228, 4}},
-      {string::yellow_charged,     {112, 4}},
-      {string::material_0,         {0  , 2}},
-      {string::material_1,         {32 , 2}},
-      {string::material_2,         {64 , 4}},
-      {string::material_3,         {72 , 3}},
-      {string::material_4,         {88 , 3}},
-      {string::material_5,         {104, 4}},
-      {string::material_6,         {112, 4}},
-      {string::material_7,         {120, 4}},
-      {string::black,              {184, 4}},
-      {string::body_green,         {240, 3}},
-      {string::skyfarmer_kernoboo, {136, 4}},
-      {string::skyfarmer_pipetka,  {128, 4}},
-      {string::rotten_item,        {224, 4}},
-      // doesn't exist in vangers source
-//    {string::center_of_mass,     {128, 4}},
-//    {string::attachment_point,   {240, 4}},
-    };
-    const offset_map default_body_offsets
-    {
-      {body::string::el_1 + "0" +   body::string::el_2 + "0", {0  , 0}},
-      {body::string::el_1 + "34" +  body::string::el_2 + "3", {34 , 3}},
-      {body::string::el_1 + "128" + body::string::el_2 + "3", {128, 3}},
-      {body::string::el_1 + "144" + body::string::el_2 + "3", {144, 3}},
-      {body::string::el_1 + "145" + body::string::el_2 + "3", {145, 3}},
-      {body::string::el_1 + "160" + body::string::el_2 + "3", {160, 3}},
-    };
-
-    const offset_pair wheel_offset           {224, 7};
-    const offset_pair weapon_offset          {224, 3};
-    // doesn't exist in vangers source
-    const offset_pair center_of_mass_offset  {128, 4};
-    const offset_pair attachment_point_offset{240, 4};
   } // namespace color
 
 } // namespace c3d
@@ -693,6 +589,112 @@ namespace a3d{
   } // namespace header
 
 } // namespace a3d
+
+
+
+namespace mat_tables{
+
+  struct offset_pair
+  {
+    offset_pair()
+    : offset(0), shift(0)
+    {
+    }
+
+    offset_pair(int offset_arg, int shift_arg)
+    : offset(offset_arg), shift(shift_arg)
+    {
+    }
+
+    offset_pair(std::initializer_list<int> l)
+    {
+      offset = *l.begin();
+      shift = *std::next(l.begin());
+    }
+
+    int offset;
+    int shift;
+  };
+
+  typedef std::unordered_map<std::string, offset_pair> offset_map;
+
+
+
+  namespace html{
+    const std::vector<std::string> append_order
+      {
+        "regular",
+        "default_body",
+        "additional_body",
+      };
+  } // namespace html
+
+
+
+  namespace mtl{
+    const std::vector<std::string> append_order
+      {
+        "regular",
+        "special",
+        "default_body",
+        "additional_body",
+      };
+  } // namespace mtl
+
+
+
+  const offset_map regular_offsets
+  {
+    {c3d::color::string::zero_reserved,      {0  , 0}},
+    {c3d::color::string::body,               {128, 3}},
+    {c3d::color::string::window,             {176, 4}},
+    {c3d::color::string::wheel,              {224, 7}},
+    {c3d::color::string::defense,            {184, 4}},
+    {c3d::color::string::weapon,             {224, 3}},
+    {c3d::color::string::tube,               {224, 7}},
+    {c3d::color::string::body_red,           {128, 3}},
+    {c3d::color::string::body_blue,          {144, 3}},
+    {c3d::color::string::body_yellow,        {160, 3}},
+    {c3d::color::string::body_gray,          {228, 4}},
+    {c3d::color::string::yellow_charged,     {112, 4}},
+    {c3d::color::string::material_0,         {0  , 2}},
+    {c3d::color::string::material_1,         {32 , 2}},
+    {c3d::color::string::material_2,         {64 , 4}},
+    {c3d::color::string::material_3,         {72 , 3}},
+    {c3d::color::string::material_4,         {88 , 3}},
+    {c3d::color::string::material_5,         {104, 4}},
+    {c3d::color::string::material_6,         {112, 4}},
+    {c3d::color::string::material_7,         {120, 4}},
+    {c3d::color::string::black,              {184, 4}},
+    {c3d::color::string::body_green,         {240, 3}},
+    {c3d::color::string::skyfarmer_kernoboo, {136, 4}},
+    {c3d::color::string::skyfarmer_pipetka,  {128, 4}},
+    {c3d::color::string::rotten_item,        {224, 4}},
+  };
+
+  // Doesn't exist in vangers source.
+  const offset_map special_offsets
+  {
+    {c3d::color::string::center_of_mass,     {128, 4}},
+    {c3d::color::string::attachment_point,   {240, 4}},
+  };
+
+  const offset_map default_body_offsets
+  {
+    {c3d::color::body::string::el_1 + "0" +
+       c3d::color::body::string::el_2 + "0", {0  , 0}},
+    {c3d::color::body::string::el_1 + "34" +
+       c3d::color::body::string::el_2 + "3", {34 , 3}},
+    {c3d::color::body::string::el_1 + "128" +
+       c3d::color::body::string::el_2 + "3", {128, 3}},
+    {c3d::color::body::string::el_1 + "144" +
+       c3d::color::body::string::el_2 + "3", {144, 3}},
+    {c3d::color::body::string::el_1 + "145" +
+       c3d::color::body::string::el_2 + "3", {145, 3}},
+    {c3d::color::body::string::el_1 + "160" +
+       c3d::color::body::string::el_2 + "3", {160, 3}},
+  };
+} // namespace mat_tables
 
 } // namespace tractor_converter
 

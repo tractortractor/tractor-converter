@@ -31,6 +31,17 @@ namespace tractor_converter{
 
 const int create_wavefront_mtl_max_end_offset = 254;
 
+const std::vector<std::string> wheel_markers
+  {
+    wavefront_obj::wheel_mat_marker,
+    wavefront_obj::wheel_mat_marker + wavefront_obj::wheel_steer_mat_marker,
+    wavefront_obj::wheel_mat_marker + wavefront_obj::wheel_ghost_mat_marker,
+    wavefront_obj::wheel_mat_marker + wavefront_obj::wheel_steer_mat_marker +
+      wavefront_obj::wheel_ghost_mat_marker,
+    wavefront_obj::wheel_mat_marker + wavefront_obj::wheel_ghost_mat_marker +
+      wavefront_obj::wheel_steer_mat_marker,
+  };
+
 struct mtl_color
 {
   double r;
@@ -46,11 +57,11 @@ typedef std::map<std::string, mtl_color, doj::alphanum_less<std::string>>
 
 mtl_color create_wavefront_mtl_mode_helper_read_color(
   const std::string &data,
-  const c3d::color::offset_pair &offset_pair);
+  const mat_tables::offset_pair &offset_pair);
 
 void create_wavefront_mtl_mode_helper_read_colors(
   const std::string &data,
-  const c3d::color::offset_map &offset_pair_map,
+  const mat_tables::offset_map &offset_pair_map,
   mtl_color_map &colors_map);
 
 void create_wavefront_mtl_mode_helper_write_colors(
