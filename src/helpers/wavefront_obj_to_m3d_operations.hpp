@@ -23,6 +23,7 @@
 #include <exception>
 #include <stdexcept>
 
+#include <cstdint>
 #include <cstring>
 #include <cmath>
 #include <cctype>

@@ -50,6 +50,14 @@ BOOST_STATIC_ASSERT_MSG(
   "Floating point numbers must fulfill the requirements "
     "of IEC 559 (IEEE 754) standard");
 
+BOOST_STATIC_ASSERT_MSG(
+  std::numeric_limits<float>::digits == 24,
+  "float must be 32-bit with 24-bit mantissa.");
+
+BOOST_STATIC_ASSERT_MSG(
+  std::numeric_limits<double>::digits == 53,
+  "double must be 64-bit with 53-bit mantissa.");
+
 // Because of volInt::calc_norms::normal_to_key.
 BOOST_STATIC_ASSERT_MSG(
   std::numeric_limits<std::size_t>::digits >= 33,

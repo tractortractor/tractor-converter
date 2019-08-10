@@ -117,7 +117,7 @@ void m3d_to_wavefront_obj_model::mechos_m3d_to_wavefront_objs()
     read_c3d(c3d::c3d_type::bound);
   }
 
-  weapon_slots_existence = read_var_from_m3d<int, int>();
+  weapon_slots_existence = read_var_from_m3d<std::int32_t, int>();
   if(weapon_slots_existence)
   {
     read_m3d_weapon_slots();
@@ -268,7 +268,7 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
     read_c3d(c3d::c3d_type::bound);
   }
 
-  weapon_slots_existence = read_var_from_m3d<int, int>();
+  weapon_slots_existence = read_var_from_m3d<std::int32_t, int>();
   if(weapon_slots_existence)
   {
     throw std::runtime_error(
@@ -397,7 +397,7 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
     read_c3d(c3d::c3d_type::bound);
   }
 
-  weapon_slots_existence = read_var_from_m3d<int, int>();
+  weapon_slots_existence = read_var_from_m3d<std::int32_t, int>();
   if(weapon_slots_existence)
   {
     throw std::runtime_error(
@@ -430,7 +430,7 @@ std::vector<double> m3d_to_wavefront_obj_model::read_vertex()
     read_vec_var_from_m3d_scaled<float, double>(volInt::axes_num);
   std::vector<double> discarded_less_preciese_vert =
     read_vec_var_from_m3d_scaled<char, double>(volInt::axes_num);
-  int discarded_sort_info = read_var_from_m3d<int, int>();
+  int discarded_sort_info = read_var_from_m3d<std::int32_t, int>();
   return vert;
 }
 
@@ -455,7 +455,7 @@ std::vector<double> m3d_to_wavefront_obj_model::read_normal(
     read_var_from_m3d<unsigned char, unsigned char>();
   if(flags & normal_flag::sort_info)
   {
-    int discarded_sort_info = read_var_from_m3d<int, int>();
+    int discarded_sort_info = read_var_from_m3d<std::int32_t, int>();
   }
   return norm;
 }
@@ -472,7 +472,7 @@ void m3d_to_wavefront_obj_model::read_normals(volInt::polyhedron &model)
 volInt::face m3d_to_wavefront_obj_model::read_polygon(
   const volInt::polyhedron &model, std::size_t cur_poly)
 {
-  int numVerts = read_var_from_m3d<int, int>();
+  int numVerts = read_var_from_m3d<std::int32_t, int>();
   if(model.numVertsPerPoly != numVerts)
   {
     throw std::runtime_error(
@@ -487,15 +487,15 @@ volInt::face m3d_to_wavefront_obj_model::read_polygon(
   }
   volInt::face poly(numVerts);
 
-  int discarded_sort_info = read_var_from_m3d<int, int>();
+  int discarded_sort_info = read_var_from_m3d<std::int32_t, int>();
 
-  poly.color_id = read_var_from_m3d<unsigned int, unsigned int>();
+  poly.color_id = read_var_from_m3d<std::uint32_t, unsigned int>();
   if(poly.color_id >= c3d::color::string_to_id::max_colors_ids)
   {
     poly.color_id = c3d::color::string_to_id::body;
   }
 
-  unsigned int color_shift = read_var_from_m3d<unsigned int, unsigned int>();
+  unsigned int color_shift = read_var_from_m3d<std::uint32_t, unsigned int>();
   if(color_shift)
   {
     std::cout << "\n\n" <<
@@ -519,8 +519,9 @@ volInt::face m3d_to_wavefront_obj_model::read_polygon(
       vert_f_ind < numVerts;
       ++vert_f_ind, --vert_f_ind_r)
   {
-    poly.verts[vert_f_ind_r] = read_var_from_m3d<int, int>();
-    poly.vertNorms[vert_f_ind_r] = read_var_from_m3d<int, int>();
+    poly.verts[vert_f_ind_r] = read_var_from_m3d<std::int32_t, int>();
+    poly.vertNorms[vert_f_ind_r] =
+      read_var_from_m3d<std::int32_t, int>();
   }
 
   return poly;
@@ -556,7 +557,7 @@ volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
     expected_vertices_per_poly = c3d::bound_model_vertices_per_polygon;
   }
 
-  int version = read_var_from_m3d<int, int>();
+  int version = read_var_from_m3d<std::int32_t, int>();
 
   if(version != c3d::version_req)
   {
@@ -568,24 +569,24 @@ volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
       ". Expected " + std::to_string(c3d::version_req) + ".");
   }
 
-  int numVerts = read_var_from_m3d<int, int>();
-  int numVertNorms = read_var_from_m3d<int, int>();
-  int numFaces = read_var_from_m3d<int, int>();
-  int discarded_numVertTotal = read_var_from_m3d<int, int>();
+  int numVerts = read_var_from_m3d<std::int32_t, int>();
+  int numVertNorms = read_var_from_m3d<std::int32_t, int>();
+  int numFaces = read_var_from_m3d<std::int32_t, int>();
+  int discarded_numVertTotal = read_var_from_m3d<std::int32_t, int>();
 
   volInt::model_extreme_points discarded_extreme_points;
   discarded_extreme_points.max() =
-    read_vec_var_from_m3d_scaled<int, double>(volInt::axes_num);
+    read_vec_var_from_m3d_scaled<std::int32_t, double>(volInt::axes_num);
   discarded_extreme_points.min() =
-    read_vec_var_from_m3d_scaled<int, double>(volInt::axes_num);
+    read_vec_var_from_m3d_scaled<std::int32_t, double>(volInt::axes_num);
 
   volInt::model_offset offset_point(
-    read_vec_var_from_m3d_scaled<int, double>(volInt::axes_num));
+    read_vec_var_from_m3d_scaled<std::int32_t, double>(volInt::axes_num));
 
-  double discarded_rmax = read_var_from_m3d_scaled<int, double>();
+  double discarded_rmax = read_var_from_m3d_scaled<std::int32_t, double>();
 
   std::vector<int> discarded_phi_psi_tetta =
-    read_vec_var_from_m3d<int, int>(volInt::axes_num);
+    read_vec_var_from_m3d<std::int32_t, int>(volInt::axes_num);
 
   double volume = read_var_from_m3d_scaled<double, double>(3.0);
   std::vector<double> rcm =
@@ -678,28 +679,28 @@ void m3d_to_wavefront_obj_model::c3d_to_wavefront_obj(
 void m3d_to_wavefront_obj_model::read_m3d_header_data()
 {
   std::vector<double> discarded_max_point =
-    read_vec_var_from_m3d_scaled<int, double>(volInt::axes_num);
-  double discarded_rmax = read_var_from_m3d_scaled<int, double>();
+    read_vec_var_from_m3d_scaled<std::int32_t, double>(volInt::axes_num);
+  double discarded_rmax = read_var_from_m3d_scaled<std::int32_t, double>();
 
-  n_wheels = read_var_from_m3d<int, int>();
-  n_debris = read_var_from_m3d<int, int>();
-  body_color_offset = read_var_from_m3d<int, int>();
-  body_color_shift = read_var_from_m3d<int, int>();
+  n_wheels = read_var_from_m3d<std::int32_t, int>();
+  n_debris = read_var_from_m3d<std::int32_t, int>();
+  body_color_offset = read_var_from_m3d<std::int32_t, int>();
+  body_color_shift = read_var_from_m3d<std::int32_t, int>();
 }
 
 
 
 void m3d_to_wavefront_obj_model::read_a3d_header_data()
 {
-  n_models = read_var_from_m3d<int, int>();
+  n_models = read_var_from_m3d<std::int32_t, int>();
 
   std::vector<double> discarded_max_point =
-    read_vec_var_from_m3d_scaled<int, double>(volInt::axes_num);
+    read_vec_var_from_m3d_scaled<std::int32_t, double>(volInt::axes_num);
   double discarded_rmax =
-    read_var_from_m3d_scaled<int, double>();
+    read_var_from_m3d_scaled<std::int32_t, double>();
 
-  body_color_offset = read_var_from_m3d<int, int>();
-  body_color_shift = read_var_from_m3d<int, int>();
+  body_color_offset = read_var_from_m3d<std::int32_t, int>();
+  body_color_shift = read_var_from_m3d<std::int32_t, int>();
 }
 
 
@@ -707,14 +708,14 @@ void m3d_to_wavefront_obj_model::read_a3d_header_data()
 void m3d_to_wavefront_obj_model::read_m3d_wheel_data(
   std::vector<volInt::polyhedron> &wheel_models, std::size_t wheel_id)
 {
-  cur_wheel_data[wheel_id].steer = read_var_from_m3d<int, int>();
+  cur_wheel_data[wheel_id].steer = read_var_from_m3d<std::int32_t, int>();
   cur_wheel_data[wheel_id].r =
     read_vec_var_from_m3d_scaled<double, double>(volInt::axes_num);
   cur_wheel_data[wheel_id].width =
-    read_var_from_m3d_scaled<int, double>();
+    read_var_from_m3d_scaled<std::int32_t, double>();
   cur_wheel_data[wheel_id].radius =
-    read_var_from_m3d_scaled<int, double>();
-  int discarded_bound_index = read_var_from_m3d<int, int>();
+    read_var_from_m3d_scaled<std::int32_t, double>();
+  int discarded_bound_index = read_var_from_m3d<std::int32_t, int>();
 
   if(cur_wheel_data[wheel_id].steer)
   {
@@ -1227,9 +1228,9 @@ void m3d_to_wavefront_obj_model::save_m3d_debris_data(
 void m3d_to_wavefront_obj_model::read_m3d_weapon_slot(std::size_t slot_id)
 {
   cur_weapon_slot_data[slot_id].R_slot =
-    read_vec_var_from_m3d_scaled<int, double>(volInt::axes_num);
+    read_vec_var_from_m3d_scaled<std::int32_t, double>(volInt::axes_num);
   cur_weapon_slot_data[slot_id].location_angle_of_slot =
-    volInt::sicher_angle_to_radians(read_var_from_m3d<int, int>());
+    volInt::sicher_angle_to_radians(read_var_from_m3d<std::int32_t, int>());
   // In weapon_slots_existence only rightmost 3 bits are important.
   // Each bit corresponds to weapon slot from right to left.
   // Example: rightmost bits are "001".
