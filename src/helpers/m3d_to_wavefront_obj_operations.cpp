@@ -629,10 +629,11 @@ void m3d_to_wavefront_obj_model::save_c3d_as_wavefront_obj(
   boost::filesystem::path file_to_save =
     file_prefix_to_path(prefix, model_num);
 
-  c3d_models[wavefront_obj::obj_name::main].bodyColorOffset =
-    body_color_offset;
-  c3d_models[wavefront_obj::obj_name::main].bodyColorShift =
-    body_color_shift;
+  for(auto &&c3d_model : c3d_models)
+  {
+    c3d_model.second.bodyColorOffset = body_color_offset;
+    c3d_model.second.bodyColorShift =  body_color_shift;
+  }
 
   c3d_models[wavefront_obj::obj_name::main].wavefront_obj_path =
     file_to_save.string();
