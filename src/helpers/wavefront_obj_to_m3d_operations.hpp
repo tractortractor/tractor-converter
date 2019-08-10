@@ -153,15 +153,15 @@ double get_weapons_bound_sphere_radius(
 
 
 
-template<class T>
+template<typename T>
 T parse_per_file_cfg_option(
   const std::string &input);
 
-template<class T>
+template<typename T>
 std::vector<T> parse_per_file_cfg_multiple_options(
   const std::string &input);
 
-template<class T>
+template<typename T>
 std::vector<T> parse_per_file_cfg_multiple_options(
   const std::vector<std::string> &input);
 

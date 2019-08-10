@@ -12,9 +12,13 @@ namespace helpers{
 std::string char_arr_to_hex_string(const char *char_arr,
                                    unsigned int char_arr_size);
 
-//std::string int_to_hex_string(int to_hex);
 template<typename T>
-std::string int_to_hex_string(const T to_hex);
+std::string int_to_hex_string(const T to_hex)
+{
+  std::stringstream string_stream_intermediate;
+  string_stream_intermediate << std::hex << to_hex;
+  return string_stream_intermediate.str();
+}
 
 } // namespace helpers
 } // namespace tractor_converter

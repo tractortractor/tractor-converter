@@ -22,14 +22,6 @@ std::string char_arr_to_hex_string(const char *char_arr,
   return string_stream_intermediate.str();
 }
 
-template<typename T>
-std::string int_to_hex_string(const T to_hex)
-{
-  std::stringstream string_stream_intermediate;
-  string_stream_intermediate << std::hex << to_hex;
-  return string_stream_intermediate.str();
-}
-
 template<>
 std::string int_to_hex_string<char>(const char to_hex)
 {
@@ -46,9 +38,6 @@ std::string int_to_hex_string<unsigned char>(const unsigned char to_hex)
   string_stream_intermediate << std::hex << static_cast<std::uint16_t>(to_hex);
   return string_stream_intermediate.str();
 }
-
-template std::string int_to_hex_string<int>(const int to_hex);
-template std::string int_to_hex_string<std::size_t>(const std::size_t to_hex);
 
 
 
