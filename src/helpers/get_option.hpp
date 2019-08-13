@@ -16,8 +16,12 @@
 #include <string>
 #include <vector>
 
+
+
 namespace tractor_converter{
 namespace helpers{
+
+
 
 std::vector<std::string> get_vec_str_option(
   const boost::program_options::variables_map &options,
@@ -27,6 +31,8 @@ double get_angle_option(
   const boost::program_options::variables_map &options,
   const std::string &option_name,
   const bitflag<error_handling> error_flags = error_handling::throw_exception);
+
+
 
 } // namespace helpers
 } // namespace tractor_converter

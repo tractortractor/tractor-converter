@@ -18,7 +18,11 @@
 #include <string>
 #include <vector>
 
+
+
 namespace tractor_converter{
+
+
 
 void usage_pal_mode_save_output_readable(
   boost::filesystem::path file,
@@ -34,6 +38,8 @@ void usage_pal_mode_save_output(
   bool readable_output,
   const std::string &file_name_error);
 void usage_pal_mode(const boost::program_options::variables_map options);
+
+
 
 } // namespace tractor_converter
 

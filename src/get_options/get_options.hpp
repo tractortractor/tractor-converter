@@ -18,9 +18,11 @@
 
 namespace tractor_converter{
 
-//const double default_3d_default_scale = 0.195313;
+
 
 boost::program_options::variables_map get_options(int ac, char** av);
+
+
 
 } // namespace tractor_converter
 

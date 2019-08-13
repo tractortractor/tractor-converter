@@ -12,11 +12,9 @@ boost::program_options::variables_map get_options(int ac, char** av)
 
   try
   {
-//  int opt;
     std::string config_file;
 
-    // Declare a group of options that will be
-    // allowed only on command line.
+    // Declare a group of options that will be allowed only on command line.
     boost::program_options::options_description generic("Generic options");
     generic.add_options()
       ((option::name::version + ",v").c_str(), "\tPrint version.\n")
@@ -28,8 +26,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
       ;
 
     // Declare a group of options that will be
-    // allowed both on command line and in
-    // config file.
+    // allowed both on command line and in config file.
     boost::program_options::options_description config("Configuration");
     config.add_options()
       ((option::name::mode + ",m").c_str(),
@@ -435,7 +432,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
       (option::name::items_bmp.c_str(),
        boost::program_options::bool_switch()->
          default_value(option::default_val::items_bmp),
-       ("\tConverting item files so 2 " + ext::readable::bmp +
+       ("\tConverting item files, so 2 " + ext::readable::bmp +
             " should be created for each " + ext::readable::tga + " file.\n"
         "\t\"" + option::name::map + "\" and "
             "\"" + option::name::output_dir_through_map + "\" "
@@ -658,14 +655,9 @@ boost::program_options::variables_map get_options(int ac, char** av)
             "\"" + mode::name::create_materials_table + "\" modes.\n").c_str())
       ;
 
-    // Hidden options, will be allowed both on command line and
-    // in config file, but will not be shown to the user.
+    // Hidden options, will be allowed both on command line and in config file,
+    // but will not be shown to the user.
     boost::program_options::options_description hidden("Hidden options");
-//  hidden.add_options()
-//    ("input-file",
-//     boost::program_options::value<std::vector<std::string>>(),
-//     "input file")
-//    ;
 
     boost::program_options::options_description cmdline_options;
     cmdline_options.add(generic).add(config).add(hidden);

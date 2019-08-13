@@ -10,6 +10,7 @@
 #include <exception>
 #include <stdexcept>
 
+#include <climits>
 #include <cstddef>
 #include <string>
 
@@ -17,6 +18,8 @@
 
 namespace tractor_converter{
 namespace helpers{
+
+
 
 std::size_t get_color_size(
   const std::string &bytes,
@@ -60,6 +63,8 @@ struct tga
   std::size_t raw_bitmap_start_pos;
 
 };
+
+
 
 } // namespace helpers
 } // namespace tractor_converter

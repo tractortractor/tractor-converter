@@ -66,12 +66,6 @@
 
 
 
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-
-
-
 namespace volInt{
 
 
@@ -115,15 +109,13 @@ double radians_to_degrees(double radians);
 double sicher_angle_to_radians(int sicher_angle);
 int radians_to_sicher_angle(double radians);
 
-void rotate_point_by_axis(
-  std::vector<double> &point,
-  double angle_sin,
-  double angle_cos,
-  rotation_axis axis);
-void rotate_point_by_axis(
-  std::vector<double> &point,
-  double angle,
-  rotation_axis axis);
+void rotate_point_by_axis(std::vector<double> &point,
+                          double angle_sin,
+                          double angle_cos,
+                          rotation_axis axis);
+void rotate_point_by_axis(std::vector<double> &point,
+                          double angle,
+                          rotation_axis axis);
 
 
 
@@ -198,9 +190,7 @@ std::vector<double> vector_2d_divide(const std::vector<double> &vec,
 
 double vector_2d_length(const std::vector<double> &vec);
 
-void matrix_multiply_self(
-  std::vector<std::vector<double>> &mat,
-  double num);
+void matrix_multiply_self(std::vector<std::vector<double>> &mat, double num);
 
 
 
@@ -246,7 +236,7 @@ std::vector<std::vector<T>> get_groups_of_connected_items(
         }
       }
 
-      // Erasing all newly found connected items from items to check.
+      // Erasing all newly found connected items from items_to_check.
       for(auto new_connected_item : new_connected_items)
       {
         items_to_check.erase(items_to_check.find(new_connected_item));
@@ -271,24 +261,16 @@ namespace calc_norms{
 
 
 
-/*
-   ============================================================================
-   macros
-   ============================================================================
-*/
+// ============================================================================
+// Macros.
+// ============================================================================
 
-#define VOLINT_SQR(x) ((x)*(x))
-#define VOLINT_CUBE(x) ((x)*(x)*(x))
+#define VOLINT_SQR(x)  ((x) * (x))
+#define VOLINT_CUBE(x) ((x) * (x) * (x))
 
-/*
-   ============================================================================
-   constants
-   ============================================================================
-*/
-
-//#define MAX_VERTS 100     /* maximum number of polyhedral vertices */
-//#define MAX_FACES 100     /* maximum number of polyhedral faces */
-//#define MAX_POLYGON_SZ 10 /* maximum number of verts per polygonal face */
+// ============================================================================
+// Constants.
+// ============================================================================
 
 #define VOLINT_X 0
 #define VOLINT_Y 1
@@ -300,33 +282,27 @@ const double vector_scale_val = 1.0;
 
 
 
-/*
-// VANGERS SOURCE
-// how angle conversions works in vangers code
-#define M_PI      3.14159265358979323846
-
-Pi_len = 11
-const int  Pi    = 1 << Pi_len;
-2048
-
-#define GTOR(x) (double(x)*(M_PI/double(Pi)))
-#define RTOG(x) (round(x*(double(Pi)/M_PI)))
-*/
+//// VANGERS SOURCE
+//// how angle conversions works in Vangers code
+//#define M_PI 3.14159265358979323846
+//
+//Pi_len = 11
+//const int Pi = 1 << Pi_len;
+//2048
+//
+//#define GTOR(x) (double(x) * (M_PI / double(Pi)))
+//#define RTOG(x) (round(x *   (double(Pi) / M_PI)))
 
 #ifndef M_PI
   #define M_PI 3.14159265358979323846
 #endif
-//const double M_PI = 3.14159265358979323846;
 const int sicher_angle_Pi = 2048; // "1 << Pi_len" where "Pi_len = 11".
 
 
 
 const unsigned int min_float_precision = 3;
-const double distinct_distance =
-  1.0/std::pow(10, min_float_precision);
-//const double distinct_distance = 1.0e-3;
-const double sqr_distinct_distance =
-  VOLINT_SQR(distinct_distance);
+const double distinct_distance = 1.0 / std::pow(10, min_float_precision);
+const double sqr_distinct_distance = VOLINT_SQR(distinct_distance);
 const double density = 1.0;
 
 const std::size_t axes_num = 3;
@@ -334,16 +310,16 @@ const std::size_t axes_2d_num = 2;
 
 const std::vector<std::vector<std::size_t>> axes_by_plane =
   {
-    {1, 2}, // x axis
-    {0, 2}, // y axis
-    {0, 1}, // z axis
+    {1, 2}, // x axis.
+    {0, 2}, // y axis.
+    {0, 1}, // z axis.
   };
 
 const std::vector<std::vector<std::size_t>> axes_by_plane_continuous =
   {
-    {1, 2}, // x axis
-    {2, 0}, // y axis
-    {0, 1}, // z axis
+    {1, 2}, // x axis.
+    {2, 0}, // y axis.
+    {0, 1}, // z axis.
   };
 
 namespace color_ids {
@@ -521,22 +497,21 @@ namespace generate_bound{
   } // namespace model
 } // namespace generate_bound
 
-/*
-   ============================================================================
-   data structures
-   ============================================================================
-*/
+// ============================================================================
+// Data structures.
+// ============================================================================
 
-struct model_extreme_points {
+struct model_extreme_points
+{
 
   model_extreme_points();
   model_extreme_points(const std::vector<double> &max,
                        const std::vector<double> &min);
   model_extreme_points(std::vector<double> &&max, std::vector<double> &&min);
 
-  std::vector<double> &max();
+  std::vector<double>       &max();
   const std::vector<double> &max() const;
-  std::vector<double> &min();
+  std::vector<double>       &min();
   const std::vector<double> &min() const;
 
   double xmax() const;
@@ -556,8 +531,8 @@ struct model_extreme_points {
   void set_zmin(double new_zmin);
 
   void get_most_extreme_cmp_cur(const model_extreme_points &other);
-  void get_most_extreme_cmp_cur(const std::vector<double> &point);
-  void get_most_extreme(const std::vector<std::vector<double>> &points);
+  void get_most_extreme_cmp_cur(const std::vector<double>  &point);
+  void get_most_extreme(const std::vector<std::vector<double>>        &points);
   void get_most_extreme(const std::vector<const std::vector<double>*> &points);
 
   std::vector<double> get_center();
@@ -566,11 +541,12 @@ struct model_extreme_points {
 
 };
 
-struct model_offset {
+struct model_offset
+{
 
   model_offset();
   model_offset(const std::vector<double> &offset_point_arg);
-  model_offset(std::vector<double> &&offset_point_arg);
+  model_offset(std::vector<double>      &&offset_point_arg);
 
   double x_off() const;
   double y_off() const;
@@ -584,29 +560,24 @@ struct model_offset {
 
 };
 
-typedef struct face {
-
-//  face(const face &other);
+typedef struct face
+{
   face(int numVerts_arg);
 
   int numVerts;
   unsigned int color_id;
   int wheel_id;
   int weapon_id;
-//  double norm[3];
   std::vector<double> norm;
   double w;
-//  int verts[MAX_POLYGON_SZ];
   std::vector<int> verts;
   std::vector<int> vertNorms;
-//  struct polyhedron *poly;
 } FACE;
 
-typedef struct polyhedron {
+typedef struct polyhedron
+{
 
   polyhedron();
-//  polyhedron(const polyhedron &other);
-//  polyhedron(polyhedron &&other);
   polyhedron(
     int numVerts_arg,
     int numVertNorms_arg,
@@ -617,7 +588,7 @@ typedef struct polyhedron {
   void reverse_polygons_orientation();
 
   std::vector<double> face_calc_normal(std::size_t face_ind);
-  double face_calc_offset_w(std::size_t face_ind);
+  double face_calc_offset_w(           std::size_t face_ind);
   void faces_calc_params(); // Must be called again if model was moved.
   void faces_calc_params_inv_neg_vol();
 
@@ -638,12 +609,10 @@ typedef struct polyhedron {
   std::vector<double> get_model_center(
     const std::vector<const face*> &polygons) const;
 
-  std::vector<const face*>
-    get_polygons_by_color(unsigned int color_id) const;
-  std::vector<const face*> get_polygons_by_ids(
-    unsigned int color_id,
-    int wheel_id,
-    int weapon_id) const;
+  std::vector<const face*> get_polygons_by_color(unsigned int color_id) const;
+  std::vector<const face*> get_polygons_by_ids(  unsigned int color_id,
+                                                 int wheel_id,
+                                                 int weapon_id) const;
 
   std::vector<const std::vector<double>*> get_vertices_by_polygons(
     const std::vector<const face*> &model_polygons) const;
@@ -723,9 +692,9 @@ typedef struct polyhedron {
   std::pair<std::vector<double>, std::vector<double>> &extreme_points_pair();
   const std::pair<std::vector<double>, std::vector<double>> &
     extreme_points_pair() const;
-  std::vector<double> &max_point();
+  std::vector<double>       &max_point();
   const std::vector<double> &max_point() const;
-  std::vector<double> &min_point();
+  std::vector<double>       &min_point();
   const std::vector<double> &min_point() const;
 
   double xmax() const;
@@ -745,7 +714,7 @@ typedef struct polyhedron {
   void set_zmin(double new_zmin);
 
 
-  std::vector<double> &offset_point();
+  std::vector<double>       &offset_point();
   const std::vector<double> &offset_point() const;
 
   double x_off() const;
@@ -765,19 +734,17 @@ typedef struct polyhedron {
   std::vector<double> rcm;
   std::vector<std::vector<double>> J;
   int bodyColorOffset, bodyColorShift;
-//  double verts[MAX_VERTS][3];
   std::vector<std::vector<double>> verts;
   std::vector<std::vector<double>> vertNorms;
-//  FACE faces[MAX_FACES];
   std::vector<face> faces;
 
 
 
-  std::pair<int, int> ref_vert_one_ind;
+  std::pair<int, int>        ref_vert_one_ind;
   const std::vector<double> *ref_vert_one;
-  std::pair<int, int> ref_vert_two_ind;
+  std::pair<int, int>        ref_vert_two_ind;
   const std::vector<double> *ref_vert_two;
-  std::pair<int, int> ref_vert_three_ind;
+  std::pair<int, int>        ref_vert_three_ind;
   const std::vector<double> *ref_vert_three;
 
   std::vector<double> ref_vert_two_rel_to_one;
@@ -798,65 +765,45 @@ typedef struct polyhedron {
   // Used only when converting from *.obj to *.m3d/*.a3d.
   std::string wavefront_obj_path;
 
-  // Used only when converting from *.m3d to *.obj.
+  // Used only when converting from *.m3d/*.a3d to *.obj.
   bool volume_overwritten;
   bool rcm_overwritten;
   bool J_overwritten;
 } POLYHEDRON;
 
 
-/*
-   ============================================================================
-   globals
-   ============================================================================
-*/
 
-static int A;   /* alpha */
-static int B;   /* beta */
-static int C;   /* gamma */
+// ============================================================================
+// Globals.
+// ============================================================================
 
-/* projection integrals */
+static int A; // alpha
+static int B; // beta
+static int C; // gamma
+
+// Projection integrals.
 static double P1, Pa, Pb, Paa, Pab, Pbb, Paaa, Paab, Pabb, Pbbb;
 
-/* face integrals */
+// Face integrals.
 static double Fa, Fb, Fc, Faa, Fbb, Fcc, Faaa, Fbbb, Fccc, Faab, Fbbc, Fcca;
 
-/* volume integrals */
+// Volume integrals.
 static double T0, T1[3], T2[3], TP[3];
 
 
 
-/*
-   ============================================================================
-   read in a polyhedron
-   ============================================================================
-*/
-
-//void readPolyhedron(char *name, POLYHEDRON *p);
-
-/*
-   ============================================================================
-   compute mass properties
-   ============================================================================
-*/
+// ============================================================================
+// Compute mass properties.
+// ============================================================================
 
 
-/* compute various integrations over projection of face */
+
+// Compute various integrations over projection of face.
 void compProjectionIntegrals(POLYHEDRON *p, FACE *f);
 
 void compFaceIntegrals(FACE *f);
 
 void compVolumeIntegrals(POLYHEDRON *p);
-
-
-/*
-   ============================================================================
-   main
-   ============================================================================
-*/
-
-
-// int main(int argc, char *argv[]);
 
 
 

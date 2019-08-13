@@ -161,7 +161,7 @@ sicher_cfg_reader::sicher_cfg_reader(
   input_file_path_str(input_file_path_str_arg),
   input_file_name_error(input_file_name_error_arg)
 {
-  // If first byte = 0 then file is compressed and encrypted.
+  // If first byte = 0, then file is compressed and encrypted.
   if(!*pos)
   {
     decrypt();
@@ -199,7 +199,7 @@ void sicher_cfg_reader::decompress()
   m_str.erase(0, xzip_decompress::comp_beg_pos);
   pos = &m_str[0];
 
-  // If label = 0 then file is not compressed.
+  // If label = 0, then file is not compressed.
   if(label)
   {
     try

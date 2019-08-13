@@ -16,7 +16,7 @@ std::size_t get_color_size(
   const std::size_t color_size =
     static_cast<std::size_t>(static_cast<unsigned char>(
       bytes[image_start_pos + tga_color_map_entry_size_pos])) /
-    8; // 8 bits per byte
+    CHAR_BIT;
   if(color_size != tga_default_color_size)
   {
     if(error_flags & error_handling::throw_exception)

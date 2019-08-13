@@ -11,7 +11,11 @@
 namespace tractor_converter{
 namespace helpers{
 
+
+
 bool check_pal_color_used(const std::size_t pos, const std::string &bytes);
+
+
 
 } // namespace helpers
 } // namespace tractor_converter

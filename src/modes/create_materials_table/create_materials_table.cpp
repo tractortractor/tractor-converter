@@ -77,11 +77,11 @@ html_material create_materials_table_mode_helper_read_material(
   const std::string &data,
   const mat_tables::offset_pair &offset_pair)
 {
-  // VANGERS SOURCE
-  // Simplified Vangers code to get end color:
+  //// VANGERS SOURCE
+  //// Simplified Vangers code to get end color:
   // end_color = color_offset + I_8 >> color_shift;
-  // Where I_8 is modifier which can't be more than
-  // NORMAL define which is ((1 << 7) - 5) = 123.
+  //// Where I_8 is modifier which can't be more than
+  //// NORMAL define which is ((1 << 7) - 5) = 123.
   int end_offset = offset_pair.offset + (123 >> offset_pair.shift);
   if(end_offset > create_materials_table_max_end_offset)
   {
@@ -89,28 +89,15 @@ html_material create_materials_table_mode_helper_read_material(
   }
   int pos = offset_pair.offset * 3;
   int end_pos = end_offset * 3;
-//int pos = end_offset * 3;
 
-//  html_material material(offset_pair);
   std::vector<html_color> colors;
   for(; pos <= end_pos; pos = pos + 3)
   {
-    // TEST
-//  std::cout << '\n';
-//  std::cout << "offset_pair.offset: " <<
-//    std::to_string(offset_pair.offset) << '\n';
-//  std::cout << "offset_pair.shift: " <<
-//    std::to_string(offset_pair.shift) << '\n';
-//  std::cout << "end_offset: " << end_offset << '\n';
-//  std::cout << "end_pos: " << std::to_string(pos) << '\n';
-
     html_color color;
 
     for(std::size_t cur_rgb_el = 0; cur_rgb_el < 3; ++cur_rgb_el)
     {
       color[cur_rgb_el] = data[pos + 2 - cur_rgb_el];
-      // TEST
-//    std::cout << "color[" << cur_rgb_el << "]" << color[cur_rgb_el] << '\n';
     }
     colors.push_back(color);
   }
@@ -184,10 +171,6 @@ void create_materials_table_mode_helper_write_materials(
 
       for(std::size_t cur_rgb_el = 0; cur_rgb_el < 3; ++cur_rgb_el)
       {
-//      data.push_back(' ');
-//      helpers::to_string_precision<double>(material.second[cur_rgb_el],
-//                                           precision_mtl_str,
-//                                           data);
         std::string tmp = helpers::int_to_hex_string<char>(color[cur_rgb_el]);
         if(tmp.size() == 1)
         {

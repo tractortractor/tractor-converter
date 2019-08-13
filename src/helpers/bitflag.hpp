@@ -6,8 +6,12 @@
 #include <limits>
 #include <bitset>
 
+
+
 namespace tractor_converter{
 namespace helpers{
+
+
 
 // Modified version of https://softwareengineering.stackexchange.com/a/338472
 template<typename Enum, bool IsEnum = std::is_enum<Enum>::value>
@@ -149,6 +153,8 @@ typename std::enable_if<std::is_enum<Enum>::value, bitflag<Enum>>::type
 {
   return ~bitflag<Enum>(value);
 }
+
+
 
 } // namespace helpers
 } // namespace tractor_converter

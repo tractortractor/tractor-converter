@@ -1,5 +1,7 @@
 #include "pal_shift_for_vangers_avi.hpp"
 
+
+
 namespace tractor_converter{
 
 
@@ -37,9 +39,9 @@ void pal_shift_for_vangers_avi_mode(
         std::string output_pal =
           helpers::read_file(file.path(),
                              helpers::file_flag::binary,
-                             tga_default_pal_size/2,
+                             tga_default_pal_size / 2,
                              0,
-                             tga_default_pal_size/2,
+                             tga_default_pal_size / 2,
                              option::name::source_dir);
 
         boost::filesystem::path file_to_save = output_dir;

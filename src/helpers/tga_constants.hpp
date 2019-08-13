@@ -7,7 +7,11 @@
 #include <string>
 #include <unordered_map>
 
+
+
 namespace tractor_converter{
+
+
 
 const std::size_t vangers_bmp_coords_size = 4;
 const std::size_t vangers_bmp_coords_pos = 0;
@@ -104,6 +108,8 @@ const std::string tga_header_str =
   tga_image_type_str +
   tga_color_map_specification_str +
   tga_image_specification_str;
+
+
 
 } // namespace tractor_converter
 

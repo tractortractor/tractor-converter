@@ -16,7 +16,8 @@ std::string char_arr_to_hex_string(const char *char_arr,
 
   for(unsigned int num = 0; num != char_arr_size; ++num)
   {
-    string_stream_intermediate << (uint16_t)char_arr[num] << " ";
+    string_stream_intermediate <<
+      static_cast<std::uint16_t>(char_arr[num]) << " ";
   }
 
   return string_stream_intermediate.str();

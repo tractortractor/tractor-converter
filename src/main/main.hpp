@@ -24,9 +24,6 @@
 
 #include <boost/static_assert.hpp>
 #include <boost/predef/other/endian.h>
-//#include <boost/detail/endian.hpp>
-//#include <boost/endian/endian.hpp>
-//#include <boost/boost/predef/detail/endian_compat.h>
 
 #include <boost/program_options.hpp>
 
@@ -35,6 +32,7 @@
 
 #include <climits>
 #include <string>
+
 
 
 #if CHAR_BIT != 8
@@ -58,7 +56,7 @@ BOOST_STATIC_ASSERT_MSG(
   std::numeric_limits<double>::digits == 53,
   "double must be 64-bit with 53-bit mantissa.");
 
-// Because of volInt::calc_norms::normal_to_key.
+// Because of volInt::calc_norms::normal_to_key() function.
 BOOST_STATIC_ASSERT_MSG(
   std::numeric_limits<std::size_t>::digits >= 33,
   "std::size_t must be at least 33-bit.");

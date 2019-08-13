@@ -7,8 +7,12 @@
 
 #include <string>
 
+
+
 namespace tractor_converter{
 namespace wavefront_obj{
+
+
 
   const std::string mat_separator = "_";
   const std::size_t mat_separator_size = mat_separator.size();
@@ -55,27 +59,7 @@ namespace wavefront_obj{
   const std::string weapon_mat_marker(mat_separator + "weapon");
   const std::size_t weapon_mat_marker_size = weapon_mat_marker.size();
 
-//const int default_float_precision = 6;
 
-// 2 newline + 1 "v" +
-// 3 "num of coords" *
-//   (1 space +
-//    3 digits left to dot +
-//    1 dot +
-//    float_precision digits right to dot) +
-// 5
-//const std::size_t expected_medium_vertex_size =
-//  2 + 1 + 3 * (1 + 3 + 1 + float_precision) + 5;
-
-// +1 because "vn" instead of "v"
-//const std::size_t expected_medium_normal_size =
-//  1 + expected_medium_vertex_size;
-
-// 2 newline + 50 material string size + 2 newline + 1 "f" +
-// 4 "num of vertices" *
-//   (1 space + 3 digits for vertex + 2 "//" + 3 digits for normal) +
-// 5
-//const std::size_t expected_polygon_size = 50 + 1 + 4 * (1 + 3 + 2 + 3) + 2;
 
 } // namespace wavefront_obj
 } // namespace tractor_converter

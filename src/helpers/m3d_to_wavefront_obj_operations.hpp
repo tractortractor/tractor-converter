@@ -8,7 +8,6 @@
 
 #include "raw_num_operations.hpp"
 #include "file_operations.hpp"
-//#include "to_string_precision.hpp"
 #include "vangers_cfg_operations.hpp"
 #include "wavefront_obj_operations.hpp"
 #include "vangers_3d_model_operations.hpp"
@@ -17,7 +16,6 @@
 #include "tiny_obj_loader.h"
 
 #include <boost/filesystem.hpp>
-//#include <boost/filesystem/fstream.hpp>
 #include <boost/algorithm/string.hpp>
 
 #include <exception>
@@ -34,8 +32,12 @@
 #include <unordered_set>
 #include <unordered_map>
 
+
+
 namespace tractor_converter{
 namespace helpers{
+
+
 
 enum class m3d_to_obj_flag
 {
@@ -373,6 +375,8 @@ void other_m3d_to_wavefront_objs(
   double scale_size,
   unsigned int float_precision_objs,
   bitflag<m3d_to_obj_flag> flags);
+
+
 
 } // namespace helpers
 } // namespace tractor_converter

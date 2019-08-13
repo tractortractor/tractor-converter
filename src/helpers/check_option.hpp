@@ -12,8 +12,12 @@
 #include <string>
 #include <vector>
 
+
+
 namespace tractor_converter{
 namespace helpers{
+
+
 
 int check_option(const boost::program_options::variables_map &options,
                  const std::string &option_name,
@@ -23,6 +27,8 @@ int check_options(const boost::program_options::variables_map &options,
                   const std::vector<std::string> &option_names,
                   const bitflag<error_handling> error_flags =
                     error_handling::throw_exception);
+
+
 
 } // namespace helpers
 } // namespace tractor_converter

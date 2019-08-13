@@ -325,7 +325,7 @@ volInt::polyhedron raw_obj_to_volInt_model(
               input_file_name_error);
 
 
-  // Reading *.obj file with tiny_obj_loader
+  // Reading *.obj file with tiny_obj_loader.
 
   unsigned char expected_n_verts_per_poly;
   std::string expected_n_verts_per_poly_err_str;
@@ -449,7 +449,6 @@ volInt::polyhedron raw_obj_to_volInt_model(
                          volInt_model);
     }
     else
-//  else if(c3d::color::ids.by<c3d::color::name>().count(cur_mat_name))
     {
       // Doing max_name_size check.
       // So longer material names will be selected.
@@ -465,18 +464,12 @@ volInt::polyhedron raw_obj_to_volInt_model(
         {
           // Assigning color ID.
           tiny_obj_id_to_color_id[cur_mat] = name_id_pair.second;
-//        tiny_obj_id_to_color_id[cur_mat] =
-//          c3d::color::ids.by<c3d::color::name>().at(cur_mat_name);
           max_name_size = name_id_pair.first.size();
         }
       }
       base_name_size = max_name_size;
     }
-//  else
-//  {
-//    // Assigning color ID.
-//    tiny_obj_id_to_color_id[cur_mat] = default_color_id;
-//  }
+
 
 
     if(!std::strncmp(cur_mat_name.c_str() + base_name_size,
@@ -521,7 +514,7 @@ volInt::polyhedron raw_obj_to_volInt_model(
 
 
 
-  // Checking wheels
+  // Checking wheels.
   int n_wheels = volInt_model.wheels.size();
   std::vector<int> missed_wheels;
   std::vector<int> out_of_range_wheels;
@@ -663,10 +656,6 @@ volInt::polyhedron raw_obj_to_volInt_model(
     }
   }
 
-  // TEST
-//std::cout << "wavefront_obj_operations reading " <<
-//  input_file_path_arg << '\n';
-
 
 
   volInt_model.faces_calc_params();
@@ -686,8 +675,6 @@ void save_volInt_as_wavefront_obj(
   std::size_t expected_medium_vertex_size,
   std::size_t expected_medium_normal_size)
 {
-//std::size_t cur_wheel_data_size = cur_wheel_data.size();
-
   std::string obj_data;
 
   std::size_t to_reserve = wavefront_obj::mtl_reference_size;
@@ -702,7 +689,7 @@ void save_volInt_as_wavefront_obj(
   obj_data.reserve(to_reserve);
 
 
-  // appending *.mtl file info
+  // Appending *.mtl file info.
   obj_data.append("mtllib ../../../../" + wavefront_obj::mtl_filename + "\n");
 
   std::size_t last_vert_ind = 1;
@@ -719,7 +706,7 @@ void save_volInt_as_wavefront_obj(
     obj_data.append(c3d_model.first);
     obj_data.push_back('\n');
 
-    // writing vertices
+    // Writing vertices.
     for(std::size_t cur_vertex = 0; cur_vertex < vert_num; ++cur_vertex)
     {
       obj_data.push_back('v');
@@ -735,7 +722,7 @@ void save_volInt_as_wavefront_obj(
     }
 
 
-    // writing normals
+    // Writing normals.
     for(std::size_t cur_normal = 0; cur_normal < norm_num; ++cur_normal)
     {
       obj_data.append("vn");
@@ -751,45 +738,13 @@ void save_volInt_as_wavefront_obj(
     }
 
 
-    // writing polygons
+    // Writing polygons.
     // color_id of any polygon should not be equal to max_colors_ids.
     unsigned int previous_color_id = c3d::color::string_to_id::max_colors_ids;
     int previous_wheel_id =  volInt::invalid::wheel_id;
     int previous_weapon_id = volInt::invalid::weapon_id;
     for(std::size_t cur_poly_num = 0; cur_poly_num < poly_num; ++cur_poly_num)
     {
-
-//    if(c3d_model.second.faces[cur_poly_num].color_id !=
-//         c3d::color::string_to_id::body &&
-//       c3d_model.second.faces[cur_poly_num].color_shift)
-//    {
-//      throw std::runtime_error(
-//        input_file_name_error + " file " + input_file_path.string() +
-//        ". polygon " + std::to_string(cur_poly_num) +
-//        " have non-body color_id " +
-//        std::to_string(c3d_model.second.faces[cur_poly_num].color_id) +
-//        " and non-zero color_shift " +
-//        std::to_string(c3d_model.second.faces[cur_poly_num].color_shift) +
-//        ". It is assumed that only polygons with body color_id " +
-//        "can have non-zero color_shift.");
-//    }
-
-
-/*
-      // Only polygons with color_id "wheel", "weapon" or "attachement_point"
-      // can have wheel_weapon_id not equal to -1.
-      int cur_poly_wheel_weapon_id =
-        c3d_model.second.faces[cur_poly_num].wheel_weapon_id;
-
-      if(cur_poly_wheel_weapon_id < 0 ||
-         std::find(c3d::color::wheel_weapon_color_ids.begin(),
-                   c3d::color::wheel_weapon_color_ids.end(),
-                   c3d_model.second.faces[cur_poly_num].color_id) ==
-           c3d::color::wheel_weapon_color_ids.end())
-      {
-        cur_poly_wheel_weapon_id = -1;
-      }
-*/
       int cur_poly_wheel_id =  c3d_model.second.faces[cur_poly_num].wheel_id;
       int cur_poly_weapon_id = c3d_model.second.faces[cur_poly_num].weapon_id;
 

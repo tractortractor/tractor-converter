@@ -10,13 +10,11 @@
 #include "file_operations.hpp"
 #include "to_string_precision.hpp"
 #include "vangers_cfg_operations.hpp"
-//#include "wavefront_obj_operations.hpp"
 
 #include "volInt.hpp"
 #include "tiny_obj_loader.h"
 
 #include <boost/filesystem.hpp>
-//#include <boost/filesystem/fstream.hpp>
 
 #include <exception>
 #include <stdexcept>
@@ -29,6 +27,8 @@
 #include <vector>
 #include <unordered_set>
 #include <unordered_map>
+
+
 
 namespace tractor_converter{
 namespace helpers{
@@ -152,8 +152,6 @@ class vangers_model
 {
 public:
 
-//enum class file_type{m3d, a3d, none};
-
   vangers_model(
     const boost::filesystem::path &input_m3d_path_arg,
     const boost::filesystem::path &output_m3d_path_arg,
@@ -243,22 +241,8 @@ protected:
       }
     }
     // Example weapon models are no longer merged with main model.
-  //if(weapon_slots_existence && example_weapon_model)
-  //{
-  //  new_main_model_num_verts +=
-  //    example_weapon_model->numVerts * m3d::weapon_slot::max_slots;
-  //  new_main_model_num_vert_norms +=
-  //    example_weapon_model->numVertNorms * m3d::weapon_slot::max_slots;
-  //  new_main_model_num_poly +=
-  //    example_weapon_model->numFaces * m3d::weapon_slot::max_slots;
-  //}
     // Center of mass model is no longer merged with main model.
-  //if(center_of_mass_model)
-  //{
-  //  new_main_model_num_verts += center_of_mass_model->numVerts;
-  //  new_main_model_num_vert_norms += center_of_mass_model->numVertNorms;
-  //  new_main_model_num_poly += center_of_mass_model->numFaces;
-  //}
+    // Memory is not reserved for those.
     main_model->verts.reserve(new_main_model_num_verts);
     main_model->vertNorms.reserve(new_main_model_num_vert_norms);
     main_model->faces.reserve(new_main_model_num_poly);
@@ -278,7 +262,7 @@ protected:
     WHEELS_CONTAINER *steer_wheels_models = nullptr,
     WHEELS_CONTAINER *non_steer_ghost_wheels_models = nullptr) const
   {
-    // inserting steering wheels into main model
+    // Inserting steering wheels into main model.
     for(std::size_t cur_wheel_num = 0;
         cur_wheel_num < cur_wheel_data.size();
         ++cur_wheel_num)
@@ -350,9 +334,6 @@ protected:
   void set_ymin(double new_ymin);
   void set_zmin(double new_zmin);
 
-// not needed
-//void scale_3d_point(std::vector<double> &point);
-//void scale_c3d(volInt::polyhedron &c3d_model);
 
 
   // Returning long double in case T is long double.

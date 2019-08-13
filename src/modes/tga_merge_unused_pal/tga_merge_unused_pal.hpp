@@ -20,10 +20,16 @@
 #include <string>
 #include <vector>
 
+
+
 namespace tractor_converter{
+
+
 
 void tga_merge_unused_pal_mode(
   const boost::program_options::variables_map options);
+
+
 
 } // namespace tractor_converter
 

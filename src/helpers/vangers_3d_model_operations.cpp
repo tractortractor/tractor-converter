@@ -102,24 +102,24 @@ void vangers_model::merge_helper_move_model_into_main(
   unsigned int merge_model_color_id;
   if(merge_type == merge_model_type::wheel)
   {
-    // Changing model_to_move so calculated center of extreme coordinates
+    // Changing model_to_move, so calculated center of extreme coordinates
     // and actual center are the same.
     model_to_move.move_coord_system_to_center();
     merge_model_color_id = c3d::color::string_to_id::invalid_color_id;
   }
   else if(merge_type == merge_model_type::weapon)
   {
-    // Changing position of weapon as it is changed in vangers source code.
-    /*
-    // VANGERS SOURCE
-    Vector off =
-      A_c2p *
-      Vector(
-        data_in_slots[i] -> model -> x_off,
-        data_in_slots[i] -> model -> y_off,
-        data_in_slots[i] -> model -> z_off);
-    data_in_slots[i] -> model -> draw_child(R_slots[i] - off,A_c2p,A_p2c);
-    */
+    // Changing position of weapon as it is changed in Vangers source code.
+
+    //// VANGERS SOURCE
+    //Vector off =
+    //  A_c2p *
+    //  Vector(
+    //    data_in_slots[i]->model->x_off,
+    //    data_in_slots[i]->model->y_off,
+    //    data_in_slots[i]->model->z_off);
+    //data_in_slots[i]->model->draw_child(R_slots[i] - off, A_c2p, A_p2c);
+
     std::vector<double> weapon_offset = model_to_move.offset_point();
     volInt::rotate_point_by_axis(weapon_offset,
                                  new_angle,
@@ -146,14 +146,14 @@ void vangers_model::merge_helper_move_model_into_main(
 
 
 
-  // Changing coordinates of all vertices of model_to_move
+  // Changing coordinates of all vertices of model_to_move,
   // so it will be in the right place.
   // new_position is center coordinates of model_to_move
   // relative to main model center.
   model_to_move.move_model_to_point(new_position);
 
-  // Since all vertices and norms are appended to main model
-  // all vertices and norm indexes of moved polygons must be updated.
+  // Since all vertices and normals are appended to main model,
+  // all vertices' and normals' indices of moved polygons must be updated.
   for(auto &&cur_poly : model_to_move.faces)
   {
     for(auto &&cur_vert_index : cur_poly.verts)
@@ -166,7 +166,7 @@ void vangers_model::merge_helper_move_model_into_main(
     }
   }
 
-  // moving vertices, vertices' normals and polygons of wheel into main model
+  // Moving vertices, vertices' normals and polygons of wheel into main model.
   std::move(model_to_move.verts.begin(),
             model_to_move.verts.end(),
             std::back_inserter(main_model.verts));
@@ -189,7 +189,7 @@ void vangers_model::merge_main_model_with_weapons(
   volInt::polyhedron &main_model,
   bitflag<merge_with_weapons_flag> flags) const
 {
-  // inserting weapon models into main model
+  // Inserting weapon models into main model.
   for(std::size_t cur_weapon_id = 0;
       cur_weapon_id < m3d::weapon_slot::max_slots;
       ++cur_weapon_id)
@@ -272,37 +272,6 @@ volInt::model_extreme_points vangers_model::get_wheel_params_extremes()
 
 
 
-
-
-// not needed
-/*
-void vangers_model::scale_3d_point(std::vector<double> &point)
-{
-  volInt::vector_multiply_self(point, scale_size);
-}
-
-
-
-void vangers_model::scale_c3d(volInt::polyhedron &c3d_model)
-{
-  for(auto &&vert_to_change : c3d_model.verts)
-  {
-    scale_3d_point(vert_to_change);
-  }
-
-  volInt::vector_multiply_self(c3d_model.max_point(), scale_size);
-
-  volInt::vector_multiply_self(c3d_model.min(), scale_size);
-
-  volInt::vector_multiply_self(c3d_model.offset_point(), scale_size);
-
-  c3d_model.rmax *= scale_size;
-
-  c3d_model.volume *= std::pow(scale_size, 3);
-
-  scale_3d_point(c3d_model.rcm);
-}
-*/
 
 
 std::pair<std::vector<double>, std::vector<double>> &

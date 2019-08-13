@@ -1,5 +1,7 @@
 #include "usage_pal.hpp"
 
+
+
 namespace tractor_converter{
 
 
@@ -97,7 +99,7 @@ void usage_pal_mode_save_output(
 
 
 
-// Trying to determine which byte values are used in Vangers BMP files
+// Trying to determine which byte values are used in Vangers *.bmp files.
 void usage_pal_mode(const boost::program_options::variables_map options)
 {
   try
@@ -144,7 +146,7 @@ void usage_pal_mode(const boost::program_options::variables_map options)
          file.path().extension().string() == ext::bmp)
       {
         std::string bmp_map;
-        // First 4 bytes indicate width and height of BMP file
+        // First 4 bytes indicate width and height of *.bmp file,
         // so they are skipped.
         bmp_map =
           helpers::read_file(
@@ -179,7 +181,7 @@ void usage_pal_mode(const boost::program_options::variables_map options)
             used_characters,
             options[option::name::readable_output].as<bool>(),
             option::name::output_dir);
-          // delete all values
+          // Delete all values.
           std::fill(used_characters.begin(), used_characters.end(), 0);
         }
       }

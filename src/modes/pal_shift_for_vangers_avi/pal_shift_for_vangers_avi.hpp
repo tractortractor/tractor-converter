@@ -18,10 +18,16 @@
 #include <string>
 #include <vector>
 
+
+
 namespace tractor_converter{
+
+
 
 void pal_shift_for_vangers_avi_mode(
   const boost::program_options::variables_map options);
+
+
 
 } // namespace tractor_converter
 

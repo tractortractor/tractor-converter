@@ -1,11 +1,12 @@
 #include "remove_not_used_pal.hpp"
 
+
+
 namespace tractor_converter{
 
 
 
-// Trying to determine
-// which byte values are used in Vangers *.bmp files
+// Trying to determine which byte values are used in Vangers *.bmp files.
 void remove_not_used_pal_mode(
   const boost::program_options::variables_map options)
 {
@@ -18,7 +19,7 @@ void remove_not_used_pal_mode(
       option::name::output_dir_unused,
       option::name::usage_pals_dir,
     };
-    helpers::check_options(options,options_to_check);
+    helpers::check_options(options, options_to_check);
 
 
 

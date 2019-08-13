@@ -48,8 +48,8 @@ THE SOFTWARE.
 
 
 
-// modified for tractor_converter
-#define TINYOBJLOADER_USE_DOUBLE // tractortractor's added
+// Modified for tractor_converter.
+#define TINYOBJLOADER_USE_DOUBLE // Added for tractor_converter.
 
 
 
@@ -1956,8 +1956,8 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
       if (material_map.find(namebuf) != material_map.end()) {
         newMaterialId = material_map[namebuf];
       } else {
-// tractortractor's added begin
-        // If material of face doesn't exist in materials' vector then add it.
+// Added for tractor_converter begin.
+        // If material of face doesn't exist in materials' vector, then add it.
         if (!namebuf.empty()) {
           newMaterialId = materials->size();
 
@@ -1969,7 +1969,7 @@ bool LoadObj(attrib_t *attrib, std::vector<shape_t> *shapes,
           material_obj.name = namebuf;
           materials->push_back(material_obj);
         }
-// tractortractor's added end
+// Added for tractor_converter end.
         // { error!! material not found }
       }
 

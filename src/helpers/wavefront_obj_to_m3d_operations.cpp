@@ -9,8 +9,7 @@ namespace helpers{
 
 void get_extreme_radius(double &cur_extreme, double radius, point offset)
 {
-  double offset_radius =
-    std::sqrt(offset[0]*offset[0] + offset[1]*offset[1] + offset[2]*offset[2]);
+  double offset_radius = volInt::vector_length(offset);
   double end_radius = std::abs(radius) + offset_radius;
   if(cur_extreme < end_radius)
   {
@@ -39,17 +38,6 @@ double get_weapons_bound_sphere_radius(
     }
   }
   return max_radius;
-/*
-  double max_radius = 0.0;
-  for(const auto &weapon_model : weapons_models)
-  {
-    if(max_radius < weapon_model.second.rmax)
-    {
-      max_radius = weapon_model.second.rmax;
-    }
-  }
-  return max_radius;
-*/
 }
 
 
@@ -167,9 +155,6 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 
 
 
-  // TEST
-//std::cout << '\n';
-//std::cout << "getting weapons of model: " << input_m3d_path << '\n';
   get_weapons_data(cur_main_model);
   get_wheels_data(cur_main_model);
   get_debris_data(&debris_models, debris_bound_models_ptr);
@@ -184,10 +169,6 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
   {
     remove_polygons(debris_model, remove_polygons_model::regular);
   }
-
-    // TEST
-//  std::cout << "first time!" << '\n';
-//  std::cout << "model:" << model_name << '\n';
 
   center_debris(&debris_models, debris_bound_models_ptr);
 
@@ -262,11 +243,6 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
   write_c3d(*cur_main_bound_model_ptr);
 
 
-    // TEST
-//  std::cout << "model:" << model_name << '\n';
-//  std::cout << "weapon_slots_existence:" << weapon_slots_existence << '\n';
-
-
   write_var_to_m3d<int, std::int32_t>(weapon_slots_existence);
   if(weapon_slots_existence)
   {
@@ -297,78 +273,6 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
              input_file_name_error,
              output_file_name_error,
              prm_scale_size);
-
-
-
-  // TEST
-  /*
-  std::cout << "second time!" << '\n';
-  std::cout << "model:" << model_name << '\n';
-  std::cout << "scale_size: " << scale_size << '\n';
-
-  volInt::vector_multiply_self(cur_main_model.rcm, scale_size);
-
-  for(auto &&vert : cur_main_model.verts)
-  {
-    volInt::vector_multiply_self(vert, scale_size);
-  }
-//std::cout << model_name << " main mechos models after scaling." << '\n';
-  cur_main_model.faces_calc_params();
-  cur_main_model.calculate_c3d_properties();
-  */
-
-
-
-  // TEST
-//std::cout << '\n';
-//std::cout << "scale_size of model: " <<
-//  input_m3d_path << " is " << scale_size << '\n';
-
-
-
-  // TEST
-//std::cout << '\n';
-//std::cout << "model: " << input_m3d_path << '\n';
-//for(std::size_t cur_weapon = 0;
-//    cur_weapon < m3d::weapon_slot::max_slots;
-//    ++cur_weapon)
-//{
-//  std::vector<double> R_slot;
-//  double location_angle_of_slot;
-//  std::cout <<
-//    "cur_weapon_slot_data[" << cur_weapon << "].location_angle_of_slot" <<
-//    cur_weapon_slot_data[cur_weapon].location_angle_of_slot << '\n';
-//  for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
-//  {
-//    std::cout <<
-//      "cur_weapon_slot_data[" << cur_weapon <<
-//        "].R_slot[" << cur_coord << "]" <<
-//      cur_weapon_slot_data[cur_weapon].R_slot[cur_coord] << '\n';
-//  }
-//}
-
-  // TEST
-  /*
-  std::unordered_map<std::string, volInt::polyhedron> cur_main_model_map
-    {{wavefront_obj::obj_name::main, cur_main_model}};
-  save_volInt_as_wavefront_obj(
-    cur_main_model_map,
-    output_m3d_path.parent_path() / (model_name + "_test" + ext::obj),
-    "test");
-  for(const auto &wheel_model : wheels_models)
-  {
-    std::unordered_map<std::string, volInt::polyhedron> cur_wheel_model_map
-      {{wavefront_obj::obj_name::main, wheel_model.second}};
-    save_volInt_as_wavefront_obj(
-      cur_wheel_model_map,
-      output_m3d_path.parent_path() /
-        (model_name +
-           "_wheel_steer_" +
-           std::to_string(wheel_model.first) +
-           ext::obj),
-      "test");
-  }
-  */
 }
 
 
@@ -445,31 +349,6 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
             file_flag::binary,
             output_file_name_error);
 
-
-
-  // TEST
-//std::cout << '\n';
-//std::cout << "scale_size of model: " <<
-//  input_m3d_path << " is " << scale_size << '\n';
-
-  // TEST
-//std::cout << '\n';
-//std::cout << "model_name: " << model_name << '\n';
-//std::cout << "x_off: " << cur_main_model.x_off() << '\n';
-//std::cout << "y_off: " << cur_main_model.y_off() << '\n';
-//std::cout << "z_off: " << cur_main_model.z_off() << '\n';
-//save_volInt_as_wavefront_obj(
-//  cur_main_model,
-//  output_m3d_path.parent_path() / (model_name + "_test" + ext::obj),
-//  "test");
-
-
-  // TEST
-//cur_main_model.max() = { 1,  1,  1};
-//cur_main_model.min() = {-1, -1, -1};
-
-
-
   return cur_main_model;
 }
 
@@ -530,10 +409,6 @@ void wavefront_obj_to_m3d_model::animated_wavefront_objs_to_a3d()
             m3d_data,
             file_flag::binary,
             output_file_name_error);
-  // TEST
-//std::cout << '\n';
-//std::cout << "scale_size of model: " << input_m3d_path <<
-//  " is " << scale_size << '\n';
 }
 
 
@@ -606,32 +481,6 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
             m3d_data,
             file_flag::binary,
             output_file_name_error);
-
-
-
-  // TEST
-  /*
-  std::cout << "second time!" << '\n';
-  std::cout << "model:" << model_name << '\n';
-  std::cout << "scale_size: " << scale_size << '\n';
-
-  volInt::vector_multiply_self(cur_main_model.rcm, scale_size);
-
-  for(auto &&vert : cur_main_model.verts)
-  {
-    volInt::vector_multiply_self(vert, scale_size);
-  }
-//std::cout << model_name << " main mechos models after scaling." << '\n';
-  cur_main_model.faces_calc_params();
-  cur_main_model.calculate_c3d_properties();
-  */
-
-
-
-  // TEST
-//std::cout << '\n';
-//std::cout << "scale_size of model: " <<
-//  input_m3d_path << " is " << scale_size << '\n';
 }
 
 
@@ -651,10 +500,6 @@ void wavefront_obj_to_m3d_model::read_file_cfg_helper_overwrite_volume(
 {
   model.volume_overwritten = true;
   model.volume = custom_volume;
-
-  // TEST
-//  std::cout << "read_file_cfg_helper_overwrite_volume:" <<
-//    model.volume << '\n';
 }
 
 
@@ -673,19 +518,6 @@ void wavefront_obj_to_m3d_model::read_file_cfg_helper_overwrite_J(
       ++cur_custom_J_el;
     }
   }
-
-  // TEST
-  /*
-  std::cout << "read_file_cfg_helper_overwrite_J:" << '\n';
-  for(std::size_t cur_row = 0; cur_row < volInt::axes_num; ++cur_row)
-  {
-    for(std::size_t cur_el = 0; cur_el < volInt::axes_num; ++cur_el)
-    {
-      std::cout << "model.J[" << cur_row << "][" << cur_el << "]" <<
-        model.J[cur_row][cur_el] << '\n';
-    }
-  }
-  */
 }
 
 
@@ -702,8 +534,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
       input_m3d_path / (model_name + ".cfg");
     std::string config_file_str = config_file_path.string();
 
-    // Declare a group of options that will be
-    // allowed in config file.
+    // Declare a group of options that will be allowed in config file.
     boost::program_options::options_description config("per_file_cfg");
     config.add_options()
       (option::per_file::name::overwrite_volume_main.c_str(),
@@ -770,16 +601,15 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
     std::ifstream ifs(config_file_str.c_str());
     if(ifs)
     {
-      // When debris or animation frame *.obj file is deleted
+      // When debris or animation frame *.obj file is deleted,
       // config option for this debris or animation frame is not expected.
-      // To prevent "unrecognised option" error
+      // To prevent "unrecognised option" error,
       // allow_unregistered argument is set to true for parse_config_file().
       boost::program_options::store(parse_config_file(ifs, config, true), vm);
       boost::program_options::notify(vm);
     }
     else
     {
-//    std::cout << "Can not open config file: " << config_file_str << "\n";
       throw std::runtime_error(
         "Can not open config file: \"" + config_file_str + "\".");
     }
@@ -950,8 +780,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_a3d(
       input_m3d_path / (model_name + ".cfg");
     std::string config_file_str = config_file_path.string();
 
-    // Declare a group of options that will be
-    // allowed in config file.
+    // Declare a group of options that will be allowed in config file.
     boost::program_options::options_description config("per_file_cfg");
     config.add_options()
       (option::per_file::name::overwrite_volume_animated.c_str(),
@@ -999,7 +828,6 @@ void wavefront_obj_to_m3d_model::read_file_cfg_a3d(
     }
     else
     {
-//    std::cout << "Can not open config file: " << config_file_str << "\n";
       throw std::runtime_error(
         "Can not open config file: \"" + config_file_str + "\".");
     }
@@ -1157,10 +985,10 @@ std::vector<double> wavefront_obj_to_m3d_model::get_medium_vert(
   const volInt::face &poly)
 {
   std::vector<double> medium_vert(volInt::axes_num, 0.0);
-  // For polygon with zero_reserved color middle point is different.
-  // middle_x is either xmax of M3D or -xmax of M3D.
-  // middle_y is either ymax of M3D or -ymax of M3D.
-  // middle_z for all those polygons is zmin of bound C3D.
+  // For polygon with zero_reserved color, middle point is different.
+  // middle_x is either xmax of *.m3d or -xmax of *.m3d.
+  // middle_y is either ymax of *.m3d or -ymax of *.m3d.
+  // middle_z for all those polygons is zmin of bound *.c3d.
   // In all other polygons middle point is average vertex.
   if(poly.color_id ==
      c3d::color::string_to_id::zero_reserved)
@@ -1196,34 +1024,6 @@ std::vector<double> wavefront_obj_to_m3d_model::get_medium_vert(
       medium_vert[1] = ymax();
     }
     medium_vert[2] = model.zmin();
-    // TEST
-    /*
-    if(model_name == "m4")
-    {
-      std::cout << "\n" << '\n';
-      std::cout << "m4: " << '\n';
-      std::cout << "poly_n: " << poly_n << '\n';
-      std::size_t cur_vert = 0;
-      for(const auto vert_ind : poly.verts)
-      {
-        const std::vector<double> &vert = model.verts[vert_ind];
-        std::cout << "vert " << cur_vert;
-        for(std::size_t coord_el = 0; coord_el < volInt::axes_num; ++coord_el)
-        {
-          std::cout << " " << vert[coord_el];
-        }
-        std::cout << "\n";
-        ++cur_vert;
-      }
-      std::cout << "medium_vert: ";
-      for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
-      {
-        std::cout << " " << medium_vert[cur_coord];
-      }
-      std::cout << "\n";
-      std::cout << "-----------------------";
-    }
-    */
   }
   else
   {
@@ -1293,9 +1093,6 @@ void wavefront_obj_to_m3d_model::write_polygon(
   std::vector<double> medium_vert = get_medium_vert(model, poly);
   write_vec_var_to_m3d_scaled_rounded<double, char>(medium_vert);
 
-//  for(std::size_t vert_n = 0;
-//      vert_n < poly.numVerts;
-//      ++vert_n)
   // Note the reverse order of vertices.
   for(std::size_t vert_f_ind = 0, vert_f_ind_r = poly.numVerts - 1;
       vert_f_ind < poly.numVerts;
@@ -1316,22 +1113,24 @@ void wavefront_obj_to_m3d_model::write_polygons(
 }
 
 
-/*
-// VANGERS SOURCE
-#ifndef COMPACT_3D
-  int poly_ind;
-  for(i = 0;i < 3;i++){
-    sorted_variable_polygons[i] = HEAP_ALLOC(num_poly,VariablePolygon*);
-    for(j = 0;j < num_poly;j++){
-      buf > poly_ind;
-      sorted_variable_polygons[i][j] = &variable_polygons[poly_ind];
-      }
-    }
-#else
-  //buf.set(3*num_poly*sizeof(VariablePolygon*),XB_CUR);
-  buf.set(3*num_poly*4,XB_CUR);
-#endif
-*/
+
+//// VANGERS SOURCE
+//#ifndef COMPACT_3D
+//  int poly_ind;
+//  for(i = 0; i < 3; i++)
+//  {
+//    sorted_variable_polygons[i] = HEAP_ALLOC(num_poly, VariablePolygon*);
+//    for(j = 0; j < num_poly; j++)
+//    {
+//      buf > poly_ind;
+//      sorted_variable_polygons[i][j] = &variable_polygons[poly_ind];
+//    }
+//  }
+//#else
+//  //buf.set(3 * num_poly * sizeof(VariablePolygon*), XB_CUR);
+//  buf.set(3 * num_poly * 4, XB_CUR);
+//#endif
+
 void wavefront_obj_to_m3d_model::write_sorted_polygon_indices(
   const volInt::polyhedron &model)
 {
@@ -1528,9 +1327,9 @@ std::vector<point*>
     {
       for(std::size_t v_f_ind = 0; v_f_ind < model.numVertsPerPoly; ++v_f_ind)
       {
-        // ref_vert_one_ind is std::pair<int, int>
-        // first is position of polygon which contains vertex of reference.
-        // second is vertex index in this polygon.
+        // ref_vert_one_ind is std::pair<int, int>.
+        // First is position of polygon which contains vertex of reference.
+        // Second is vertex index in this polygon.
         if(reference_model->ref_vert_one_ind == vert_indices)
         {
           ref_points[0] = &model.verts[model.faces[poly_ind].verts[v_f_ind]];
@@ -1549,27 +1348,6 @@ std::vector<point*>
       vert_indices.second = 0;
     }
   }
-
-
-  // TEST
-  /*
-  std::cout << "\n\n\n";
-  std::cout << "reference_model->ref_vert_one_ind: " <<
-    reference_model->ref_vert_one_ind.first << "; " <<
-    reference_model->ref_vert_one_ind.second << '\n';
-  std::cout << "reference_model->ref_vert_two_ind: " <<
-    reference_model->ref_vert_two_ind.first << "; " <<
-    reference_model->ref_vert_two_ind.second << '\n';
-  std::cout << "reference_model->ref_vert_three_ind: " <<
-    reference_model->ref_vert_three_ind.first << "; " <<
-    reference_model->ref_vert_three_ind.second << '\n';
-  std::cout << "ref_points[0]: " <<
-    reinterpret_cast<void*>(ref_points[0]) << '\n';
-  std::cout << "ref_points[1]: " <<
-    reinterpret_cast<void*>(ref_points[1]) << '\n';
-  std::cout << "ref_points[2]: " <<
-    reinterpret_cast<void*>(ref_points[2]) << '\n';
-  */
 
   if(!(ref_points[0] &&
        ref_points[1] &&
@@ -1615,39 +1393,6 @@ std::pair<point, point> wavefront_obj_to_m3d_model::get_compare_points(
     volInt::vector_minus(three_rel_to_one,
                          reference_model->ref_vert_three_rel_to_one);
 
-  // TEST
-  /*
-  std::cout << "two_rel_to_one: " <<
-    two_rel_to_one[0] << "; " <<
-    two_rel_to_one[1] << ";" <<
-    two_rel_to_one[2] << '\n';
-
-  std::cout << "reference_model->ref_vert_two_rel_to_one: " <<
-    reference_model->ref_vert_two_rel_to_one[0] << "; " <<
-    reference_model->ref_vert_two_rel_to_one[1] << ";" <<
-    reference_model->ref_vert_two_rel_to_one[2] << '\n';
-
-  std::cout << "two_compare_point: " <<
-    two_compare_point[0] << "; " <<
-    two_compare_point[1] << ";" <<
-    two_compare_point[2] << '\n';
-
-  std::cout << "three_rel_to_one: " <<
-    three_rel_to_one[0] << "; " <<
-    three_rel_to_one[1] << ";" <<
-    three_rel_to_one[2] << '\n';
-
-  std::cout << "reference_model->ref_vert_three_rel_to_one: " <<
-    reference_model->ref_vert_three_rel_to_one[0] << "; " <<
-    reference_model->ref_vert_three_rel_to_one[1] << ";" <<
-    reference_model->ref_vert_three_rel_to_one[2] << '\n';
-
-  std::cout << "three_compare_point: " <<
-    three_compare_point[0] << "; " <<
-    three_compare_point[1] << ";" <<
-    three_compare_point[2] << '\n';
-  */
-
   return {two_compare_point, three_compare_point};
 }
 
@@ -1674,39 +1419,6 @@ std::pair<point, point> wavefront_obj_to_m3d_model::get_compare_points(
     volInt::vector_minus(two_rel_to_one, ref_model_two_rel_to_one);
   point three_compare_point =
     volInt::vector_minus(three_rel_to_one, ref_model_three_rel_to_one);
-
-  // TEST
-  /*
-  std::cout << "two_rel_to_one: " <<
-    two_rel_to_one[0] << "; " <<
-    two_rel_to_one[1] << ";" <<
-    two_rel_to_one[2] << '\n';
-
-  std::cout << "reference_model->ref_vert_two_rel_to_one: " <<
-    reference_model->ref_vert_two_rel_to_one[0] << "; " <<
-    reference_model->ref_vert_two_rel_to_one[1] << ";" <<
-    reference_model->ref_vert_two_rel_to_one[2] << '\n';
-
-  std::cout << "two_compare_point: " <<
-    two_compare_point[0] << "; " <<
-    two_compare_point[1] << ";" <<
-    two_compare_point[2] << '\n';
-
-  std::cout << "three_rel_to_one: " <<
-    three_rel_to_one[0] << "; " <<
-    three_rel_to_one[1] << ";" <<
-    three_rel_to_one[2] << '\n';
-
-  std::cout << "reference_model->ref_vert_three_rel_to_one: " <<
-    reference_model->ref_vert_three_rel_to_one[0] << "; " <<
-    reference_model->ref_vert_three_rel_to_one[1] << ";" <<
-    reference_model->ref_vert_three_rel_to_one[2] << '\n';
-
-  std::cout << "three_compare_point: " <<
-    three_compare_point[0] << "; " <<
-    three_compare_point[1] << ";" <<
-    three_compare_point[2] << '\n';
-  */
 
   return {two_compare_point, three_compare_point};
 }
@@ -1735,7 +1447,7 @@ void wavefront_obj_to_m3d_model::get_custom_rcm(volInt::polyhedron &model)
 
 
   // If all coordinates of points 2 and 3 relative to 1 are the same
-  // in orig model and current model then model wasn't rotated or changed.
+  // in orig model and current model, then model wasn't rotated or changed.
   // compare_points.first is difference between 2nd reference points.
   // compare_points.second is difference between 3rd ones.
   // Throwing exception if difference is not zero.
@@ -1758,18 +1470,6 @@ void wavefront_obj_to_m3d_model::get_custom_rcm(volInt::polyhedron &model)
                                    *center_of_mass_model->ref_vert_one);
 
   model.rcm_overwritten = true;
-
-  // TEST
-  /*
-  std::cout << "*cur_rcm_verts[0]: " <<
-    (*cur_rcm_verts[0])[0] << "; " <<
-    (*cur_rcm_verts[0])[1] << "; " <<
-    (*cur_rcm_verts[0])[2] << '\n';
-  std::cout << "*center_of_mass_model->ref_vert_one: " <<
-    (*center_of_mass_model->ref_vert_one)[0] << "; " <<
-    (*center_of_mass_model->ref_vert_one)[1] << "; " <<
-    (*center_of_mass_model->ref_vert_one)[2] << '\n';
-  */
 }
 
 
@@ -1796,7 +1496,7 @@ void wavefront_obj_to_m3d_model::get_attachment_point(
 
 
   // If all coordinates of points 2 and 3 relative to 1 are the same
-  // in orig model and current model then model wasn't rotated or changed.
+  // in orig model and current model, then model wasn't rotated or changed.
   // compare_points.first is difference between 2nd reference points.
   // compare_points.second is difference between 3rd ones.
   // Throwing exception if difference is not zero.
@@ -1834,7 +1534,7 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
     return;
   }
 
-  // There are m3d::weapon_slot::max_slots weapons in all vangers models.
+  // There are m3d::weapon_slot::max_slots weapons in all Vangers models.
   // cur_weapon_verts contains pair of vertices for each weapon.
   // This pair of vertices is later used to get weapons' angles.
   std::vector<std::vector<point*>> cur_weapon_verts;
@@ -1866,7 +1566,6 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
 
 
   // Getting info about slots.
-
   for(std::size_t cur_slot = 0;
       cur_slot < m3d::weapon_slot::max_slots;
       ++cur_slot)
@@ -1875,23 +1574,6 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
        cur_weapon_verts[cur_slot][1] &&
        cur_weapon_verts[cur_slot][2])
     {
-
-      // TEST
-      /*
-      std::cout << "cur_weapon_verts[" << cur_slot << "][0]: " <<
-        (*cur_weapon_verts[cur_slot][0])[0] << "; " <<
-        (*cur_weapon_verts[cur_slot][0])[1] << "; " <<
-        (*cur_weapon_verts[cur_slot][0])[2] << '\n';
-      std::cout << "cur_weapon_verts[" << cur_slot << "][1]: " <<
-        (*cur_weapon_verts[cur_slot][1])[0] << "; " <<
-        (*cur_weapon_verts[cur_slot][1])[1] << "; " <<
-        (*cur_weapon_verts[cur_slot][1])[2] << '\n';
-      std::cout << "cur_weapon_verts[" << cur_slot << "][2]: " <<
-        (*cur_weapon_verts[cur_slot][2])[0] << "; " <<
-        (*cur_weapon_verts[cur_slot][2])[1] << "; " <<
-        (*cur_weapon_verts[cur_slot][2])[2] << '\n';
-      */
-
       std::pair<point, point> compare_points =
         get_compare_points(
           cur_weapon_verts[cur_slot],
@@ -1905,7 +1587,7 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
                              (*cur_weapon_verts[cur_slot][0]));
 
       // If y coordinate of points 2 and 3 relative to 1 is the same
-      // in orig model and current model
+      // in orig model and current model,
       // then model wasn't rotated by x or z axes.
       // compare_points.first is difference between 2nd reference points.
       // compare_points.second is difference between 3rd ones.
@@ -1959,7 +1641,7 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
           ref_verts_rotated_ptr);
 
       // If all coordinates of points 2 and 3 relative to 1 are the same
-      // in rotated orig model and current model then model wasn't changed.
+      // in rotated orig model and current model, then model wasn't changed.
       // rotated_compare_points.first is difference
       // between 2nd reference points.
       // rotated_compare_points.second is difference between 3rd ones.
@@ -2003,8 +1685,6 @@ std::unordered_map<int, volInt::polyhedron>
   std::unordered_map<int, std::unordered_map<int, int>> vertices_maps;
   std::unordered_map<int, std::unordered_map<int, int>> norms_maps;
   std::size_t v_per_poly = main_model.faces[0].numVerts;
-  // TEST
-//  std::unordered_map<int, std::ofstream> test_poly_properties_ofstream;
 
   for(const auto wheel_steer_num : main_model.wheels_steer)
   {
@@ -2020,18 +1700,10 @@ std::unordered_map<int, volInt::polyhedron>
       cur_vert_nums[wheel_steer_num] = 0;
       cur_norm_nums[wheel_steer_num] = 0;
       cur_poly_nums[wheel_steer_num] = 0;
-
-      // TEST
-//    test_poly_properties_ofstream[wheel_steer_num] =
-//      std::ofstream((output_m3d_path.string() + "/" +
-//                       model_name + "_wheel_before_" +
-//                       std::to_string(wheel_steer_num) + ".txt").c_str(),
-//                    std::ios_base::out);
     }
   }
 
-  // Copying right polygons to wheel models
-  // and making verts and norms maps.
+  // Copying right polygons to wheel models and making verts and norms maps.
   for(std::size_t poly_ind = 0; poly_ind < main_model.numFaces; ++poly_ind)
   {
     volInt::face &cur_poly = main_model.faces[poly_ind];
@@ -2045,20 +1717,11 @@ std::unordered_map<int, volInt::polyhedron>
       cur_wheel_model.faces.push_back(cur_poly);
       volInt::face &cur_wheel_poly =
         cur_wheel_model.faces[cur_poly_nums[wheel_id]];
-      // TEST
-//    test_poly_properties_ofstream[wheel_id] << "cur_poly.norm[VOLINT_X]: " <<
-//      cur_poly.norm[VOLINT_X] << '\n';
-//    test_poly_properties_ofstream[wheel_id] << "cur_poly.norm[VOLINT_Y]: " <<
-//      cur_poly.norm[VOLINT_Y] << '\n';
-//    test_poly_properties_ofstream[wheel_id] << "cur_poly.norm[VOLINT_Z]: " <<
-//      cur_poly.norm[VOLINT_Z] << '\n';
-//    test_poly_properties_ofstream[wheel_id] << "cur_poly.w: " <<
-//      cur_poly.w << '\n';
 
-      // Checking if vertices and norms indexes are already in the maps
+      // Checking if vertices' and normals' indices are already in the maps
       // and adding them if they are not.
-      // Key of the map is original vertex/norm index.
-      // Value of the map is new vertex/norm index.
+      // Key of the map is original vertex/normal index.
+      // Value of the map is new vertex/normal index.
       for(std::size_t v_f_ind = 0; v_f_ind < v_per_poly; ++v_f_ind)
       {
         if(vertices_maps[wheel_id].count(cur_wheel_poly.verts[v_f_ind]))
@@ -2081,16 +1744,16 @@ std::unordered_map<int, volInt::polyhedron>
 
         if(norms_maps[wheel_id].count(cur_wheel_poly.vertNorms[v_f_ind]))
         {
-          // One of the keys of the map is equal to norm index.
-          // Changing index of norm to value of the map entry.
+          // One of the keys of the map is equal to normal index.
+          // Changing index of normal to value of the map entry.
           cur_wheel_poly.vertNorms[v_f_ind] =
             norms_maps[wheel_id][cur_wheel_poly.vertNorms[v_f_ind]];
         }
         else
         {
-          // Norm index is not found as key in the map.
+          // Normal index is not found as key in the map.
           // Inserting new key-value pair in the map.
-          // Changing index of norm to size of the map.
+          // Changing index of normal to size of the map.
           cur_wheel_poly.vertNorms[v_f_ind] = cur_norm_nums[wheel_id];
           norms_maps[wheel_id][cur_poly.vertNorms[v_f_ind]] =
             cur_norm_nums[wheel_id];
@@ -2101,7 +1764,7 @@ std::unordered_map<int, volInt::polyhedron>
     }
   }
 
-  // Copying vertices and norms into wheel models.
+  // Copying vertices and normals into wheel models.
   // Maps created earlier are used to figure out which vertex to copy where.
   for(const auto wheel_steer_num : main_model.wheels_steer)
   {
@@ -2124,7 +1787,7 @@ std::unordered_map<int, volInt::polyhedron>
       cur_wheel_model.wavefront_obj_path = main_model.wavefront_obj_path;
       cur_wheel_model.wheel_id = wheel_steer_num;
 
-      // Copying vertices and norms.
+      // Copying vertices and normals.
       for(const auto &cur_wheel_vertex_ind : vertices_maps[wheel_steer_num])
       {
         cur_wheel_model.verts[cur_wheel_vertex_ind.second] =
@@ -2156,26 +1819,6 @@ void wavefront_obj_to_m3d_model::get_m3d_extreme_points(
 {
   extreme_points = volInt::model_extreme_points();
   extreme_points.get_most_extreme_cmp_cur(main_model->extreme_points);
-  // TEST
-  /*
-  if(model_name == "m4")
-  {
-    std::cout << "\n--------------------\n";
-    std::cout << "before\n";
-    std::cout << "max_point:";
-    for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
-    {
-      std::cout << " " << max_point()[cur_coord];
-    }
-    std::cout << '\n';
-    std::cout << "min_point:";
-    for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
-    {
-      std::cout << " " << min_point()[cur_coord];
-    }
-    std::cout << '\n';
-  }
-  */
 
   for_each_steer_non_ghost_wheel(
     main_model, wheels_models,
@@ -2189,27 +1832,6 @@ void wavefront_obj_to_m3d_model::get_m3d_extreme_points(
                                  wheel_model.offset_point());
         extreme_points.get_most_extreme_cmp_cur(cur_wheel_extreme_points);
       });
-
-  // TEST
-  /*
-  if(model_name == "m4")
-  {
-    std::cout << "\n--------------------\n";
-    std::cout << "after\n";
-    std::cout << "max_point:";
-    for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
-    {
-      std::cout << " " << max_point()[cur_coord];
-    }
-    std::cout << '\n';
-    std::cout << "min_point:";
-    for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
-    {
-      std::cout << " " << min_point()[cur_coord];
-    }
-    std::cout << '\n';
-  }
-  */
 }
 
 void wavefront_obj_to_m3d_model::get_m3d_extreme_points_calc_c3d_extr(
@@ -2236,25 +1858,6 @@ void wavefront_obj_to_m3d_model::get_a3d_extreme_points(
   {
     extreme_points.get_most_extreme_cmp_cur(model.extreme_points);
   }
-  // TEST
-  /*
-  if(model_name == "a1")
-  {
-    std::cout << "\n--------------------\n";
-    std::cout << "max_point:";
-    for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
-    {
-      std::cout << " " << max_point()[cur_coord];
-    }
-    std::cout << '\n';
-    std::cout << "min_point:";
-    for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
-    {
-      std::cout << " " << min_point()[cur_coord];
-    }
-    std::cout << '\n';
-  }
-  */
 }
 
 void wavefront_obj_to_m3d_model::get_a3d_extreme_points_calc_c3d_extr(
@@ -2276,18 +1879,6 @@ void wavefront_obj_to_m3d_model::get_m3d_header_data(
   std::deque<volInt::polyhedron> *debris_models,
   std::deque<volInt::polyhedron> *debris_bound_models)
 {
-  // TEST
-//std::cout << "\n\n\n";
-//std::cout << "getting m3d header data for " << model_name << '\n';
-
-  // TEST
-  /*
-  std::cout << "\n\n\n";
-  std::cout << model_name << " main model." << '\n';
-  std::cout << "\n\n\n";
-  std::cout << model_name << " main bound model." << '\n';
-  */
-
   main_model->calculate_c3d_properties();
   if(main_bound_model)
   {
@@ -2315,71 +1906,12 @@ void wavefront_obj_to_m3d_model::get_m3d_header_data(
       model.calculate_c3d_properties();
     }
   }
-  // TEST
-//std::cout << "\n\n";
 
-
-
-//  xmax = main_model->xmax;
-//  ymax = main_model->ymax;
-//  zmax = main_model->zmax;
   get_m3d_extreme_points(main_model, wheels_models);
   // rmax must be set in get_m3d_scale_size() function.
-//  rmax = main_model->rmax;
 
   body_color_offset = main_model->bodyColorOffset;
   body_color_shift = main_model->bodyColorShift;
-
-
-
-  // TEST
-  /*
-  std::cout << "\n\n";
-  std::cout << "model: " << model_name << '\n';
-  std::cout << "xmax: " << xmax << '\n';
-  std::cout << "ymax: " << ymax << '\n';
-  std::cout << "zmax: " << zmax << '\n';
-  std::cout << "rmax: " << rmax << '\n';
-
-  std::cout << "body_color_offset: " << body_color_offset << '\n';
-  std::cout << "body_color_shift: " << body_color_shift << '\n';
-  */
-
-
-
-// Obtained in get_wheels_data function.
-  /*
-  if(n_wheels)
-  {
-    for(i = 0; i < n_wheels; i++)
-    {
-      cur_wheel_data[i].steer = ;
-      cur_wheel_data[i].r = ;
-      cur_wheel_data[i].width = ;
-      cur_wheel_data[i].radius = ;
-      cur_wheel_data[i].bound_index = ;
-    }
-  }
-  */
-  // VANGERS SOURCE
-  /*
-  for(i = 0; i < n_wheels; i++){
-    buf > wheels[i].steer > wheels[i].r > wheels[i].width >
-      wheels[i].radius > wheels[i].bound_index;
-    }
-  */
-
-// Obtained in get_weapons_data function.
-  // VANGERS SOURCE
-  /*
-  buf > slots_existence;
-  if(slots_existence){
-    for(i = 0; i < MAX_SLOTS; i++){
-      buf > R_slots[i] > location_angle_of_slots[i];
-      data_in_slots[i] = 0;
-      }
-    }
-  */
 }
 
 
@@ -2387,17 +1919,6 @@ void wavefront_obj_to_m3d_model::get_m3d_header_data(
 void wavefront_obj_to_m3d_model::get_a3d_header_data(
   std::deque<volInt::polyhedron> *models)
 {
-  // TEST
-//std::cout << "\n\n\n";
-//std::cout << "getting a3d header data for " << model_name << '\n';
-
-  // TEST
-//int cur_animated = 0;
-
-  // VANGERS SOURCE
-//buf > n_models > xmax > ymax > zmax > rmax;
-//buf >  body_color_offset > body_color_shift;
-
   n_models = models->size();
   if(!n_models)
   {
@@ -2413,42 +1934,14 @@ void wavefront_obj_to_m3d_model::get_a3d_header_data(
 
   for(auto &&model : *models)
   {
-    // TEST
-//  std::cout << "\n\n\n";
-//  std::cout << "cur_animated: " << cur_animated;
-//  std::cout << model_name <<
-//    " animated #" << cur_animated << " model." << '\n';
-//  ++cur_animated;
-
     model.calculate_c3d_properties();
   }
 
-//  xmax = (*models)[0].xmax;
-//  ymax = (*models)[0].ymax;
-//  zmax = (*models)[0].zmax;
   get_a3d_extreme_points(models);
   // rmax must be set in get_a3d_scale_size() function.
-//  rmax = (*models)[0].rmax;
 
   body_color_offset = (*models)[0].bodyColorOffset;
-  body_color_shift = (*models)[0].bodyColorShift;
-
-  // TEST
-  /*
-  std::cout << "\n\n";
-  std::cout << "model: " << model_name << '\n';
-  std::cout << "xmax: " << xmax << '\n';
-  std::cout << "ymax: " << ymax << '\n';
-  std::cout << "zmax: " << zmax << '\n';
-  std::cout << "rmax: " << rmax << '\n';
-
-  std::cout << "body_color_offset: " << body_color_offset << '\n';
-  std::cout << "body_color_shift: " << body_color_shift << '\n';
-  */
-
-// VANGERS SOURCE
-//buf > n_models > xmax > ymax > zmax > rmax;
-//buf >  body_color_offset > body_color_shift;
+  body_color_shift =  (*models)[0].bodyColorShift;
 }
 
 
@@ -2507,17 +2000,6 @@ void wavefront_obj_to_m3d_model::get_wheels_data(
     cur_wheel_data[wheel_n].radius =
       (wheels_extreme_points[wheel_n].zmax() -
        wheels_extreme_points[wheel_n].zmin()) / 2;
-
-    // TEST
-    /*
-    if(model_name == "m4")
-    {
-      std::cout << "cur_wheel_data[" << wheel_n << "].width: " <<
-        cur_wheel_data[wheel_n].width << '\n';
-      std::cout << "cur_wheel_data[" << wheel_n << "].radius: " <<
-        cur_wheel_data[wheel_n].radius << '\n';
-    }
-    */
   }
 }
 
@@ -2731,8 +2213,7 @@ void wavefront_obj_to_m3d_model::get_m3d_scale_size(
   double extreme_radius = 0.0;
 
   get_scale_helper_get_extreme_radius(main_model, extreme_radius);
-//get_scale_helper_get_extreme_radius(main_bound_model,
-//                                    extreme_radius);
+  // No need to get extreme radius of main_bound_model.
 
   for_each_steer_non_ghost_wheel(
     main_model, wheels_models,
@@ -2743,16 +2224,6 @@ void wavefront_obj_to_m3d_model::get_m3d_scale_size(
                                             wheel_model.offset_point());
       });
 
-  // TEST
-  /*
-  if(boost::filesystem::path(main_model->wavefront_obj_path).stem().string() ==
-     "m5_main")
-  {
-    std::cout << "m5 scaling test" << '\n';
-    std::cout << "weapon_slots_existence: " << weapon_slots_existence << '\n';
-  }
-  */
-
   if(weapon_slots_existence)
   {
     for(const auto &slot_data : cur_weapon_slot_data)
@@ -2762,43 +2233,6 @@ void wavefront_obj_to_m3d_model::get_m3d_scale_size(
         get_extreme_radius(extreme_radius,
                            max_weapons_radius,
                            slot_data.R_slot);
-/*
-        double max_slot_distance =
-          std::sqrt(
-            slot_data.R_slot[0]*slot_data.R_slot[0] +
-            slot_data.R_slot[1]*slot_data.R_slot[1] +
-            slot_data.R_slot[2]*slot_data.R_slot[2]);
-        get_extreme_radius(extreme_radius, max_slot_distance);
-*/
-/*
-        for(std::size_t coord_el = 0; coord_el < volInt::axes_num; ++coord_el)
-        {
-          get_extreme_radius(
-            extreme_radius,
-            slot_data.R_slot[coord_el] + max_weapons_radius);
-          get_extreme_radius(
-            extreme_radius,
-            slot_data.R_slot[coord_el] - max_weapons_radius);
-          // TEST
-          if(boost::filesystem::path(main_model->wavefront_obj_path)
-               .stem().string() ==
-             "m5_main")
-          {
-            std::cout << "extreme_radius: " <<
-              extreme_radius << '\n';
-            std::cout << "slot_data.R_slot[" << coord_el << "]: " <<
-              slot_data.R_slot[coord_el] << '\n';
-            std::cout << "max_weapons_radius: " <<
-              max_weapons_radius << '\n';
-            std::cout <<
-              "slot_data.R_slot[coord_el] + max_weapons_radius: " <<
-              slot_data.R_slot[coord_el] + max_weapons_radius << '\n';
-            std::cout <<
-              "slot_data.R_slot[coord_el] - max_weapons_radius: " <<
-              slot_data.R_slot[coord_el] - max_weapons_radius << '\n';
-          }
-        }
-*/
       }
     }
   }
@@ -2809,13 +2243,7 @@ void wavefront_obj_to_m3d_model::get_m3d_scale_size(
       get_scale_helper_get_extreme_radius(&model, extreme_radius);
     }
   }
-//  if(debris_bound_models)
-//  {
-//    for(const auto &model : *debris_bound_models)
-//    {
-//      get_scale_helper_get_extreme_radius(&model, extreme_radius);
-//    }
-//  }
+  // No need to get extreme radius of debris_bound_models.
 
   rmax = extreme_radius;
   get_scale_helper_set_scale_from_rmax();
@@ -3196,7 +2624,7 @@ void wavefront_obj_to_m3d_model::remove_polygons(
   );
 
 
-  // Updating all existing polygons' indexes
+  // Updating all existing polygons' indices
   // since vertices and normals were deleted.
   std::vector<std::size_t> new_verts_ind_change_map =
     remove_polygons_helper_create_ind_change_map(model.numVerts,
@@ -3216,31 +2644,6 @@ void wavefront_obj_to_m3d_model::remove_polygons(
     }
   }
 
-  // TEST
-  /*
-  for(std::size_t cur_poly_n = 0; cur_poly_n < model.numFaces; ++cur_poly_n)
-  {
-    for(std::size_t cur_vert = 0; cur_vert < model.numVertsPerPoly; ++cur_vert)
-    {
-      if(model.faces[cur_poly_n].verts[cur_vert] < 0 ||
-         model.faces[cur_poly_n].verts[cur_vert] >= model.verts.size())
-      {
-        std::cout << "model.faces[" << cur_poly_n << "].verts[" <<
-            cur_vert << "]: " <<
-          model.faces[cur_poly_n].verts[cur_vert] << '\n';
-      }
-      if(model.faces[cur_poly_n].vertNorms[cur_vert] < 0 ||
-         model.faces[cur_poly_n].vertNorms[cur_vert] >= model.vertNorms.size())
-      {
-        std::cout << "model.faces[" << cur_poly_n << "].vertNorms[" <<
-            cur_vert << "]: " <<
-          model.faces[cur_poly_n].vertNorms[cur_vert] << '\n';
-      }
-    }
-  }
-  */
-
-
   model.numVerts = model.verts.size();
   model.numVertNorms = model.vertNorms.size();
   model.numVertTotal = model.numFaces * model.faces[0].numVerts;
@@ -3255,15 +2658,6 @@ void create_game_lst(
   const std::string &output_file_name_error_arg,
   const std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg)
 {
-
-  // TEST
-  /*
-  std::cout << file::game_lst <<
-    " input path: " << input_file_path_arg.string() << '\n';
-  std::cout << file::game_lst <<
-    " output path: " << where_to_save_arg.string() << '\n';
-  */
-
   std::string orig_game_lst_data =
     read_file(input_file_path_arg,
               file_flag::binary | file_flag::read_all,
@@ -3282,16 +2676,10 @@ void create_game_lst(
     cur_cfg_writer.get_next_value<int>(van_cfg_key::game_lst::NumModel);
   const int max_size =
     cur_cfg_writer.get_next_value<int>(van_cfg_key::game_lst::MaxSize);
-  // TEST
-//std::cout << "max_model: " << max_model << '\n';
-//std::cout << "max_size: " << max_size << '\n';
   for(std::size_t cur_model = 0; cur_model < max_model; ++cur_model)
   {
     const int model_num =
       cur_cfg_writer.get_next_value<int>(van_cfg_key::game_lst::ModelNum);
-    // TEST
-//  std::cout << "cur_model: " << cur_model << '\n';
-//  std::cout << "model_num: " << model_num << '\n';
     if(cur_model != model_num)
     {
       throw std::runtime_error(
@@ -3310,11 +2698,6 @@ void create_game_lst(
       cur_cfg_writer.get_next_value<std::string>(van_cfg_key::game_lst::Name);
     const std::string model_name =
       boost::filesystem::path(model_path).stem().string();
-
-    // TEST
-//  std::cout << "model_name: " << model_name << '\n';
-//  std::cout << "boost::filesystem::path(model_name).stem().string(): " <<
-//    boost::filesystem::path(model_name).stem().string() << '\n';
 
     if((*non_mechos_scale_sizes_arg).count(model_name))
     {
@@ -3344,12 +2727,6 @@ void create_prm(
   const std::string &output_file_name_error_arg,
   const double scale_size)
 {
-  // TEST
-  /*
-  std::cout << "prm input path: " << input_file_path_arg.string() << '\n';
-  std::cout << "prm output path: " << where_to_save_arg.string() << '\n';
-  */
-
   std::string orig_prm_data =
     read_file(input_file_path_arg,
               file_flag::binary | file_flag::read_all,

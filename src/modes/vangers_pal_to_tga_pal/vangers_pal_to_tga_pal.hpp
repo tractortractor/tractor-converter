@@ -18,10 +18,16 @@
 #include <string>
 #include <vector>
 
+
+
 namespace tractor_converter{
+
+
 
 void vangers_pal_to_tga_pal_mode(
   const boost::program_options::variables_map options);
+
+
 
 } // namespace tractor_converter
 

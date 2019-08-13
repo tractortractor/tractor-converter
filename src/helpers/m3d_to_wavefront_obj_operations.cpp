@@ -49,8 +49,9 @@ m3d_to_wavefront_obj_model::m3d_to_wavefront_obj_model(
     "%." + std::to_string(float_precision_objs) + "f";
 
   // 2 newline + 1 "v" +
-  // 3 "num of coords" * (1 space + 3 digits left to dot + 1 dot +
-  //   float_precision_objs digits right to dot ) +
+  // 3 "num of coords" *
+  //   (1 space + 3 digits left to dot + 1 dot +
+  //    float_precision_objs digits right to dot ) +
   // 5
   expected_medium_vertex_size =
     2 + 1 + 3 * (1 + 3 + 1 + float_precision_objs) + 5;
@@ -68,13 +69,8 @@ void m3d_to_wavefront_obj_model::mechos_m3d_to_wavefront_objs()
   boost::filesystem::create_directory(output_m3d_path);
 
   volInt::polyhedron main_model = read_c3d(c3d::c3d_type::regular);
-  // TEST
-//  std::cout << "-----------------------------" << '\n';
-//  std::cout << "Volume of main of " <<
-//    input_m3d_path.string() << '\n';
-//  std::cout << main_model.check_volume() << '\n';
 
-  // IMPORTANT! Header data must be acquired before writing c3d to obj.
+  // IMPORTANT! Header data must be acquired before writing *.c3d to *.obj.
   read_m3d_header_data();
 
   std::vector<volInt::polyhedron> steer_wheels_models;
@@ -132,22 +128,14 @@ void m3d_to_wavefront_obj_model::mechos_m3d_to_wavefront_objs()
   }
   if(n_wheels)
   {
-//  std::cout << "\n\ninput_m3d_path.string(): " <<
-//    input_m3d_path.string() << "\n\n";
-//  std::vector<volInt::polyhedron> steer_wheels_models =
-//    read_m3d_wheels_data();
     merge_main_model_with_wheels(&main_model,
                                  &steer_wheels_models,
                                  &non_steer_ghost_wheels_models);
   }
-//if(center_of_mass_model)
-//{
-//  merge_model_with_center_of_mass(main_model);
-//}
 
 
 
-  // 1 for main model
+  // 1 for main model.
   std::size_t main_models_to_reserve = 1;
   if(weapon_slots_existence && example_weapon_model)
   {
@@ -155,7 +143,7 @@ void m3d_to_wavefront_obj_model::mechos_m3d_to_wavefront_objs()
   }
   if(center_of_mass_model)
   {
-    // 1 for center of mass model
+    // 1 for center of mass model.
     main_models_to_reserve += 1;
   }
 
@@ -189,27 +177,22 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
   boost::filesystem::create_directory(output_m3d_path);
 
   volInt::polyhedron main_model = read_c3d(c3d::c3d_type::regular);
-  // TEST
-//  std::cout << "-----------------------------" << '\n';
-//  std::cout << "Volume of main of " <<
-//    input_m3d_path.string() << '\n';
-//  std::cout << main_model.check_volume() << '\n';
 
-  // IMPORTANT! Header data must be acquired before writing c3d to obj.
+  // IMPORTANT! Header data must be acquired before writing *.c3d to *.obj.
   read_m3d_header_data();
 
 
 
-  // 1 for main model
+  // 1 for main model.
   std::size_t main_models_to_reserve = 1;
   if(weapon_attachment_point)
   {
-    // 1 for attachment point model
+    // 1 for attachment point model.
     main_models_to_reserve += 1;
   }
   if(center_of_mass_model)
   {
-    // 1 for center of mass model
+    // 1 for center of mass model.
     main_models_to_reserve += 1;
   }
 
@@ -240,23 +223,6 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
       input_m3d_path.string() +
       ". Non-mechos model have non-zero n_wheels value.");
   }
-  // TEST
-  /*
-  std::cout << "weapon_slots_existence: " << weapon_slots_existence << '\n';
-  for(std::size_t cur_slot = 0;
-      cur_slot < m3d::weapon_slot::max_slots;
-      ++cur_slot)
-  {
-    std::cout << "cur_slot: " << cur_slot << '\n';
-    for(std::size_t cur_coord = 0; cur_coord < volInt::axes_num; ++cur_coord)
-    {
-      std::cout << "R_slot[" << cur_coord << "]" <<
-        cur_weapon_slot_data[cur_slot].R_slot[cur_coord] << '\n';
-    }
-    std::cout << "slot_data_el.location_angle_of_slot: " <<
-      cur_weapon_slot_data[cur_slot].location_angle_of_slot << '\n';
-  }
-  */
   if(flags & m3d_to_obj_flag::extract_bound_model)
   {
     c3d_to_wavefront_obj(wavefront_obj::prefix::main_bound,
@@ -294,17 +260,17 @@ void m3d_to_wavefront_obj_model::animated_a3d_to_wavefront_objs()
 {
   boost::filesystem::create_directory(output_m3d_path);
 
-  // IMPORTANT! Header data must be acquired before writing c3d to obj.
+  // IMPORTANT! Header data must be acquired before writing *.c3d to *.obj.
   read_a3d_header_data();
 
   std::vector<std::unordered_map<std::string, volInt::polyhedron>>
     models(n_models);
 
-  // 1 for main model
+  // 1 for main model.
   std::size_t animated_models_to_reserve = 1;
   if(center_of_mass_model)
   {
-    // 1 for center of mass model
+    // 1 for center of mass model.
     animated_models_to_reserve += 1;
   }
 
@@ -314,17 +280,8 @@ void m3d_to_wavefront_obj_model::animated_a3d_to_wavefront_objs()
     models[cur_animated][wavefront_obj::obj_name::main] =
       read_c3d(c3d::c3d_type::regular);
 
-    // TEST
-//    std::cout << "-----------------------------" << '\n';
-//    std::cout << "Volume of animated " << cur_animated <<
-//      " of " << input_m3d_path.string() << '\n';
-//    std::cout <<
-//      models.at(cur_animated).
-//        at(wavefront_obj::obj_name::main).check_volume() << '\n';
-
     if(center_of_mass_model)
     {
-//    merge_model_with_center_of_mass(models[cur_animated]);
       add_center_of_mass_to_models_map(
         models[cur_animated],
         models[cur_animated][wavefront_obj::obj_name::main].rcm);
@@ -345,22 +302,17 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
 
 
   volInt::polyhedron main_model = read_c3d(c3d::c3d_type::regular);
-  // TEST
-//  std::cout << "-----------------------------" << '\n';
-//  std::cout << "Volume of main of " <<
-//    input_m3d_path.string() << '\n';
-//  std::cout << main_model.check_volume() << '\n';
 
-  // IMPORTANT! Header data must be acquired before writing c3d to obj.
+  // IMPORTANT! Header data must be acquired before writing *.c3d to *.obj.
   read_m3d_header_data();
 
 
 
-  // 1 for main model
+  // 1 for main model.
   std::size_t main_models_to_reserve = 1;
   if(center_of_mass_model)
   {
-    // 1 for center of mass model
+    // 1 for center of mass model.
     main_models_to_reserve += 1;
   }
 
@@ -371,7 +323,6 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
 
   if(center_of_mass_model)
   {
-//  merge_model_with_center_of_mass(main_model);
     add_center_of_mass_to_models_map(
       main_models, main_models[wavefront_obj::obj_name::main].rcm);
   }
@@ -569,9 +520,9 @@ volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
       ". Expected " + std::to_string(c3d::version_req) + ".");
   }
 
-  int numVerts = read_var_from_m3d<std::int32_t, int>();
-  int numVertNorms = read_var_from_m3d<std::int32_t, int>();
-  int numFaces = read_var_from_m3d<std::int32_t, int>();
+  int numVerts =               read_var_from_m3d<std::int32_t, int>();
+  int numVertNorms =           read_var_from_m3d<std::int32_t, int>();
+  int numFaces =               read_var_from_m3d<std::int32_t, int>();
   int discarded_numVertTotal = read_var_from_m3d<std::int32_t, int>();
 
   volInt::model_extreme_points discarded_extreme_points;
@@ -652,12 +603,6 @@ void m3d_to_wavefront_obj_model::save_c3d_as_wavefront_obj(
   const std::string &prefix,
   const std::size_t *model_num)
 {
-    // TEST
-//  std::cout << "-----------------------------" << '\n';
-//  std::cout << "Volume of " << prefix << " of " <<
-//    input_m3d_path.string() << '\n';
-//  std::cout << c3d_model.check_volume() << '\n';
-
   std::unordered_map<std::string, volInt::polyhedron> c3d_models
     {{wavefront_obj::obj_name::main, c3d_model}};
   save_c3d_as_wavefront_obj(c3d_models, prefix, model_num);
@@ -803,7 +748,7 @@ void
 
 
 
-// Marking non-steering wheels and figuring which wheels are ghost ones.
+// Marking wheels as steering/non-steering and ghost/non-ghost.
 void m3d_to_wavefront_obj_model::mark_wheels(
   volInt::polyhedron &main_model,
   const std::vector<volInt::polyhedron> &steer_wheels_models)
@@ -813,6 +758,8 @@ void m3d_to_wavefront_obj_model::mark_wheels(
   {
     main_model.wheels.insert(wheel_ind);
   }
+
+  // Marking steering wheels.
   for(std::size_t wheel_ind = 0; wheel_ind < cur_w_data_size; ++wheel_ind)
   {
     if(cur_wheel_data[wheel_ind].steer)
@@ -825,98 +772,10 @@ void m3d_to_wavefront_obj_model::mark_wheels(
     }
   }
 
-
-
-/*
-  // Creating groups of non-steering wheels polygons.
-  std::vector<const volInt::face*> non_steering_wheels_polygons =
-    main_model.get_polygons_by_color(c3d::color::string_to_id::wheel);
-
-
-  std::vector<std::vector<const volInt::face*>> wheels_groups;
-  std::vector<std::vector<double>> wheels_centers;
-
-  mark_wheels_helper_get_wheels(non_steering_wheels_polygons,
-                                main_model,
-                                wheels_groups,
-                                wheels_centers);
-
-
-//unsigned int non_steering_wheels_num = 0;
-//for(const auto &cur_wheel_data_el : cur_wheel_data)
-//{
-//  if(!cur_wheel_data[cur_wheel_data_el].steer)
-//  {
-//    ++non_steering_wheels_num;
-//  }
-//}
-
-  // Trying to figure out which part of model is current non-steering wheel.
-  // Polygons which belong to this wheel are getting their "wheel_id"
-  // changed to ease material name generation.
-  for(std::size_t model_wheel_center_num = 0,
-        wheels_centers_size = wheels_centers.size();
-      model_wheel_center_num < wheels_centers_size;
-      ++model_wheel_center_num)
-  {
-    std::size_t closest_wheel_data_num = 0;
-    double closest_distance = std::numeric_limits<double>::max();
-//  for(std::size_t model_wheel_center_num = 0,
-//        wheels_centers_size = wheels_centers.size();
-//      model_wheel_center_num < wheels_centers_size;
-//      ++model_wheel_center_num)
-    for(std::size_t wheel_ind = 0; wheel_ind < cur_w_data_size; ++wheel_ind)
-    {
-      if(!cur_wheel_data[wheel_ind].steer)
-      {
-        double distance =
-          volInt::vector_length_between(wheels_centers[model_wheel_center_num],
-                                        cur_wheel_data[wheel_ind].r);
-        if(distance < closest_distance)
-        {
-          closest_wheel_data_num = wheel_ind;
-          closest_distance = distance;
-        }
-      }
-    }
-    // TEST
-//  std::cout << "cur_wheel_data[cur_wheel_num].r: " <<
-//    cur_wheel_data[cur_wheel_num].r[0] << "; " <<
-//    cur_wheel_data[cur_wheel_num].r[1] << "; " <<
-//    cur_wheel_data[cur_wheel_num].r[2] << '\n';
-//  std::cout << "wheels_centers[closest_model_wheel_num]: " <<
-//    wheels_centers[closest_model_wheel_num][0] << "; " <<
-//    wheels_centers[closest_model_wheel_num][1] << "; " <<
-//    wheels_centers[closest_model_wheel_num][2] << '\n';
-//  std::cout << "closest_distance: " << std::sqrt(closest_distance) << '\n';
-    for(auto cur_poly : wheels_groups[model_wheel_center_num])
-    {
-      // Assuming that volInt::face* points to polygon of non-const main_model.
-      const_cast<volInt::face*>(cur_poly)->wheel_id =
-        closest_wheel_data_num;
-    }
-
-    cur_wheel_data[closest_wheel_data_num].ghost = 0;
-    // Note that insert() won't create duplicates
-    // since wheels_non_ghost is std::unordered_set.
-    main_model.wheels_non_ghost.insert(closest_wheel_data_num);
-  }
-
-  mark_helper_move_non_steering_wheels_to_center(main_model);
-
-  // Needed to properly calculate volume
-  // right after moving non-steering wheels.
-  // Not really used but useful for debugging.
-  main_model.faces_calc_params();
-*/
-
-
-
   // Marking ghost wheels.
   non_steer_ghost_wheels_num = 0;
   for(std::size_t wheel_ind = 0; wheel_ind < cur_w_data_size; ++wheel_ind)
   {
-    // If there is no group found for wheel center it's a ghost wheel.
     if(cur_wheel_data[wheel_ind].steer)
     {
       if(steer_wheels_models.
@@ -934,19 +793,16 @@ void m3d_to_wavefront_obj_model::mark_wheels(
     }
     else
     {
-//    if(!main_model.wheels_non_ghost.count(wheel_ind))
-//    {
       cur_wheel_data[wheel_ind].ghost = 1;
       main_model.wheels_ghost.insert(wheel_ind);
       ++non_steer_ghost_wheels_num;
-//    }
     }
   }
 }
 
 
 
-// Copy ghost wheel model and scale it to specified width and radius.
+// Copying ghost wheel model and scaling it to specified width and radius.
 volInt::polyhedron
   m3d_to_wavefront_obj_model::get_ghost_wheels_helper_generate_wheel(
     int wheel_id)
@@ -960,23 +816,6 @@ volInt::polyhedron
     (cur_ghost_wheel.zmax() - cur_ghost_wheel.zmin()) / 2;
   double radius_multiplier = cur_wheel_data[wheel_id].radius / given_radius;
 
-  // TEST
-  /*
-  std::cout << "cur_wheel_data[" << wheel_id << "].width: " <<
-    cur_wheel_data[wheel_id].width << '\n';
-  std::cout << "given_width: " <<
-    given_width << '\n';
-  std::cout << "width_multiplier: " <<
-    width_multiplier << '\n';
-
-  std::cout << "cur_wheel_data[" << wheel_id << "].radius: " <<
-    cur_wheel_data[wheel_id].radius << '\n';
-  std::cout << "given_radius: " <<
-    given_width << '\n';
-  std::cout << "radius_multiplier: " <<
-    radius_multiplier << '\n';
-  */
-
   std::vector<double> multiplier =
     {
       width_multiplier,
@@ -988,14 +827,6 @@ volInt::polyhedron
   {
     volInt::vector_multiply_self(cur_vert, multiplier);
   }
-
-// TEST
-// Both variables are set at merge_helper_move_model_into_main() function.
-//  for(auto &&cur_poly : cur_ghost_wheel.faces)
-//  {
-//    cur_poly.color_id = c3d::color::string_to_id::weapon;
-//    cur_poly.wheel_id = wheel_id;
-//  }
 
   return cur_ghost_wheel;
 }
@@ -1060,7 +891,7 @@ void m3d_to_wavefront_obj_model::move_weapon_model(
 
 
 
-  // Changing coordinates of all vertices of weapon_model
+  // Changing coordinates of all vertices of weapon_model,
   // so it will be in the right place.
   // new_position is center coordinates of weapon_model
   // relative to main model center.
@@ -1145,11 +976,11 @@ void m3d_to_wavefront_obj_model::read_m3d_debris_data(
 {
   debris_models.assign(n_debris,
                        std::unordered_map<std::string, volInt::polyhedron>());
-  // 1 for main model
+  // 1 for main model.
   std::size_t debris_models_to_reserve = 1;
   if(center_of_mass_model)
   {
-    // 1 for center of mass model
+    // 1 for center of mass model.
     debris_models_to_reserve += 1;
   }
   debris_bound_models.reserve(n_debris);
@@ -1258,21 +1089,6 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
   std::vector<std::unordered_map<std::string, volInt::polyhedron>>
     *debris_models)
 {
-/*
-  std::size_t expected_conf_data_size =
-    per_file_cfg_main_overwrite_volume_size +
-    per_file_cfg_main_center_of_mass_size +
-    per_file_cfg_main_overwrite_inertia_tensor_size +
-    per_file_cfg_main_custom_volume_size +
-    per_file_cfg_main_custom_inertia_tensor_size;
-  if(debris_models && debris_models->size() > 0)
-  {
-    expected_conf_data_size +=
-      per_file_cfg_debris_center_of_mass_size +
-      per_file_cfg_debris_overwrite_inertia_tensor_size +
-      debris_models->size() * per_file_cfg_debris_custom_inertia_tensor_size;
-  }
-*/
 
   std::size_t expected_conf_data_size =
     per_file_cfg_expected_main_size;
@@ -1286,10 +1102,6 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
 
   std::string conf_data_to_save;
   conf_data_to_save.reserve(expected_conf_data_size);
-
-  // TEST
-//  std::cout << "before conf_data_to_save.capacity(): " <<
-//    conf_data_to_save.capacity() << '\n';
 
   conf_data_to_save.append(
     "# Overwrite volume for main model when custom volume is supplied.\n"
@@ -1450,11 +1262,6 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
     }
   }
 
-  // TEST
-//  std::cout << "after conf_data_to_save.size(): " <<
-//    conf_data_to_save.size() << '\n';
-
-  // save to file
   boost::filesystem::path file_to_save = output_m3d_path;
   file_to_save.append(model_name + ".cfg", boost::filesystem::path::codecvt());
   save_file(file_to_save,
@@ -1475,10 +1282,6 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
 
   std::string conf_data_to_save;
   conf_data_to_save.reserve(expected_conf_data_size);
-
-  // TEST
-//  std::cout << "before conf_data_to_save.capacity(): " <<
-//    conf_data_to_save.capacity() << '\n';
 
   conf_data_to_save.append(
     "# Overwrite volume for animated models "
@@ -1562,11 +1365,6 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
     }
   }
 
-  // TEST
-//  std::cout << "after conf_data_to_save.size(): " <<
-//    conf_data_to_save.size() << '\n';
-
-  // save to file
   boost::filesystem::path file_to_save = output_m3d_path;
   file_to_save.append(model_name + ".cfg", boost::filesystem::path::codecvt());
   save_file(file_to_save,
@@ -1604,16 +1402,10 @@ std::unordered_map<std::string, double> read_scales_and_copy_game_lst(
     cur_cfg_reader.get_next_value<int>(van_cfg_key::game_lst::NumModel);
   const int max_size =
     cur_cfg_reader.get_next_value<int>(van_cfg_key::game_lst::MaxSize);
-  // TEST
-//std::cout << "max_model: " << max_model << '\n';
-//std::cout << "max_size: " << max_size << '\n';
   for(std::size_t cur_model = 0; cur_model < max_model; ++cur_model)
   {
     const int model_num =
       cur_cfg_reader.get_next_value<int>(van_cfg_key::game_lst::ModelNum);
-    // TEST
-//  std::cout << "cur_model: " << cur_model << '\n';
-//  std::cout << "model_num: " << model_num << '\n';
     if(cur_model != model_num)
     {
       throw std::runtime_error(

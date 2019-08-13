@@ -13,6 +13,8 @@
 
 #include <string>
 
+
+
 namespace tractor_converter{
 namespace helpers{
 
@@ -76,7 +78,7 @@ std::string read_file(const std::string &path_string,
 
 
 
-// overwrites part of file instead of appending
+// Overwrites part of file instead of appending.
 void write_to_file(boost::filesystem::ofstream &file,
                    const std::string &bytes_to_write,
                    const bitflag<file_flag> flags,
@@ -118,6 +120,8 @@ boost::filesystem::path get_directory(const std::string &path_string,
 boost::filesystem::path filepath_case_insensitive_part_get(
   const boost::filesystem::path &case_sensitive_part,
   const boost::filesystem::path &case_insensitive_part);
+
+
 
 } // namespace helpers
 } // namespace tractor_converter

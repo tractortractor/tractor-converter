@@ -18,10 +18,16 @@
 #include <vector>
 #include <map>
 
+
+
 namespace tractor_converter{
+
+
 
 void compare_bmp_escave_outside_mode(
   const boost::program_options::variables_map options);
+
+
 
 } // namespace tractor_converter
 

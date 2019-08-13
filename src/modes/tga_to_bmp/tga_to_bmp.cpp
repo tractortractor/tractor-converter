@@ -1,5 +1,7 @@
 #include "tga_to_bmp.hpp"
 
+
+
 namespace tractor_converter{
 
 
@@ -76,7 +78,7 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
           tga_image.raw_bitmap_start_pos;
 
         // Using vangers_bmp_coords_size bytes before start for coordinates.
-        // Last 4 bytes of palette are overwritten
+        // Last 4 bytes of palette are overwritten,
         // so we need to do all operations with palette
         // before inserting coordinates and saving new *.bmp.
         const std::size_t real_start_of_bmp =
@@ -123,8 +125,8 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
           if(tga_image_descriptor !=
              tga_image_specification_image_descriptor_str)
           {
-            // checking if bit 4 is off counting from 0
-            // if so flip horizontally
+            // Checking if bit 4 is off counting from 0.
+            // If so, flip horizontally.
             if(tga_image_descriptor[0] & '\x10')
             {
               std::size_t row_start_pos = real_start_of_bmp_no_coords;
@@ -132,7 +134,7 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
                   current_y != tga_image.height;
                   ++current_y)
               {
-                for(std::size_t current_x = 0, max_x = tga_image.width/2;
+                for(std::size_t current_x = 0, max_x = tga_image.width / 2;
                     current_x != max_x;
                     ++current_x)
                 {
@@ -146,8 +148,8 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
                 row_start_pos += tga_image.width;
               }
             }
-            // checking if bit 5 is off counting from 0
-            // if so flip vertically
+            // Checking if bit 5 is off counting from 0.
+            // If so, flip vertically.
             if(!(tga_image_descriptor[0] & '\x20'))
             {
               std::size_t column_start_pos = real_start_of_bmp_no_coords;
@@ -155,7 +157,7 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
                   current_x != tga_image.width;
                   ++current_x)
               {
-                for(std::size_t current_y = 0, max_y = tga_image.height/2;
+                for(std::size_t current_y = 0, max_y = tga_image.height / 2;
                     current_y != max_y;
                     ++current_y)
                 {

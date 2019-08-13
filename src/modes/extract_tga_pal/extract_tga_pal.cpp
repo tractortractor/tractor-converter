@@ -1,5 +1,7 @@
 #include "extract_tga_pal.hpp"
 
+
+
 namespace tractor_converter{
 
 
@@ -13,7 +15,7 @@ void extract_tga_pal_mode(const boost::program_options::variables_map options)
       option::name::source_dir,
       option::name::output_dir,
     };
-    helpers::check_options(options,options_to_check);
+    helpers::check_options(options, options_to_check);
 
 
 

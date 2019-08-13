@@ -10,11 +10,17 @@
 #include <string>
 #include <vector>
 
+
+
 namespace tractor_converter{
 namespace helpers{
 
+
+
 mat_tables::offset_map parse_mtl_body_offs(
   const std::vector<std::string> &body_offsets_str);
+
+
 
 } // namespace helpers
 } // namespace tractor_converter

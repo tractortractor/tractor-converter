@@ -49,10 +49,6 @@ std::string read_file(boost::filesystem::ifstream &file,
       bytes_to_return.append(buffer, sizeof(buffer));
     }
     bytes_to_return.append(buffer, file.gcount());
-//    return ret;
-//    bytes_to_return =
-//      (std::string((std::istreambuf_iterator<char>(file)),
-//                    std::istreambuf_iterator<char>()));
   }
 
   return bytes_to_return;

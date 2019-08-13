@@ -3,9 +3,6 @@
 
 #include "defines.hpp"
 
-//#include <boost/filesystem.hpp>
-//#include <boost/filesystem/fstream.hpp>
-
 #include <exception>
 #include <stdexcept>
 
@@ -13,6 +10,8 @@
 #include <cstring>
 #include <string>
 #include <vector>
+
+
 
 namespace tractor_converter{
 namespace helpers{

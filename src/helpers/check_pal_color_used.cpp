@@ -1,7 +1,11 @@
 #include "check_pal_color_used.hpp"
 
+
+
 namespace tractor_converter{
 namespace helpers{
+
+
 
 bool check_pal_color_used(const std::size_t pos, const std::string &bytes)
 {
@@ -16,6 +20,8 @@ bool check_pal_color_used(const std::size_t pos, const std::string &bytes)
   }
   return false;
 }
+
+
 
 } // namespace helpers
 } // namespace tractor_converter

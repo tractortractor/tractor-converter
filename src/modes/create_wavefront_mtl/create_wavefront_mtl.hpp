@@ -27,7 +27,11 @@
 #include <map>
 #include <unordered_map>
 
+
+
 namespace tractor_converter{
+
+
 
 const int create_wavefront_mtl_max_end_offset = 254;
 
@@ -71,6 +75,8 @@ void create_wavefront_mtl_mode_helper_write_colors(
 
 void create_wavefront_mtl_mode(
   const boost::program_options::variables_map options);
+
+
 
 } // namespace tractor_converter
 

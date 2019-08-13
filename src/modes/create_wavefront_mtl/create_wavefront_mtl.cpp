@@ -53,11 +53,11 @@ mtl_color create_wavefront_mtl_helper_read_color(
   const mat_tables::offset_pair &offset_pair)
 {
   mtl_color color;
-  // VANGERS SOURCE
-  // Simplified Vangers code to get end color:
+  //// VANGERS SOURCE
+  //// Simplified Vangers code to get end color:
   // end_color = color_offset + I_8 >> color_shift;
-  // Where I_8 is modifier which can't be more than
-  // NORMAL define which is ((1 << 7) - 5) = 123.
+  //// Where I_8 is modifier which can't be more than
+  //// NORMAL define which is ((1 << 7) - 5) = 123.
   int end_offset = offset_pair.offset + (123 >> offset_pair.shift);
   if(end_offset > create_wavefront_mtl_max_end_offset)
   {
@@ -65,22 +65,10 @@ mtl_color create_wavefront_mtl_helper_read_color(
   }
   int pos = end_offset * 3;
 
-  // TEST
-//std::cout << '\n';
-//std::cout << "offset_pair.offset: " <<
-//  std::to_string(offset_pair.offset) << '\n';
-//std::cout << "offset_pair.shift: " <<
-//  std::to_string(offset_pair.shift) << '\n';
-//std::cout << "end_offset: " << end_offset << '\n';
-//std::cout << "end_pos: " << std::to_string(pos) << '\n';
-
   for(std::size_t cur_rgb_el = 0; cur_rgb_el < 3; ++cur_rgb_el)
   {
     color[cur_rgb_el] =
       static_cast<unsigned char>(data[pos + 2 - cur_rgb_el]) / 255.0;
-
-  // TEST
-//  std::cout << "color[" << cur_rgb_el << "]" << color[cur_rgb_el] << '\n';
   }
   return color;
 }
@@ -251,7 +239,7 @@ void create_wavefront_mtl_mode(
 
 
         std::string mtl_file;
-        // Counting number of materials to be written in *.mtl file.
+        // Counting number of materials to be written to *.mtl file.
         std::size_t mat_to_write = 0;
         for(const auto &cur_append : mtl_append_order)
         {

@@ -18,7 +18,6 @@
 
 #include <boost/program_options.hpp>
 #include <boost/filesystem.hpp>
-//#include <boost/filesystem/fstream.hpp>
 
 #include <exception>
 #include <stdexcept>
@@ -38,6 +37,8 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <functional>
+
+
 
 namespace tractor_converter{
 namespace helpers{
@@ -76,15 +77,14 @@ template <typename FLOAT>
 FLOAT round_away_from_zero(FLOAT num)
 {
   return num < 0 ? std::floor(num) : std::ceil(num);
-//  return std::copysign(std::ceil(std::fabs(num)), num);
 }
 
 
 
 const double round_half_to_even_remainder_max =
-  0.5 + 1.0/std::pow(10, volInt::min_float_precision); // 0.501
+  0.5 + 1.0 / std::pow(10, volInt::min_float_precision); // 0.501
 const double round_half_to_even_remainder_min =
-  0.5 - 1.0/std::pow(10, volInt::min_float_precision); // 0.499
+  0.5 - 1.0 / std::pow(10, volInt::min_float_precision); // 0.499
 
 template <typename FLOAT, typename INT>
 INT round_half_to_even(FLOAT num)
@@ -577,6 +577,8 @@ void other_wavefront_objs_to_m3d(
   double gen_bound_area_threshold_arg,
   bitflag<obj_to_m3d_flag> flags_arg,
   std::unordered_map<std::string, double> *non_mechos_scale_sizes_arg);
+
+
 
 } // namespace helpers
 } // namespace tractor_converter

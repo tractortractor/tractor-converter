@@ -21,9 +21,15 @@
 #include <map>
 #include <cstdint>
 
+
+
 namespace tractor_converter{
 
+
+
 void tga_to_bmp_mode(const boost::program_options::variables_map options);
+
+
 
 } // namespace tractor_converter
 

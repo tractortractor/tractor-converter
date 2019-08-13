@@ -1,5 +1,7 @@
 #include "tga_merge_unused_pal.hpp"
 
+
+
 namespace tractor_converter{
 
 
@@ -15,7 +17,7 @@ void tga_merge_unused_pal_mode(
       option::name::output_dir,
       option::name::unused_pals_dir,
     };
-    helpers::check_options(options,options_to_check);
+    helpers::check_options(options, options_to_check);
 
 
     boost::filesystem::path source_dir =
@@ -67,7 +69,7 @@ void tga_merge_unused_pal_mode(
 
 
 
-        // counting number of null bytes colors from the end in tga palette
+        // Counting number of null bytes colors from the end in *.tga palette.
         std::size_t null_colors = 0;
         std::vector<bool> orig_pal_null_map(tga_default_colors_num_in_pal,
                                             false);
@@ -87,7 +89,7 @@ void tga_merge_unused_pal_mode(
         }
         std::size_t used_pal_colors = tga_image.colors_num - null_colors;
 
-        // counting number of colors in unused_pal
+        // Counting number of colors in unused_pal.
         std::size_t unused_pal_colors_num = 0;
         std::vector<bool> unused_pal_usage_map(tga_default_colors_num_in_pal,
                                                false);
@@ -187,40 +189,29 @@ void tga_merge_unused_pal_mode(
           original_start_of_image - missing_byte_num;
         std::size_t tga_header_n_ID_field_size =
           tga_header_size + tga_image.ID_field_length;
-        // Moving new header and pal to new position
+        // Moving new header and palette to new position
         // in case palette size changed.
         if(missing_byte_num)
         {
-          // changing color size to 256
+          // Changing color size to 256.
           bytes.replace(
             original_start_of_image + tga_color_map_length_pos,
             tga_color_map_length.size(),
             tga_color_map_length);
 
-          // moving header to new position
+          // Moving header to new position.
           bytes.replace(
             new_start_of_image, tga_header_n_ID_field_size,
             bytes,
             original_start_of_image, tga_header_n_ID_field_size);
         }
-        // moving new pal to new position
+        // Moving new palette to new position.
         bytes.replace(
           new_start_of_image + tga_header_n_ID_field_size,
           tga_default_pal_size,
           new_palette);
 
-        // Changing image bytes as needed
-        // TEST
-        /*
-        for(std::size_t cur_num = 0, max_num = 256;
-            cur_num != max_num;
-            ++cur_num)
-        {
-          std::cout << cur_num << " : " <<
-            static_cast<std::size_t>(new_palette_pos_change_map[cur_num]) <<
-            '\n';
-        }
-        */
+        // Changing image bytes as needed.
         for(std::size_t current_byte = tga_image.raw_bitmap_start_pos,
               end_byte = tga_image.raw_bitmap_start_pos +
                          tga_image.raw_bitmap_size;
@@ -239,10 +230,6 @@ void tga_merge_unused_pal_mode(
         boost::filesystem::path file_to_save = output_dir;
         file_to_save.append(file.path().stem().string() + ext::tga,
                             boost::filesystem::path::codecvt());
-//      helpers::save_file(file_to_save,
-//                         bytes,
-//                         helpers::file_flag::binary,
-//                         option::name::output_dir);
         std::size_t size_of_file_to_write =
           tga_header_size +
           tga_image.ID_field_length +

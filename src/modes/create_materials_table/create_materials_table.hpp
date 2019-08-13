@@ -27,12 +27,16 @@
 #include <unordered_map>
 #include <utility>
 
+
+
 namespace tractor_converter{
+
+
 
 enum class html_material_changes{none, per_world, per_quant};
 
-const std::pair<int,int> color_ind_changes_per_world_range = {0 , 127};
-const std::pair<int,int> color_ind_changes_per_quant_range = {88, 119};
+const std::pair<int, int> color_ind_changes_per_world_range = {0 , 127};
+const std::pair<int, int> color_ind_changes_per_quant_range = {88, 119};
 
 const int create_materials_table_max_end_offset = 254;
 
@@ -72,11 +76,9 @@ const std::size_t expected_size_per_material =
   // "    <td>7</td>" + 2 newline // 7 - max shift
   14 + 2 +
   // "    <td>" + html_table_changes_per_world + "</td>" + 2 newline
-  8 +
-//    html_table_changes_per_world.size()
-    std::max({html_table_changes_none.size(),
-              html_table_changes_per_world.size(),
-              html_table_changes_per_quant.size()}) +
+  8 + std::max({html_table_changes_none.size(),
+                html_table_changes_per_world.size(),
+                html_table_changes_per_quant.size()}) +
     5 + 2 +
   // "  </tr>" + 2 newline
   7 + 2;
@@ -138,6 +140,8 @@ void create_materials_table_mode_helper_write_materials(
 
 void create_materials_table_mode(
   const boost::program_options::variables_map options);
+
+
 
 } // namespace tractor_converter
 

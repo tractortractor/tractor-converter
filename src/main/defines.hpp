@@ -3,11 +3,15 @@
 
 #include <string>
 
+
+
 namespace tractor_converter{
+
+
 
 namespace define{
   const std::string version = "1.0.0";
-} // namespace defines
+} // namespace define
 
 // For program options.
 namespace option{
@@ -232,7 +236,8 @@ namespace file{
 // For helpers.
 enum class error_handling{none, throw_exception};
 
+
+
 } // namespace tractor_converter
 
 #endif // TRACTOR_CONVERTER_DEFINES_H
-

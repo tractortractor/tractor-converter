@@ -40,7 +40,7 @@
 
 
 
-// Modified for tractor_converter
+// Modified for tractor_converter.
 
 
 
@@ -64,68 +64,64 @@ double radians_to_degrees(double radians)
 
 
 
-/*
-// VANGERS SOURCE
-// how angle conversions works in vangers code
-#define M_PI      3.14159265358979323846
-
-Pi_len = 11
-const int  Pi    = 1 << Pi_len;
-2048
-
-#define GTOR(x) (double(x)*(M_PI/double(Pi)))
-#define RTOG(x) (round(x*(double(Pi)/M_PI)))
-*/
+//// VANGERS SOURCE
+//// How angle conversions works in Vangers code.
+//#define M_PI 3.14159265358979323846
+//
+//Pi_len = 11
+//const int Pi = 1 << Pi_len;
+//2048
+//
+//#define GTOR(x) (double(x) * (M_PI / double(Pi)))
+//#define RTOG(x) (round(x *   (double(Pi) / M_PI)))
 
 double sicher_angle_to_radians(int sicher_angle)
 {
   return static_cast<double>(sicher_angle) *
-         (M_PI/static_cast<double>(sicher_angle_Pi));
+         (M_PI / static_cast<double>(sicher_angle_Pi));
 }
 
 int radians_to_sicher_angle(double radians)
 {
-  return std::round(radians*(static_cast<double>(sicher_angle_Pi)/M_PI));
+  return std::round(radians * (static_cast<double>(sicher_angle_Pi) / M_PI));
 }
 
 
 
-/*
-// VANGERS SOURCE
-// how rotation works in vangers source
-inline Vector Vector::operator* (const DBM& m) const
-{
-  return
-    Vector(
-      round(m.a[0]*x + m.a[1]*y + m.a[2]*z),
-      round(m.a[3]*x + m.a[4]*y + m.a[5]*z),
-      round(m.a[6]*x + m.a[7]*y + m.a[8]*z));
-}
-
-inline DBM::DBM(int angle,int axis)
-{
-//------ Calculate Matrix for ROTATE point an angle ------
-  double calpha = Cos(angle);
-  double salpha = Sin(angle);
-  switch(axis){
-    case Z_AXIS:
-      a[0]   =  calpha; a[1]   = -salpha; a[2]   = 0;
-      a[3]   =  salpha; a[4]   = calpha;  a[5]   = 0;
-      a[6]   = 0;    a[7]   = 0;      a[8]   = 1;
-      break;
-    case X_AXIS:
-      a[0]   =  1;    a[1]   =  0;      a[2]   = 0;
-      a[3]   =  0;    a[4]   =  calpha; a[5]   = -salpha;
-      a[6]   =  0;    a[7]   =  salpha; a[8]   = calpha;
-      break;
-    case Y_AXIS:
-      a[0]   = calpha;  a[1]   =  0;      a[2]   = salpha;
-      a[3]   = 0;    a[4]   =  1;      a[5]   = 0;
-      a[6]   = -salpha; a[7]   =  0;      a[8]   = calpha;
-      break;
-    }
-}
-*/
+//// VANGERS SOURCE
+//// How rotation works in Vangers source.
+//inline Vector Vector::operator*(const DBM &m) const
+//{
+//  return
+//    Vector(
+//      round(m.a[0] * x + m.a[1] * y + m.a[2] * z),
+//      round(m.a[3] * x + m.a[4] * y + m.a[5] * z),
+//      round(m.a[6] * x + m.a[7] * y + m.a[8] * z));
+//}
+//
+//inline DBM::DBM(int angle, int axis)
+//{
+////------ Calculate Matrix for ROTATE point an angle ------
+//  double calpha = Cos(angle);
+//  double salpha = Sin(angle);
+//  switch(axis){
+//    case Z_AXIS:
+//      a[0] =  calpha; a[1] = -salpha; a[2] =  0;
+//      a[3] =  salpha; a[4] =  calpha; a[5] =  0;
+//      a[6] =  0;      a[7] =  0;      a[8] =  1;
+//      break;
+//    case X_AXIS:
+//      a[0] =  1;      a[1] =  0;      a[2] =  0;
+//      a[3] =  0;      a[4] =  calpha; a[5] = -salpha;
+//      a[6] =  0;      a[7] =  salpha; a[8] =  calpha;
+//      break;
+//    case Y_AXIS:
+//      a[0] =  calpha; a[1] =  0;      a[2] =  salpha;
+//      a[3] =  0;      a[4] =  1;      a[5] =  0;
+//      a[6] = -salpha; a[7] =  0;      a[8] =  calpha;
+//      break;
+//    }
+//}
 
 void rotate_point_by_axis(
   std::vector<double> &point_arg,
@@ -144,8 +140,8 @@ void rotate_point_by_axis(
 }
 
 void rotate_point_by_axis(std::vector<double> &point_arg,
-                             double angle,
-                             rotation_axis axis)
+                          double angle,
+                          rotation_axis axis)
 {
   if(angle == 0.0)
   {
@@ -460,7 +456,7 @@ double vector_angle(const std::vector<double> &first,
 {
   double length = vector_length(first) * vector_length(second);
   double dot_product = vector_dot_product(first, second);
-  double cosine = dot_product/length;
+  double cosine = dot_product / length;
   if(std::abs(cosine) >= 1.0)
   {
     if(dot_product >= 0.0)
@@ -560,11 +556,9 @@ std::vector<double> calc_norms::key_to_normal(std::size_t key)
 
 
 
-/*
-   ============================================================================
-   data structures
-   ============================================================================
-*/
+// ============================================================================
+// Data structures.
+// ============================================================================
 
 
 
@@ -810,21 +804,6 @@ void model_offset::set_z_off(double new_z_off)
 
 
 
-/*
-face::face(const face &other)
-: numVerts(other.numVerts),
-  color_id(other.color_id),
-  wheel_id(other.wheel_id),
-  weapon_id(other.weapon_id),
-  norm(other.norm),
-  w(other.w),
-  verts(other.verts),
-  vertNorms(other.vertNorms)
-{
-}
-*/
-
-
 face::face(int numVerts_arg)
 : numVerts(numVerts_arg),
   color_id(0),
@@ -865,79 +844,6 @@ polyhedron::polyhedron()
 {
 }
 
-
-/*
-polyhedron::polyhedron(const polyhedron &other)
-: numVerts(other.numVerts),
-  numVertNorms(other.numVertNorms),
-  numFaces(other.numFaces),
-  numVertTotal(other.numVertTotal),
-  numVertsPerPoly(other.numVertsPerPoly),
-  extreme_points(other.extreme_points),
-  offset(other.offset),
-  rmax(other.rmax),
-  volume(other.volume),
-  rcm(other.rcm),
-  J(other.J),
-  bodyColorOffset(other.bodyColorOffset),
-  bodyColorShift(other.bodyColorShift),
-  verts(other.verts),
-  vertNorms(other.vertNorms),
-  faces(other.faces),
-  ref_vert_one_ind(other.ref_vert_one_ind),
-  ref_vert_one(other.ref_vert_one),
-  ref_vert_two_ind(other.ref_vert_two_ind),
-  ref_vert_two(other.ref_vert_two),
-  ref_angle(other.ref_angle),
-  wavefront_obj_path(other.wavefront_obj_path),
-  wheels(other.wheels),
-  wheels_steer(other.wheels_steer),
-  wheels_non_steer(other.wheels_non_steer),
-  wheels_ghost(other.wheels_ghost),
-  wheels_non_ghost(other.wheels_non_ghost),
-  wheel_id(other.wheel_id),
-  volume_overwritten(other.volume_overwritten),
-  rcm_overwritten(other.rcm_overwritten),
-  J_overwritten(other.J_overwritten)
-{
-}
-
-
-polyhedron::polyhedron(polyhedron &&other)
-: numVerts(other.numVerts),
-  numVertNorms(other.numVertNorms),
-  numFaces(other.numFaces),
-  numVertTotal(other.numVertTotal),
-  numVertsPerPoly(other.numVertsPerPoly),
-  extreme_points(other.extreme_points),
-  offset(other.offset),
-  rmax(other.rmax),
-  volume(other.volume),
-  rcm(other.rcm),
-  J(other.J),
-  bodyColorOffset(other.bodyColorOffset),
-  bodyColorShift(other.bodyColorShift),
-  verts(std::move(other.verts)),
-  vertNorms(std::move(other.vertNorms)),
-  faces(std::move(other.faces)),
-  ref_vert_one_ind(other.ref_vert_one_ind),
-  ref_vert_one(other.ref_vert_one),
-  ref_vert_two_ind(other.ref_vert_two_ind),
-  ref_vert_two(other.ref_vert_two),
-  ref_angle(other.ref_angle),
-  wavefront_obj_path(other.wavefront_obj_path),
-  wheels(other.wheels),
-  wheels_steer(other.wheels_steer),
-  wheels_non_steer(other.wheels_non_steer),
-  wheels_ghost(other.wheels_ghost),
-  wheels_non_ghost(other.wheels_non_ghost),
-  wheel_id(other.wheel_id),
-  volume_overwritten(other.volume_overwritten),
-  rcm_overwritten(other.rcm_overwritten),
-  J_overwritten(other.J_overwritten)
-{
-}
-*/
 
 
 polyhedron::polyhedron(int numVerts_arg,
@@ -1021,7 +927,7 @@ std::vector<double> polyhedron::face_calc_normal(std::size_t face_ind)
     const std::vector<double> &current =
       verts[cur_face.verts[cur_vert]];
     const std::vector<double> &next =
-      verts[cur_face.verts[(cur_vert+1)%numVertsPerPoly]];
+      verts[cur_face.verts[(cur_vert + 1) % numVertsPerPoly]];
     for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
     {
       const std::vector<std::size_t> &axes =
@@ -1109,14 +1015,10 @@ double polyhedron::get_vertex_angle(std::size_t face_ind, std::size_t vert_ind)
   face &cur_face = faces[face_ind];
   std::size_t prev_ind =
     (vert_ind + cur_face.numVerts - 1) % cur_face.numVerts;
-  std::size_t next_ind =
-    (vert_ind + 1) % cur_face.numVerts;
-  std::vector<double> &prev_vertex =
-    verts[cur_face.verts[prev_ind]];
-  std::vector<double> &cur_vertex =
-    verts[cur_face.verts[vert_ind]];
-  std::vector<double> &next_vertex =
-    verts[cur_face.verts[next_ind]];
+  std::size_t next_ind = (vert_ind + 1) % cur_face.numVerts;
+  std::vector<double> &prev_vertex = verts[cur_face.verts[prev_ind]];
+  std::vector<double> &cur_vertex =  verts[cur_face.verts[vert_ind]];
+  std::vector<double> &next_vertex = verts[cur_face.verts[next_ind]];
   return vector_angle(vector_minus(cur_vertex, prev_vertex),
                       vector_minus(cur_vertex, next_vertex));
 }
@@ -1164,7 +1066,7 @@ void polyhedron::recalc_vertNorms(double max_smooth_angle)
     }
   }
 
-  // Getting map per each vertex: containing face ind - vertex face index.
+  // Getting map per each vertex: face index - vertex face index.
   std::vector<std::unordered_map<std::size_t, std::size_t>>
     vert_to_face_ind_vert_f_ind_pair(numVerts);
   for(std::size_t vert_ind = 0; vert_ind < numVerts; ++vert_ind)
@@ -1476,8 +1378,7 @@ std::vector<const std::vector<double>*> polyhedron::get_vertices_by_polygons(
 std::vector<const std::vector<double>*> polyhedron::get_vertices_by_color(
   unsigned int color_id) const
 {
-  std::vector<const face*> tmp_polygons =
-    get_polygons_by_color(color_id);
+  std::vector<const face*> tmp_polygons = get_polygons_by_color(color_id);
   return get_vertices_by_polygons(tmp_polygons);
 }
 
@@ -1622,7 +1523,8 @@ void polyhedron::set_color_id(unsigned int new_color_id,
   {
     for(auto &&cur_poly : faces)
     {
-      // If non-standard color id ended up in m3d model it must be preserved.
+      // If non-standard color id ended up in *.m3d model,
+      // it must be preserved.
       if(cur_poly.color_id < color_ids::max_colors_ids)
       {
         cur_poly.color_id = new_color_id;
@@ -1676,14 +1578,6 @@ bool polyhedron::find_ref_points()
           const std::vector<double> *cur_point =
             &verts.at(faces[poly_2_ind].verts[v_2_ind]);
 
-          // TEST
-          /*
-          std::cout << "\n\n\n";
-          std::cout << "cur_poly_two_num: " << cur_poly_two_num <<
-            ", cur_vert_two_num: " << cur_vert_two_num << '\n';
-          std::cout << '\n';
-          */
-
           std::vector<double> rel_to_one =
             vector_minus((*cur_point), (*ref_vert_one));
 
@@ -1691,7 +1585,7 @@ bool polyhedron::find_ref_points()
                 std::abs(rel_to_one[2]) > distinct_distance) &&
              std::abs(rel_to_one[1]) > distinct_distance)
           {
-            ref_vert_two_ind.first = poly_2_ind;
+            ref_vert_two_ind.first =  poly_2_ind;
             ref_vert_two_ind.second = v_2_ind;
             ref_vert_two = cur_point;
 
@@ -1706,40 +1600,20 @@ bool polyhedron::find_ref_points()
                   &verts.at(faces[poly_3_ind].verts[v_3_ind]);
 
                 double x1 = (*ref_vert_two)[0] - (*ref_vert_one)[0];
-                double x2 = (*cur_point)[0] - (*ref_vert_one)[0];
+                double x2 = (*cur_point)[0] -    (*ref_vert_one)[0];
                 double y1 = (*ref_vert_two)[1] - (*ref_vert_one)[1];
-                double y2 = (*cur_point)[1] - (*ref_vert_one)[1];
+                double y2 = (*cur_point)[1] -    (*ref_vert_one)[1];
                 double z1 = (*ref_vert_two)[2] - (*ref_vert_one)[2];
-                double z2 = (*cur_point)[2] - (*ref_vert_one)[2];
-
-                // TEST
-                /*
-                std::cout << "x1: " << x1 << '\n';
-                std::cout << "x2: " << x2 << '\n';
-                std::cout << "y1: " << y1 << '\n';
-                std::cout << "y2: " << y2 << '\n';
-                std::cout << "z1: " << z1 << '\n';
-                std::cout << "z2: " << z2 << '\n';
-
-                std::cout << "x1*y2 - x2*y1: " << x1*y2 - x2*y1 << '\n';
-                std::cout << "x1*z2 - x2*z1: " << x1*z2 - x2*z1 << '\n';
-                std::cout << "y1*z2 - y2*z1: " << y1*z2 - y2*z1 << '\n';
-
-                std::cout << "sqr_distinct_distance: " <<
-                  sqr_distinct_distance << '\n';
-                */
+                double z2 = (*cur_point)[2] -    (*ref_vert_one)[2];
 
                 // If current vert is not collinear with vert one and vert two.
-                if(!(std::abs(x1*y2 - x2*y1) < sqr_distinct_distance &&
-                     std::abs(x1*z2 - x2*z1) < sqr_distinct_distance &&
-                     std::abs(y1*z2 - y2*z1) < sqr_distinct_distance))
+                if(!(std::abs(x1 * y2 - x2 * y1) < sqr_distinct_distance &&
+                     std::abs(x1 * z2 - x2 * z1) < sqr_distinct_distance &&
+                     std::abs(y1 * z2 - y2 * z1) < sqr_distinct_distance))
                 {
                   ref_vert_three_ind.first = poly_3_ind;
                   ref_vert_three_ind.second = v_3_ind;
                   ref_vert_three = cur_point;
-
-                  // TEST
-//                std::cout << "find_ref_points_end_search_loop!" << '\n';
 
                   goto find_ref_points_end_search_loop;
                 }
@@ -1752,44 +1626,12 @@ bool polyhedron::find_ref_points()
   }
   find_ref_points_end_search_loop:
 
-  // TEST
-  /*
-  std::cout << "\n\n";
-  std::cout << "ref_vert_one_ind: " << ref_vert_one_ind.first << ", " <<
-    ref_vert_one_ind.second << '\n';
-  std::cout << '\n';
-  std::cout << "ref_vert_two_ind: " << ref_vert_two_ind.first << ", " <<
-    ref_vert_two_ind.second << '\n';
-  std::cout << "\n\n\n\n\n";
-  */
-
-
-
   if(ref_vert_one_ind.first < 0 || ref_vert_two_ind.first < 0)
   {
     return false;
   }
 
-  // TEST
-  /*
-  std::cout << "\n\n";
-  std::cout << "(*ref_vert_two)[0]: " << (*ref_vert_two)[0] <<
-    "; (*ref_vert_one)[0]: " << (*ref_vert_one)[0] << '\n';
-  std::cout << '\n';
-  std::cout << "(*ref_vert_two)[2]: " << (*ref_vert_two)[2] <<
-    "; (*ref_vert_one)[2]: " << (*ref_vert_one)[2] << '\n';
-  std::cout << "\n\n\n\n\n";
-
-  std::cout << "\n\n";
-  std::cout << "((*ref_vert_two)[0] - (*ref_vert_one)[0]): " <<
-                ((*ref_vert_two)[0] - (*ref_vert_one)[0]) << '\n';
-  std::cout << '\n';
-  std::cout << "((*ref_vert_two)[2] - (*ref_vert_one)[2]): " <<
-                ((*ref_vert_two)[2] - (*ref_vert_one)[2]) << '\n';
-  std::cout << "\n\n\n\n\n";
-  */
-
-  ref_vert_two_rel_to_one = vector_minus((*ref_vert_two), (*ref_vert_one));
+  ref_vert_two_rel_to_one =   vector_minus((*ref_vert_two),   (*ref_vert_one));
   ref_vert_three_rel_to_one = vector_minus((*ref_vert_three), (*ref_vert_one));
 
 
@@ -1825,20 +1667,6 @@ void polyhedron::calculate_c3d_properties()
   calculate_rmax();
 
   compVolumeIntegrals(this);
-
-  // TEST
-  /*
-  if(wheel_id >= 0)
-  {
-    std::cout << "Wheel " << std::to_string(wheel_id + 1) <<
-                 " of input model " << wavefront_obj_path << '\n';
-  }
-  else
-  {
-    std::cout << "Input model " + wavefront_obj_path << '\n';
-  }
-  std::cout << "T0: " << T0 << '\n';
-  */
 
   if(T0 < 0)
   {
@@ -1900,158 +1728,6 @@ void polyhedron::calculate_c3d_properties()
         mass * rcm[axes[0]] * rcm[axes[1]];
     }
   }
-
-
-
-  // TEST
-  /*
-  std::cout << '\n';
-
-  std::cout << "xmax: " << xmax() << '\n';
-  std::cout << "ymax: " << ymax() << '\n';
-  std::cout << "zmax: " << zmax() << '\n';
-
-  std::cout << "xmin: " << xmin() << '\n';
-  std::cout << "ymin: " << ymin() << '\n';
-  std::cout << "zmin: " << zmin() << '\n';
-
-  std::cout << "rmax: " << rmax << '\n';
-  std::cout << "volume: " << volume << '\n';
-  std::cout << "rcm: " << rcm[0] << ", " << rcm[1] << ", " << rcm[2] << '\n';
-  std::cout << "J: " << '\n' <<
-    J[0][0] << ", " << J[0][1] << ", " << J[0][2] << '\n' <<
-    J[1][0] << ", " << J[1][1] << ", " << J[1][2] << '\n' <<
-    J[2][0] << ", " << J[2][1] << ", " << J[2][2] << '\n';
-
-  std::cout << "\n\n";
-  */
-
-
-
-
-  // TEST
-  /*
-  double expected_volume = 0.0;
-
-  for(std::size_t cur_poly = 0; cur_poly < numFaces; ++cur_poly)
-  {
-    if(numVertsPerPoly == 3)
-    {
-      std::vector<double> U = vector_minus(verts[faces[cur_poly].verts[1]],
-                                           verts[faces[cur_poly].verts[0]]);
-      std::vector<double> V = vector_minus(verts[faces[cur_poly].verts[2]],
-                                           verts[faces[cur_poly].verts[0]]);
-
-
-      std::vector<double> flat_normal(axes_num, 0.0);
-      flat_normal[0] = U[1] * V[2] - U[2] * V[1];
-      flat_normal[1] = U[2] * V[0] - U[0] * V[2];
-      flat_normal[2] = U[0] * V[1] - U[1] * V[0];
-      flat_normal = vector_scale(1.0, flat_normal);
-
-      std::cout << "expected flat_normal poly " << cur_poly << ": " <<
-        flat_normal[0] << ", " <<
-        flat_normal[1] << ", " <<
-        flat_normal[2] << '\n';
-      std::cout << "flat_normal poly " << cur_poly << ": " <<
-        faces[cur_poly].norm[0] << ", " <<
-        faces[cur_poly].norm[1] << ", " <<
-        faces[cur_poly].norm[2] << '\n';
-    }
-
-
-      expected_volume +=
-        vector_dot_product(
-          verts[faces[cur_poly].verts[0]],
-          vector_cross_product(verts[faces[cur_poly].verts[1]],
-                               verts[faces[cur_poly].verts[2]]))
-        /
-        6.0f;
-//    faces[cur_poly];
-    }
-  }
-  */
-
-  // TEST
-  /*
-  if(numVertsPerPoly == 3)
-  {
-    std::cout << "volume: " << volume << '\n';
-    std::cout << "expected_volume: " << expected_volume << '\n';
-    std::cout << "volume/expected_volume: " << volume/expected_volume << '\n';
-    std::cout << "expected_volume/volume: " << expected_volume/volume << '\n';
-  }
-  */
-
-  // TEST
-  /*
-//if(false)
-  if(numVertsPerPoly == 3)
-  {
-    DBV p1 = DBV(variable_polygons[i].vertices[2]->x_8,
-                 variable_polygons[i].vertices[2]->y_8,
-                 variable_polygons[i].vertices[2]->z_8);
-    DBV p2 = DBV(variable_polygons[i].vertices[1]->x_8,
-                 variable_polygons[i].vertices[1]->y_8,
-                 variable_polygons[i].vertices[1]->z_8);
-    DBV p3 = DBV(variable_polygons[i].vertices[0]->x_8,
-                 variable_polygons[i].vertices[0]->y_8,
-                 variable_polygons[i].vertices[0]->z_8);
-
-    DBV U(p2 - p1);
-    DBV V(p3 - p1);
-    model_debug_info << "U.x" << U.x << '\n';
-    model_debug_info << "U.y" << U.y << '\n';
-    model_debug_info << "U.z" << U.z << '\n';
-    model_debug_info << "V.x" << V.x << '\n';
-    model_debug_info << "V.y" << V.y << '\n';
-    model_debug_info << "V.z" << V.z << '\n';
-
-    flat_normal.x = U.y * V.z - U.z * V.y;
-    flat_normal.y = U.z * V.x - U.x * V.z;
-    flat_normal.z = U.x * V.y - U.y * V.x;
-
-
-    expected_volume += (p1 * (p2 % p3)) / 6.0f;
-  }
-//else
-  else if(numVertsPerPoly == 4)
-  {
-    DBV p1 = DBV(variable_polygons[i].vertices[3]->x_8,
-                 variable_polygons[i].vertices[3]->y_8,
-                 variable_polygons[i].vertices[3]->z_8);
-    DBV p2 = DBV(variable_polygons[i].vertices[2]->x_8,
-                 variable_polygons[i].vertices[2]->y_8,
-                 variable_polygons[i].vertices[2]->z_8);
-    DBV p3 = DBV(variable_polygons[i].vertices[1]->x_8,
-                 variable_polygons[i].vertices[1]->y_8,
-                 variable_polygons[i].vertices[1]->z_8);
-    DBV p4 = DBV(variable_polygons[i].vertices[0]->x_8,
-                 variable_polygons[i].vertices[0]->y_8,
-                 variable_polygons[i].vertices[0]->z_8);
-
-
-
-    DBV normal(0,0,0);
-
-    for(j = 0;j < num;j++)
-    {
-      Vertex* current = variable_polygons[i].vertices[num-1-j];
-      Vertex* next = variable_polygons[i].vertices[num-1-(j+1)%num];
-      flat_normal.x = flat_normal.x + (current -> y_8 - next -> y_8) *
-                      (current -> z_8 + next -> z_8);
-      flat_normal.y = flat_normal.y + (current -> z_8 - next -> z_8) *
-                      (current -> x_8 + next -> x_8);
-      flat_normal.z = flat_normal.z + (current -> x_8 - next -> x_8) *
-                      (current -> y_8 + next -> y_8);
-    }
-
-
-
-    expected_volume += (p1 * (p2 % p3)) / 6.0f;
-    expected_volume += (p1 * (p3 % p4)) / 6.0f;
-  }
-  */
 }
 
 
@@ -2147,9 +1823,7 @@ generate_bound::layer_vert_inds polyhedron::get_min_length_layer_points(
 {
   std::size_t points_size = verts_plane_lengths_rel_points.size();
   generate_bound::layer_vert_inds layer_verts_by_length(points_size);
-  for(std::size_t cur_point = 0;
-      cur_point < points_size;
-      ++cur_point)
+  for(std::size_t cur_point = 0; cur_point < points_size; ++cur_point)
   {
     const std::unordered_map<std::size_t, double> &cur_v_plane_lengths =
       verts_plane_lengths_rel_points[cur_point];
@@ -2180,10 +1854,10 @@ double polyhedron::get_plane_area_from_points(
       vert_ind_ind < vert_inds_size;
       ++vert_ind_ind)
   {
-    std::size_t cur_vert_ind = vert_inds[vert_ind_ind];
-    std::size_t next_vert_ind = vert_inds[(vert_ind_ind+1)%vert_inds_size];
+    std::size_t cur_vert_ind =  vert_inds[vert_ind_ind];
+    std::size_t next_vert_ind = vert_inds[(vert_ind_ind + 1) % vert_inds_size];
     const std::vector<double> &current = verts_arg[cur_vert_ind];
-    const std::vector<double> &next = verts_arg[next_vert_ind];
+    const std::vector<double> &next =    verts_arg[next_vert_ind];
     area += (current[model_3d_axes[0]] + next[model_3d_axes[0]]) *
             (current[model_3d_axes[1]] - next[model_3d_axes[1]]);
   }
@@ -2444,7 +2118,7 @@ polyhedron polyhedron::generate_bound_model(
     const std::vector<std::size_t> &plane_axes = axes_by_plane[cur_axis];
     for(auto edge : edges)
     {
-      std::vector<double> first_v_rel_min = verts_rel_min[edge.first];
+      std::vector<double> first_v_rel_min =  verts_rel_min[edge.first];
       std::vector<double> second_v_rel_min = verts_rel_min[edge.second];
 
       // If both points are at the same plane
@@ -2698,7 +2372,7 @@ polyhedron polyhedron::generate_bound_model(
 
 
 
-  // Adjusting layer verts so they will be within layer_bounds.
+  // Adjusting layer verts, so they will be within layer_bounds.
   for(std::size_t cur_axis = 0; cur_axis < axes_num; ++cur_axis)
   {
     for(auto &&layer_vert : layers_verts)
@@ -2988,74 +2662,12 @@ void polyhedron::set_z_off(double new_z_off)
 
 
 
-/*
-   ============================================================================
-   read in a polyhedron
-   ============================================================================
-*/
-
-/*
-void readPolyhedron(char *name, POLYHEDRON *p)
-{
-  FILE *fp;
-  char line[200], *c;
-  int i, j, n;
-  double dx1, dy1, dz1, dx2, dy2, dz2, nx, ny, nz, len;
-  FACE *f;
-
-  
-  if (!(fp = fopen(name, "r"))) {
-    printf("i/o error\n");
-    exit(1);
-  }
-  
-  fscanf(fp, "%d", &p->numVerts);
-  printf("Reading in %d vertices\n", p->numVerts);
-  for (i = 0; i < p->numVerts; i++)
-    fscanf(fp, "%lf %lf %lf", 
-           &p->verts[i][VOLINT_X], &p->verts[i][VOLINT_Y], &p->verts[i][VOLINT_Z]);
-
-  fscanf(fp, "%d", &p->numFaces);
-  printf("Reading in %d faces\n", p->numFaces);
-  for (i = 0; i < p->numFaces; i++) {
-    f = &p->faces[i];
-    f->poly = p;
-    fscanf(fp, "%d", &f->numVerts);
-    for (j = 0; j < f->numVerts; j++) fscanf(fp, "%d", &f->verts[j]);
-
-//     compute face normal and offset w from first 3 vertices 
-    dx1 = p->verts[f->verts[1]][VOLINT_X] - p->verts[f->verts[0]][VOLINT_X];
-    dy1 = p->verts[f->verts[1]][VOLINT_Y] - p->verts[f->verts[0]][VOLINT_Y];
-    dz1 = p->verts[f->verts[1]][VOLINT_Z] - p->verts[f->verts[0]][VOLINT_Z];
-    dx2 = p->verts[f->verts[2]][VOLINT_X] - p->verts[f->verts[1]][VOLINT_X];
-    dy2 = p->verts[f->verts[2]][VOLINT_Y] - p->verts[f->verts[1]][VOLINT_Y];
-    dz2 = p->verts[f->verts[2]][VOLINT_Z] - p->verts[f->verts[1]][VOLINT_Z];
-    nx = dy1 * dz2 - dy2 * dz1;
-    ny = dz1 * dx2 - dz2 * dx1;
-    nz = dx1 * dy2 - dx2 * dy1;
-    len = sqrt(nx * nx + ny * ny + nz * nz);
-    f->norm[VOLINT_X] = nx / len;
-    f->norm[VOLINT_Y] = ny / len;
-    f->norm[VOLINT_Z] = nz / len;
-    f->w = - f->norm[VOLINT_X] * p->verts[f->verts[0]][VOLINT_X]
-           - f->norm[VOLINT_Y] * p->verts[f->verts[0]][VOLINT_Y]
-           - f->norm[VOLINT_Z] * p->verts[f->verts[0]][VOLINT_Z];
-
-  }
-
-  fclose(fp);
-
-}
-*/
-
-/*
-   ============================================================================
-   compute mass properties
-   ============================================================================
-*/
+// ============================================================================
+// Compute mass properties.
+// ============================================================================
 
 
-/* compute various integrations over projection of face */
+// Compute various integrations over projection of face.
 void compProjectionIntegrals(POLYHEDRON *p, FACE *f)
 {
   double a0, a1, da;
@@ -3068,11 +2680,12 @@ void compProjectionIntegrals(POLYHEDRON *p, FACE *f)
 
   P1 = Pa = Pb = Paa = Pab = Pbb = Paaa = Paab = Pabb = Pbbb = 0.0;
 
-  for (i = 0; i < f->numVerts; i++) {
+  for (i = 0; i < f->numVerts; i++)
+  {
     a0 = p->verts[f->verts[i]][A];
     b0 = p->verts[f->verts[i]][B];
-    a1 = p->verts[f->verts[(i+1) % f->numVerts]][A];
-    b1 = p->verts[f->verts[(i+1) % f->numVerts]][B];
+    a1 = p->verts[f->verts[(i + 1) % f->numVerts]][A];
+    b1 = p->verts[f->verts[(i + 1) % f->numVerts]][B];
     da = a1 - a0;
     db = b1 - b0;
     a0_2 = a0 * a0; a0_3 = a0_2 * a0; a0_4 = a0_3 * a0;
@@ -3080,41 +2693,46 @@ void compProjectionIntegrals(POLYHEDRON *p, FACE *f)
     a1_2 = a1 * a1; a1_3 = a1_2 * a1; 
     b1_2 = b1 * b1; b1_3 = b1_2 * b1;
 
-    C1 = a1 + a0;
-    Ca = a1*C1 + a0_2; Caa = a1*Ca + a0_3; Caaa = a1*Caa + a0_4;
-    Cb = b1*(b1 + b0) + b0_2; Cbb = b1*Cb + b0_3; Cbbb = b1*Cbb + b0_4;
-    Cab = 3*a1_2 + 2*a1*a0 + a0_2; Kab = a1_2 + 2*a1*a0 + 3*a0_2;
-    Caab = a0*Cab + 4*a1_3; Kaab = a1*Kab + 4*a0_3;
-    Cabb = 4*b1_3 + 3*b1_2*b0 + 2*b1*b0_2 + b0_3;
-    Kabb = b1_3 + 2*b1_2*b0 + 3*b1*b0_2 + 4*b0_3;
+    C1 =   a1 + a0;
+    Ca =   a1 * C1  + a0_2;
+    Caa =  a1 * Ca  + a0_3;
+    Caaa = a1 * Caa + a0_4;
+    Cb =   b1 * (b1 + b0) + b0_2;
+    Cbb =  b1 * Cb  + b0_3;
+    Cbbb = b1 * Cbb + b0_4;
+    Cab =  3 * a1_2 + 2 * a1 * a0 + a0_2;
+    Kab =  a1_2 + 2 * a1 * a0 + 3 * a0_2;
+    Caab = a0 * Cab + 4 * a1_3;
+    Kaab = a1 * Kab + 4 * a0_3;
+    Cabb = 4 * b1_3 + 3 * b1_2 * b0 + 2 * b1 * b0_2 + b0_3;
+    Kabb = b1_3 + 2 * b1_2 * b0 + 3 * b1 * b0_2 + 4 * b0_3;
 
-    P1 += db*C1;
-    Pa += db*Ca;
-    Paa += db*Caa;
-    Paaa += db*Caaa;
-    Pb += da*Cb;
-    Pbb += da*Cbb;
-    Pbbb += da*Cbbb;
-    Pab += db*(b1*Cab + b0*Kab);
-    Paab += db*(b1*Caab + b0*Kaab);
-    Pabb += da*(a1*Cabb + a0*Kabb);
+    P1 +=   db * C1;
+    Pa +=   db * Ca;
+    Paa +=  db * Caa;
+    Paaa += db * Caaa;
+    Pb +=   da * Cb;
+    Pbb +=  da * Cbb;
+    Pbbb += da * Cbbb;
+    Pab +=  db * (b1 * Cab  + b0 * Kab);
+    Paab += db * (b1 * Caab + b0 * Kaab);
+    Pabb += da * (a1 * Cabb + a0 * Kabb);
   }
 
-  P1 /= 2.0;
-  Pa /= 6.0;
-  Paa /= 12.0;
-  Paaa /= 20.0;
-  Pb /= -6.0;
-  Pbb /= -12.0;
+  P1 /=    2.0;
+  Pa /=    6.0;
+  Paa /=   12.0;
+  Paaa /=  20.0;
+  Pb /=   -6.0;
+  Pbb /=  -12.0;
   Pbbb /= -20.0;
-  Pab /= 24.0;
-  Paab /= 60.0;
+  Pab /=   24.0;
+  Paab /=  60.0;
   Pabb /= -60.0;
 }
 
 void compFaceIntegrals(POLYHEDRON *p, FACE *f)
 {
-//  double *n, w;
   std::vector<double> n;
   double w;
   double k1, k2, k3, k4;
@@ -3125,26 +2743,34 @@ void compFaceIntegrals(POLYHEDRON *p, FACE *f)
   n = f->norm;
   k1 = 1 / n[C]; k2 = k1 * k1; k3 = k2 * k1; k4 = k3 * k1;
 
-  Fa = k1 * Pa;
-  Fb = k1 * Pb;
-  Fc = -k2 * (n[A]*Pa + n[B]*Pb + w*P1);
+  Fa =    k1 * Pa;
+  Fb =    k1 * Pb;
+  Fc =   -k2 * (n[A] * Pa + n[B] * Pb + w * P1);
 
-  Faa = k1 * Paa;
-  Fbb = k1 * Pbb;
-  Fcc = k3 * (VOLINT_SQR(n[A])*Paa + 2*n[A]*n[B]*Pab + VOLINT_SQR(n[B])*Pbb
-         + w*(2*(n[A]*Pa + n[B]*Pb) + w*P1));
+  Faa =   k1 * Paa;
+  Fbb =   k1 * Pbb;
+  Fcc =   k3 * (VOLINT_SQR(n[A]) * Paa +
+                2 * n[A] * n[B] * Pab +
+                VOLINT_SQR(n[B]) * Pbb +
+                w * (2 * (n[A] * Pa + n[B] * Pb) + w * P1));
 
-  Faaa = k1 * Paaa;
-  Fbbb = k1 * Pbbb;
-  Fccc = -k4 * (VOLINT_CUBE(n[A])*Paaa + 3*VOLINT_SQR(n[A])*n[B]*Paab 
-           + 3*n[A]*VOLINT_SQR(n[B])*Pabb + VOLINT_CUBE(n[B])*Pbbb
-           + 3*w*(VOLINT_SQR(n[A])*Paa + 2*n[A]*n[B]*Pab + VOLINT_SQR(n[B])*Pbb)
-           + w*w*(3*(n[A]*Pa + n[B]*Pb) + w*P1));
+  Faaa =  k1 * Paaa;
+  Fbbb =  k1 * Pbbb;
+  Fccc = -k4 * (VOLINT_CUBE(n[A]) * Paaa +
+                3 * VOLINT_SQR(n[A]) * n[B] * Paab +
+                3 * n[A] * VOLINT_SQR(n[B]) * Pabb +
+                VOLINT_CUBE(n[B]) * Pbbb +
+                3 * w * (VOLINT_SQR(n[A]) * Paa +
+                         2 * n[A] * n[B] * Pab +
+                         VOLINT_SQR(n[B]) * Pbb) +
+                w * w * (3 * (n[A] * Pa + n[B] * Pb) + w * P1));
 
-  Faab = k1 * Paab;
-  Fbbc = -k2 * (n[A]*Pabb + n[B]*Pbbb + w*Pbb);
-  Fcca = k3 * (VOLINT_SQR(n[A])*Paaa + 2*n[A]*n[B]*Paab + VOLINT_SQR(n[B])*Pabb
-         + w*(2*(n[A]*Paa + n[B]*Pab) + w*Pa));
+  Faab =  k1 * Paab;
+  Fbbc = -k2 * (n[A] * Pabb + n[B] * Pbbb + w * Pbb);
+  Fcca =  k3 * (VOLINT_SQR(n[A]) * Paaa +
+                2 * n[A] * n[B] * Paab +
+                VOLINT_SQR(n[B]) * Pabb +
+                w * (2 * (n[A] * Paa + n[B] * Pab) + w * Pa));
 }
 
 void compVolumeIntegrals(POLYHEDRON *p)
@@ -3171,7 +2797,8 @@ void compVolumeIntegrals(POLYHEDRON *p)
 
     compFaceIntegrals(p, f);
 
-    T0 += f->norm[VOLINT_X] * ((A == VOLINT_X) ? Fa : ((B == VOLINT_X) ? Fb : Fc));
+    T0 +=
+      f->norm[VOLINT_X] * ((A == VOLINT_X) ? Fa : ((B == VOLINT_X) ? Fb : Fc));
 
     T1[A] += f->norm[A] * Faa;
     T1[B] += f->norm[B] * Fbb;
@@ -3188,80 +2815,6 @@ void compVolumeIntegrals(POLYHEDRON *p)
   T2[VOLINT_X] /= 3; T2[VOLINT_Y] /= 3; T2[VOLINT_Z] /= 3;
   TP[VOLINT_X] /= 2; TP[VOLINT_Y] /= 2; TP[VOLINT_Z] /= 2;
 }
-
-
-/*
-   ============================================================================
-   main
-   ============================================================================
-*/
-
-
-
-//int main(int argc, char *argv[])
-//{
-//  POLYHEDRON p;
-//  double density, mass;
-//  double r[3];            /* center of mass */
-//  double J[3][3];         /* inertia tensor */
-//
-//  if (argc != 2) {
-//    printf("usage:  %s <polyhedron geometry filename>\n", argv[0]);
-//    exit(0);
-//  }
-//
-//  readPolyhedron(argv[1], &p);
-
-//  compVolumeIntegrals(&p);
-//
-//
-//  printf("\nT1 =   %+20.6f\n\n", T0);
-//
-//  printf("Tx =   %+20.6f\n", T1[VOLINT_X]);
-//  printf("Ty =   %+20.6f\n", T1[VOLINT_Y]);
-//  printf("Tz =   %+20.6f\n\n", T1[VOLINT_Z]);
-//  
-//  printf("Txx =  %+20.6f\n", T2[VOLINT_X]);
-//  printf("Tyy =  %+20.6f\n", T2[VOLINT_Y]);
-//  printf("Tzz =  %+20.6f\n\n", T2[VOLINT_Z]);
-//
-//  printf("Txy =  %+20.6f\n", TP[VOLINT_X]);
-//  printf("Tyz =  %+20.6f\n", TP[VOLINT_Y]);
-//  printf("Tzx =  %+20.6f\n\n", TP[VOLINT_Z]);
-//
-//  density = 1.0;  /* assume unit density */
-//
-//  mass = density * T0;
-//
-//  /* compute center of mass */
-//  r[VOLINT_X] = T1[VOLINT_X] / T0;
-//  r[VOLINT_Y] = T1[VOLINT_Y] / T0;
-//  r[VOLINT_Z] = T1[VOLINT_Z] / T0;
-//
-//  /* compute inertia tensor */
-//  J[VOLINT_X][VOLINT_X] = density * (T2[VOLINT_Y] + T2[VOLINT_Z]);
-//  J[VOLINT_Y][VOLINT_Y] = density * (T2[VOLINT_Z] + T2[VOLINT_X]);
-//  J[VOLINT_Z][VOLINT_Z] = density * (T2[VOLINT_X] + T2[VOLINT_Y]);
-//  J[VOLINT_X][VOLINT_Y] = J[VOLINT_Y][VOLINT_X] = - density * TP[VOLINT_X];
-//  J[VOLINT_Y][VOLINT_Z] = J[VOLINT_Z][VOLINT_Y] = - density * TP[VOLINT_Y];
-//  J[VOLINT_Z][VOLINT_X] = J[VOLINT_X][VOLINT_Z] = - density * TP[VOLINT_Z];
-//
-//  /* translate inertia tensor to center of mass */
-//  J[VOLINT_X][VOLINT_X] -= mass * (r[VOLINT_Y]*r[VOLINT_Y] + r[VOLINT_Z]*r[VOLINT_Z]);
-//  J[VOLINT_Y][VOLINT_Y] -= mass * (r[VOLINT_Z]*r[VOLINT_Z] + r[VOLINT_X]*r[VOLINT_X]);
-//  J[VOLINT_Z][VOLINT_Z] -= mass * (r[VOLINT_X]*r[VOLINT_X] + r[VOLINT_Y]*r[VOLINT_Y]);
-//  J[VOLINT_X][VOLINT_Y] = J[VOLINT_Y][VOLINT_X] += mass * r[VOLINT_X] * r[VOLINT_Y]; 
-//  J[VOLINT_Y][VOLINT_Z] = J[VOLINT_Z][VOLINT_Y] += mass * r[VOLINT_Y] * r[VOLINT_Z]; 
-//  J[VOLINT_Z][VOLINT_X] = J[VOLINT_X][VOLINT_Z] += mass * r[VOLINT_Z] * r[VOLINT_X]; 
-//
-//  printf("center of mass:  (%+12.6f,%+12.6f,%+12.6f)\n\n", r[VOLINT_X], r[VOLINT_Y], r[VOLINT_Z]);
-//
-//  printf("inertia tensor with origin at c.o.m. :\n");
-//  printf("%+15.6f  %+15.6f  %+15.6f\n", J[VOLINT_X][VOLINT_X], J[VOLINT_X][VOLINT_Y], J[VOLINT_X][VOLINT_Z]);
-//  printf("%+15.6f  %+15.6f  %+15.6f\n", J[VOLINT_Y][VOLINT_X], J[VOLINT_Y][VOLINT_Y], J[VOLINT_Y][VOLINT_Z]);
-//  printf("%+15.6f  %+15.6f  %+15.6f\n\n", J[VOLINT_Z][VOLINT_X], J[VOLINT_Z][VOLINT_Y], J[VOLINT_Z][VOLINT_Z]);
-//  
-//}
 
 
 

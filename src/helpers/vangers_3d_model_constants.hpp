@@ -5,7 +5,6 @@
 
 #include "volInt.hpp"
 
-//#include <boost/bimap.hpp>
 #include <boost/bimap/bimap.hpp>
 #include <boost/bimap/unordered_set_of.hpp>
 #include <boost/bimap/tags/tagged.hpp>
@@ -14,7 +13,11 @@
 #include <string>
 #include <unordered_map>
 
+
+
 namespace tractor_converter{
+
+
 
 namespace c3d{
 
@@ -37,11 +40,11 @@ namespace c3d{
 
 
   namespace header{
-    // 0  int
+    // 0   int
     const std::size_t version_pos = 0;
-    // 4  int
+    // 4   int
     const std::size_t num_vert_pos = version_pos + sizeof(int);
-    // 8  int
+    // 8   int
     const std::size_t num_norm_pos = num_vert_pos + sizeof(int);
     // 12  int
     const std::size_t num_poly_pos = num_norm_pos + sizeof(int);
@@ -84,18 +87,18 @@ namespace c3d{
     const std::size_t tetta_pos = psi_pos + sizeof(int);
 
 
-    // 72   double
+    // 72  double
     const std::size_t volume_pos = tetta_pos + sizeof(int);
     // 80  double vector
     const std::size_t rcm_pos = volume_pos + sizeof(double);
-    // 104  double matrix
-    const std::size_t J_pos = rcm_pos + sizeof(double)*volInt::axes_num;
+    // 104 double matrix
+    const std::size_t J_pos = rcm_pos + sizeof(double) * volInt::axes_num;
 
 
 
     // 176
     const std::size_t size =
-      J_pos + sizeof(double)*volInt::axes_num*volInt::axes_num;
+      J_pos + sizeof(double) * volInt::axes_num * volInt::axes_num;
   } // namespace header
 
   const std::size_t data_pos = header::size;
@@ -105,19 +108,19 @@ namespace c3d{
   namespace vertex{
     const int default_sort_info = 0;
 
-    // 4  float
+    // 4   float
     const std::size_t full_coord_size = sizeof(float);
     // 12
     const std::size_t full_coords_size =
       full_coord_size * volInt::axes_num;
 
-    // 1  char
+    // 1   char
     const std::size_t compact_coord_size = sizeof(char);
     // 3
     const std::size_t compact_coords_size =
       compact_coord_size * volInt::axes_num;
 
-    // 4  int
+    // 4   int
     const std::size_t sort_info_size = sizeof(int);
 
 
@@ -161,15 +164,15 @@ namespace c3d{
     const int default_sort_info = 0;
     const unsigned char default_n_power = 0;
 
-    // 1  char
+    // 1   char
     const std::size_t coord_size = sizeof(char);
     // 3
     const std::size_t coords_size = coord_size * volInt::axes_num;
 
-    // 1 unsigned char
+    // 1   unsigned char
     const std::size_t n_power_size = sizeof(unsigned char);
 
-    // 4  int
+    // 4   int
     const std::size_t sort_info_size = sizeof(int);
 
     // 5
@@ -200,31 +203,31 @@ namespace c3d{
     const unsigned char default_flat_norm_n_power = 0;
 
 
-    // 4 int
+    // 4   int
     const std::size_t vertex_num_size = sizeof(int);
-    // 4 int
+    // 4   int
     const std::size_t sort_info_size = sizeof(int);
-    // 4 unsigned int
+    // 4   unsigned int
     const std::size_t color_id_size = sizeof(unsigned int);
-    // 4 unsigned int
+    // 4   unsigned int
     const std::size_t color_shift_size = sizeof(unsigned int);
-    // 1 char
+    // 1   char
     const std::size_t flat_normal_coord_size = sizeof(char);
-    // 1 unsigned char
+    // 1   unsigned char
     const std::size_t flat_normal_n_power_size = sizeof(unsigned char);
     // 4
     const std::size_t flat_normal_size =
       flat_normal_coord_size * volInt::axes_num + flat_normal_n_power_size;
-    // 1 char
+    // 1   char
     const std::size_t middle_point_coord_size = sizeof(char);
     // 3
     const std::size_t middle_point_size =
       middle_point_coord_size * volInt::axes_num;
 
 
-    // 4 int
+    // 4   int
     const std::size_t vert_ind_size = sizeof(int);
-    // 4 int
+    // 4   int
     const std::size_t norm_ind_size = sizeof(int);
 
 
@@ -270,7 +273,7 @@ namespace c3d{
   } // namespace polygon
 
   namespace polygon_sort_info{
-    // 4 int
+    // 4   int
     const std::size_t poly_ind_size = sizeof(int);
     // 12
     const std::size_t size = poly_ind_size * 3;
@@ -308,10 +311,10 @@ namespace c3d{
       const std::string skyfarmer_kernoboo =       "skyfarmer_kernoboo";
       const std::string skyfarmer_pipetka =        "skyfarmer_pipetka";
       const std::string rotten_item =              "rotten_item";
-      // End of color id list in vangers source.
+      // End of color id list in Vangers source.
       const std::string max_colors_ids =           "max_colors_ids";
 
-      // Doesn't exist in vangers source.
+      // Doesn't exist in Vangers source.
       const std::string virtual_object_ids_begin = "virtual_object_ids_begin";
       const std::string center_of_mass =           "center_of_mass";
       const std::string attachment_point =         "attachment_point";
@@ -345,10 +348,10 @@ namespace c3d{
       const unsigned int skyfarmer_kernoboo =       22;
       const unsigned int skyfarmer_pipetka =        23;
       const unsigned int rotten_item =              24;
-      // End of color id list in vangers source.
+      // End of color id list in Vangers source.
       const unsigned int max_colors_ids =           25;
 
-      // Doesn't exist in vangers source.
+      // Doesn't exist in Vangers source.
       const unsigned int virtual_object_ids_begin = 1000000;
       const unsigned int center_of_mass =           1000001;
       const unsigned int attachment_point =         1000002;
@@ -373,11 +376,11 @@ namespace c3d{
       namespace min{
         const int offset = 0;
         const int shift = 0;
-      } // namespace max
+      } // namespace min
       namespace default_val{
         const int offset = 128;
         const int shift = 3;
-      } // namespace max
+      } // namespace default_val
     } // namespace body
 
     struct id{};
@@ -420,9 +423,9 @@ namespace c3d{
       (string_to_id::skyfarmer_kernoboo, string::skyfarmer_kernoboo)
       (string_to_id::skyfarmer_pipetka, string::skyfarmer_pipetka)
       (string_to_id::rotten_item, string::rotten_item)
-      // End of color id list in vangers source.
+      // End of color id list in Vangers source.
       (string_to_id::max_colors_ids, string::max_colors_ids)
-      // Doesn't exist in vangers source.
+      // Doesn't exist in Vangers source.
       (string_to_id::virtual_object_ids_begin,
          string::virtual_object_ids_begin)
       (string_to_id::center_of_mass, string::center_of_mass)
@@ -439,23 +442,23 @@ namespace c3d{
 namespace m3d{
 
   namespace header{
-    // 4 int
+    // 4   int
     const std::size_t xmax_size = sizeof(int);
-    // 4 int
+    // 4   int
     const std::size_t ymax_size = sizeof(int);
-    // 4 int
+    // 4   int
     const std::size_t zmax_size = sizeof(int);
-    // 4 int
+    // 4   int
     const std::size_t rmax_size = sizeof(int);
 
-    // 4 int
+    // 4   int
     const std::size_t n_wheels_size = sizeof(int);
-    // 4 int
+    // 4   int
     const std::size_t n_debris_size = sizeof(int);
 
-    // 4 int
+    // 4   int
     const std::size_t body_color_offset_size = sizeof(int);
-    // 4 int
+    // 4   int
     const std::size_t body_color_shift_size = sizeof(int);
 
     // 32
@@ -465,23 +468,23 @@ namespace m3d{
       body_color_shift_size;
 
 
-    // 0 int
+    // 0   int
     const std::size_t xmax_pos = 0;
-    // 4 int
+    // 4   int
     const std::size_t ymax_pos = xmax_pos + sizeof(int);
-    // 8 int
+    // 8   int
     const std::size_t zmax_pos = ymax_pos + sizeof(int);
-    // 12 int
+    // 12  int
     const std::size_t rmax_pos = zmax_pos + sizeof(int);
 
-    // 16 int
+    // 16  int
     const std::size_t n_wheels_pos = rmax_pos + sizeof(int);
-    // 20 int
+    // 20  int
     const std::size_t n_debris_pos = n_wheels_pos + sizeof(int);
 
-    // 24 int
+    // 24  int
     const std::size_t body_color_offset_pos = n_debris_pos + sizeof(int);
-    // 28 int
+    // 28  int
     const std::size_t body_color_shift_pos =
       body_color_offset_pos + sizeof(int);
   } // namespace header
@@ -489,15 +492,15 @@ namespace m3d{
   namespace wheel{
     const int default_bound_index = 0;
 
-    // 4 int
+    // 4   int
     const std::size_t steer_size = sizeof(int);
-    // 24 double vector
+    // 24  double vector
     const std::size_t r_size = sizeof(double) * volInt::axes_num;
-    // 4 int
+    // 4   int
     const std::size_t width_size = sizeof(int);
-    // 4 int
+    // 4   int
     const std::size_t radius_size = sizeof(int);
-    // 4 int
+    // 4   int
     const std::size_t bound_index_size = sizeof(int);
 
     // 40
@@ -505,27 +508,27 @@ namespace m3d{
       steer_size + r_size + width_size + radius_size + bound_index_size;
 
 
-    // 0 int
+    // 0   int
     const std::size_t steer_pos = 0;
-    // 4 double vector
+    // 4   double vector
     const std::size_t r_pos = steer_pos + sizeof(int);
-    // 28 int
+    // 28  int
     const std::size_t width_pos = r_pos + sizeof(double) * volInt::axes_num;
-    // 32 int
+    // 32  int
     const std::size_t radius_pos = width_pos + sizeof(int);
-    // 36 int
+    // 36  int
     const std::size_t bound_index_pos = radius_pos + sizeof(int);
   } // namespace wheel
 
   namespace weapon_slot{
     const std::size_t max_slots = 3;
 
-    // 4 int
+    // 4   int
     const std::size_t slots_existence_size = sizeof(int);
 
-    // 12 int vector
+    // 12  int vector
     const std::size_t R_slot_size = sizeof(int) * volInt::axes_num;
-    // 4 int
+    // 4   int
     const std::size_t location_angle_of_slot_size = sizeof(int);
 
     // 16
@@ -533,12 +536,12 @@ namespace m3d{
       R_slot_size + location_angle_of_slot_size;
 
 
-    // 0 int
+    // 0   int
     const std::size_t slots_existence_pos = 0;
 
-    // 0 int vector
+    // 0   int vector
     const std::size_t R_slot_rel_pos = 0;
-    // 12 int
+    // 12  int
     const std::size_t location_angle_of_slot_rel_pos =
       R_slot_rel_pos + sizeof(int) * volInt::axes_num;
   } // namespace weapon_slot
@@ -548,20 +551,20 @@ namespace m3d{
 namespace a3d{
 
   namespace header{
-    // 4 int
+    // 4   int
     const std::size_t n_models_size = sizeof(int);
-    // 4 int
+    // 4   int
     const std::size_t xmax_size = sizeof(int);
-    // 4 int
+    // 4   int
     const std::size_t ymax_size = sizeof(int);
-    // 4 int
+    // 4   int
     const std::size_t zmax_size = sizeof(int);
-    // 4 int
+    // 4   int
     const std::size_t rmax_size = sizeof(int);
 
-    // 4 int
+    // 4   int
     const std::size_t body_color_offset_size = sizeof(int);
-    // 4 int
+    // 4   int
     const std::size_t body_color_shift_size = sizeof(int);
 
     // 32
@@ -570,20 +573,20 @@ namespace a3d{
       body_color_offset_size + body_color_shift_size;
 
 
-    // 0 int
+    // 0   int
     const std::size_t n_models_pos = 0;
-    // 4 int
+    // 4   int
     const std::size_t xmax_pos = n_models_pos + sizeof(int);
-    // 8 int
+    // 8   int
     const std::size_t ymax_pos = xmax_pos + sizeof(int);
-    // 12 int
+    // 12  int
     const std::size_t zmax_pos = ymax_pos + sizeof(int);
-    // 16 int
+    // 16  int
     const std::size_t rmax_pos = zmax_pos + sizeof(int);
 
-    // 20 int
+    // 20  int
     const std::size_t body_color_offset_pos = rmax_pos + sizeof(int);
-    // 24 int
+    // 24  int
     const std::size_t body_color_shift_pos =
       body_color_offset_pos + sizeof(int);
   } // namespace header
@@ -679,7 +682,7 @@ namespace mat_tables{
     {c3d::color::string::rotten_item,        {224, 4}},
   };
 
-  // Doesn't exist in vangers source.
+  // Doesn't exist in Vangers source.
   const offset_map special_offsets
   {
     {c3d::color::string::center_of_mass,     {128, 4}},
@@ -701,7 +704,10 @@ namespace mat_tables{
     {c3d::color::body::string::el_1 + "160" +
        c3d::color::body::string::el_2 + "3", {160, 3}},
   };
+
 } // namespace mat_tables
+
+
 
 } // namespace tractor_converter
 

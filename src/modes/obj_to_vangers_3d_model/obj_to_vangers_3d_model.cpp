@@ -112,7 +112,7 @@ void obj_to_vangers_3d_model_mode(
     volInt::polyhedron *weapon_attachment_point_model_ptr;
     try
     {
-      // Getting weapon attachment point model to get positions of the weapons.
+      // Getting weapon attachment point model to get positions of weapons.
       weapon_attachment_point_model =
         helpers::raw_obj_to_volInt_model(
           weapon_attachment_point_file,
@@ -186,7 +186,7 @@ void obj_to_vangers_3d_model_mode(
 
 
     // Getting list of game directories.
-    // Game.lst file must be present for each game directory.
+    // game.lst file must be present for each game directory.
     std::unordered_map<std::string, helpers::vangers_3d_paths_game_dir>
       vangers_game_dirs;
     for(const auto &entry :
@@ -210,7 +210,7 @@ void obj_to_vangers_3d_model_mode(
       }
     }
 
-    // Getting list of paths with prm, m3d and a3d files.
+    // Getting list of paths with *.prm, *.m3d and *.a3d files.
     for(auto &&game_dir : vangers_game_dirs)
     {
       boost::filesystem::path resource_folder_name(folder::resource);
@@ -303,7 +303,7 @@ void obj_to_vangers_3d_model_mode(
 
     // Converting files for each game directory.
     // It is assumed that each game directory
-    // have it's own *.prm parameters and *.m3d weapons files.
+    // have it's own *.prm parameters and *.m3d weapon files.
     for(const auto &game_dir : vangers_game_dirs)
     {
       std::unordered_map<std::string, double> non_mechos_scale_sizes;
@@ -332,12 +332,6 @@ void obj_to_vangers_3d_model_mode(
               gen_bound_area_threshold,
               obj_to_m3d_flags,
               non_mechos_scale_sizes_ptr);
-          // TEST
-//        std::cout << '\n' << "weapon m3d" << '\n';
-//        std::cout << "input: " <<
-//          m3d_io_paths.second.input.string() << '\n';
-//        std::cout << "output: " <<
-//          m3d_io_paths.second.output.string() << '\n';
         }
         catch(std::exception &e)
         {
@@ -381,12 +375,6 @@ void obj_to_vangers_3d_model_mode(
             gen_bound_layers_num,
             gen_bound_area_threshold,
             obj_to_m3d_flags);
-          // TEST
-//        std::cout << '\n' << "mechos m3d" << '\n';
-//        std::cout << "input: " <<
-//          m3d_io_paths.second.input.string() << '\n';
-//        std::cout << "output: " <<
-//          m3d_io_paths.second.output.string() << '\n';
         }
         catch(std::exception &e)
         {
@@ -418,12 +406,6 @@ void obj_to_vangers_3d_model_mode(
             max_smooth_angle,
             obj_to_m3d_flags,
             non_mechos_scale_sizes_ptr);
-          // TEST
-//        std::cout << '\n' << "animated a3d" << '\n';
-//        std::cout << "input: " <<
-//          a3d_io_paths.second.input.string() << '\n';
-//        std::cout << "output: " <<
-//          a3d_io_paths.second.output.string() << '\n';
         }
         catch(std::exception &e)
         {
@@ -457,12 +439,6 @@ void obj_to_vangers_3d_model_mode(
             gen_bound_area_threshold,
             obj_to_m3d_flags,
             non_mechos_scale_sizes_ptr);
-          // TEST
-//        std::cout << '\n' << "other m3d" << '\n';
-//        std::cout << "input: " <<
-//          m3d_io_paths.second.input.string() << '\n';
-//        std::cout << "output: " <<
-//          m3d_io_paths.second.output.string() << '\n';
         }
         catch(std::exception &e)
         {

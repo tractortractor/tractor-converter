@@ -39,10 +39,6 @@ double scale_from_map(
                                                   bogus_file_rel_root);
     if(bogus_file.string().size())
     {
-//    throw std::runtime_error(
-//      input_file_name_error + " file " + bogus_file.string() +
-//      " have unspecified scale_size for " +
-//      to_lookup_path.string() + " file.");
       std::cout << '\n';
       std::cout << (input_file_name_error + " file " + bogus_file.string() +
         " have unspecified scale_size for " + to_lookup_path.string() +
@@ -53,10 +49,6 @@ double scale_from_map(
     else
     {
       bogus_file = input_game_dir_root / bogus_file_rel_root;
-//    throw std::runtime_error(
-//      input_file_name_error + " file " + bogus_file.string() +
-//      " doesn't exist but needed to provide scale_size for " +
-//      to_lookup_path.string() + " file.");
       std::cout << '\n';
       std::cout << (input_file_name_error + " file " + bogus_file.string() +
         " doesn't exist but needed to provide scale_size for " +
@@ -262,7 +254,7 @@ void vangers_3d_model_to_obj_mode(
 
 
     // Getting list of game directories.
-    // Game.lst file must be present for each game directory.
+    // game.lst file must be present for each game directory.
     std::unordered_map<std::string, helpers::vangers_3d_paths_game_dir>
       vangers_game_dirs;
     for(const auto &entry :
@@ -287,7 +279,7 @@ void vangers_3d_model_to_obj_mode(
       }
     }
 
-    // Getting list of paths with prm, m3d and a3d files.
+    // Getting list of paths with *.prm, *.m3d and *.a3d files.
     for(auto &&game_dir : vangers_game_dirs)
     {
       boost::filesystem::path resource_folder_name(folder::resource);
@@ -390,72 +382,8 @@ void vangers_3d_model_to_obj_mode(
 
 
 
-    // TEST
-    /*
-    for(const auto &game_dir : vangers_game_dirs)
-    {
-      std::cout << "game_dir.first: " << game_dir.first << '\n';
-      std::cout << "game_dir.second.game_lst.input: " <<
-        game_dir.second.game_lst.input << '\n';
-      std::cout << "game_dir.second.game_lst.output: " <<
-        game_dir.second.game_lst.output << '\n';
-
-      for(const auto &prm_io_paths : game_dir.second.mechous_prm)
-      {
-        std::cout << "prm_io_paths.first: " << prm_io_paths.first << '\n';
-        std::cout << "prm_io_paths.second.input: " <<
-          prm_io_paths.second.input << '\n';
-        std::cout << "prm_io_paths.second.output: " <<
-          prm_io_paths.second.output << '\n';
-      }
-
-
-      for(const auto &m3d_io_paths : game_dir.second.weapon_m3d)
-      {
-        std::cout << "weapon_m3d.first: " << m3d_io_paths.first << '\n';
-        std::cout << "weapon_m3d.second.input: " <<
-          m3d_io_paths.second.input << '\n';
-        std::cout << "weapon_m3d.second.output: " <<
-          m3d_io_paths.second.output << '\n';
-      }
-      std::cout << "m3d_weapon_file: " << m3d_weapon_file << '\n';
-
-
-      for(const auto &m3d_io_paths : game_dir.second.mechous_m3d)
-      {
-        std::cout << "mechous_m3d.first: " << m3d_io_paths.first << '\n';
-        std::cout << "mechous_m3d.second.input: " <<
-          m3d_io_paths.second.input << '\n';
-        std::cout << "mechous_m3d.second.output: " <<
-          m3d_io_paths.second.output << '\n';
-      }
-
-
-      for(const auto &m3d_io_paths : game_dir.second.animated_a3d)
-      {
-        std::cout << "animated_a3d.first: " << m3d_io_paths.first << '\n';
-        std::cout << "animated_a3d.second.input: " <<
-          m3d_io_paths.second.input << '\n';
-        std::cout << "animated_a3d.second.output: " <<
-          m3d_io_paths.second.output << '\n';
-      }
-
-
-      for(const auto &m3d_io_paths : game_dir.second.other_m3d)
-      {
-        std::cout << "other_m3d.first: " << m3d_io_paths.first << '\n';
-        std::cout << "other_m3d.second.input: " <<
-          m3d_io_paths.second.input << '\n';
-        std::cout << "other_m3d.second.output: " <<
-          m3d_io_paths.second.output << '\n';
-      }
-    }
-    */
-
-
-
     // Converting files for each game directory.
-    // It is assumed that each game directory have it's own
+    // It is assumed that each game directory has it's own
     // *.prm parameters and *.m3d weapons files.
     for(const auto &game_dir : vangers_game_dirs)
     {
@@ -464,17 +392,6 @@ void vangers_3d_model_to_obj_mode(
                                                game_dir.second.game_lst.output,
                                                option::name::source_dir,
                                                option::name::output_dir);
-      // TEST
-      /*
-      for(const auto &non_mechos_scale_size : non_mechos_scale_sizes)
-      {
-        std::cout << "non_mechos_scale_size.first: " <<
-          non_mechos_scale_size.first << '\n';
-        std::cout << "non_mechos_scale_size.second: " <<
-          non_mechos_scale_size.second << '\n';
-      }
-      */
-
 
       std::unordered_map<std::string, double> mechos_scale_sizes;
       for(const auto &prm_io_paths : game_dir.second.mechous_prm)
@@ -488,16 +405,6 @@ void vangers_3d_model_to_obj_mode(
                                            option::name::source_dir,
                                            option::name::output_dir);
       }
-      // TEST
-      /*
-      for(const auto &mechos_scale_size : mechos_scale_sizes)
-      {
-        std::cout << "mechos_scale_size.first: " <<
-          mechos_scale_size.first << '\n';
-        std::cout << "mechos_scale_size.second: " <<
-          mechos_scale_size.second << '\n';
-      }
-      */
 
 
       std::unordered_map<std::string, volInt::polyhedron> weapons_models;

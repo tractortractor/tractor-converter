@@ -1,5 +1,7 @@
 #include "vangers_pal_to_tga_pal.hpp"
 
+
+
 namespace tractor_converter{
 
 
@@ -45,10 +47,10 @@ void vangers_pal_to_tga_pal_mode(
             current_pal_byte != tga_default_pal_size;
             current_pal_byte += 3)
         {
-          // VANGERS SOURCE
-//        XGR_Palette->colors[i].r = pal[i].R << 2;
-//        XGR_Palette->colors[i].g = pal[i].G << 2;
-//        XGR_Palette->colors[i].b = pal[i].B << 2;
+          //// VANGERS SOURCE
+          //XGR_Palette->colors[i].r = pal[i].R << 2;
+          //XGR_Palette->colors[i].g = pal[i].G << 2;
+          //XGR_Palette->colors[i].b = pal[i].B << 2;
 
           if(!options[option::name::reversed].as<bool>())
           {

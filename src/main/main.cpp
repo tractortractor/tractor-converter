@@ -4,7 +4,6 @@
 
 int main(int argc, char** argv)
 {
-
   try
   {
     const boost::program_options::variables_map options =

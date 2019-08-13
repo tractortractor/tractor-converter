@@ -1,5 +1,7 @@
 #include "bmp_to_tga.hpp"
 
+
+
 namespace tractor_converter{
 
 
@@ -95,11 +97,11 @@ void bmp_to_tga_mode(const boost::program_options::variables_map options)
         }
 
 
-        // inserting header
+        // Inserting header.
         bytes.replace(0, tga_header_size, tga_header_str);
-        // replacing dummy width and height with real ones
+        // Replacing dummy width and height with real ones.
         bytes.replace(tga_coords_pos, tga_coords_size, current_coords);
-        // inserting palette
+        // Inserting palette.
         bytes.replace(tga_default_pal_pos, tga_default_pal_size, palette);
 
 

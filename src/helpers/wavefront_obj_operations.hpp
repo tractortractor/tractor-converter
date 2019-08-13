@@ -5,35 +5,33 @@
 #include "wavefront_obj_constants.hpp"
 #include "vangers_3d_model_constants.hpp"
 
-//#include "raw_num_operations.hpp"
 #include "file_operations.hpp"
 #include "to_string_precision.hpp"
-//#include "vangers_cfg_operations.hpp"
 #include "vangers_3d_model_operations.hpp"
 
 #include "volInt.hpp"
 #include "tiny_obj_loader.h"
 
 #include <boost/filesystem.hpp>
-//#include <boost/filesystem/fstream.hpp>
 
 #include <exception>
 #include <stdexcept>
 
 #include <cstring>
-//#include <cmath>
-//#include <iostream>
 #include <algorithm>
 #include <utility>
-//#include <iterator>
 #include <string>
 #include <vector>
 #include <sstream>
 #include <unordered_set>
 #include <unordered_map>
 
+
+
 namespace tractor_converter{
 namespace helpers{
+
+
 
 const unsigned int float_precision_objs_default = 6;
 
@@ -113,6 +111,8 @@ void save_volInt_as_wavefront_obj(
     float_precision_objs_string_default,
   std::size_t expected_medium_vertex_size = expected_vertex_size_default,
   std::size_t expected_medium_normal_size = expected_normal_size_default);
+
+
 
 } // namespace helpers
 } // namespace tractor_converter

@@ -25,7 +25,11 @@
 #include <vector>
 #include <unordered_map>
 
+
+
 namespace tractor_converter{
+
+
 
 enum class scale_from_map_type{mechos, non_mechos};
 double scale_from_map(
@@ -38,6 +42,8 @@ double scale_from_map(
 
 void vangers_3d_model_to_obj_mode(
   const boost::program_options::variables_map options);
+
+
 
 } // namespace tractor_converter
 
