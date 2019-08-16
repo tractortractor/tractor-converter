@@ -107,34 +107,9 @@ void vangers_model::merge_helper_move_model_into_main(
     model_to_move.move_coord_system_to_center();
     merge_model_color_id = c3d::color::string_to_id::invalid_color_id;
   }
-  else if(merge_type == merge_model_type::weapon)
-  {
-    // Changing position of weapon as it is changed in Vangers source code.
-
-    //// VANGERS SOURCE
-    //Vector off =
-    //  A_c2p *
-    //  Vector(
-    //    data_in_slots[i]->model->x_off,
-    //    data_in_slots[i]->model->y_off,
-    //    data_in_slots[i]->model->z_off);
-    //data_in_slots[i]->model->draw_child(R_slots[i] - off, A_c2p, A_p2c);
-
-    std::vector<double> weapon_offset = model_to_move.offset_point();
-    volInt::rotate_point_by_axis(weapon_offset,
-                                 new_angle,
-                                 volInt::rotation_axis::y);
-    volInt::vector_minus_self(new_position, weapon_offset);
-
-    merge_model_color_id = c3d::color::string_to_id::invalid_color_id;
-  }
   else if(merge_type == merge_model_type::attachment_point)
   {
     merge_model_color_id = c3d::color::string_to_id::attachment_point;
-  }
-  else if(merge_type == merge_model_type::center_of_mass)
-  {
-    merge_model_color_id = c3d::color::string_to_id::center_of_mass;
   }
   // Changing color_id for model.
   model_to_move.set_color_id(merge_model_color_id, wheel_id, weapon_id);
@@ -180,51 +155,6 @@ void vangers_model::merge_helper_move_model_into_main(
   main_model.numVerts += model_to_move.numVerts;
   main_model.numVertNorms += model_to_move.numVertNorms;
   main_model.numFaces += model_to_move.numFaces;
-}
-
-
-
-// Not used.
-void vangers_model::merge_main_model_with_weapons(
-  volInt::polyhedron &main_model,
-  bitflag<merge_with_weapons_flag> flags) const
-{
-  // Inserting weapon models into main model.
-  for(std::size_t cur_weapon_id = 0;
-      cur_weapon_id < m3d::weapon_slot::max_slots;
-      ++cur_weapon_id)
-  {
-    if(flags & merge_with_weapons_flag::extract_nonexistent_weapons ||
-       cur_weapon_slot_data[cur_weapon_id].exists)
-    {
-      volInt::polyhedron temp_weapon_model = *example_weapon_model;
-      merge_helper_move_model_into_main(
-        main_model,
-        temp_weapon_model,
-        cur_weapon_slot_data[cur_weapon_id].R_slot,
-        cur_weapon_slot_data[cur_weapon_id].location_angle_of_slot,
-        volInt::invalid::wheel_id,
-        cur_weapon_id,
-        merge_model_type::weapon);
-    }
-  }
-}
-
-
-
-// Not used.
-void vangers_model::merge_model_with_center_of_mass(
-  volInt::polyhedron &model) const
-{
-  volInt::polyhedron temp_center_of_mass_model = *center_of_mass_model;
-  merge_helper_move_model_into_main(
-    model,
-    temp_center_of_mass_model,
-    model.rcm,
-    0.0,
-    volInt::invalid::wheel_id,
-    volInt::invalid::weapon_id,
-    merge_model_type::center_of_mass);
 }
 
 

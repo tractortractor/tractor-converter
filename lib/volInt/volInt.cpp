@@ -57,11 +57,6 @@ double degrees_to_radians(double degrees)
   return degrees * (M_PI / 180.0);
 }
 
-double radians_to_degrees(double radians)
-{
-  return radians * (180.0 / M_PI);
-}
-
 
 
 //// VANGERS SOURCE
@@ -197,28 +192,6 @@ void vector_scale_self(double norm, std::vector<double> &vec)
   {
     vec[cur_coord] *= s;
   }
-}
-
-
-
-void vector_make_zero(std::vector<double> &vec)
-{
-  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
-  {
-    vec[cur_coord] = 0.0;
-  }
-}
-
-
-
-std::vector<double> vector_invert(const std::vector<double> &vec)
-{
-  std::vector<double> ret(axes_num, 0.0);
-  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
-  {
-    ret[cur_coord] = -vec[cur_coord];
-  }
-  return ret;
 }
 
 
@@ -399,30 +372,6 @@ double vector_length_between(
 
 
 
-std::vector<double> vector_middle(
-  const std::vector<double> &first,
-  const std::vector<double> &second)
-{
-  return vector_divide(vector_plus(first, second), 2);
-}
-
-
-
-bool vector_equal(const std::vector<double> &first,
-                  const std::vector<double> &second)
-{
-  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
-  {
-    if(std::abs(first[cur_coord] - second[cur_coord]) > distinct_distance)
-    {
-      return false;
-    }
-  }
-  return true;
-}
-
-
-
 double vector_dot_product(const std::vector<double> &first,
                           const std::vector<double> &second)
 {
@@ -432,21 +381,6 @@ double vector_dot_product(const std::vector<double> &first,
     dot_product += first[cur_coord] * second[cur_coord];
   }
   return dot_product;
-}
-
-
-
-std::vector<double> vector_cross_product(const std::vector<double> &first,
-                                         const std::vector<double> &second)
-{
-  std::vector<double> ret(axes_num, 0.0);
-  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
-  {
-    const std::vector<std::size_t> &axes = axes_by_plane_continuous[cur_coord];
-    ret[cur_coord] =
-      first[axes[0]] * second[axes[1]] - first[axes[1]] * second[axes[0]];
-  }
-  return ret;
 }
 
 
@@ -473,30 +407,6 @@ double vector_angle(const std::vector<double> &first,
 
 
 
-std::vector<double> vector_2d_minus(const std::vector<double> &first,
-                                    const std::vector<double> &second)
-{
-  std::vector<double> ret(axes_2d_num, 0.0);
-  for(std::size_t cur_coord = 0; cur_coord < axes_2d_num; ++cur_coord)
-  {
-    ret[cur_coord] = first[cur_coord] - second[cur_coord];
-  }
-  return ret;
-}
-
-
-
-void vector_2d_minus_self(std::vector<double> &first,
-                          const std::vector<double> &second)
-{
-  for(std::size_t cur_coord = 0; cur_coord < axes_2d_num; ++cur_coord)
-  {
-    first[cur_coord] -= second[cur_coord];
-  }
-}
-
-
-
 std::vector<double> vector_2d_divide(const std::vector<double> &vec,
                                      double num)
 {
@@ -513,18 +423,6 @@ std::vector<double> vector_2d_divide(const std::vector<double> &vec,
 double vector_2d_length(const std::vector<double> &vec)
 {
   return std::hypot(vec[0], vec[1]);
-}
-
-
-
-void matrix_multiply_self(
-  std::vector<std::vector<double>> &mat,
-  double num)
-{
-  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
-  {
-    vector_multiply_self(mat[cur_coord], num);
-  }
 }
 
 
@@ -721,26 +619,6 @@ void model_extreme_points::get_most_extreme(
       );
     min()[cur_coord] = (*result.first)[cur_coord];
     max()[cur_coord] = (*result.second)[cur_coord];
-  }
-}
-
-
-
-void model_extreme_points::get_most_extreme(
-  const std::vector<const std::vector<double>*> &points)
-{
-  for(std::size_t cur_coord = 0; cur_coord < axes_num; ++cur_coord)
-  {
-    auto result =
-      std::minmax_element(
-        points.begin(), points.end(),
-        [&](const std::vector<double> *a, const std::vector<double> *b)
-        {
-          return (*a)[cur_coord] < (*b)[cur_coord];
-        }
-      );
-    min()[cur_coord] = (*(*result.first))[cur_coord];
-    max()[cur_coord] = (*(*result.second))[cur_coord];
   }
 }
 
@@ -1263,135 +1141,12 @@ void polyhedron::get_extreme_points()
 
 
 
-model_extreme_points polyhedron::get_extreme_points(
-  const std::vector<const face*> &polygons_arg) const
-{
-  model_extreme_points tmp_extreme_points;
-
-  std::vector<const std::vector<double>*> tmp_verts =
-    get_vertices_by_polygons(polygons_arg);
-
-  tmp_extreme_points.get_most_extreme(tmp_verts);
-
-  return tmp_extreme_points;
-}
-
-
-
 
 
 std::vector<double> polyhedron::get_model_center()
 {
   get_extreme_points();
   return extreme_points.get_center();
-}
-
-
-
-std::vector<double> polyhedron::get_model_center(
-  const std::vector<const std::vector<double>*> &vertices) const
-{
-  model_extreme_points tmp_extreme_points;
-  tmp_extreme_points.get_most_extreme(vertices);
-  return tmp_extreme_points.get_center();
-}
-
-
-
-std::vector<double> polyhedron::get_model_center(
-  const std::vector<const face*> &polygons_arg) const
-{
-  model_extreme_points tmp_extreme_points = get_extreme_points(polygons_arg);
-  return tmp_extreme_points.get_center();
-}
-
-
-
-
-
-std::vector<const face*> polyhedron::get_polygons_by_color(
-  unsigned int color_id_arg) const
-{
-  std::vector<const face*> tmp_polygons;
-  tmp_polygons.reserve(numFaces);
-  for(std::size_t cur_poly = 0; cur_poly < numFaces; ++cur_poly)
-  {
-    if(faces[cur_poly].color_id == color_id_arg)
-    {
-      tmp_polygons.push_back(&faces[cur_poly]);
-    }
-  }
-  return tmp_polygons;
-}
-
-
-
-std::vector<const face*> polyhedron::get_polygons_by_ids(
-  unsigned int color_id_arg,
-  int wheel_id_arg,
-  int weapon_id_arg) const
-{
-  std::vector<const face*> tmp_polygons;
-  tmp_polygons.reserve(numFaces);
-  for(std::size_t cur_poly = 0; cur_poly < numFaces; ++cur_poly)
-  {
-    if(faces[cur_poly].color_id ==  color_id_arg &&
-       faces[cur_poly].wheel_id ==  wheel_id_arg &&
-       faces[cur_poly].weapon_id == weapon_id_arg)
-    {
-      tmp_polygons.push_back(&faces[cur_poly]);
-    }
-  }
-  return tmp_polygons;
-}
-
-
-
-
-
-std::vector<const std::vector<double>*> polyhedron::get_vertices_by_polygons(
-    const std::vector<const face*> &polygons_arg) const
-{
-  std::vector<const std::vector<double>*> tmp_verts;
-
-  // Getting vertices of specified polygons without duplicates.
-  std::unordered_set<int> tmp_verts_ids;
-  for(const auto polygon : polygons_arg)
-  {
-    for(auto vert_num : polygon->verts)
-    {
-      tmp_verts_ids.insert(vert_num);
-    }
-  }
-
-  tmp_verts.reserve(tmp_verts_ids.size());
-  for(auto tmp_vert_id : tmp_verts_ids)
-  {
-    tmp_verts.push_back(&verts[tmp_vert_id]);
-  }
-
-  return tmp_verts;
-}
-
-
-
-std::vector<const std::vector<double>*> polyhedron::get_vertices_by_color(
-  unsigned int color_id) const
-{
-  std::vector<const face*> tmp_polygons = get_polygons_by_color(color_id);
-  return get_vertices_by_polygons(tmp_polygons);
-}
-
-
-
-std::vector<const std::vector<double>*> polyhedron::get_vertices_by_ids(
-  unsigned int color_id,
-  int wheel_id,
-  int weapon_id) const
-{
-  std::vector<const face*> tmp_polygons =
-    get_polygons_by_ids(color_id, wheel_id, weapon_id);
-  return get_vertices_by_polygons(tmp_polygons);
 }
 
 
@@ -1413,31 +1168,6 @@ void polyhedron::move_model_to_point_inv_neg_vol(
 {
   move_model_to_point(point_arg);
   faces_calc_params_inv_neg_vol();
-}
-
-
-
-void polyhedron::move_model_to_point(
-  std::vector<const std::vector<double>*> verts_arg,
-  const std::vector<double> &point_arg)
-{
-  for(auto vert_ptr : verts_arg)
-  {
-    // Cast from constant pointer to non-constant pointer
-    // to modify non-constant "this".
-    vector_plus_self(*const_cast<std::vector<double>*>(vert_ptr), point_arg);
-  }
-}
-
-
-
-void polyhedron::move_model_to_point(
-  std::vector<const face*> polygons_arg,
-  const std::vector<double> &point_arg)
-{
-  std::vector<const std::vector<double>*> tmp_verts =
-    get_vertices_by_polygons(polygons_arg);
-  move_model_to_point(tmp_verts, point_arg);
 }
 
 
@@ -1469,29 +1199,6 @@ void polyhedron::move_coord_system_to_center()
 }
 
 
-
-void polyhedron::move_coord_system_to_point(
-  std::vector<const std::vector<double>*> verts_arg,
-  const std::vector<double> &point_arg)
-{
-  for(auto vert_ptr : verts_arg)
-  {
-    // Cast from constant pointer to non-constant pointer
-    // to modify non-constant "this".
-    vector_minus_self(*const_cast<std::vector<double>*>(vert_ptr), point_arg);
-  }
-}
-
-
-
-void polyhedron::move_coord_system_to_point(
-  std::vector<const face*> polygons_arg,
-  const std::vector<double> &point_arg)
-{
-  std::vector<const std::vector<double>*> tmp_verts =
-    get_vertices_by_polygons(polygons_arg);
-  move_coord_system_to_point(tmp_verts, point_arg);
-}
 
 
 

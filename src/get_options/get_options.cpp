@@ -655,15 +655,11 @@ boost::program_options::variables_map get_options(int ac, char** av)
             "\"" + mode::name::create_materials_table + "\" modes.\n").c_str())
       ;
 
-    // Hidden options, will be allowed both on command line and in config file,
-    // but will not be shown to the user.
-    boost::program_options::options_description hidden("Hidden options");
-
     boost::program_options::options_description cmdline_options;
-    cmdline_options.add(generic).add(config).add(hidden);
+    cmdline_options.add(generic).add(config);
 
     boost::program_options::options_description config_file_options;
-    config_file_options.add(config).add(hidden);
+    config_file_options.add(config);
 
     boost::program_options::options_description visible("Allowed options");
     visible.add(generic).add(config);

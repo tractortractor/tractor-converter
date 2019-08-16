@@ -296,13 +296,6 @@ protected:
     }
   }
 
-  // Not used.
-  void merge_main_model_with_weapons(
-    volInt::polyhedron &main_model,
-    bitflag<merge_with_weapons_flag> flags) const;
-  // Not used.
-  void merge_model_with_center_of_mass(volInt::polyhedron &main_model) const;
-
   void merge_model_with_weapon_attachment_point(
     volInt::polyhedron &main_model) const;
 

@@ -104,7 +104,6 @@ enum class rotation_axis : std::size_t {x = 0, y = 1, z = 2};
 
 
 double degrees_to_radians(double degrees);
-double radians_to_degrees(double radians);
 
 double sicher_angle_to_radians(int sicher_angle);
 int radians_to_sicher_angle(double radians);
@@ -122,9 +121,6 @@ void rotate_point_by_axis(std::vector<double> &point,
 std::vector<double> vector_scale(double norm, const std::vector<double> &vec);
 void vector_scale_self(double norm, std::vector<double> &vec);
 
-void vector_make_zero(std::vector<double> &vec);
-
-std::vector<double> vector_invert(const std::vector<double> &vec);
 void vector_invert_self(std::vector<double> &vec);
 
 std::vector<double> vector_plus(const std::vector<double> &first,
@@ -160,19 +156,7 @@ double vector_length_between(
   const std::vector<double> &first,
   const std::vector<double> &second);
 
-std::vector<double> vector_middle(
-  const std::vector<double> &first,
-  const std::vector<double> &second);
-
-bool vector_equal(
-  const std::vector<double> &first,
-  const std::vector<double> &second);
-
 double vector_dot_product(
-  const std::vector<double> &first,
-  const std::vector<double> &second);
-
-std::vector<double> vector_cross_product(
   const std::vector<double> &first,
   const std::vector<double> &second);
 
@@ -180,17 +164,10 @@ double vector_angle(
   const std::vector<double> &first,
   const std::vector<double> &second);
 
-std::vector<double> vector_2d_minus(const std::vector<double> &first,
-                                    const std::vector<double> &second);
-void vector_2d_minus_self(std::vector<double> &first,
-                          const std::vector<double> &second);
-
 std::vector<double> vector_2d_divide(const std::vector<double> &vec,
                                      double num);
 
 double vector_2d_length(const std::vector<double> &vec);
-
-void matrix_multiply_self(std::vector<std::vector<double>> &mat, double num);
 
 
 
@@ -532,8 +509,7 @@ struct model_extreme_points
 
   void get_most_extreme_cmp_cur(const model_extreme_points &other);
   void get_most_extreme_cmp_cur(const std::vector<double>  &point);
-  void get_most_extreme(const std::vector<std::vector<double>>        &points);
-  void get_most_extreme(const std::vector<const std::vector<double>*> &points);
+  void get_most_extreme(const std::vector<std::vector<double>> &points);
 
   std::vector<double> get_center();
 
@@ -599,50 +575,17 @@ typedef struct polyhedron
   double check_volume();
 
   void get_extreme_points();
-  model_extreme_points get_extreme_points(
-    const std::vector<const face*> &polygons) const;
 
 
   std::vector<double> get_model_center();
-  std::vector<double> get_model_center(
-    const std::vector<const std::vector<double>*> &vertices) const;
-  std::vector<double> get_model_center(
-    const std::vector<const face*> &polygons) const;
-
-  std::vector<const face*> get_polygons_by_color(unsigned int color_id) const;
-  std::vector<const face*> get_polygons_by_ids(  unsigned int color_id,
-                                                 int wheel_id,
-                                                 int weapon_id) const;
-
-  std::vector<const std::vector<double>*> get_vertices_by_polygons(
-    const std::vector<const face*> &model_polygons) const;
-
-  std::vector<const std::vector<double>*> get_vertices_by_color(
-    unsigned int color_id) const;
-  std::vector<const std::vector<double>*> get_vertices_by_ids(
-    unsigned int color_id,
-    int wheel_id =  invalid::wheel_id,
-    int weapon_id = invalid::weapon_id) const;
 
   void move_model_to_point(const std::vector<double> &point);
   void move_model_to_point_inv_neg_vol(const std::vector<double> &point);
-  void move_model_to_point(
-    std::vector<const std::vector<double>*> vertices,
-    const std::vector<double> &point);
-  void move_model_to_point(
-    std::vector<const face*> polygons,
-    const std::vector<double> &point);
 
   void move_coord_system_to_point(const std::vector<double> &point);
   void move_coord_system_to_point_inv_neg_vol(
     const std::vector<double> &point);
   void move_coord_system_to_center();
-  void move_coord_system_to_point(
-    std::vector<const std::vector<double>*> vertices,
-    const std::vector<double> &point);
-  void move_coord_system_to_point(
-    std::vector<const face*> polygons,
-    const std::vector<double> &point);
 
   void rotate_by_axis(double angle, rotation_axis axis);
 

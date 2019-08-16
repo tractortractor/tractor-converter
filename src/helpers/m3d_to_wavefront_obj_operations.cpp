@@ -687,67 +687,6 @@ std::vector<volInt::polyhedron>
 
 
 
-void m3d_to_wavefront_obj_model::mark_wheels_helper_get_wheels(
-  const std::vector<const volInt::face*> &polygons,
-  volInt::polyhedron &main_model,
-  std::vector<std::vector<const volInt::face*>> &end_wheels_groups,
-  std::vector<std::vector<double>> &wheels_centers) const
-{
-  end_wheels_groups =
-    volInt::get_groups_of_connected_items<const volInt::face*>(
-      polygons,
-      [](const volInt::face* first, const volInt::face* second)->bool
-        {
-          // Checking if cur_poly and poly_to_compare have same vertex.
-          for(std::size_t cur_vertex_num = 0;
-              cur_vertex_num < c3d::regular_model_vertices_per_polygon;
-              ++cur_vertex_num)
-          {
-            if(std::find(first->verts.begin(),
-                         first->verts.end(),
-                         second->verts[cur_vertex_num]) !=
-               first->verts.end())
-            {
-              return true;
-            }
-          }
-          return false;
-        });
-
-  std::size_t end_wheels_groups_size = end_wheels_groups.size();
-  wheels_centers.reserve(end_wheels_groups_size);
-  for(std::size_t cur_group = 0;
-      cur_group < end_wheels_groups_size;
-      ++cur_group)
-  {
-    wheels_centers.push_back(
-      main_model.get_model_center(end_wheels_groups[cur_group]));
-  }
-}
-
-
-
-void
-  m3d_to_wavefront_obj_model::mark_helper_move_non_steering_wheels_to_center(
-    volInt::polyhedron &model) const
-{
-  for(const auto wheel_non_ghost_num : model.wheels_non_ghost)
-  {
-    std::vector<const std::vector<double>*> wheel_vertices =
-      model.get_vertices_by_ids(c3d::color::string_to_id::wheel,
-                                wheel_non_ghost_num);
-    const std::vector<double> wheel_center =
-      model.get_model_center(wheel_vertices);
-
-    model.move_model_to_point(
-      wheel_vertices,
-      volInt::vector_minus(cur_wheel_data[wheel_non_ghost_num].r,
-                           wheel_center));
-  }
-}
-
-
-
 // Marking wheels as steering/non-steering and ghost/non-ghost.
 void m3d_to_wavefront_obj_model::mark_wheels(
   volInt::polyhedron &main_model,
