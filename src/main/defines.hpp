@@ -10,7 +10,7 @@ namespace tractor_converter{
 
 
 namespace define{
-  const std::string version = "1.0.0";
+  const std::string version = "2.0.0";
 } // namespace define
 
 // For program options.
