@@ -427,13 +427,14 @@ double vector_2d_length(const std::vector<double> &vec)
 
 
 
-std::size_t calc_norms::normal_to_key(const std::vector<double> &norm)
+unsigned long long int calc_norms::normal_to_key(
+  const std::vector<double> &norm)
 {
-  std::size_t key = 0;
+  unsigned long long int key = 0;
   for(std::size_t cur_norm = 0; cur_norm < axes_num; ++cur_norm)
   {
     key +=
-      static_cast<std::size_t>(
+      static_cast<unsigned long long int>(
         to_integer_multiply +
         std::round(norm[cur_norm] * to_integer_multiply)) <<
       to_key_shift[cur_norm];
@@ -441,12 +442,13 @@ std::size_t calc_norms::normal_to_key(const std::vector<double> &norm)
   return key;
 }
 
-std::vector<double> calc_norms::key_to_normal(std::size_t key)
+std::vector<double> calc_norms::key_to_normal(unsigned long long int key)
 {
   std::vector<double> norm(axes_num, 0.0);
   for(std::size_t cur_norm = 0; cur_norm < axes_num; ++cur_norm)
   {
-    std::size_t natural_norm = (key >> to_key_shift[cur_norm]) & k_to_n_mask;
+    unsigned long long int natural_norm =
+      (key >> to_key_shift[cur_norm]) & key_to_normal_mask;
     norm[cur_norm] = (natural_norm / to_integer_multiply) - vector_scale_val;
   }
   return norm;
@@ -1088,7 +1090,8 @@ void polyhedron::recalc_vertNorms(double max_smooth_angle)
 
   // Reducing number of normals.
   std::size_t raw_vertNorms_size = raw_vertNorms.size();
-  std::unordered_map<std::size_t, std::size_t> normal_val_to_norm_ind;
+  std::unordered_map<unsigned long long int, std::size_t>
+    normal_val_to_norm_ind;
   normal_val_to_norm_ind.reserve(raw_vertNorms_size);
 
   vertNorms = std::vector<std::vector<double>>();
@@ -1100,7 +1103,7 @@ void polyhedron::recalc_vertNorms(double max_smooth_angle)
     for(std::size_t norm_f_ind = 0; norm_f_ind < numVertsPerPoly; ++norm_f_ind)
     {
       std::size_t raw_norm_ind = face.vertNorms[norm_f_ind];
-      std::size_t vert_norm_val_key =
+      unsigned long long int vert_norm_val_key =
         calc_norms::normal_to_key(raw_vertNorms[raw_norm_ind]);
 
       if(normal_val_to_norm_ind.count(vert_norm_val_key))

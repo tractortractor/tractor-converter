@@ -56,9 +56,4 @@ BOOST_STATIC_ASSERT_MSG(
   std::numeric_limits<double>::digits == 53,
   "double must be 64-bit with 53-bit mantissa.");
 
-// Because of volInt::calc_norms::normal_to_key() function.
-BOOST_STATIC_ASSERT_MSG(
-  std::numeric_limits<std::size_t>::digits >= 33,
-  "std::size_t must be at least 33-bit.");
-
 #endif // TRACTOR_CONVERTER_MAIN_H
