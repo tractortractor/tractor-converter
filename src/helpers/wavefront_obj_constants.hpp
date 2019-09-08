@@ -35,8 +35,8 @@ namespace wavefront_obj{
   const double vector_scale_val = 1.0;
 
 
-  // 2 "g " + 2 newline
-  const std::size_t base_obj_name_size = 2 + 2;
+  // 2 "o " + 2 newline + 2 "g " + 2 newline
+  const std::size_t base_obj_name_size = 2 + 2 + 2 + 2;
 
   const std::string mtl_filename = "object_materials" + ext::mtl;
   // 19 "mtllib ../../../../" + mtl_filename.size() + 2 '\n'

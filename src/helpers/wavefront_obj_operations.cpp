@@ -681,7 +681,7 @@ void save_volInt_as_wavefront_obj(
   for(const auto &c3d_model : c3d_models)
   {
     to_reserve +=
-      wavefront_obj::base_obj_name_size + c3d_model.first.size() +
+      wavefront_obj::base_obj_name_size + c3d_model.first.size() * 2 +
       c3d_model.second.verts.size() * expected_medium_vertex_size +
       c3d_model.second.vertNorms.size() * expected_medium_normal_size +
       c3d_model.second.faces.size() * expected_polygon_size;
@@ -701,6 +701,10 @@ void save_volInt_as_wavefront_obj(
     std::size_t poly_num = c3d_model.second.faces.size();
     std::size_t expected_vertices_per_poly =
       c3d_model.second.faces[0].verts.size();
+
+    obj_data.append("o ");
+    obj_data.append(c3d_model.first);
+    obj_data.push_back('\n');
 
     obj_data.append("g ");
     obj_data.append(c3d_model.first);
