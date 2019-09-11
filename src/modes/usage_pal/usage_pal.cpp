@@ -190,7 +190,7 @@ void usage_pal_mode(const boost::program_options::variables_map options)
     if(!options[option::name::usage_pal_for_each_file].as<bool>())
     {
       boost::filesystem::path file_to_save =
-        boost::filesystem::canonical(
+        boost::filesystem::weakly_canonical(
           options[option::name::output_file].as<std::string>());
       usage_pal_mode_save_output(
         file_to_save,

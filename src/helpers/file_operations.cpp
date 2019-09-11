@@ -228,7 +228,7 @@ boost::filesystem::path get_directory(const std::string &path_string,
                                       const std::string &dir_name_error)
 {
   boost::filesystem::path dir =
-    boost::filesystem::canonical(path_string);
+    boost::filesystem::weakly_canonical(path_string);
 
   if(!boost::filesystem::exists(dir))
   {
