@@ -64,10 +64,10 @@ void compare_bmp_escave_outside_mode(
             helpers::read_all_dummy_size,
             option::name::source_dir);
 
-        boost::filesystem::path file_to_compare = dir_to_compare;
-        file_to_compare.append(
-          file.path().filename().string(),
-          boost::filesystem::path::codecvt());
+        boost::filesystem::path file_to_compare =
+          helpers::filepath_case_insensitive_part_get(
+            dir_to_compare,
+            file.path().filename());
         std::string bmp_bytes_to_compare =
           helpers::read_file(
             file_to_compare,

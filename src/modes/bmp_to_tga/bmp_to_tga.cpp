@@ -63,7 +63,8 @@ void bmp_to_tga_mode(const boost::program_options::variables_map options)
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
     {
       if(boost::filesystem::is_regular_file(file.status()) &&
-         file.path().extension().string() == ext::bmp)
+         boost::algorithm::to_lower_copy(file.path().extension().string()) ==
+           ext::bmp)
       {
         std::string bytes =
           helpers::read_file(
@@ -82,10 +83,10 @@ void bmp_to_tga_mode(const boost::program_options::variables_map options)
 
         if(options[option::name::pal_for_each_file].as<bool>())
         {
-          boost::filesystem::path palette_file = palette_dir;
-          palette_file.append(
-            file.path().stem().string() + ext::pal,
-            boost::filesystem::path::codecvt());
+          boost::filesystem::path palette_file =
+            helpers::filepath_case_insensitive_part_get(
+              palette_dir,
+              file.path().stem().string() + ext::pal);
           palette =
             helpers::read_file(
               palette_file,
@@ -108,7 +109,8 @@ void bmp_to_tga_mode(const boost::program_options::variables_map options)
 
         boost::filesystem::path file_to_save = output_dir;
         file_to_save.append(
-          file.path().stem().string() + ext::tga,
+          boost::algorithm::to_lower_copy(file.path().stem().string()) +
+            ext::tga,
           boost::filesystem::path::codecvt());
         helpers::save_file(file_to_save,
                            bytes,

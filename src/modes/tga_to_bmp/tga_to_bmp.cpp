@@ -58,7 +58,8 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
     {
       if(boost::filesystem::is_regular_file(file.status()) &&
-         file.path().extension().string() == ext::tga)
+         boost::algorithm::to_lower_copy(file.path().extension().string()) ==
+           ext::tga)
       {
         std::string bytes =
           helpers::read_file(
@@ -183,8 +184,10 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
 
 
         boost::filesystem::path file_to_save = output_dir;
-        file_to_save.append(file.path().stem().string() + ext::bmp,
-                            boost::filesystem::path::codecvt());
+        file_to_save.append(
+          boost::algorithm::to_lower_copy(file.path().stem().string()) +
+            ext::bmp,
+          boost::filesystem::path::codecvt());
         helpers::write_to_file(
           file_to_save,
           bytes,
@@ -217,8 +220,10 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
           }
 
           boost::filesystem::path file_to_save_mapped = output_dir_through_map;
-          file_to_save_mapped.append(file.path().stem().string() + ext::bmp,
-                                     boost::filesystem::path::codecvt());
+          file_to_save_mapped.append(
+            boost::algorithm::to_lower_copy(file.path().stem().string()) +
+              ext::bmp,
+            boost::filesystem::path::codecvt());
           helpers::save_file(file_to_save_mapped,
                              mapped_bytes,
                              helpers::file_flag::binary,

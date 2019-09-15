@@ -43,7 +43,8 @@ void remove_not_used_pal_mode(
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
     {
       if(boost::filesystem::is_regular_file(file.status()) &&
-         file.path().extension().string() == ext::pal)
+         boost::algorithm::to_lower_copy(file.path().extension().string()) ==
+           ext::pal)
       {
         std::string orig_pal =
           helpers::read_file(
@@ -54,9 +55,10 @@ void remove_not_used_pal_mode(
             helpers::read_all_dummy_size,
             option::name::source_dir);
 
-        boost::filesystem::path usage_pal_file = usage_pals_dir;
-        usage_pal_file.append(file.path().stem().string() + ext::pal,
-                              boost::filesystem::path::codecvt());
+        boost::filesystem::path usage_pal_file =
+          helpers::filepath_case_insensitive_part_get(
+            usage_pals_dir,
+            file.path().stem().string() + ext::pal);
         std::string usage_pal =
           helpers::read_file(
             usage_pal_file,
@@ -91,16 +93,20 @@ void remove_not_used_pal_mode(
         }
 
         boost::filesystem::path file_to_save = output_dir;
-        file_to_save.append(file.path().stem().string() + ext::pal,
-                            boost::filesystem::path::codecvt());
+        file_to_save.append(
+          boost::algorithm::to_lower_copy(file.path().stem().string()) +
+            ext::pal,
+          boost::filesystem::path::codecvt());
         helpers::save_file(file_to_save,
                            pal_used,
                            helpers::file_flag::binary,
                            option::name::output_dir);
 
         boost::filesystem::path file_to_save_unused = output_dir_unused;
-        file_to_save_unused.append(file.path().stem().string() + ext::pal,
-                                   boost::filesystem::path::codecvt());
+        file_to_save_unused.append(
+          boost::algorithm::to_lower_copy(file.path().stem().string()) +
+            ext::pal,
+          boost::filesystem::path::codecvt());
         helpers::save_file(file_to_save_unused,
                            pal_unused,
                            helpers::file_flag::binary,

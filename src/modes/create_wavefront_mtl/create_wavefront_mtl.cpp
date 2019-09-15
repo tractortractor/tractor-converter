@@ -163,7 +163,8 @@ void create_wavefront_mtl_mode(
     for(const auto &file : boost::filesystem::directory_iterator(source_dir))
     {
       if(boost::filesystem::is_regular_file(file.status()) &&
-         file.path().extension().string() == ext::pal)
+         boost::algorithm::to_lower_copy(file.path().extension().string()) ==
+           ext::pal)
       {
         std::string source_pal =
           helpers::read_file(file.path(),
@@ -267,8 +268,10 @@ void create_wavefront_mtl_mode(
 
 
         boost::filesystem::path file_to_save = output_dir;
-        file_to_save.append(file.path().stem().string() + ext::mtl,
-                            boost::filesystem::path::codecvt());
+        file_to_save.append(
+          boost::algorithm::to_lower_copy(file.path().stem().string()) +
+            ext::mtl,
+          boost::filesystem::path::codecvt());
         helpers::save_file(file_to_save,
                            mtl_file,
                            helpers::file_flag::none,
