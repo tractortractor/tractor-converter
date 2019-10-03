@@ -171,7 +171,8 @@ void create_materials_table_mode_helper_write_materials(
 
       for(std::size_t cur_rgb_el = 0; cur_rgb_el < 3; ++cur_rgb_el)
       {
-        std::string tmp = helpers::int_to_hex_string<char>(color[cur_rgb_el]);
+        std::string tmp =
+          helpers::int_to_hex_string<unsigned char>(color[cur_rgb_el]);
         if(tmp.size() == 1)
         {
           tmp = "0" + tmp;

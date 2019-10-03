@@ -42,14 +42,16 @@ double get_weapons_bound_sphere_radius(
 
 
 
-template<> double parse_per_file_cfg_option<double>(
+template<>
+double parse_per_file_cfg_option<double>(
   const std::string &input)
 {
   char* cur_pos = const_cast<char*>(&input[0]);
   return std::strtod(cur_pos, nullptr);
 }
 
-template<> std::vector<double> parse_per_file_cfg_multiple_options<double>(
+template<>
+std::vector<double> parse_per_file_cfg_multiple_options<double>(
   const std::string &input)
 {
   std::vector<double> to_return;
@@ -61,7 +63,8 @@ template<> std::vector<double> parse_per_file_cfg_multiple_options<double>(
   return to_return;
 }
 
-template<> std::vector<double> parse_per_file_cfg_multiple_options<double>(
+template<>
+std::vector<double> parse_per_file_cfg_multiple_options<double>(
   const std::vector<std::string> &input)
 {
   std::vector<double> to_return;
