@@ -695,14 +695,34 @@ namespace mat_tables{
        c3d::color::body::string::el_2 + "0", {0  , 0}},
     {c3d::color::body::string::el_1 + "34" +
        c3d::color::body::string::el_2 + "3", {34 , 3}},
+    {c3d::color::body::string::el_1 + "112" +
+       c3d::color::body::string::el_2 + "4", {112, 4}},
     {c3d::color::body::string::el_1 + "128" +
        c3d::color::body::string::el_2 + "3", {128, 3}},
+    {c3d::color::body::string::el_1 + "128" +
+       c3d::color::body::string::el_2 + "4", {128, 4}},
+    {c3d::color::body::string::el_1 + "134" +
+       c3d::color::body::string::el_2 + "4", {134, 4}},
+    {c3d::color::body::string::el_1 + "136" +
+       c3d::color::body::string::el_2 + "4", {136, 4}},
+    {c3d::color::body::string::el_1 + "140" +
+       c3d::color::body::string::el_2 + "5", {140, 5}},
     {c3d::color::body::string::el_1 + "144" +
        c3d::color::body::string::el_2 + "3", {144, 3}},
     {c3d::color::body::string::el_1 + "145" +
        c3d::color::body::string::el_2 + "3", {145, 3}},
+    {c3d::color::body::string::el_1 + "152" +
+       c3d::color::body::string::el_2 + "4", {152, 4}},
     {c3d::color::body::string::el_1 + "160" +
        c3d::color::body::string::el_2 + "3", {160, 3}},
+    {c3d::color::body::string::el_1 + "160" +
+       c3d::color::body::string::el_2 + "4", {160, 4}},
+    {c3d::color::body::string::el_1 + "228" +
+       c3d::color::body::string::el_2 + "4", {228, 4}},
+    {c3d::color::body::string::el_1 + "240" +
+       c3d::color::body::string::el_2 + "3", {240, 3}},
+    {c3d::color::body::string::el_1 + "245" +
+       c3d::color::body::string::el_2 + "4", {245, 4}},
   };
 
 } // namespace mat_tables
