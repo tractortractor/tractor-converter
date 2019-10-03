@@ -188,6 +188,16 @@ private:
 
 };
 
+template<>
+void sicher_cfg_reader::skip_spaces_until_value<std::string>();
+
+template<>
+int sicher_cfg_reader::get_cur_pos_value_str<int>();
+template<>
+double sicher_cfg_reader::get_cur_pos_value_str<double>();
+template<>
+std::string sicher_cfg_reader::get_cur_pos_value_str<std::string>();
+
 
 
 // To create new Sicher's *.prm and *.lst files from existing ones.
@@ -245,6 +255,24 @@ private:
   }
 
 };
+
+template<>
+void sicher_cfg_writer::append_value<int>(const int &value,
+                                          const std::string &format);
+template<>
+void sicher_cfg_writer::append_value<double>(const double &value,
+                                             const std::string &format);
+template<>
+void sicher_cfg_writer::append_value<std::string>(const std::string &value,
+                                                  const std::string &format);
+
+
+template<>
+void sicher_cfg_writer::move_pos_after_value<int>();
+template<>
+void sicher_cfg_writer::move_pos_after_value<double>();
+template<>
+void sicher_cfg_writer::move_pos_after_value<std::string>();
 
 
 

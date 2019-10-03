@@ -20,6 +20,12 @@ std::string int_to_hex_string(const T to_hex)
   return string_stream_intermediate.str();
 }
 
+template<>
+std::string int_to_hex_string<char>(const char to_hex);
+
+template<>
+std::string int_to_hex_string<unsigned char>(const unsigned char to_hex);
+
 
 
 } // namespace helpers
