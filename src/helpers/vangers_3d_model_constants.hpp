@@ -27,6 +27,7 @@ namespace c3d{
   enum class c3d_type
   {
     regular,
+    main_of_mechos,
     bound,
   };
 

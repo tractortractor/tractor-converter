@@ -126,7 +126,8 @@ wavefront_obj_to_m3d_model::wavefront_obj_to_m3d_model(
 void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
 {
   volInt::polyhedron cur_main_model =
-    read_obj_prefix(wavefront_obj::prefix::main, c3d::c3d_type::regular);
+    read_obj_prefix(wavefront_obj::prefix::main,
+                    c3d::c3d_type::main_of_mechos);
 
   volInt::polyhedron cur_main_bound_model;
   volInt::polyhedron *cur_main_bound_model_ptr = nullptr;

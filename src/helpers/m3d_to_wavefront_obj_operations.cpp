@@ -68,7 +68,7 @@ void m3d_to_wavefront_obj_model::mechos_m3d_to_wavefront_objs()
 {
   boost::filesystem::create_directory(output_m3d_path);
 
-  volInt::polyhedron main_model = read_c3d(c3d::c3d_type::regular);
+  volInt::polyhedron main_model = read_c3d(c3d::c3d_type::main_of_mechos);
 
   // IMPORTANT! Header data must be acquired before writing *.c3d to *.obj.
   read_m3d_header_data();
@@ -499,7 +499,8 @@ volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
   c3d::c3d_type cur_c3d_type)
 {
   int expected_vertices_per_poly;
-  if(cur_c3d_type == c3d::c3d_type::regular)
+  if(cur_c3d_type == c3d::c3d_type::regular ||
+     cur_c3d_type == c3d::c3d_type::main_of_mechos)
   {
     expected_vertices_per_poly = c3d::regular_model_vertices_per_polygon;
   }

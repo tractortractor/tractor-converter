@@ -329,7 +329,8 @@ volInt::polyhedron raw_obj_to_volInt_model(
 
   unsigned char expected_n_verts_per_poly;
   std::string expected_n_verts_per_poly_err_str;
-  if(type == c3d::c3d_type::regular)
+  if(type == c3d::c3d_type::regular ||
+     type == c3d::c3d_type::main_of_mechos)
   {
     expected_n_verts_per_poly = c3d::regular_model_vertices_per_polygon;
     expected_n_verts_per_poly_err_str = "regular";
@@ -472,32 +473,35 @@ volInt::polyhedron raw_obj_to_volInt_model(
 
 
 
-    if(!std::strncmp(cur_mat_name.c_str() + base_name_size,
-                     wavefront_obj::wheel_mat_marker.c_str(),
-                     wavefront_obj::wheel_mat_marker_size))
+    if(type == c3d::c3d_type::main_of_mechos)
     {
-      // Assigning wheel ID.
-      raw_obj_to_volInt_helper_get_wheel_properties(
-        input_file_path_arg,
-        input_file_name_error,
-        cur_mat,
-        cur_mat_name,
-        base_name_size,
-        tiny_obj_id_to_wheel_id,
-        volInt_model);
-    }
-    else if(!std::strncmp(cur_mat_name.c_str() + base_name_size,
-                          wavefront_obj::weapon_mat_marker.c_str(),
-                          wavefront_obj::weapon_mat_marker_size))
-    {
-      // Assigning weapon ID.
-      raw_obj_to_volInt_helper_get_weapon_num(
-        input_file_path_arg,
-        input_file_name_error,
-        cur_mat,
-        cur_mat_name,
-        base_name_size,
-        tiny_obj_id_to_weapon_id);
+      if(!std::strncmp(cur_mat_name.c_str() + base_name_size,
+                       wavefront_obj::wheel_mat_marker.c_str(),
+                       wavefront_obj::wheel_mat_marker_size))
+      {
+        // Assigning wheel ID.
+        raw_obj_to_volInt_helper_get_wheel_properties(
+          input_file_path_arg,
+          input_file_name_error,
+          cur_mat,
+          cur_mat_name,
+          base_name_size,
+          tiny_obj_id_to_wheel_id,
+          volInt_model);
+      }
+      else if(!std::strncmp(cur_mat_name.c_str() + base_name_size,
+                            wavefront_obj::weapon_mat_marker.c_str(),
+                            wavefront_obj::weapon_mat_marker_size))
+      {
+        // Assigning weapon ID.
+        raw_obj_to_volInt_helper_get_weapon_num(
+          input_file_path_arg,
+          input_file_name_error,
+          cur_mat,
+          cur_mat_name,
+          base_name_size,
+          tiny_obj_id_to_weapon_id);
+      }
     }
   }
 
@@ -514,51 +518,54 @@ volInt::polyhedron raw_obj_to_volInt_model(
 
 
 
-  // Checking wheels.
-  int n_wheels = volInt_model.wheels.size();
-  std::vector<int> missed_wheels;
-  std::vector<int> out_of_range_wheels;
-  missed_wheels.reserve(n_wheels);
-  out_of_range_wheels.reserve(n_wheels);
-  for(std::size_t cur_wheel = 0; cur_wheel < n_wheels; ++cur_wheel)
+  if(type == c3d::c3d_type::main_of_mechos)
   {
-    if(!volInt_model.wheels.count(cur_wheel))
+    // Checking wheels.
+    int n_wheels = volInt_model.wheels.size();
+    std::vector<int> missed_wheels;
+    std::vector<int> out_of_range_wheels;
+    missed_wheels.reserve(n_wheels);
+    out_of_range_wheels.reserve(n_wheels);
+    for(std::size_t cur_wheel = 0; cur_wheel < n_wheels; ++cur_wheel)
     {
-      missed_wheels.push_back(cur_wheel);
+      if(!volInt_model.wheels.count(cur_wheel))
+      {
+        missed_wheels.push_back(cur_wheel);
+      }
     }
-  }
-  for(std::size_t cur_wheel : volInt_model.wheels)
-  {
-    if(cur_wheel >= n_wheels)
+    for(std::size_t cur_wheel : volInt_model.wheels)
     {
-      out_of_range_wheels.push_back(cur_wheel);
+      if(cur_wheel >= n_wheels)
+      {
+        out_of_range_wheels.push_back(cur_wheel);
+      }
     }
-  }
 
-  if(missed_wheels.size() || out_of_range_wheels.size())
-  {
-    std::string missed_wheels_str;
-    std::string out_of_range_wheels_str;
-    for(std::size_t missed_wheel : missed_wheels)
+    if(missed_wheels.size() || out_of_range_wheels.size())
     {
-      missed_wheels_str.append(std::to_string(missed_wheel + 1) + "\n");
+      std::string missed_wheels_str;
+      std::string out_of_range_wheels_str;
+      for(std::size_t missed_wheel : missed_wheels)
+      {
+        missed_wheels_str.append(std::to_string(missed_wheel + 1) + "\n");
+      }
+      for(std::size_t out_of_range_wheel : out_of_range_wheels)
+      {
+        out_of_range_wheels_str.append(
+          std::to_string(out_of_range_wheel + 1) + "\n");
+      }
+      throw std::runtime_error(
+        "In " + input_file_name_error + " file " +
+        input_file_path_arg.string() +
+        " wheels order is wrong. " + '\n' +
+        "It is assumed that all wheels are numbered " +
+        "from 1 to number of wheels." + '\n' +
+        "Missed wheels:" + '\n' +
+        missed_wheels_str +
+        "Out of range wheels: " + '\n' +
+        out_of_range_wheels_str +
+        '\n');
     }
-    for(std::size_t out_of_range_wheel : out_of_range_wheels)
-    {
-      out_of_range_wheels_str.append(
-        std::to_string(out_of_range_wheel + 1) + "\n");
-    }
-    throw std::runtime_error(
-      "In " + input_file_name_error + " file " +
-      input_file_path_arg.string() +
-      " wheels order is wrong. " + '\n' +
-      "It is assumed that all wheels are numbered " +
-      "from 1 to number of wheels." + '\n' +
-      "Missed wheels:" + '\n' +
-      missed_wheels_str +
-      "Out of range wheels: " + '\n' +
-      out_of_range_wheels_str +
-      '\n');
   }
 
 
