@@ -470,8 +470,15 @@ namespace generate_bound{
         {20, 23, 26}, // x
         {18, 19, 20}, // y
       };
-    const std::size_t min_layer_vert_to_center = 22;
-    const std::vector<std::size_t> min_layer_extremes = {18, 20, 24, 26};
+    const std::unordered_map<std::size_t, std::vector<std::size_t>>
+      min_layer_verts_to_center_by_extremes =
+        {
+          {22, {18, 20, 24, 26}},
+          {19, {18, 20}},
+          {23, {20, 26}},
+          {25, {24, 26}},
+          {21, {18, 24}},
+        };
   } // namespace model
 } // namespace generate_bound
 

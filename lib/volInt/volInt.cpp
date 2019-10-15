@@ -1697,15 +1697,22 @@ polyhedron polyhedron::extr_inds_to_bound(
       }
     }
 
-    std::vector<double> min_layer_center(axes_num, 0.0);
-    for(auto extr_ind : generate_bound::model::min_layer_extremes)
+    for(auto &vert_to_center_by_extremes :
+          generate_bound::model::min_layer_verts_to_center_by_extremes)
     {
-      vector_plus_self(min_layer_center, bound_model.verts[extr_ind]);
+      std::size_t vert_to_center_ind = vert_to_center_by_extremes.first;
+      const std::vector<std::size_t> &extremes =
+        vert_to_center_by_extremes.second;
+
+      std::vector<double> extr_center(axes_num, 0.0);
+      for(auto extr_ind : extremes)
+      {
+        vector_plus_self(extr_center, bound_model.verts[extr_ind]);
+      }
+      vector_divide_self(extr_center, extremes.size());
+
+      bound_model.verts[vert_to_center_ind] = extr_center;
     }
-    vector_divide_self(min_layer_center,
-                       generate_bound::model::min_layer_extremes.size());
-    bound_model.verts[generate_bound::model::min_layer_vert_to_center] =
-      min_layer_center;
   }
 
 
