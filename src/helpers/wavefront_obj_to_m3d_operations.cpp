@@ -2024,17 +2024,22 @@ void wavefront_obj_to_m3d_model::get_debris_data(
   }
   n_debris = debris_num;
 
-  if(n_debris)
+  // Whole point of informing about found debris is to make sure
+  // that both debris model and debris bound model are found.
+  if(!(flags & obj_to_m3d_flag::generate_bound_models))
   {
-    std::cout << '\n';
-    std::cout << "Found " << std::to_string(debris_num) <<
-      " debris for " << input_m3d_path << " model." << '\n';
-  }
-  else
-  {
-    std::cout << '\n';
-    std::cout << "Couldn't find debris for " <<
-      input_m3d_path << " model." << '\n';
+    if(n_debris)
+    {
+      std::cout << '\n';
+      std::cout << "Found " << std::to_string(debris_num) <<
+        " debris for " << input_m3d_path << " model." << '\n';
+    }
+    else
+    {
+      std::cout << '\n';
+      std::cout << "Couldn't find debris for " <<
+        input_m3d_path << " model." << '\n';
+    }
   }
 }
 
