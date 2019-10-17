@@ -545,24 +545,41 @@ volInt::polyhedron raw_obj_to_volInt_model(
     {
       std::string missed_wheels_str;
       std::string out_of_range_wheels_str;
+
+      if(missed_wheels.size() == 1)
+      {
+        missed_wheels_str.append("Missed wheel:\n");
+      }
+      else
+      {
+        missed_wheels_str.append("Missed wheels:\n");
+      }
       for(std::size_t missed_wheel : missed_wheels)
       {
         missed_wheels_str.append(std::to_string(missed_wheel + 1) + "\n");
+      }
+
+      if(out_of_range_wheels.size() == 1)
+      {
+        missed_wheels_str.append("Out of range wheel:" "\n");
+      }
+      else
+      {
+        missed_wheels_str.append("Out of range wheels:" "\n");
       }
       for(std::size_t out_of_range_wheel : out_of_range_wheels)
       {
         out_of_range_wheels_str.append(
           std::to_string(out_of_range_wheel + 1) + "\n");
       }
+
       throw std::runtime_error(
         "In " + input_file_name_error + " file " +
         input_file_path_arg.string() +
         " wheels order is wrong. " + '\n' +
         "It is assumed that all wheels are numbered " +
         "from 1 to number of wheels." + '\n' +
-        "Missed wheels:" + '\n' +
         missed_wheels_str +
-        "Out of range wheels: " + '\n' +
         out_of_range_wheels_str +
         '\n');
     }
