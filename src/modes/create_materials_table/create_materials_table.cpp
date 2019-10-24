@@ -255,7 +255,7 @@ void create_materials_table_mode(
           materials_maps[mat_tables::append_order_el::additional_body]);
 
         std::string html_table_file;
-        // Counting number of materials to be written in *.html file.
+        // Counting number of materials to be written to *.html file.
         std::size_t mat_to_write = 0;
         std::size_t colors_to_write = 0;
         for(const auto &cur_append : mat_tables::html::append_order)

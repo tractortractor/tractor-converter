@@ -127,9 +127,10 @@ void obj_to_vangers_3d_model_mode(
         std::cout << "Failed to get weapon attachment point model " <<
           weapon_attachment_point_file.string() << '\n';
         std::cout << '\n';
-        std::cout << "Can't find 3 reference vertices." << '\n';
-        std::cout << "Generated " << ext::readable::m3d << " mechos and " <<
-          "weapon files will have incorrect attachment point data." << '\n';
+        std::cout << "Couldn't find 3 reference vertices." << '\n';
+        std::cout << "Generated " << ext::readable::m3d <<
+          " mechos and weapon files will have "
+          "incorrect attachment point data." << '\n';
         std::cout << '\n';
         weapon_attachment_point_model_ptr = nullptr;
       }
@@ -140,7 +141,7 @@ void obj_to_vangers_3d_model_mode(
       std::cout << "Failed to get weapon attachment point model: " <<
         e.what() << '\n';
       std::cout << "Generated " << ext::readable::m3d <<
-        " mechos and weapon files may have " <<
+        " mechos and weapon files will have " <<
         "incorrect weapon attachment point data." << '\n';
       weapon_attachment_point_model_ptr = nullptr;
     }
@@ -167,7 +168,7 @@ void obj_to_vangers_3d_model_mode(
         std::cout << "Failed to get center of mass model " <<
           center_of_mass_file.string() << '\n';
         std::cout << '\n';
-        std::cout << "Can't find 3 reference vertices." << '\n';
+        std::cout << "Couldn't find 3 reference vertices." << '\n';
         std::cout << "Generated " << ext::readable::m3d_and_a3d <<
           " files will not have custom center of mass." << '\n';
         std::cout << '\n';
@@ -303,7 +304,7 @@ void obj_to_vangers_3d_model_mode(
 
     // Converting files for each game directory.
     // It is assumed that each game directory
-    // have it's own *.prm parameters and *.m3d weapon files.
+    // has its own *.prm parameters and *.m3d weapon files.
     for(const auto &game_dir : vangers_game_dirs)
     {
       std::unordered_map<std::string, double> non_mechos_scale_sizes;

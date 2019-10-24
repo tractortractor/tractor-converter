@@ -606,7 +606,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
     if(ifs)
     {
       // When debris or animation frame *.obj file is deleted,
-      // config option for this debris or animation frame is not expected.
+      // config option for that debris or animation frame is not expected.
       // To prevent "unrecognised option" error,
       // allow_unregistered argument is set to true for parse_config_file().
       boost::program_options::store(parse_config_file(ifs, config, true), vm);
@@ -636,7 +636,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
       }
       catch(std::exception &e)
       {
-        std::cout << "Failed to retrieve custom center of mass in " <<
+        std::cout << "Failed to retrieve custom center of mass from " <<
           input_file_name_error << " file " <<
           main_model.wavefront_obj_path << '\n';
         std::cout << e.what() << '\n';
@@ -711,7 +711,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_m3d(
           catch(std::exception &e)
           {
             std::cout <<
-              "Failed to retrieve custom center of mass in " <<
+              "Failed to retrieve custom center of mass from " <<
               input_file_name_error << " file " <<
               (*debris_models)[cur_debris].wavefront_obj_path << '\n';
             std::cout << e.what() << '\n';
@@ -873,7 +873,7 @@ void wavefront_obj_to_m3d_model::read_file_cfg_a3d(
         catch(std::exception &e)
         {
           std::cout <<
-            "Failed to retrieve custom center of mass in " <<
+            "Failed to retrieve custom center of mass from " <<
             input_file_name_error << " file " <<
             animated_models[cur_animated].wavefront_obj_path << '\n';
           std::cout << e.what() << '\n';
@@ -993,7 +993,7 @@ std::vector<double> wavefront_obj_to_m3d_model::get_medium_vert(
   // middle_x is either xmax of *.m3d or -xmax of *.m3d.
   // middle_y is either ymax of *.m3d or -ymax of *.m3d.
   // middle_z for all those polygons is zmin of bound *.c3d.
-  // In all other polygons middle point is average vertex.
+  // In all other polygons, middle point is average vertex.
   if(poly.color_id ==
      c3d::color::string_to_id::zero_reserved)
   {
@@ -1333,7 +1333,7 @@ std::vector<point*>
       {
         // ref_vert_one_ind is std::pair<int, int>.
         // First is position of polygon which contains vertex of reference.
-        // Second is vertex index in this polygon.
+        // Second is vertex index in that polygon.
         if(reference_model->ref_vert_one_ind == vert_indices)
         {
           ref_points[0] = &model.verts[model.faces[poly_ind].verts[v_f_ind]];
@@ -1360,7 +1360,7 @@ std::vector<point*>
     std::string err_msg;
     err_msg.append(
       input_file_name_error + " file " + model.wavefront_obj_path + "\n" +
-      "Can't find reference points for " +
+      "Couldn't find reference points for " +
       c3d::color::ids.by<c3d::color::id>().at(color_id));
     if(wheel_id != volInt::invalid::wheel_id)
     {
@@ -1540,7 +1540,7 @@ void wavefront_obj_to_m3d_model::get_weapons_data(volInt::polyhedron &model)
 
   // There are m3d::weapon_slot::max_slots weapons in all Vangers models.
   // cur_weapon_verts contains pair of vertices for each weapon.
-  // This pair of vertices is later used to get weapons' angles.
+  // That pair of vertices is later used to get weapons' angles.
   std::vector<std::vector<point*>> cur_weapon_verts;
   cur_weapon_verts.reserve(m3d::weapon_slot::max_slots);
 
@@ -1722,8 +1722,8 @@ std::unordered_map<int, volInt::polyhedron>
       volInt::face &cur_wheel_poly =
         cur_wheel_model.faces[cur_poly_nums[wheel_id]];
 
-      // Checking if vertices' and normals' indices are already in the maps
-      // and adding them if they are not.
+      // Checking whether vertices' and normals' indices
+      // are already in the maps and adding them if they are not.
       // Key of the map is original vertex/normal index.
       // Value of the map is new vertex/normal index.
       for(std::size_t v_f_ind = 0; v_f_ind < v_per_poly; ++v_f_ind)
@@ -1769,7 +1769,7 @@ std::unordered_map<int, volInt::polyhedron>
   }
 
   // Copying vertices and normals into wheel models.
-  // Maps created earlier are used to figure out which vertex to copy where.
+  // Maps created earlier are used to figure out where to copy each vertex.
   for(const auto wheel_steer_num : main_model.wheels_steer)
   {
     if(main_model.wheels_non_ghost.count(wheel_steer_num))
@@ -1803,8 +1803,8 @@ std::unordered_map<int, volInt::polyhedron>
           main_model.vertNorms[cur_wheel_norm_ind.first];
       }
 
-      // Moving coordinate system to wheel center.
-      // So center of wheel model will have coordinates: 0, 0, 0.
+      // Moving coordinate system to wheel center,
+      // so center of wheel model will have coordinates: 0, 0, 0.
       point wheel_center = cur_wheel_model.get_model_center();
       cur_wheel_model.offset_point() = wheel_center;
       cur_wheel_model.move_coord_system_to_point_inv_neg_vol(wheel_center);

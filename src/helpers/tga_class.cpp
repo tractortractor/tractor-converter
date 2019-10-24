@@ -22,7 +22,7 @@ std::size_t get_color_size(
     if(error_flags & error_handling::throw_exception)
     {
       throw std::runtime_error(
-        "Image " + path_string + " have color depth size " +
+        "Image " + path_string + " has color depth size " +
         std::to_string(color_size) +
         " bytes which is different from expected " +
         std::to_string(tga_default_color_size) + " bytes.");
@@ -53,7 +53,7 @@ std::size_t get_colors_num(
     if(error_flags & error_handling::throw_exception)
     {
       throw std::runtime_error(
-        "Image " + path_string + " have number of colors in palette " +
+        "Image " + path_string + " has number of colors in the palette " +
         std::to_string(colors_num) + " which is greater than expected max " +
         std::to_string(tga_default_colors_num_in_pal) + " colors.");
     }
@@ -86,7 +86,7 @@ tga::tga(const std::string &bytes_arg,
   {
     std::string err_msg =
       "Image " + file_name_error +
-      " have color map type " + std::to_string(color_map_type) + ".\n";
+      " has color map type " + std::to_string(color_map_type) + ".\n";
     if(color_map_type == tga_color_map_type_empty)
     {
       err_msg.append("Color map is not present.\n");
@@ -106,7 +106,7 @@ tga::tga(const std::string &bytes_arg,
   {
     std::string err_msg =
       "Image " + file_name_error +
-      " have image type " + std::to_string(image_type);
+      " has image type " + std::to_string(image_type);
     if(image_types.count(image_type))
     {
       err_msg.append(" which means \"" + image_types.at(image_type) + "\"");

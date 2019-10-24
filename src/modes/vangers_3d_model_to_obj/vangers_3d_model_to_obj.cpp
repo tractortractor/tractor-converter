@@ -41,7 +41,7 @@ double scale_from_map(
     {
       std::cout << '\n';
       std::cout << (input_file_name_error + " file " + bogus_file.string() +
-        " have unspecified scale_size for " + to_lookup_path.string() +
+        " has unspecified scale_size for " + to_lookup_path.string() +
         " file. Default scale " + std::to_string(default_scale) +
         " is used.") << '\n';
       return default_scale;
@@ -160,7 +160,7 @@ void vangers_3d_model_to_obj_mode(
         std::cout << "Failed to get weapon attachment point model " <<
           weapon_attachment_point_file.string() << '\n';
         std::cout << '\n';
-        std::cout << "Can't find 3 reference vertices." << '\n';
+        std::cout << "Couldn't find 3 reference vertices." << '\n';
         std::cout << "Generated weapon and mechos " << ext::readable::obj <<
           " files should not be converted back to " << ext::readable::m3d <<
           " since there will be no data about " <<
@@ -175,7 +175,7 @@ void vangers_3d_model_to_obj_mode(
       std::cout << "Failed to get weapon attachment point model: " <<
         e.what() << '\n';
       std::cout << "Generated weapon and mechos " << ext::readable::obj <<
-        " files  should not be converted back to " <<
+        " files should not be converted back to " <<
         ext::readable::m3d << " since there will be " <<
         "no data about weapons' attachment points." << '\n';
       weapon_attachment_point_model_ptr = nullptr;
@@ -231,7 +231,7 @@ void vangers_3d_model_to_obj_mode(
           std::cout << "Failed to get center of mass model " <<
             center_of_mass_file.string() << '\n';
           std::cout << '\n';
-          std::cout << "Can't find 3 reference vertices." << '\n';
+          std::cout << "Couldn't find 3 reference vertices." << '\n';
           std::cout << "Center of mass will not be extracted." << '\n';
           std::cout << '\n';
           center_of_mass_model_ptr = nullptr;
@@ -383,7 +383,7 @@ void vangers_3d_model_to_obj_mode(
 
 
     // Converting files for each game directory.
-    // It is assumed that each game directory has it's own
+    // It is assumed that each game directory has its own
     // *.prm parameters and *.m3d weapons files.
     for(const auto &game_dir : vangers_game_dirs)
     {

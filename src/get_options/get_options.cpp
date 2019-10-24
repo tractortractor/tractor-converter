@@ -45,25 +45,25 @@ boost::program_options::variables_map get_options(int ac, char** av)
              "\n"
              "\nBy default, creates one usage palette for all files."
              "\n\"" + option::name::output_file + "\" "
-                 "must be specified in this case."
+                 "must be specified in that case."
              "\n"
              "\nIf \"" + option::name::usage_pal_for_each_file + "\" "
                  "is specified, creates usage palette for each file."
              "\n\"" + option::name::output_dir + "\" "
-                 "must be specified in this case."
+                 "must be specified in that case."
              "\n"
              "\n\"" + option::name::source_dir + "\" "
-                 "options must be specified."
+                 "option must be specified."
            "\n"
            "\n"
            "\n"
            "\n\tremove_not_used_pal - Use output of \"usage\" mode "
                "to create 2 palettes."
              "\n"
-             "\nOne with used colors goes to "
+             "\nOne with used colors is saved to "
                  "\"" + option::name::output_dir + "\"."
              "\n"
-             "\nOne with unused colors goes to "
+             "\nOne with unused colors is saved to "
                  "\"" + option::name::output_dir_unused + "\"."
              "\nThose unused colors are still needed to display text "
                  "and other game elements properly."
@@ -132,7 +132,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "\n"
            "\n\tcompare_bmp_escave_outside - Compare values of bytes "
                "in " + ext::readable::bmp +
-               " images for escave and non-escave files."
+               " images between escave and non-escave files."
              "\nCreate map to indicate which bytes of source files "
                  "match bytes of compared files."
              "\nSpecify \"" + option::name::readable_output + "\" option "
@@ -145,7 +145,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "\n"
            "\n"
            "\n\tbmp_to_tga - Convert Vangers " + ext::readable::bmp +
-               " files from " + option::name::source_dir +
+               " files found in " + option::name::source_dir +
                " folder to " + ext::readable::tga + " files."
              "\n"
              "\nAll input " + ext::readable::pal +
@@ -160,7 +160,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
              "\nIf \"" + option::name::pal_for_each_file + "\" "
                  "option is specified, \"" + option::name::pal_dir + "\" "
                  "must be specified instead of \"" + option::name::pal + "\"."
-             "\nIn this case, for each " + ext::readable::bmp + " file in "
+             "\nIn that case, for each " + ext::readable::bmp + " file in "
                  "\"" + option::name::source_dir + "\", "
                  "there must be " + ext::readable::pal +
                  " file with same name in \"" + option::name::pal_dir + "\"."
@@ -202,7 +202,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
            "\n"
            "\n"
            "\n\tvangers_3d_model_to_obj - Convert Vangers " +
-               ext::readable::m3d_and_a3d + " models into " +
+               ext::readable::m3d_and_a3d + " models to " +
                ext::readable::wavefront_obj + " ones."
              "\nFor each game directory found in "
                  "\"" + option::name::source_dir + "\", output directory in "
@@ -246,7 +246,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
                  " file which contains model which will mark center of mass."
              "\nSpecify \"" + option::name::wavefront_mtl + "\" "
                  "option to copy " + ext::readable::mtl +
-                 " file to output folders, so generated " +
+                 " file to output folders so generated " +
                  ext::readable::obj + " files will refer to it."
              "\nSpecify \"" + option::name::extract_nonexistent_weapons + "\" "
                  "option to extract weapons which are marked as nonexistent."
@@ -300,7 +300,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
                  "option to recalculate vertex normals."
              "\nUse \"" + option::name::max_smooth_angle + "\" "
                  "option to specify max angle between "
-                 "smooth faces when generating normals."
+                 "smooth faces while generating normals."
              "\nSpecify \"" + option::name::gen_bound_models + "\" "
                  "option to automatically generate bound models."
              "\n\"" + option::name::gen_bound_layers_num + "\" "
@@ -436,7 +436,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
             " should be created for each " + ext::readable::tga + " file.\n"
         "\t\"" + option::name::map + "\" and "
             "\"" + option::name::output_dir_through_map + "\" "
-            "must be specified in this case.\n"
+            "must be specified in that case.\n"
         "\tUsed by \"" + mode::name::tga_to_bmp + "\" mode.\n").c_str())
       (option::name::map.c_str(),
        boost::program_options::value<std::string>(),
@@ -452,7 +452,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
       (option::name::fix_null_bytes_and_direction.c_str(),
        boost::program_options::bool_switch()->
          default_value(option::default_val::fix_null_bytes_and_direction),
-       ("\tIf null bytes got changed to never used color "
+       ("\tIf null bytes got changed to never used color, "
             "or image got rotated/flipped, "
             "specify this option to deal with those problems.\n"
         "\tUsed by \"" + mode::name::tga_to_bmp + "\" mode.\n").c_str())
@@ -478,7 +478,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
          default_value(option::default_val::m3d_weapon_file),
        ("\tName of " + ext::readable::m3d +
             " file which contains weapon model.\n"
-        "\tThis model is used to indicate positions "
+        "\tThat model is used to indicate positions "
             "of weapons slots on mechos models.\n"
         "\tUsed by \"" + mode::name::vangers_3d_model_to_obj + "\" "
             "mode.\n").c_str())
@@ -486,7 +486,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
        boost::program_options::value<std::string>()->
          default_value(option::default_val::weapon_attachment_point_file),
        ("\tPath to " + ext::readable::wavefront_obj + " file.\n"
-        "\tThis " + ext::readable::obj + " model is used to indicate "
+        "\tThat " + ext::readable::obj + " model is used to indicate "
             "position of attachment point in weapons models.\n"
         "\tUsed by \"" + mode::name::vangers_3d_model_to_obj + "\" and "
             "\"" + mode::name::obj_to_vangers_3d_model + "\" "
@@ -495,7 +495,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
        boost::program_options::value<std::string>()->
          default_value(option::default_val::ghost_wheel_file),
        ("\tPath to " + ext::readable::wavefront_obj + " file.\n"
-        "\tThis " + ext::readable::obj + " model is used to indicate "
+        "\tThat " + ext::readable::obj + " model is used to indicate "
             "position of wheels with no polygons.\n"
         "\tUsed by \"" + mode::name::vangers_3d_model_to_obj + "\" "
             "mode.\n").c_str())
@@ -516,7 +516,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
        boost::program_options::value<std::string>()->
          default_value(option::default_val::center_of_mass_file),
        ("\tPath to " + ext::readable::wavefront_obj + " file.\n"
-        "\tThis " + ext::readable::obj + " model is used to indicate position "
+        "\tThat " + ext::readable::obj + " model is used to indicate position "
             "of extracted center of mass.\n"
         "\tUsed by \"" + mode::name::vangers_3d_model_to_obj + "\" and "
             "\"" + mode::name::obj_to_vangers_3d_model + "\" "
@@ -594,7 +594,7 @@ boost::program_options::variables_map get_options(int ac, char** av)
       (option::name::max_smooth_angle.c_str(),
        boost::program_options::value<std::string>()->
          default_value(option::default_val::max_smooth_angle),
-       ("\tUsed when recalculating vertex normals.\n"
+       ("\tUsed while recalculating vertex normals.\n"
         "\tAngle is measured in radians by default.\n"
         "\tIf \"d\" character is found right after the number, "
             "value is measured in degrees.\n"
@@ -615,14 +615,14 @@ boost::program_options::variables_map get_options(int ac, char** av)
       (option::name::gen_bound_layers_num.c_str(),
        boost::program_options::value<std::size_t>()->
          default_value(option::default_val::gen_bound_layers_num),
-       ("\tUsed when generating bound model.\n"
+       ("\tUsed while generating bound model.\n"
         "\tMore layers will make generated bound model more precise.\n"
         "\tUsed by \"" + mode::name::obj_to_vangers_3d_model + "\" "
             "mode.\n").c_str())
       (option::name::gen_bound_area_threshold.c_str(),
        boost::program_options::value<double>()->
          default_value(option::default_val::gen_bound_area_threshold),
-       ("\tUsed when generating bound model.\n"
+       ("\tUsed while generating bound model.\n"
         "\tWith higher values more parts of original model will be considered "
             "insignificant and will end up outside of generated bound.\n"
         "\tMaximum is " +

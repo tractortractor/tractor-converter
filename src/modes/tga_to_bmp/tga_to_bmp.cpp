@@ -122,11 +122,11 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
           std::string tga_image_descriptor =
             bytes.substr(tga_image_specification_image_descriptor_pos,
                          tga_image_specification_image_descriptor_str.size());
-          // Checking if image descriptor is expected by Vangers.
+          // Checking whether image descriptor is expected by Vangers.
           if(tga_image_descriptor !=
              tga_image_specification_image_descriptor_str)
           {
-            // Checking if bit 4 is off counting from 0.
+            // Checking whether bit 4 is off counting from 0.
             // If so, flip horizontally.
             if(tga_image_descriptor[0] & '\x10')
             {
@@ -149,7 +149,7 @@ void tga_to_bmp_mode(const boost::program_options::variables_map options)
                 row_start_pos += tga_image.width;
               }
             }
-            // Checking if bit 5 is off counting from 0.
+            // Checking whether bit 5 is off counting from 0.
             // If so, flip vertically.
             if(!(tga_image_descriptor[0] & '\x20'))
             {

@@ -221,7 +221,7 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
     throw std::runtime_error(
       input_file_name_error + " file " +
       input_m3d_path.string() +
-      ". Non-mechos model have non-zero n_wheels value.");
+      ". Non-mechos model has non-zero n_wheels value.");
   }
   if(flags & m3d_to_obj_flag::extract_bound_model)
   {
@@ -240,7 +240,7 @@ volInt::polyhedron m3d_to_wavefront_obj_model::weapon_m3d_to_wavefront_objs()
     throw std::runtime_error(
       input_file_name_error + " file " +
       input_m3d_path.string() +
-      ". Non-mechos model have non-zero weapon_slots_existence.");
+      ". Non-mechos model has non-zero weapon_slots_existence.");
   }
 
   save_file_cfg_m3d(main_models[wavefront_obj::obj_name::main]);
@@ -334,7 +334,7 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
     throw std::runtime_error(
       input_file_name_error + " file " +
       input_m3d_path.string() +
-      ". Non-mechos model have non-zero n_wheels value.");
+      ". Non-mechos model has non-zero n_wheels value.");
   }
 
   if(flags & m3d_to_obj_flag::extract_bound_model)
@@ -354,7 +354,7 @@ void m3d_to_wavefront_obj_model::other_m3d_to_wavefront_objs()
     throw std::runtime_error(
       input_file_name_error + " file " +
       input_m3d_path.string() +
-      ". Non-mechos model have non-zero weapon_slots_existence.");
+      ". Non-mechos model has non-zero weapon_slots_existence.");
   }
 
   save_file_cfg_m3d(main_models[wavefront_obj::obj_name::main]);
@@ -432,7 +432,7 @@ volInt::face m3d_to_wavefront_obj_model::read_polygon(
       " polygon " + std::to_string(cur_poly) +
       " at position " +
       std::to_string(m3d_data_cur_pos - sizeof(int)) +
-      " have unexpected number of vertices " +
+      " has unexpected number of vertices " +
       std::to_string(numVerts) +
       ". Expected " + std::to_string(model.numVertsPerPoly) + ".");
   }
@@ -455,7 +455,7 @@ volInt::face m3d_to_wavefront_obj_model::read_polygon(
       ". polygon " << std::to_string(cur_poly) <<
       " at position " +
       std::to_string(m3d_data_cur_pos - sizeof(unsigned int)) +
-      " have non-zero color_shift " << std::to_string(color_shift) <<
+      " has non-zero color_shift " << std::to_string(color_shift) <<
       ". It is assumed that color_shift of any polygon is always 0." << '\n';
   }
 
@@ -515,7 +515,7 @@ volInt::polyhedron m3d_to_wavefront_obj_model::read_c3d(
   {
     throw std::runtime_error(
       input_file_name_error + " file " +
-      input_m3d_path.string() + " have unexpected c3d_version " +
+      input_m3d_path.string() + " has unexpected c3d_version " +
       std::to_string(version) + " at position " +
       std::to_string(m3d_data_cur_pos - sizeof(int)) +
       ". Expected " + std::to_string(c3d::version_req) + ".");
@@ -831,7 +831,7 @@ void m3d_to_wavefront_obj_model::move_weapon_model(
 
 
 
-  // Changing coordinates of all vertices of weapon_model,
+  // Changing coordinates of all vertices of weapon_model
   // so it will be in the right place.
   // new_position is center coordinates of weapon_model
   // relative to main model center.
@@ -1005,7 +1005,7 @@ void m3d_to_wavefront_obj_model::read_m3d_weapon_slot(std::size_t slot_id)
   // In weapon_slots_existence only rightmost 3 bits are important.
   // Each bit corresponds to weapon slot from right to left.
   // Example: rightmost bits are "001".
-  // In this case weapon 1 exists, weapon 2 and 3 does not exist.
+  // In that case, weapon 1 exists, weapon 2 and 3 do not exist.
   cur_weapon_slot_data[slot_id].exists =
     ((1 << slot_id) & weapon_slots_existence);
 }
@@ -1060,10 +1060,10 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
     "\n\n"
     "# Use center of mass mark to get custom center of mass "
       "for main model.\n"
-    "# Center of mass is never used in game but used to generate "
-      "inertia tensor.\n"
-    "# Doesn't change behavior of the object in game if "
-      "inertia tensor was overwritten.\n");
+    "# Center of mass is never used in the game "
+      "but used to generate inertia tensor.\n"
+    "# Doesn't change behavior of the object in the game "
+      "if inertia tensor was overwritten.\n");
   if(!(flags & m3d_to_obj_flag::use_custom_rcm_by_default))
   {
     conf_data_to_save.push_back('#');
@@ -1099,7 +1099,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
   conf_data_to_save.append(
     "\n\n"
     "# Custom inertia tensor matrix for main model.\n"
-    "# Split in 3 rows for convenience.\n");
+    "# Split into 3 rows for convenience.\n");
   for(std::size_t cur_row = 0; cur_row < volInt::axes_num; ++cur_row)
   {
     conf_data_to_save.append(
@@ -1137,10 +1137,10 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
       "\n\n"
       "# Use center of mass mark to get custom center of mass "
         "for debris models.\n"
-      "# Center of mass is never used in game but used "
-        "to generate inertia tensor.\n"
-      "# Doesn't change behavior of the debris in game if inertia tensor "
-        "was overwritten.\n");
+      "# Center of mass is never used in the game "
+        "but used to generate inertia tensor.\n"
+      "# Doesn't change behavior of the debris in the game "
+        "if inertia tensor was overwritten.\n");
     if(!(flags & m3d_to_obj_flag::use_custom_rcm_by_default))
     {
       conf_data_to_save.push_back('#');
@@ -1182,7 +1182,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_m3d(
         "\n\n"
         "# Custom inertia tensor matrix for debris model " +
           std::to_string(cur_debris + 1) + ".\n"
-        "# Split in 3 rows for convenience.\n");
+        "# Split into 3 rows for convenience.\n");
       for(std::size_t cur_row = 0; cur_row < volInt::axes_num; ++cur_row)
       {
         conf_data_to_save.append(
@@ -1241,10 +1241,10 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
     "\n\n"
     "# Use center of mass mark to get custom center of mass "
       "for animated models.\n"
-    "# Center of mass is never used in game but used "
-      "to generate inertia tensor.\n"
-    "# Doesn't change behavior of animated model in game if inertia tensor "
-      "was overwritten.\n");
+    "# Center of mass is never used in the game "
+      "but used to generate inertia tensor.\n"
+    "# Doesn't change behavior of animated model in the game "
+      "if inertia tensor was overwritten.\n");
   if(!(flags & m3d_to_obj_flag::use_custom_rcm_by_default))
   {
     conf_data_to_save.push_back('#');
@@ -1254,8 +1254,8 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
 
 
   conf_data_to_save.append("\n\n"
-    "# Overwrite inertia tensor matrix for animated models when "
-      "custom matrix is supplied.\n"
+    "# Overwrite inertia tensor matrix for animated models "
+      "when custom matrix is supplied.\n"
     "# Used in many calculations.\n");
   if(!(flags & m3d_to_obj_flag::use_custom_J_by_default))
   {
@@ -1286,7 +1286,7 @@ void m3d_to_wavefront_obj_model::save_file_cfg_a3d(
       "\n\n"
       "# Custom inertia tensor matrix for animated model " +
         std::to_string(cur_animated + 1) + ".\n"
-      "# Split in 3 rows for convenience.\n");
+      "# Split into 3 rows for convenience.\n");
     for(std::size_t cur_row = 0; cur_row < volInt::axes_num; ++cur_row)
     {
       conf_data_to_save.append(

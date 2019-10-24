@@ -131,7 +131,7 @@ struct wheel_data
   double width;
   double radius;
 
-  // Does not exist in actual *.m3d file.
+  // Those don't exist in actual *.m3d file.
   int ghost;
   std::size_t wheel_model_index;
 };

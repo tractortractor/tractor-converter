@@ -70,7 +70,7 @@ std::size_t raw_obj_to_volInt_helper_get_body_color(
   std::string mat_name,
   volInt::polyhedron &volInt_model)
 {
-  // Checking if string is "body_offset_*_shift_*" string. * - integer.
+  // Checking whether string is "body_offset_*_shift_*" string. * - integer.
   // Skipping color operations if it doesn't match.
 
   std::size_t base_name_size = c3d::color::string::body.size();
@@ -87,7 +87,7 @@ std::size_t raw_obj_to_volInt_helper_get_body_color(
 
   std::string color_offset_str;
   std::string color_shift_str;
-  // Checking if there is enough space for "body_offset_*".
+  // Checking whether there is enough space for "body_offset_*".
   if(mat_name.size() < wavefront_obj::body_mat_str_el_1_size)
   {
     return base_name_size;
@@ -108,9 +108,9 @@ std::size_t raw_obj_to_volInt_helper_get_body_color(
     wavefront_obj::body_mat_str_el_1_size +
     offset_num_size +
     wavefront_obj::body_mat_str_el_2_size;
-  if(// Checking if there is enough space for "body_offset_*_shift_*".
+  if(// Checking whether there is enough space for "body_offset_*_shift_*".
      mat_name.size() < body_mat_pre_shift_number_size ||
-     // Checking if there is "_shift_" part of string.
+     // Checking whether there is "_shift_" part of string.
      std::strncmp(mat_name.c_str() +
                     wavefront_obj::body_mat_str_el_1_size +
                     offset_num_size,
@@ -378,7 +378,7 @@ volInt::polyhedron raw_obj_to_volInt_model(
 
 
 
-  // Getting sizes and checking if retrieved info is correct.
+  // Getting sizes and checking whether retrieved info is correct.
 
   // attrib.vertices and attrib.norms are std::vector<double>.
   // Each 3 double numbers = 1 vertex.
@@ -436,7 +436,7 @@ volInt::polyhedron raw_obj_to_volInt_model(
   {
     std::size_t base_name_size = 0;
     const std::string &cur_mat_name = materials[cur_mat].name;
-    // Checking if first part of cur_mat_name is "body_offset_".
+    // Checking whether first part of cur_mat_name is "body_offset_".
     if(!std::strncmp(cur_mat_name.c_str(),
                      wavefront_obj::body_mat_str_el_1.c_str(),
                      wavefront_obj::body_mat_str_el_1_size))
@@ -451,8 +451,8 @@ volInt::polyhedron raw_obj_to_volInt_model(
     }
     else
     {
-      // Doing max_name_size check.
-      // So longer material names will be selected.
+      // Doing max_name_size check,
+      // so longer material names will be selected.
       // Example: "body_green" vs "body", "body_green" will be selected.
       std::size_t max_name_size = 0;
       for(const auto &name_id_pair : c3d::color::ids.by<c3d::color::name>())
@@ -655,8 +655,8 @@ volInt::polyhedron raw_obj_to_volInt_model(
 
 
 
-      // If polygon is saved in actual *.m3d/*.a3d model
-      // check if normal indices were specified in *.obj file.
+      // If polygon is saved in actual *.m3d/*.a3d model,
+      // check whether normal indices were specified in *.obj file.
       if(cur_volint_poly_ref.color_id <
          c3d::color::string_to_id::max_colors_ids)
       {
@@ -670,7 +670,7 @@ volInt::polyhedron raw_obj_to_volInt_model(
               "In " + input_file_name_error + " file " +
               input_file_path_arg.string() +
               " face " + std::to_string(cur_poly_num) +
-              " have no normal index specified for vertex " +
+              " has no normal index specified for vertex " +
               std::to_string(cur_poly_vert_num) + "." + '\n' +
               "All faces which are part of actual model" +
               " must have specified normal indices.");

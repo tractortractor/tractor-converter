@@ -315,7 +315,7 @@ namespace c3d{
       // End of color id list in Vangers source.
       const std::string max_colors_ids =           "max_colors_ids";
 
-      // Doesn't exist in Vangers source.
+      // Those don't exist in Vangers source.
       const std::string virtual_object_ids_begin = "virtual_object_ids_begin";
       const std::string center_of_mass =           "center_of_mass";
       const std::string attachment_point =         "attachment_point";
@@ -352,7 +352,7 @@ namespace c3d{
       // End of color id list in Vangers source.
       const unsigned int max_colors_ids =           25;
 
-      // Doesn't exist in Vangers source.
+      // Those don't exist in Vangers source.
       const unsigned int virtual_object_ids_begin = 1000000;
       const unsigned int center_of_mass =           1000001;
       const unsigned int attachment_point =         1000002;
@@ -426,7 +426,7 @@ namespace c3d{
       (string_to_id::rotten_item, string::rotten_item)
       // End of color id list in Vangers source.
       (string_to_id::max_colors_ids, string::max_colors_ids)
-      // Doesn't exist in Vangers source.
+      // Those don't exist in Vangers source.
       (string_to_id::virtual_object_ids_begin,
          string::virtual_object_ids_begin)
       (string_to_id::center_of_mass, string::center_of_mass)
@@ -683,7 +683,7 @@ namespace mat_tables{
     {c3d::color::string::rotten_item,        {224, 4}},
   };
 
-  // Doesn't exist in Vangers source.
+  // Those don't exist in Vangers source.
   const offset_map special_offsets
   {
     {c3d::color::string::center_of_mass,     {128, 4}},

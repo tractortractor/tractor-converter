@@ -40,7 +40,7 @@ void tga_merge_unused_pal_mode(
            ext::tga)
       {
         // Leaving extra 768 bytes at the beginning of
-        // *.tga file string to move header here in case
+        // *.tga file string to move header there in case
         // original palette is smaller than default 768.
         std::size_t original_start_of_image = tga_default_pal_size;
         std::string bytes =
@@ -71,7 +71,7 @@ void tga_merge_unused_pal_mode(
 
 
 
-        // Counting number of null bytes colors from the end in *.tga palette.
+        // Counting number of null bytes colors from the end of *.tga palette.
         std::size_t null_colors = 0;
         std::vector<bool> orig_pal_null_map(tga_default_colors_num_in_pal,
                                             false);
@@ -115,7 +115,7 @@ void tga_merge_unused_pal_mode(
           throw std::runtime_error(
             "Number of palette colors of image " + file.path().string() +
             " is " + std::to_string(used_pal_colors) +
-            ", number of colors in palette " + unused_pal_file.string() +
+            ". Number of colors in palette " + unused_pal_file.string() +
             " is " + std::to_string(unused_pal_colors_num) +
             ". Their sum is greater than expected max of " +
             std::to_string(tga_default_colors_num_in_pal) + ".");

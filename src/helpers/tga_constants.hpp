@@ -59,7 +59,7 @@ const std::unordered_map<int, std::string> image_types =
     {32, "compressed color-mapped data, using Huffman, Delta, and "
          "runlength encoding"},
     {33, "compressed color-mapped data, using Huffman, Delta, "
-         "and runlength encoding.  4-pass quadtree-type process"},
+         "and runlength encoding. 4-pass quadtree-type process"},
   };
 
 const std::string tga_id_length_str("\0", 1);

@@ -326,7 +326,7 @@ void sicher_cfg_reader::move_pos_to_value(const std::string &value_name)
   {
     throw std::runtime_error(
       input_file_name_error + " file " + input_file_path_str + ". " +
-      "Can't find next key \"" + value_name + "\".");
+      "Couldn't find next key \"" + value_name + "\".");
   }
 }
 

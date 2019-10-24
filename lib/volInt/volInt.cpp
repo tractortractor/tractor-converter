@@ -60,7 +60,7 @@ double degrees_to_radians(double degrees)
 
 
 //// VANGERS SOURCE
-//// How angle conversions works in Vangers code.
+//// How angle conversions work in Vangers code.
 //#define M_PI 3.14159265358979323846
 //
 //Pi_len = 11
@@ -84,7 +84,7 @@ int radians_to_sicher_angle(double radians)
 
 
 //// VANGERS SOURCE
-//// How rotation works in Vangers source.
+//// How rotation works in Vangers code.
 //inline Vector Vector::operator*(const DBM &m) const
 //{
 //  return
@@ -878,7 +878,7 @@ void polyhedron::faces_calc_params()
 void polyhedron::faces_calc_params_inv_neg_vol()
 {
   // If volume is negative, vertices have wrong order.
-  // They must be reversed again in this case.
+  // They must be reversed again in that case.
   faces_calc_params(); // Must be called before "check_volume()".
   if(check_volume() < 0)
   {
@@ -1009,7 +1009,7 @@ void polyhedron::recalc_vertNorms(double max_smooth_angle)
   }
 
   // Using angles between faces to determine
-  // if vertices between faces should be smooth.
+  // whether vertices between faces should be smooth.
   std::unordered_set<
     std::pair<std::size_t, std::size_t>,
     boost::hash<std::pair<std::size_t, std::size_t>>>
@@ -1299,9 +1299,9 @@ bool polyhedron::find_ref_points()
             ref_vert_two_ind.second = v_2_ind;
             ref_vert_two = cur_point;
 
-            // Finding third vert which is not collinear
-            // to vert one and vert two.
-            // Needed to check if the model was rotated by other axes.
+            // Finding third vert
+            // which is not collinear to vert one and vert two.
+            // Needed to check whether the model was rotated by other axes.
             for(std::size_t poly_3_ind = 0; poly_3_ind < n_faces; ++poly_3_ind)
             {
               for(std::size_t v_3_ind = 0; v_3_ind < v_per_poly; ++v_3_ind)
@@ -1390,7 +1390,7 @@ void polyhedron::calculate_c3d_properties()
     {
       err_msg.append("Input model " + wavefront_obj_path);
     }
-    err_msg.append(" have negative volume: \"" + std::to_string(T0) + "\" " +
+    err_msg.append(" has negative volume: \"" + std::to_string(T0) + "\" " +
                    "(before scaling to the in-game units of measurement).");
     throw exception::negative_volume(err_msg);
   }
@@ -1399,7 +1399,7 @@ void polyhedron::calculate_c3d_properties()
   if(T0 == 0.0 && wheel_id < 0)
   {
     throw exception::zero_volume("Input model " + wavefront_obj_path +
-                                 " have zero volume.");
+                                 " has zero volume.");
   }
 
   if(!volume_overwritten)
@@ -1444,7 +1444,7 @@ void polyhedron::calculate_c3d_properties()
 
 
 
-// Extreme points are generated in such order,
+// Extreme points are generated in such order
 // they can be used as polygon vertices to find area.
 // axis 1
 // 3   2
@@ -1881,7 +1881,7 @@ polyhedron polyhedron::generate_bound_model(
       {
         low_layer = std::round(first_v_rel_min[cur_axis] / layer_step);
       }
-      // Else layer above this point is low layer of edge.
+      // Else the layer above this point is low layer of edge.
       else
       {
         low_layer = std::ceil(first_v_rel_min[cur_axis] / layer_step);
@@ -1894,7 +1894,7 @@ polyhedron polyhedron::generate_bound_model(
       {
         top_layer = std::round(second_v_rel_min[cur_axis] / layer_step);
       }
-      // Else layer below this point is top layer of edge.
+      // Else the layer below this point is top layer of edge.
       else
       {
         top_layer = std::floor(second_v_rel_min[cur_axis] / layer_step);
@@ -1931,7 +1931,7 @@ polyhedron polyhedron::generate_bound_model(
 
 
   // Getting extreme points per plane.
-  // Extreme points are generated in such order,
+  // Extreme points are generated in such order
   // they can be used as polygon vertices to find area.
   std::vector<std::vector<std::vector<double>>>
     plane_4_extreme_points_by_axis =
@@ -1962,7 +1962,7 @@ polyhedron polyhedron::generate_bound_model(
 
 
   // Getting extreme vertices for each layer.
-  // Extreme vertices are generated in such order,
+  // Extreme vertices are generated in such order
   // they can be used as polygon vertices to find area.
   // 3 2
   // 0 1
@@ -2089,7 +2089,7 @@ polyhedron polyhedron::generate_bound_model(
 
 
 
-  // Adjusting layer verts, so they will be within layer_bounds.
+  // Adjusting layer verts so they will be within layer_bounds.
   for(std::size_t cur_axis = 0; cur_axis < axes_num; ++cur_axis)
   {
     for(auto &&layer_vert : layers_verts)
@@ -2175,7 +2175,7 @@ polyhedron polyhedron::generate_bound_model(
 
 
   // Getting extreme vertices for bound defining z layers.
-  // Extreme vertices are generated in such order,
+  // Extreme vertices are generated in such order
   // they can be used as polygon vertices to find area.
   // 3 2
   // 0 1

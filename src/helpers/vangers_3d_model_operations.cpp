@@ -102,7 +102,7 @@ void vangers_model::merge_helper_move_model_into_main(
   unsigned int merge_model_color_id;
   if(merge_type == merge_model_type::wheel)
   {
-    // Changing model_to_move, so calculated center of extreme coordinates
+    // Changing model_to_move so calculated center of extreme coordinates
     // and actual center are the same.
     model_to_move.move_coord_system_to_center();
     merge_model_color_id = c3d::color::string_to_id::invalid_color_id;
@@ -121,7 +121,7 @@ void vangers_model::merge_helper_move_model_into_main(
 
 
 
-  // Changing coordinates of all vertices of model_to_move,
+  // Changing coordinates of all vertices of model_to_move
   // so it will be in the right place.
   // new_position is center coordinates of model_to_move
   // relative to main model center.

@@ -7,16 +7,16 @@ namespace tractor_converter{
 
 
 // There are 2 *.bmp files with equal size.
-// One for escave and other for outside of escave.
-// In this mode this program reads both files and checks it byte by byte.
-// For example byte at position 0 in source_dir file is 0xFF
-// while in same file of dir_to_compare it is 0xEE.
+// One is for escave, and the other is for outside of escave.
+// In this mode, this program reads both files and checks them byte by byte.
+// For example, byte at position 0 in source_dir file is 0xFF
+// while in the same file of dir_to_compare it is 0xEE.
 // So program records that for 0xFF byte there was 1 0xEE byte.
 // At the end for each possible byte value there is std::map
 // of matched bytes with number of matches.
-// For example for 0xFF there are 3 matched byte values:
+// For example, for 0xFF there are 3 matched byte values:
 // 0xEE matched 1000 times, 0xDD matched 2 times and 0xCC matched 500 times.
-// In this case 0xEE value is selected for 0xFF.
+// In that case, 0xEE value is selected for 0xFF.
 // So map source-compare is 0xFF - 0xEE.
 
 void compare_bmp_escave_outside_mode(
@@ -43,9 +43,10 @@ void compare_bmp_escave_outside_mode(
         options[option::name::dir_to_compare].as<std::string>(),
         option::name::dir_to_compare);
 
-    // Have 256 elements for each possible value of source_dir byte.
-    // For each element there is vector of matched bytes of dir_to_compare
-    // and number of matches for each matched byte.
+    // For each possible byte value of source_dir images,
+    // there is a map of matched bytes of dir_to_compare images.
+    // Key of the map - value of matched byte of dir_to_compare images;
+    // value of the map - number of matches.
     std::vector<std::map<char, int>> source_compare_table =
       std::vector<std::map<char, int>>(
         tga_default_colors_num_in_pal,

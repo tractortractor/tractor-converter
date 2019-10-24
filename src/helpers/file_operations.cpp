@@ -44,7 +44,7 @@ std::string read_file(boost::filesystem::ifstream &file,
   {
     bytes_to_return.reserve(expected_file_size * 2);
     char buffer[read_buffer_size];
-    while (file.read(buffer, sizeof(buffer)))
+    while(file.read(buffer, sizeof(buffer)))
     {
       bytes_to_return.append(buffer, sizeof(buffer));
     }

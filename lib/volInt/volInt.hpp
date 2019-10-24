@@ -260,7 +260,7 @@ const double vector_scale_val = 1.0;
 
 
 //// VANGERS SOURCE
-//// how angle conversions works in Vangers code
+//// How angle conversions works in Vangers code.
 //#define M_PI 3.14159265358979323846
 //
 //Pi_len = 11
@@ -710,7 +710,7 @@ typedef struct polyhedron
   std::unordered_set<std::size_t> wheels_non_ghost;
 
   // Holds wheel id in case model itself is a wheel.
-  // Otherwise value is invalid::wheel_id which is -1.
+  // Otherwise value is invalid::wheel_id, which is -1.
   int wheel_id;
 
   // Used only when converting from *.obj to *.m3d/*.a3d.

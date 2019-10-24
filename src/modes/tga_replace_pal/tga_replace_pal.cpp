@@ -40,7 +40,7 @@ void tga_replace_pal_mode(
            ext::tga)
       {
         // Leaving extra 768 bytes at the beginning of
-        // *.tga file string to move header here in case
+        // *.tga file string to move header there in case
         // original palette is smaller than default 768.
         std::size_t original_start_of_image = tga_default_pal_size;
         std::string bytes =
