@@ -1,0 +1,4 @@
+(language "en_US")
+# Separators must be ";" on windows, ":" on unix.
+(script-fu-path "${gimp_dir}/scripts:${gimp_data_dir}/scripts:../../gimp_scripts")
+

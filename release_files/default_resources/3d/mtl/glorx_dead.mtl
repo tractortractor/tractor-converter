@@ -1,0 +1,4644 @@
+newmtl black
+Kd 0.0627 0.1255 0.0000
+newmtl body
+Kd 0.9412 0.4078 0.0471
+newmtl body_blue
+Kd 0.2510 0.1882 0.9412
+newmtl body_gray
+Kd 0.6902 0.6902 0.6902
+newmtl body_green
+Kd 0.4235 0.8157 0.0000
+newmtl body_red
+Kd 0.9412 0.4078 0.0471
+newmtl body_yellow
+Kd 0.9412 0.9098 0.0000
+newmtl defense
+Kd 0.0627 0.1255 0.0000
+newmtl material_0
+Kd 0.3608 0.3608 0.3608
+newmtl material_1
+Kd 0.3137 0.3137 0.3137
+newmtl material_2
+Kd 0.1569 0.1569 0.1569
+newmtl material_3
+Kd 0.4078 0.4863 0.4235
+newmtl material_4
+Kd 0.5333 0.4392 0.1725
+newmtl material_5
+Kd 0.8157 0.0000 0.0471
+newmtl material_6
+Kd 0.7843 0.8000 0.0000
+newmtl material_7
+Kd 0.1725 0.1725 0.1725
+newmtl rotten_item
+Kd 0.4392 0.4392 0.4392
+newmtl skyfarmer_kernoboo
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_pipetka
+Kd 0.5020 0.2353 0.0314
+newmtl tube
+Kd 0.0000 0.0000 0.0000
+newmtl weapon
+Kd 0.9412 0.9412 0.9412
+newmtl wheel
+Kd 0.0000 0.0000 0.0000
+newmtl window
+Kd 0.8627 0.7059 0.8941
+newmtl yellow_charged
+Kd 0.7843 0.8000 0.0000
+newmtl zero_reserved
+Kd 0.1098 0.1098 0.1098
+newmtl attachment_point
+Kd 0.2196 0.4392 0.0000
+newmtl center_of_mass
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_0_shift_0
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_34_shift_3
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_112_shift_4
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_128_shift_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_4
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_134_shift_4
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_136_shift_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_144_shift_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_145_shift_3
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_152_shift_4
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_160_shift_3
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_4
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_228_shift_4
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_240_shift_3
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_245_shift_4
+Kd 0.3765 0.7059 0.0000
+newmtl black_wheel_1
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_2
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_3
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_4
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_5
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_6
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_7
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_8
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_9
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_10
+Kd 0.0627 0.1255 0.0000
+newmtl body_blue_wheel_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_4
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_5
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_6
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_7
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_8
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_9
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_10
+Kd 0.2510 0.1882 0.9412
+newmtl body_gray_wheel_1
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_2
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_3
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_4
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_5
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_6
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_7
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_8
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_9
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_10
+Kd 0.6902 0.6902 0.6902
+newmtl body_green_wheel_1
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_2
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_3
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_4
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_5
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_6
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_7
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_8
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_9
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_10
+Kd 0.4235 0.8157 0.0000
+newmtl body_red_wheel_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_yellow_wheel_1
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_2
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_3
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_4
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_5
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_6
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_7
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_8
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_9
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_10
+Kd 0.9412 0.9098 0.0000
+newmtl defense_wheel_1
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_2
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_3
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_4
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_5
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_6
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_7
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_8
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_9
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_10
+Kd 0.0627 0.1255 0.0000
+newmtl material_0_wheel_1
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_2
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_3
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_4
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_5
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_6
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_7
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_8
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_9
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_10
+Kd 0.3608 0.3608 0.3608
+newmtl material_1_wheel_1
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_2
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_3
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_4
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_5
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_6
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_7
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_8
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_9
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_10
+Kd 0.3137 0.3137 0.3137
+newmtl material_2_wheel_1
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_2
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_3
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_4
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_5
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_6
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_7
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_8
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_9
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_10
+Kd 0.1569 0.1569 0.1569
+newmtl material_3_wheel_1
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_2
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_3
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_4
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_5
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_6
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_7
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_8
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_9
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_10
+Kd 0.4078 0.4863 0.4235
+newmtl material_4_wheel_1
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_2
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_3
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_4
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_5
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_6
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_7
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_8
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_9
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_10
+Kd 0.5333 0.4392 0.1725
+newmtl material_5_wheel_1
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_2
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_3
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_4
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_5
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_6
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_7
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_8
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_9
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_10
+Kd 0.8157 0.0000 0.0471
+newmtl material_6_wheel_1
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_2
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_3
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_4
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_5
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_6
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_7
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_8
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_9
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_10
+Kd 0.7843 0.8000 0.0000
+newmtl material_7_wheel_1
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_2
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_3
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_4
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_5
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_6
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_7
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_8
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_9
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_10
+Kd 0.1725 0.1725 0.1725
+newmtl rotten_item_wheel_1
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_2
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_3
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_4
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_5
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_6
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_7
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_8
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_9
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_10
+Kd 0.4392 0.4392 0.4392
+newmtl skyfarmer_kernoboo_wheel_1
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_2
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_3
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_4
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_5
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_6
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_7
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_8
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_9
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_10
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_pipetka_wheel_1
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_2
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_3
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_4
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_5
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_6
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_7
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_8
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_9
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_10
+Kd 0.5020 0.2353 0.0314
+newmtl tube_wheel_1
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_2
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_3
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_4
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_5
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_6
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_7
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_8
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_9
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_10
+Kd 0.0000 0.0000 0.0000
+newmtl weapon_wheel_1
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_2
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_3
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_4
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_5
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_6
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_7
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_8
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_9
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_10
+Kd 0.9412 0.9412 0.9412
+newmtl wheel_wheel_1
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_2
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_3
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_4
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_5
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_6
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_7
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_8
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_9
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_10
+Kd 0.0000 0.0000 0.0000
+newmtl window_wheel_1
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_2
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_3
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_4
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_5
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_6
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_7
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_8
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_9
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_10
+Kd 0.8627 0.7059 0.8941
+newmtl yellow_charged_wheel_1
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_2
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_3
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_4
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_5
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_6
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_7
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_8
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_9
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_10
+Kd 0.7843 0.8000 0.0000
+newmtl zero_reserved_wheel_1
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_2
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_3
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_4
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_5
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_6
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_7
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_8
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_9
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_10
+Kd 0.1098 0.1098 0.1098
+newmtl black_wheel_steer_1
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_2
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_3
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_4
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_5
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_6
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_7
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_8
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_9
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_10
+Kd 0.0627 0.1255 0.0000
+newmtl body_blue_wheel_steer_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_4
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_5
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_6
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_7
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_8
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_9
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_10
+Kd 0.2510 0.1882 0.9412
+newmtl body_gray_wheel_steer_1
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_2
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_3
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_4
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_5
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_6
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_7
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_8
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_9
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_10
+Kd 0.6902 0.6902 0.6902
+newmtl body_green_wheel_steer_1
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_2
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_3
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_4
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_5
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_6
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_7
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_8
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_9
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_10
+Kd 0.4235 0.8157 0.0000
+newmtl body_red_wheel_steer_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_yellow_wheel_steer_1
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_2
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_3
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_4
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_5
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_6
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_7
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_8
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_9
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_10
+Kd 0.9412 0.9098 0.0000
+newmtl defense_wheel_steer_1
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_2
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_3
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_4
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_5
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_6
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_7
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_8
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_9
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_10
+Kd 0.0627 0.1255 0.0000
+newmtl material_0_wheel_steer_1
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_2
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_3
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_4
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_5
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_6
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_7
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_8
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_9
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_10
+Kd 0.3608 0.3608 0.3608
+newmtl material_1_wheel_steer_1
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_2
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_3
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_4
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_5
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_6
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_7
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_8
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_9
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_10
+Kd 0.3137 0.3137 0.3137
+newmtl material_2_wheel_steer_1
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_2
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_3
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_4
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_5
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_6
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_7
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_8
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_9
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_10
+Kd 0.1569 0.1569 0.1569
+newmtl material_3_wheel_steer_1
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_2
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_3
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_4
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_5
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_6
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_7
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_8
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_9
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_10
+Kd 0.4078 0.4863 0.4235
+newmtl material_4_wheel_steer_1
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_2
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_3
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_4
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_5
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_6
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_7
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_8
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_9
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_10
+Kd 0.5333 0.4392 0.1725
+newmtl material_5_wheel_steer_1
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_2
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_3
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_4
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_5
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_6
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_7
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_8
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_9
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_10
+Kd 0.8157 0.0000 0.0471
+newmtl material_6_wheel_steer_1
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_2
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_3
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_4
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_5
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_6
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_7
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_8
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_9
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_10
+Kd 0.7843 0.8000 0.0000
+newmtl material_7_wheel_steer_1
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_2
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_3
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_4
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_5
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_6
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_7
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_8
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_9
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_10
+Kd 0.1725 0.1725 0.1725
+newmtl rotten_item_wheel_steer_1
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_2
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_3
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_4
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_5
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_6
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_7
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_8
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_9
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_10
+Kd 0.4392 0.4392 0.4392
+newmtl skyfarmer_kernoboo_wheel_steer_1
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_2
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_3
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_4
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_5
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_6
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_7
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_8
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_9
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_10
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_pipetka_wheel_steer_1
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_2
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_3
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_4
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_5
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_6
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_7
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_8
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_9
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_10
+Kd 0.5020 0.2353 0.0314
+newmtl tube_wheel_steer_1
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_2
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_3
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_4
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_5
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_6
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_7
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_8
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_9
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_10
+Kd 0.0000 0.0000 0.0000
+newmtl weapon_wheel_steer_1
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_2
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_3
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_4
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_5
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_6
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_7
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_8
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_9
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_10
+Kd 0.9412 0.9412 0.9412
+newmtl wheel_wheel_steer_1
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_2
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_3
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_4
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_5
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_6
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_7
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_8
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_9
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_10
+Kd 0.0000 0.0000 0.0000
+newmtl window_wheel_steer_1
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_2
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_3
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_4
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_5
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_6
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_7
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_8
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_9
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_10
+Kd 0.8627 0.7059 0.8941
+newmtl yellow_charged_wheel_steer_1
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_2
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_3
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_4
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_5
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_6
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_7
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_8
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_9
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_10
+Kd 0.7843 0.8000 0.0000
+newmtl zero_reserved_wheel_steer_1
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_2
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_3
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_4
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_5
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_6
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_7
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_8
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_9
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_10
+Kd 0.1098 0.1098 0.1098
+newmtl black_wheel_ghost_1
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_2
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_3
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_4
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_5
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_6
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_7
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_8
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_9
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_10
+Kd 0.0627 0.1255 0.0000
+newmtl body_blue_wheel_ghost_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_4
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_5
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_6
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_7
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_8
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_9
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_10
+Kd 0.2510 0.1882 0.9412
+newmtl body_gray_wheel_ghost_1
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_2
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_3
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_4
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_5
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_6
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_7
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_8
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_9
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_10
+Kd 0.6902 0.6902 0.6902
+newmtl body_green_wheel_ghost_1
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_2
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_3
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_4
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_5
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_6
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_7
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_8
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_9
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_10
+Kd 0.4235 0.8157 0.0000
+newmtl body_red_wheel_ghost_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_yellow_wheel_ghost_1
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_2
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_3
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_4
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_5
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_6
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_7
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_8
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_9
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_10
+Kd 0.9412 0.9098 0.0000
+newmtl defense_wheel_ghost_1
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_2
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_3
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_4
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_5
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_6
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_7
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_8
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_9
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_10
+Kd 0.0627 0.1255 0.0000
+newmtl material_0_wheel_ghost_1
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_2
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_3
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_4
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_5
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_6
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_7
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_8
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_9
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_10
+Kd 0.3608 0.3608 0.3608
+newmtl material_1_wheel_ghost_1
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_2
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_3
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_4
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_5
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_6
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_7
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_8
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_9
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_10
+Kd 0.3137 0.3137 0.3137
+newmtl material_2_wheel_ghost_1
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_2
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_3
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_4
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_5
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_6
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_7
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_8
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_9
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_10
+Kd 0.1569 0.1569 0.1569
+newmtl material_3_wheel_ghost_1
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_2
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_3
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_4
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_5
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_6
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_7
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_8
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_9
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_10
+Kd 0.4078 0.4863 0.4235
+newmtl material_4_wheel_ghost_1
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_2
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_3
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_4
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_5
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_6
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_7
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_8
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_9
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_10
+Kd 0.5333 0.4392 0.1725
+newmtl material_5_wheel_ghost_1
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_2
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_3
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_4
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_5
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_6
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_7
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_8
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_9
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_10
+Kd 0.8157 0.0000 0.0471
+newmtl material_6_wheel_ghost_1
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_2
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_3
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_4
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_5
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_6
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_7
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_8
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_9
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_10
+Kd 0.7843 0.8000 0.0000
+newmtl material_7_wheel_ghost_1
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_2
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_3
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_4
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_5
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_6
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_7
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_8
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_9
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_10
+Kd 0.1725 0.1725 0.1725
+newmtl rotten_item_wheel_ghost_1
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_2
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_3
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_4
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_5
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_6
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_7
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_8
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_9
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_10
+Kd 0.4392 0.4392 0.4392
+newmtl skyfarmer_kernoboo_wheel_ghost_1
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_2
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_3
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_4
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_5
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_6
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_7
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_8
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_9
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_10
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_pipetka_wheel_ghost_1
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_2
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_3
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_4
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_5
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_6
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_7
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_8
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_9
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_10
+Kd 0.5020 0.2353 0.0314
+newmtl tube_wheel_ghost_1
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_2
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_3
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_4
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_5
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_6
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_7
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_8
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_9
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_10
+Kd 0.0000 0.0000 0.0000
+newmtl weapon_wheel_ghost_1
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_2
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_3
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_4
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_5
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_6
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_7
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_8
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_9
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_10
+Kd 0.9412 0.9412 0.9412
+newmtl wheel_wheel_ghost_1
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_2
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_3
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_4
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_5
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_6
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_7
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_8
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_9
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_10
+Kd 0.0000 0.0000 0.0000
+newmtl window_wheel_ghost_1
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_2
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_3
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_4
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_5
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_6
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_7
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_8
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_9
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_10
+Kd 0.8627 0.7059 0.8941
+newmtl yellow_charged_wheel_ghost_1
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_2
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_3
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_4
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_5
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_6
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_7
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_8
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_9
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_10
+Kd 0.7843 0.8000 0.0000
+newmtl zero_reserved_wheel_ghost_1
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_2
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_3
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_4
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_5
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_6
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_7
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_8
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_9
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_10
+Kd 0.1098 0.1098 0.1098
+newmtl black_wheel_steer_ghost_1
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_ghost_2
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_ghost_3
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_ghost_4
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_ghost_5
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_ghost_6
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_ghost_7
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_ghost_8
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_ghost_9
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_steer_ghost_10
+Kd 0.0627 0.1255 0.0000
+newmtl body_blue_wheel_steer_ghost_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_ghost_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_ghost_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_ghost_4
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_ghost_5
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_ghost_6
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_ghost_7
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_ghost_8
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_ghost_9
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_steer_ghost_10
+Kd 0.2510 0.1882 0.9412
+newmtl body_gray_wheel_steer_ghost_1
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_ghost_2
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_ghost_3
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_ghost_4
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_ghost_5
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_ghost_6
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_ghost_7
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_ghost_8
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_ghost_9
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_steer_ghost_10
+Kd 0.6902 0.6902 0.6902
+newmtl body_green_wheel_steer_ghost_1
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_ghost_2
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_ghost_3
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_ghost_4
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_ghost_5
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_ghost_6
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_ghost_7
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_ghost_8
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_ghost_9
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_steer_ghost_10
+Kd 0.4235 0.8157 0.0000
+newmtl body_red_wheel_steer_ghost_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_ghost_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_ghost_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_ghost_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_ghost_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_ghost_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_ghost_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_ghost_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_ghost_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_steer_ghost_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_ghost_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_ghost_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_ghost_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_ghost_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_ghost_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_ghost_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_ghost_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_ghost_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_ghost_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_steer_ghost_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_yellow_wheel_steer_ghost_1
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_ghost_2
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_ghost_3
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_ghost_4
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_ghost_5
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_ghost_6
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_ghost_7
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_ghost_8
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_ghost_9
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_steer_ghost_10
+Kd 0.9412 0.9098 0.0000
+newmtl defense_wheel_steer_ghost_1
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_ghost_2
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_ghost_3
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_ghost_4
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_ghost_5
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_ghost_6
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_ghost_7
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_ghost_8
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_ghost_9
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_steer_ghost_10
+Kd 0.0627 0.1255 0.0000
+newmtl material_0_wheel_steer_ghost_1
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_ghost_2
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_ghost_3
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_ghost_4
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_ghost_5
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_ghost_6
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_ghost_7
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_ghost_8
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_ghost_9
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_steer_ghost_10
+Kd 0.3608 0.3608 0.3608
+newmtl material_1_wheel_steer_ghost_1
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_ghost_2
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_ghost_3
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_ghost_4
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_ghost_5
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_ghost_6
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_ghost_7
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_ghost_8
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_ghost_9
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_steer_ghost_10
+Kd 0.3137 0.3137 0.3137
+newmtl material_2_wheel_steer_ghost_1
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_ghost_2
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_ghost_3
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_ghost_4
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_ghost_5
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_ghost_6
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_ghost_7
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_ghost_8
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_ghost_9
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_steer_ghost_10
+Kd 0.1569 0.1569 0.1569
+newmtl material_3_wheel_steer_ghost_1
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_ghost_2
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_ghost_3
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_ghost_4
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_ghost_5
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_ghost_6
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_ghost_7
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_ghost_8
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_ghost_9
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_steer_ghost_10
+Kd 0.4078 0.4863 0.4235
+newmtl material_4_wheel_steer_ghost_1
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_ghost_2
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_ghost_3
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_ghost_4
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_ghost_5
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_ghost_6
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_ghost_7
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_ghost_8
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_ghost_9
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_steer_ghost_10
+Kd 0.5333 0.4392 0.1725
+newmtl material_5_wheel_steer_ghost_1
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_ghost_2
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_ghost_3
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_ghost_4
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_ghost_5
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_ghost_6
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_ghost_7
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_ghost_8
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_ghost_9
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_steer_ghost_10
+Kd 0.8157 0.0000 0.0471
+newmtl material_6_wheel_steer_ghost_1
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_ghost_2
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_ghost_3
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_ghost_4
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_ghost_5
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_ghost_6
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_ghost_7
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_ghost_8
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_ghost_9
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_steer_ghost_10
+Kd 0.7843 0.8000 0.0000
+newmtl material_7_wheel_steer_ghost_1
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_ghost_2
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_ghost_3
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_ghost_4
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_ghost_5
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_ghost_6
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_ghost_7
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_ghost_8
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_ghost_9
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_steer_ghost_10
+Kd 0.1725 0.1725 0.1725
+newmtl rotten_item_wheel_steer_ghost_1
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_ghost_2
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_ghost_3
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_ghost_4
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_ghost_5
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_ghost_6
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_ghost_7
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_ghost_8
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_ghost_9
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_steer_ghost_10
+Kd 0.4392 0.4392 0.4392
+newmtl skyfarmer_kernoboo_wheel_steer_ghost_1
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_ghost_2
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_ghost_3
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_ghost_4
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_ghost_5
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_ghost_6
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_ghost_7
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_ghost_8
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_ghost_9
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_steer_ghost_10
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_pipetka_wheel_steer_ghost_1
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_ghost_2
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_ghost_3
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_ghost_4
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_ghost_5
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_ghost_6
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_ghost_7
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_ghost_8
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_ghost_9
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_steer_ghost_10
+Kd 0.5020 0.2353 0.0314
+newmtl tube_wheel_steer_ghost_1
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_ghost_2
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_ghost_3
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_ghost_4
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_ghost_5
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_ghost_6
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_ghost_7
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_ghost_8
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_ghost_9
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_steer_ghost_10
+Kd 0.0000 0.0000 0.0000
+newmtl weapon_wheel_steer_ghost_1
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_ghost_2
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_ghost_3
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_ghost_4
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_ghost_5
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_ghost_6
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_ghost_7
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_ghost_8
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_ghost_9
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_steer_ghost_10
+Kd 0.9412 0.9412 0.9412
+newmtl wheel_wheel_steer_ghost_1
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_ghost_2
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_ghost_3
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_ghost_4
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_ghost_5
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_ghost_6
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_ghost_7
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_ghost_8
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_ghost_9
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_steer_ghost_10
+Kd 0.0000 0.0000 0.0000
+newmtl window_wheel_steer_ghost_1
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_ghost_2
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_ghost_3
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_ghost_4
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_ghost_5
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_ghost_6
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_ghost_7
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_ghost_8
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_ghost_9
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_steer_ghost_10
+Kd 0.8627 0.7059 0.8941
+newmtl yellow_charged_wheel_steer_ghost_1
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_ghost_2
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_ghost_3
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_ghost_4
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_ghost_5
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_ghost_6
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_ghost_7
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_ghost_8
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_ghost_9
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_steer_ghost_10
+Kd 0.7843 0.8000 0.0000
+newmtl zero_reserved_wheel_steer_ghost_1
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_ghost_2
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_ghost_3
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_ghost_4
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_ghost_5
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_ghost_6
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_ghost_7
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_ghost_8
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_ghost_9
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_steer_ghost_10
+Kd 0.1098 0.1098 0.1098
+newmtl black_wheel_ghost_steer_1
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_steer_2
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_steer_3
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_steer_4
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_steer_5
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_steer_6
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_steer_7
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_steer_8
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_steer_9
+Kd 0.0627 0.1255 0.0000
+newmtl black_wheel_ghost_steer_10
+Kd 0.0627 0.1255 0.0000
+newmtl body_blue_wheel_ghost_steer_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_steer_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_steer_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_steer_4
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_steer_5
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_steer_6
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_steer_7
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_steer_8
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_steer_9
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_wheel_ghost_steer_10
+Kd 0.2510 0.1882 0.9412
+newmtl body_gray_wheel_ghost_steer_1
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_steer_2
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_steer_3
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_steer_4
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_steer_5
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_steer_6
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_steer_7
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_steer_8
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_steer_9
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_wheel_ghost_steer_10
+Kd 0.6902 0.6902 0.6902
+newmtl body_green_wheel_ghost_steer_1
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_steer_2
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_steer_3
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_steer_4
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_steer_5
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_steer_6
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_steer_7
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_steer_8
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_steer_9
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_wheel_ghost_steer_10
+Kd 0.4235 0.8157 0.0000
+newmtl body_red_wheel_ghost_steer_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_steer_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_steer_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_steer_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_steer_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_steer_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_steer_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_steer_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_steer_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_wheel_ghost_steer_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_steer_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_steer_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_steer_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_steer_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_steer_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_steer_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_steer_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_steer_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_steer_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_wheel_ghost_steer_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_yellow_wheel_ghost_steer_1
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_steer_2
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_steer_3
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_steer_4
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_steer_5
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_steer_6
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_steer_7
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_steer_8
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_steer_9
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_wheel_ghost_steer_10
+Kd 0.9412 0.9098 0.0000
+newmtl defense_wheel_ghost_steer_1
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_steer_2
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_steer_3
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_steer_4
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_steer_5
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_steer_6
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_steer_7
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_steer_8
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_steer_9
+Kd 0.0627 0.1255 0.0000
+newmtl defense_wheel_ghost_steer_10
+Kd 0.0627 0.1255 0.0000
+newmtl material_0_wheel_ghost_steer_1
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_steer_2
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_steer_3
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_steer_4
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_steer_5
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_steer_6
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_steer_7
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_steer_8
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_steer_9
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_wheel_ghost_steer_10
+Kd 0.3608 0.3608 0.3608
+newmtl material_1_wheel_ghost_steer_1
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_steer_2
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_steer_3
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_steer_4
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_steer_5
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_steer_6
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_steer_7
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_steer_8
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_steer_9
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_wheel_ghost_steer_10
+Kd 0.3137 0.3137 0.3137
+newmtl material_2_wheel_ghost_steer_1
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_steer_2
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_steer_3
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_steer_4
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_steer_5
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_steer_6
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_steer_7
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_steer_8
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_steer_9
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_wheel_ghost_steer_10
+Kd 0.1569 0.1569 0.1569
+newmtl material_3_wheel_ghost_steer_1
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_steer_2
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_steer_3
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_steer_4
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_steer_5
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_steer_6
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_steer_7
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_steer_8
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_steer_9
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_wheel_ghost_steer_10
+Kd 0.4078 0.4863 0.4235
+newmtl material_4_wheel_ghost_steer_1
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_steer_2
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_steer_3
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_steer_4
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_steer_5
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_steer_6
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_steer_7
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_steer_8
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_steer_9
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_wheel_ghost_steer_10
+Kd 0.5333 0.4392 0.1725
+newmtl material_5_wheel_ghost_steer_1
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_steer_2
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_steer_3
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_steer_4
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_steer_5
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_steer_6
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_steer_7
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_steer_8
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_steer_9
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_wheel_ghost_steer_10
+Kd 0.8157 0.0000 0.0471
+newmtl material_6_wheel_ghost_steer_1
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_steer_2
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_steer_3
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_steer_4
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_steer_5
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_steer_6
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_steer_7
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_steer_8
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_steer_9
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_wheel_ghost_steer_10
+Kd 0.7843 0.8000 0.0000
+newmtl material_7_wheel_ghost_steer_1
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_steer_2
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_steer_3
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_steer_4
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_steer_5
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_steer_6
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_steer_7
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_steer_8
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_steer_9
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_wheel_ghost_steer_10
+Kd 0.1725 0.1725 0.1725
+newmtl rotten_item_wheel_ghost_steer_1
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_steer_2
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_steer_3
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_steer_4
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_steer_5
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_steer_6
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_steer_7
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_steer_8
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_steer_9
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_wheel_ghost_steer_10
+Kd 0.4392 0.4392 0.4392
+newmtl skyfarmer_kernoboo_wheel_ghost_steer_1
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_steer_2
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_steer_3
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_steer_4
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_steer_5
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_steer_6
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_steer_7
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_steer_8
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_steer_9
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_wheel_ghost_steer_10
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_pipetka_wheel_ghost_steer_1
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_steer_2
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_steer_3
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_steer_4
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_steer_5
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_steer_6
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_steer_7
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_steer_8
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_steer_9
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_wheel_ghost_steer_10
+Kd 0.5020 0.2353 0.0314
+newmtl tube_wheel_ghost_steer_1
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_steer_2
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_steer_3
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_steer_4
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_steer_5
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_steer_6
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_steer_7
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_steer_8
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_steer_9
+Kd 0.0000 0.0000 0.0000
+newmtl tube_wheel_ghost_steer_10
+Kd 0.0000 0.0000 0.0000
+newmtl weapon_wheel_ghost_steer_1
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_steer_2
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_steer_3
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_steer_4
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_steer_5
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_steer_6
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_steer_7
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_steer_8
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_steer_9
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_wheel_ghost_steer_10
+Kd 0.9412 0.9412 0.9412
+newmtl wheel_wheel_ghost_steer_1
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_steer_2
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_steer_3
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_steer_4
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_steer_5
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_steer_6
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_steer_7
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_steer_8
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_steer_9
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_wheel_ghost_steer_10
+Kd 0.0000 0.0000 0.0000
+newmtl window_wheel_ghost_steer_1
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_steer_2
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_steer_3
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_steer_4
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_steer_5
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_steer_6
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_steer_7
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_steer_8
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_steer_9
+Kd 0.8627 0.7059 0.8941
+newmtl window_wheel_ghost_steer_10
+Kd 0.8627 0.7059 0.8941
+newmtl yellow_charged_wheel_ghost_steer_1
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_steer_2
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_steer_3
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_steer_4
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_steer_5
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_steer_6
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_steer_7
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_steer_8
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_steer_9
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_wheel_ghost_steer_10
+Kd 0.7843 0.8000 0.0000
+newmtl zero_reserved_wheel_ghost_steer_1
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_steer_2
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_steer_3
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_steer_4
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_steer_5
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_steer_6
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_steer_7
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_steer_8
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_steer_9
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_wheel_ghost_steer_10
+Kd 0.1098 0.1098 0.1098
+newmtl attachment_point_wheel_1
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_2
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_3
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_4
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_5
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_6
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_7
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_8
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_9
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_10
+Kd 0.2196 0.4392 0.0000
+newmtl center_of_mass_wheel_1
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_2
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_3
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_4
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_5
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_6
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_7
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_8
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_9
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_10
+Kd 0.5020 0.2353 0.0314
+newmtl attachment_point_wheel_steer_1
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_2
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_3
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_4
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_5
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_6
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_7
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_8
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_9
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_10
+Kd 0.2196 0.4392 0.0000
+newmtl center_of_mass_wheel_steer_1
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_2
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_3
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_4
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_5
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_6
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_7
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_8
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_9
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_10
+Kd 0.5020 0.2353 0.0314
+newmtl attachment_point_wheel_ghost_1
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_2
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_3
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_4
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_5
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_6
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_7
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_8
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_9
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_10
+Kd 0.2196 0.4392 0.0000
+newmtl center_of_mass_wheel_ghost_1
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_2
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_3
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_4
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_5
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_6
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_7
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_8
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_9
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_10
+Kd 0.5020 0.2353 0.0314
+newmtl attachment_point_wheel_steer_ghost_1
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_ghost_2
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_ghost_3
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_ghost_4
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_ghost_5
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_ghost_6
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_ghost_7
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_ghost_8
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_ghost_9
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_steer_ghost_10
+Kd 0.2196 0.4392 0.0000
+newmtl center_of_mass_wheel_steer_ghost_1
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_ghost_2
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_ghost_3
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_ghost_4
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_ghost_5
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_ghost_6
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_ghost_7
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_ghost_8
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_ghost_9
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_steer_ghost_10
+Kd 0.5020 0.2353 0.0314
+newmtl attachment_point_wheel_ghost_steer_1
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_steer_2
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_steer_3
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_steer_4
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_steer_5
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_steer_6
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_steer_7
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_steer_8
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_steer_9
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_wheel_ghost_steer_10
+Kd 0.2196 0.4392 0.0000
+newmtl center_of_mass_wheel_ghost_steer_1
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_steer_2
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_steer_3
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_steer_4
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_steer_5
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_steer_6
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_steer_7
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_steer_8
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_steer_9
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_wheel_ghost_steer_10
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_0_shift_0_wheel_1
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_2
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_3
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_4
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_5
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_6
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_7
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_8
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_9
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_10
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_34_shift_3_wheel_1
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_2
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_3
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_4
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_5
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_6
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_7
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_8
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_9
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_10
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_112_shift_4_wheel_1
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_2
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_3
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_4
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_5
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_6
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_7
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_8
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_9
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_10
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_128_shift_3_wheel_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_4_wheel_1
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_2
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_3
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_4
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_5
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_6
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_7
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_8
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_9
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_10
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_134_shift_4_wheel_1
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_2
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_3
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_4
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_5
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_6
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_7
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_8
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_9
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_10
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_136_shift_4_wheel_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_144_shift_3_wheel_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_4
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_5
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_6
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_7
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_8
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_9
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_10
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_145_shift_3_wheel_1
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_2
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_3
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_4
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_5
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_6
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_7
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_8
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_9
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_10
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_152_shift_4_wheel_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_4
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_5
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_6
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_7
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_8
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_9
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_10
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_160_shift_3_wheel_1
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_2
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_3
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_4
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_5
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_6
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_7
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_8
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_9
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_10
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_4_wheel_1
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_2
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_3
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_4
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_5
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_6
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_7
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_8
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_9
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_10
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_228_shift_4_wheel_1
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_2
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_3
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_4
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_5
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_6
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_7
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_8
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_9
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_10
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_240_shift_3_wheel_1
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_2
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_3
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_4
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_5
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_6
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_7
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_8
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_9
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_10
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_245_shift_4_wheel_1
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_2
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_3
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_4
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_5
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_6
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_7
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_8
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_9
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_10
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_0_shift_0_wheel_steer_1
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_2
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_3
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_4
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_5
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_6
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_7
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_8
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_9
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_10
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_34_shift_3_wheel_steer_1
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_2
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_3
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_4
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_5
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_6
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_7
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_8
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_9
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_10
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_112_shift_4_wheel_steer_1
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_2
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_3
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_4
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_5
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_6
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_7
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_8
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_9
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_10
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_128_shift_3_wheel_steer_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_4_wheel_steer_1
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_2
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_3
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_4
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_5
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_6
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_7
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_8
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_9
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_10
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_1
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_2
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_3
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_4
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_5
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_6
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_7
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_8
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_9
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_10
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_136_shift_4_wheel_steer_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_144_shift_3_wheel_steer_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_4
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_5
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_6
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_7
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_8
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_9
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_10
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_145_shift_3_wheel_steer_1
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_2
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_3
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_4
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_5
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_6
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_7
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_8
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_9
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_10
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_152_shift_4_wheel_steer_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_4
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_5
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_6
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_7
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_8
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_9
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_10
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_160_shift_3_wheel_steer_1
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_2
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_3
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_4
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_5
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_6
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_7
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_8
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_9
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_10
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_1
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_2
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_3
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_4
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_5
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_6
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_7
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_8
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_9
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_10
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_228_shift_4_wheel_steer_1
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_2
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_3
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_4
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_5
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_6
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_7
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_8
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_9
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_10
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_240_shift_3_wheel_steer_1
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_2
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_3
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_4
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_5
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_6
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_7
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_8
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_9
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_10
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_1
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_2
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_3
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_4
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_5
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_6
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_7
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_8
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_9
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_10
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_0_shift_0_wheel_ghost_1
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_2
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_3
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_4
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_5
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_6
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_7
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_8
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_9
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_10
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_34_shift_3_wheel_ghost_1
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_2
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_3
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_4
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_5
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_6
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_7
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_8
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_9
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_10
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_112_shift_4_wheel_ghost_1
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_2
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_3
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_4
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_5
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_6
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_7
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_8
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_9
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_10
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_128_shift_3_wheel_ghost_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_4_wheel_ghost_1
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_2
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_3
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_4
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_5
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_6
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_7
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_8
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_9
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_10
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_1
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_2
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_3
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_4
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_5
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_6
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_7
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_8
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_9
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_10
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_136_shift_4_wheel_ghost_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_144_shift_3_wheel_ghost_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_4
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_5
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_6
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_7
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_8
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_9
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_10
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_145_shift_3_wheel_ghost_1
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_2
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_3
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_4
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_5
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_6
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_7
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_8
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_9
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_10
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_152_shift_4_wheel_ghost_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_4
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_5
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_6
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_7
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_8
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_9
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_10
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_160_shift_3_wheel_ghost_1
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_2
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_3
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_4
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_5
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_6
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_7
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_8
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_9
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_10
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_1
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_2
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_3
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_4
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_5
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_6
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_7
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_8
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_9
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_10
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_228_shift_4_wheel_ghost_1
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_2
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_3
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_4
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_5
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_6
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_7
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_8
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_9
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_10
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_240_shift_3_wheel_ghost_1
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_2
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_3
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_4
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_5
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_6
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_7
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_8
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_9
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_10
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_1
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_2
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_3
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_4
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_5
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_6
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_7
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_8
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_9
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_10
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_0_shift_0_wheel_steer_ghost_1
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_ghost_2
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_ghost_3
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_ghost_4
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_ghost_5
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_ghost_6
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_ghost_7
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_ghost_8
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_ghost_9
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_steer_ghost_10
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_34_shift_3_wheel_steer_ghost_1
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_ghost_2
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_ghost_3
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_ghost_4
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_ghost_5
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_ghost_6
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_ghost_7
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_ghost_8
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_ghost_9
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_steer_ghost_10
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_112_shift_4_wheel_steer_ghost_1
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_ghost_2
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_ghost_3
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_ghost_4
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_ghost_5
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_ghost_6
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_ghost_7
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_ghost_8
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_ghost_9
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_steer_ghost_10
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_128_shift_3_wheel_steer_ghost_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_ghost_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_ghost_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_ghost_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_ghost_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_ghost_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_ghost_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_ghost_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_ghost_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_steer_ghost_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_4_wheel_steer_ghost_1
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_ghost_2
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_ghost_3
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_ghost_4
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_ghost_5
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_ghost_6
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_ghost_7
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_ghost_8
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_ghost_9
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_steer_ghost_10
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_ghost_1
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_ghost_2
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_ghost_3
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_ghost_4
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_ghost_5
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_ghost_6
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_ghost_7
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_ghost_8
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_ghost_9
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_steer_ghost_10
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_136_shift_4_wheel_steer_ghost_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_ghost_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_ghost_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_ghost_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_ghost_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_ghost_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_ghost_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_ghost_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_ghost_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_steer_ghost_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_ghost_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_ghost_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_ghost_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_ghost_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_ghost_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_ghost_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_ghost_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_ghost_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_ghost_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_steer_ghost_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_144_shift_3_wheel_steer_ghost_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_ghost_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_ghost_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_ghost_4
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_ghost_5
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_ghost_6
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_ghost_7
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_ghost_8
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_ghost_9
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_steer_ghost_10
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_145_shift_3_wheel_steer_ghost_1
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_ghost_2
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_ghost_3
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_ghost_4
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_ghost_5
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_ghost_6
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_ghost_7
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_ghost_8
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_ghost_9
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_steer_ghost_10
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_152_shift_4_wheel_steer_ghost_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_ghost_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_ghost_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_ghost_4
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_ghost_5
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_ghost_6
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_ghost_7
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_ghost_8
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_ghost_9
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_steer_ghost_10
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_160_shift_3_wheel_steer_ghost_1
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_ghost_2
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_ghost_3
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_ghost_4
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_ghost_5
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_ghost_6
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_ghost_7
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_ghost_8
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_ghost_9
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_steer_ghost_10
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_ghost_1
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_ghost_2
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_ghost_3
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_ghost_4
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_ghost_5
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_ghost_6
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_ghost_7
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_ghost_8
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_ghost_9
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_steer_ghost_10
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_228_shift_4_wheel_steer_ghost_1
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_ghost_2
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_ghost_3
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_ghost_4
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_ghost_5
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_ghost_6
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_ghost_7
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_ghost_8
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_ghost_9
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_steer_ghost_10
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_240_shift_3_wheel_steer_ghost_1
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_ghost_2
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_ghost_3
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_ghost_4
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_ghost_5
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_ghost_6
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_ghost_7
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_ghost_8
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_ghost_9
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_steer_ghost_10
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_ghost_1
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_ghost_2
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_ghost_3
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_ghost_4
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_ghost_5
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_ghost_6
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_ghost_7
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_ghost_8
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_ghost_9
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_steer_ghost_10
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_0_shift_0_wheel_ghost_steer_1
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_steer_2
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_steer_3
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_steer_4
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_steer_5
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_steer_6
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_steer_7
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_steer_8
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_steer_9
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_wheel_ghost_steer_10
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_34_shift_3_wheel_ghost_steer_1
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_steer_2
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_steer_3
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_steer_4
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_steer_5
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_steer_6
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_steer_7
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_steer_8
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_steer_9
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_wheel_ghost_steer_10
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_112_shift_4_wheel_ghost_steer_1
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_steer_2
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_steer_3
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_steer_4
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_steer_5
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_steer_6
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_steer_7
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_steer_8
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_steer_9
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_wheel_ghost_steer_10
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_128_shift_3_wheel_ghost_steer_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_steer_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_steer_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_steer_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_steer_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_steer_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_steer_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_steer_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_steer_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_wheel_ghost_steer_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_4_wheel_ghost_steer_1
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_steer_2
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_steer_3
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_steer_4
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_steer_5
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_steer_6
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_steer_7
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_steer_8
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_steer_9
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_wheel_ghost_steer_10
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_steer_1
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_steer_2
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_steer_3
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_steer_4
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_steer_5
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_steer_6
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_steer_7
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_steer_8
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_steer_9
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_wheel_ghost_steer_10
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_136_shift_4_wheel_ghost_steer_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_steer_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_steer_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_steer_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_steer_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_steer_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_steer_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_steer_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_steer_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_wheel_ghost_steer_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_steer_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_steer_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_steer_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_steer_4
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_steer_5
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_steer_6
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_steer_7
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_steer_8
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_steer_9
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_wheel_ghost_steer_10
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_144_shift_3_wheel_ghost_steer_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_steer_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_steer_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_steer_4
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_steer_5
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_steer_6
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_steer_7
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_steer_8
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_steer_9
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_wheel_ghost_steer_10
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_145_shift_3_wheel_ghost_steer_1
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_steer_2
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_steer_3
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_steer_4
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_steer_5
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_steer_6
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_steer_7
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_steer_8
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_steer_9
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_wheel_ghost_steer_10
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_152_shift_4_wheel_ghost_steer_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_steer_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_steer_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_steer_4
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_steer_5
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_steer_6
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_steer_7
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_steer_8
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_steer_9
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_wheel_ghost_steer_10
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_160_shift_3_wheel_ghost_steer_1
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_steer_2
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_steer_3
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_steer_4
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_steer_5
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_steer_6
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_steer_7
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_steer_8
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_steer_9
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_wheel_ghost_steer_10
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_steer_1
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_steer_2
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_steer_3
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_steer_4
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_steer_5
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_steer_6
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_steer_7
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_steer_8
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_steer_9
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_wheel_ghost_steer_10
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_228_shift_4_wheel_ghost_steer_1
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_steer_2
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_steer_3
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_steer_4
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_steer_5
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_steer_6
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_steer_7
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_steer_8
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_steer_9
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_wheel_ghost_steer_10
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_240_shift_3_wheel_ghost_steer_1
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_steer_2
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_steer_3
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_steer_4
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_steer_5
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_steer_6
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_steer_7
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_steer_8
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_steer_9
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_wheel_ghost_steer_10
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_steer_1
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_steer_2
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_steer_3
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_steer_4
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_steer_5
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_steer_6
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_steer_7
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_steer_8
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_steer_9
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_wheel_ghost_steer_10
+Kd 0.3765 0.7059 0.0000
+newmtl black_weapon_1
+Kd 0.0627 0.1255 0.0000
+newmtl black_weapon_2
+Kd 0.0627 0.1255 0.0000
+newmtl black_weapon_3
+Kd 0.0627 0.1255 0.0000
+newmtl body_blue_weapon_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_weapon_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_blue_weapon_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_gray_weapon_1
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_weapon_2
+Kd 0.6902 0.6902 0.6902
+newmtl body_gray_weapon_3
+Kd 0.6902 0.6902 0.6902
+newmtl body_green_weapon_1
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_weapon_2
+Kd 0.4235 0.8157 0.0000
+newmtl body_green_weapon_3
+Kd 0.4235 0.8157 0.0000
+newmtl body_red_weapon_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_weapon_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_red_weapon_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_weapon_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_weapon_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_weapon_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_yellow_weapon_1
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_weapon_2
+Kd 0.9412 0.9098 0.0000
+newmtl body_yellow_weapon_3
+Kd 0.9412 0.9098 0.0000
+newmtl defense_weapon_1
+Kd 0.0627 0.1255 0.0000
+newmtl defense_weapon_2
+Kd 0.0627 0.1255 0.0000
+newmtl defense_weapon_3
+Kd 0.0627 0.1255 0.0000
+newmtl material_0_weapon_1
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_weapon_2
+Kd 0.3608 0.3608 0.3608
+newmtl material_0_weapon_3
+Kd 0.3608 0.3608 0.3608
+newmtl material_1_weapon_1
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_weapon_2
+Kd 0.3137 0.3137 0.3137
+newmtl material_1_weapon_3
+Kd 0.3137 0.3137 0.3137
+newmtl material_2_weapon_1
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_weapon_2
+Kd 0.1569 0.1569 0.1569
+newmtl material_2_weapon_3
+Kd 0.1569 0.1569 0.1569
+newmtl material_3_weapon_1
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_weapon_2
+Kd 0.4078 0.4863 0.4235
+newmtl material_3_weapon_3
+Kd 0.4078 0.4863 0.4235
+newmtl material_4_weapon_1
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_weapon_2
+Kd 0.5333 0.4392 0.1725
+newmtl material_4_weapon_3
+Kd 0.5333 0.4392 0.1725
+newmtl material_5_weapon_1
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_weapon_2
+Kd 0.8157 0.0000 0.0471
+newmtl material_5_weapon_3
+Kd 0.8157 0.0000 0.0471
+newmtl material_6_weapon_1
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_weapon_2
+Kd 0.7843 0.8000 0.0000
+newmtl material_6_weapon_3
+Kd 0.7843 0.8000 0.0000
+newmtl material_7_weapon_1
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_weapon_2
+Kd 0.1725 0.1725 0.1725
+newmtl material_7_weapon_3
+Kd 0.1725 0.1725 0.1725
+newmtl rotten_item_weapon_1
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_weapon_2
+Kd 0.4392 0.4392 0.4392
+newmtl rotten_item_weapon_3
+Kd 0.4392 0.4392 0.4392
+newmtl skyfarmer_kernoboo_weapon_1
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_weapon_2
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_kernoboo_weapon_3
+Kd 0.9412 0.4078 0.0471
+newmtl skyfarmer_pipetka_weapon_1
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_weapon_2
+Kd 0.5020 0.2353 0.0314
+newmtl skyfarmer_pipetka_weapon_3
+Kd 0.5020 0.2353 0.0314
+newmtl tube_weapon_1
+Kd 0.0000 0.0000 0.0000
+newmtl tube_weapon_2
+Kd 0.0000 0.0000 0.0000
+newmtl tube_weapon_3
+Kd 0.0000 0.0000 0.0000
+newmtl weapon_weapon_1
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_weapon_2
+Kd 0.9412 0.9412 0.9412
+newmtl weapon_weapon_3
+Kd 0.9412 0.9412 0.9412
+newmtl wheel_weapon_1
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_weapon_2
+Kd 0.0000 0.0000 0.0000
+newmtl wheel_weapon_3
+Kd 0.0000 0.0000 0.0000
+newmtl window_weapon_1
+Kd 0.8627 0.7059 0.8941
+newmtl window_weapon_2
+Kd 0.8627 0.7059 0.8941
+newmtl window_weapon_3
+Kd 0.8627 0.7059 0.8941
+newmtl yellow_charged_weapon_1
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_weapon_2
+Kd 0.7843 0.8000 0.0000
+newmtl yellow_charged_weapon_3
+Kd 0.7843 0.8000 0.0000
+newmtl zero_reserved_weapon_1
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_weapon_2
+Kd 0.1098 0.1098 0.1098
+newmtl zero_reserved_weapon_3
+Kd 0.1098 0.1098 0.1098
+newmtl attachment_point_weapon_1
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_weapon_2
+Kd 0.2196 0.4392 0.0000
+newmtl attachment_point_weapon_3
+Kd 0.2196 0.4392 0.0000
+newmtl center_of_mass_weapon_1
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_weapon_2
+Kd 0.5020 0.2353 0.0314
+newmtl center_of_mass_weapon_3
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_0_shift_0_weapon_1
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_weapon_2
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_0_shift_0_weapon_3
+Kd 0.1098 0.1098 0.1098
+newmtl body_offset_34_shift_3_weapon_1
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_weapon_2
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_34_shift_3_weapon_3
+Kd 0.2196 0.2196 0.2196
+newmtl body_offset_112_shift_4_weapon_1
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_weapon_2
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_112_shift_4_weapon_3
+Kd 0.7843 0.8000 0.0000
+newmtl body_offset_128_shift_3_weapon_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_weapon_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_3_weapon_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_128_shift_4_weapon_1
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_weapon_2
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_128_shift_4_weapon_3
+Kd 0.5020 0.2353 0.0314
+newmtl body_offset_134_shift_4_weapon_1
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_weapon_2
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_134_shift_4_weapon_3
+Kd 0.8314 0.3608 0.0314
+newmtl body_offset_136_shift_4_weapon_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_weapon_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_136_shift_4_weapon_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_weapon_1
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_weapon_2
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_140_shift_5_weapon_3
+Kd 0.9412 0.4078 0.0471
+newmtl body_offset_144_shift_3_weapon_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_weapon_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_144_shift_3_weapon_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_145_shift_3_weapon_1
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_weapon_2
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_145_shift_3_weapon_3
+Kd 0.0627 0.0627 0.0000
+newmtl body_offset_152_shift_4_weapon_1
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_weapon_2
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_152_shift_4_weapon_3
+Kd 0.2510 0.1882 0.9412
+newmtl body_offset_160_shift_3_weapon_1
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_weapon_2
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_3_weapon_3
+Kd 0.9412 0.9098 0.0000
+newmtl body_offset_160_shift_4_weapon_1
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_weapon_2
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_160_shift_4_weapon_3
+Kd 0.4706 0.4549 0.0000
+newmtl body_offset_228_shift_4_weapon_1
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_weapon_2
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_228_shift_4_weapon_3
+Kd 0.6902 0.6902 0.6902
+newmtl body_offset_240_shift_3_weapon_1
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_weapon_2
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_240_shift_3_weapon_3
+Kd 0.4235 0.8157 0.0000
+newmtl body_offset_245_shift_4_weapon_1
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_weapon_2
+Kd 0.3765 0.7059 0.0000
+newmtl body_offset_245_shift_4_weapon_3
+Kd 0.3765 0.7059 0.0000
