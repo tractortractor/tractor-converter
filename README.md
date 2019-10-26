@@ -15,9 +15,9 @@ It can perform the following conversions:
 How to use
 =======
 
-Download the [latest release](https://github.com/tractortractor/tractor-converter/releases/latest) and read the [docs](./docs). [en](./docs/en) and [ru](./docs/ru) subfolders contains exact instructions and limitations. [common](./docs/common) subfolder contains useful tables and images.
+Download the [latest release](https://github.com/tractortractor/tractor-converter/releases/latest) and read the [docs](./release_files/docs). [en](./release_files/docs/en) and [ru](./release_files/docs/ru) subfolders contains exact instructions and limitations. [common](./release_files/docs/common) subfolder contains useful tables and images.
 
-Video guides: https://www.youtube.com/watch?v=ykKCx6cgkqA&list=PL-AfSpdu5KiUcdAZMFrtokJtNxctVKey3
+Video guides: https://www.youtube.com/watch?v=yGCJbbyhnQk&list=PL-AfSpdu5KiUcdAZMFrtokJtNxctVKey3
 
 Demo video: https://www.youtube.com/watch?v=T9ZYQcRSpNk&list=PL-AfSpdu5KiUcdAZMFrtokJtNxctVKey3
 
@@ -50,3 +50,5 @@ Dependencies
   * system
   * filesystem
   * program_options
+
+* [zlib](https://www.zlib.net/)
