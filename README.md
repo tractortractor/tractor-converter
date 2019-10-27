@@ -5,10 +5,10 @@ This converter was made to modify resources of Vangers game. https://github.com/
 
 It can perform the following conversions:
 
-* .m3d/.a3d -> Wavefront .obj -> .m3d/.a3d.
-* Vangers item .bmp -> indexed Truevision .tga -> Vangers item .bmp.
+* .m3d/.a3d <-> Wavefront .obj.
+* Vangers item .bmp <-> indexed Truevision .tga.
 * Common image and video formats -> Vangers item preview .avi. Requires [GIMP](https://www.gimp.org/) and [FFmpeg](https://ffmpeg.org/) executables for this conversion.
-* Vangers end screen .bmp -> indexed Truevision .tga -> Vangers end screen .bmp.
+* Vangers end screen .bmp <-> indexed Truevision .tga.
 
 
 
