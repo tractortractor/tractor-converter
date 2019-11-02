@@ -1329,10 +1329,10 @@ std::vector<point*>
   {
     volInt::face &cur_poly = model.faces[poly_ind];
     if(cur_poly.color_id == color_id &&
-       (wheel_id == volInt::invalid::wheel_id ||
-          cur_poly.wheel_id == wheel_id) &&
-       (weapon_id == volInt::invalid::weapon_id ||
-          cur_poly.weapon_id == weapon_id))
+       (cur_poly.wheel_id == volInt::invalid::wheel_id ||
+        cur_poly.wheel_id == wheel_id) &&
+       (cur_poly.weapon_id == volInt::invalid::weapon_id ||
+        cur_poly.weapon_id == weapon_id))
     {
       for(std::size_t v_f_ind = 0; v_f_ind < model.numVertsPerPoly; ++v_f_ind)
       {
