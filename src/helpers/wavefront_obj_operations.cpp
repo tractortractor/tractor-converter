@@ -473,35 +473,32 @@ volInt::polyhedron raw_obj_to_volInt_model(
 
 
 
-    if(type == c3d::c3d_type::main_of_mechos)
+    if(!std::strncmp(cur_mat_name.c_str() + base_name_size,
+                     wavefront_obj::wheel_mat_marker.c_str(),
+                     wavefront_obj::wheel_mat_marker_size))
     {
-      if(!std::strncmp(cur_mat_name.c_str() + base_name_size,
-                       wavefront_obj::wheel_mat_marker.c_str(),
-                       wavefront_obj::wheel_mat_marker_size))
-      {
-        // Assigning wheel ID.
-        raw_obj_to_volInt_helper_get_wheel_properties(
-          input_file_path_arg,
-          input_file_name_error,
-          cur_mat,
-          cur_mat_name,
-          base_name_size,
-          tiny_obj_id_to_wheel_id,
-          volInt_model);
-      }
-      else if(!std::strncmp(cur_mat_name.c_str() + base_name_size,
-                            wavefront_obj::weapon_mat_marker.c_str(),
-                            wavefront_obj::weapon_mat_marker_size))
-      {
-        // Assigning weapon ID.
-        raw_obj_to_volInt_helper_get_weapon_num(
-          input_file_path_arg,
-          input_file_name_error,
-          cur_mat,
-          cur_mat_name,
-          base_name_size,
-          tiny_obj_id_to_weapon_id);
-      }
+      // Assigning wheel ID.
+      raw_obj_to_volInt_helper_get_wheel_properties(
+        input_file_path_arg,
+        input_file_name_error,
+        cur_mat,
+        cur_mat_name,
+        base_name_size,
+        tiny_obj_id_to_wheel_id,
+        volInt_model);
+    }
+    else if(!std::strncmp(cur_mat_name.c_str() + base_name_size,
+                          wavefront_obj::weapon_mat_marker.c_str(),
+                          wavefront_obj::weapon_mat_marker_size))
+    {
+      // Assigning weapon ID.
+      raw_obj_to_volInt_helper_get_weapon_num(
+        input_file_path_arg,
+        input_file_name_error,
+        cur_mat,
+        cur_mat_name,
+        base_name_size,
+        tiny_obj_id_to_weapon_id);
     }
   }
 

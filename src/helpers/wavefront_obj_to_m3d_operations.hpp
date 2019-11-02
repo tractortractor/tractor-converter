@@ -505,10 +505,9 @@ private:
     const std::deque<volInt::polyhedron> *debris_bound_models = nullptr);
   std::size_t get_a3d_file_size(const std::deque<volInt::polyhedron> *models);
 
-  enum class remove_polygons_model{mechos, weapon, regular};
+  enum class remove_polygons_model{mechos, non_mechos};
   void remove_polygons_helper_erase_mechos(volInt::polyhedron &main_model);
-  void remove_polygons_helper_erase_weapons(volInt::polyhedron &main_model);
-  void remove_polygons_helper_erase_regular(volInt::polyhedron &model);
+  void remove_polygons_helper_erase_non_mechos(volInt::polyhedron &model);
   std::vector<std::size_t> remove_polygons_helper_create_ind_change_map(
     std::size_t size,
     std::unordered_set<std::size_t> &verts_to_keep);

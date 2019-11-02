@@ -171,7 +171,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
   remove_polygons(cur_main_model, remove_polygons_model::mechos);
   for(auto &&debris_model : debris_models)
   {
-    remove_polygons(debris_model, remove_polygons_model::regular);
+    remove_polygons(debris_model, remove_polygons_model::non_mechos);
   }
 
   center_debris(&debris_models, debris_bound_models_ptr);
@@ -305,7 +305,7 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
 
 
   // Must be called before call to get_m3d_scale_size().
-  remove_polygons(cur_main_model, remove_polygons_model::weapon);
+  remove_polygons(cur_main_model, remove_polygons_model::non_mechos);
 
   if(flags & obj_to_m3d_flag::center_model)
   {
@@ -376,7 +376,7 @@ void wavefront_obj_to_m3d_model::animated_wavefront_objs_to_a3d()
   // Must be called before call to get_a3d_scale_size().
   for(auto &&animated_model : animated_models)
   {
-    remove_polygons(animated_model, remove_polygons_model::regular);
+    remove_polygons(animated_model, remove_polygons_model::non_mechos);
   }
 
   if(flags & obj_to_m3d_flag::center_model)
@@ -440,7 +440,7 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
 
 
   // Must be called before call to get_m3d_scale_size().
-  remove_polygons(cur_main_model, remove_polygons_model::regular);
+  remove_polygons(cur_main_model, remove_polygons_model::non_mechos);
 
   if(flags & obj_to_m3d_flag::center_model)
   {
@@ -2525,7 +2525,7 @@ void wavefront_obj_to_m3d_model::remove_polygons_helper_erase_mechos(
 
 
 
-void wavefront_obj_to_m3d_model::remove_polygons_helper_erase_weapons(
+void wavefront_obj_to_m3d_model::remove_polygons_helper_erase_non_mechos(
   volInt::polyhedron &model)
 {
   model.faces.erase(
@@ -2534,28 +2534,9 @@ void wavefront_obj_to_m3d_model::remove_polygons_helper_erase_weapons(
       [&](const volInt::face &poly)
       {
         if(poly.color_id == c3d::color::string_to_id::attachment_point ||
-           poly.color_id == c3d::color::string_to_id::center_of_mass)
-        {
-          return true;
-        }
-        return false;
-      }
-    ),
-    model.faces.end()
-  );
-}
-
-
-
-void wavefront_obj_to_m3d_model::remove_polygons_helper_erase_regular(
-  volInt::polyhedron &model)
-{
-  model.faces.erase(
-    std::remove_if(
-      model.faces.begin(), model.faces.end(),
-      [&](const volInt::face &poly)
-      {
-        if(poly.color_id == c3d::color::string_to_id::center_of_mass)
+           poly.color_id == c3d::color::string_to_id::center_of_mass ||
+           poly.weapon_id != volInt::invalid::weapon_id ||
+           model.wheels_ghost.count(poly.wheel_id))
         {
           return true;
         }
@@ -2602,13 +2583,9 @@ void wavefront_obj_to_m3d_model::remove_polygons(
   {
     remove_polygons_helper_erase_mechos(model);
   }
-  else if(model_type == remove_polygons_model::weapon)
+  else if(model_type == remove_polygons_model::non_mechos)
   {
-    remove_polygons_helper_erase_weapons(model);
-  }
-  else if(model_type == remove_polygons_model::regular)
-  {
-    remove_polygons_helper_erase_regular(model);
+    remove_polygons_helper_erase_non_mechos(model);
   }
 
   model.numFaces = model.faces.size();
