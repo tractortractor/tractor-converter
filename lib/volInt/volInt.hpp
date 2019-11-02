@@ -260,7 +260,7 @@ const double vector_scale_val = 1.0;
 
 
 //// VANGERS SOURCE
-//// How angle conversions works in Vangers code.
+//// How angle conversions work in Vangers code.
 //#define M_PI 3.14159265358979323846
 //
 //Pi_len = 11
