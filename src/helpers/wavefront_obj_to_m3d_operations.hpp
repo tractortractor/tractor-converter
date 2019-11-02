@@ -455,8 +455,10 @@ private:
     volInt::polyhedron *debris_model,
     volInt::polyhedron *debris_bound_model = nullptr);
 
+  enum class center_m3d_model{weapon, non_weapon};
   void center_m3d(
     volInt::polyhedron *main_model,
+    center_m3d_model model_type,
     volInt::polyhedron *main_bound_model = nullptr,
     std::unordered_map<int, volInt::polyhedron> *wheels_models = nullptr,
     std::deque<volInt::polyhedron> *debris_models = nullptr,

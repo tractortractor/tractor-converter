@@ -179,6 +179,7 @@ void wavefront_obj_to_m3d_model::mechos_wavefront_objs_to_m3d()
   if(flags & obj_to_m3d_flag::center_model)
   {
     center_m3d(&cur_main_model,
+               center_m3d_model::non_weapon,
                cur_main_bound_model_ptr,
                &wheels_models,
                &debris_models,
@@ -308,7 +309,9 @@ volInt::polyhedron wavefront_obj_to_m3d_model::weapon_wavefront_objs_to_m3d()
 
   if(flags & obj_to_m3d_flag::center_model)
   {
-    center_m3d(&cur_main_model, cur_main_bound_model_ptr);
+    center_m3d(&cur_main_model,
+               center_m3d_model::weapon,
+               cur_main_bound_model_ptr);
   }
 
   get_m3d_scale_size(&cur_main_model, cur_main_bound_model_ptr);
@@ -441,7 +444,9 @@ void wavefront_obj_to_m3d_model::other_wavefront_objs_to_m3d()
 
   if(flags & obj_to_m3d_flag::center_model)
   {
-    center_m3d(&cur_main_model, cur_main_bound_model_ptr);
+    center_m3d(&cur_main_model,
+               center_m3d_model::non_weapon,
+               cur_main_bound_model_ptr);
   }
 
   get_m3d_scale_size(&cur_main_model, cur_main_bound_model_ptr);
@@ -2094,6 +2099,7 @@ void wavefront_obj_to_m3d_model::center_debris(
 
 void wavefront_obj_to_m3d_model::center_m3d(
   volInt::polyhedron *main_model,
+  center_m3d_model model_type,
   volInt::polyhedron *main_bound_model,
   std::unordered_map<int, volInt::polyhedron> *wheels_models,
   std::deque<volInt::polyhedron> *debris_models,
@@ -2103,6 +2109,15 @@ void wavefront_obj_to_m3d_model::center_m3d(
   std::vector<double> m3d_center = extreme_points.get_center();
 
   main_model->move_coord_system_to_point_inv_neg_vol(m3d_center);
+  if(model_type == center_m3d_model::weapon)
+  {
+    volInt::vector_minus_self(main_model->offset_point(), m3d_center);
+  }
+  if(main_model->rcm_overwritten)
+  {
+    volInt::vector_minus_self(main_model->rcm, m3d_center);
+  }
+
   if(main_bound_model)
   {
     main_bound_model->move_coord_system_to_point_inv_neg_vol(m3d_center);
