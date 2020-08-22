@@ -1,3 +1,10 @@
+Credits
+=======
+
+Thanks to unknown contributor who donated twice in August 2020.
+
+
+
 Tractor converter
 =======
 
@@ -29,6 +36,8 @@ Donate
 If you like the software, please consider a donation.
 
 https://my.qiwi.com/form/Andrei-KdYrSoJFgk
+
+Email tractortractor7@gmail.com if you want to be mentioned in the credits.
 
 
 
