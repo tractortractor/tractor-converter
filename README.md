@@ -1,7 +1,9 @@
 Credits
 =======
 
-Thanks to unknown contributor who donated three times in August 2020.
+Thanks to unknown contributors who donated:
+* three times in August 2020,
+* once in September 2020.
 
 
 
