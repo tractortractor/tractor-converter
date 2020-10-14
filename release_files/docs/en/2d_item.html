@@ -2,7 +2,7 @@
 
 <h3>How to edit *.bmp images of items</h3>
 <ol>
-  <li>Open modes/path_to_vangers_data_dir.bat file in any text editor. Replace value of PATH_TO_VANGERS_DATA_DIR variable with path to Vangers "data" folder. It contains "game.lst" file, "resource" folder and other game resources.</li>
+  <li>Open modes/path_to_vangers_data_dir.bat file in any text editor. Replace value of PATH_TO_VANGERS_DATA_DIR variable with path to Vangers "data" folder. It contains "game.lst" file, "resource" folder and other game resources. On Windows some characters in path, "!" for example, will not be treated properly by batch script, so only letters and digits should be used. *.bat scripts are replaced by *.sh scripts in Linux and macOS versions.</li>
   <li>Launch modes/2d_item/bmp_to_tga.bat.</li>
   <li>Now modes/2d_item/intermediate_tga folder contains *.tga images of items. It's time to edit them. See docs/common/2d_item/items.ods. If you want to replace one of the images, see below.</li>
   <li>Launch modes/2d_item/tga_to_bmp.bat.</li>

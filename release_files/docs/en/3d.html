@@ -2,7 +2,7 @@
 
 <h3>How to edit *.m3d/*.a3d</h3>
 <ol>
-  <li>Open modes/path_to_vangers_data_dir.bat file in any text editor. Replace value of PATH_TO_VANGERS_DATA_DIR variable with path to Vangers "data" folder. It contains "game.lst" file, "resource" folder and other game resources.</li>
+  <li>Open modes/path_to_vangers_data_dir.bat file in any text editor. Replace value of PATH_TO_VANGERS_DATA_DIR variable with path to Vangers "data" folder. It contains "game.lst" file, "resource" folder and other game resources. On Windows some characters in path, "!" for example, will not be treated properly by batch script, so only letters and digits should be used. *.bat scripts are replaced by *.sh scripts in Linux and macOS versions.</li>
   <li>Launch modes/3d/m3d_to_obj.bat.</li>
   <li>Now modes/3d/intermediate_obj folder contains *.obj files of Vangers models. It's time to edit them. See docs/common/3d/3d_models.ods. If you want to edit wheels or weapon attachment points, see below.</li>
   <li>Launch modes/3d/obj_to_m3d.bat.</li>
@@ -12,6 +12,22 @@
 <h3>Advanced</h3>
 <ul>
   <li><p>All models must have 3 vertices per polygon.</p></li>
+  <li>
+    <p>By default, volume, center of mass and inertia tensor are generated automatically. To properly generate those values, otherwise it may cause problems in-game, model must be watertight:</p>
+    <ul>
+      <li><p>no holes in meshes;</p></li>
+      <li><p>no intersections between polygons;</p></li>
+      <li><p>no polygons inside meshes;</p></li>
+      <li>
+        <p>all polygon normals must be facing either inside</p>
+        <img src="../images/3d_normals_right_in.jpg">
+        <p>or outside,</p>
+        <img src="../images/3d_normals_right_out.jpg">
+        <p>not opposite directions.</p>
+        <img src="../images/3d_normals_wrong.jpg">
+      </li>
+    </ul>
+  </li>
   <li>
     <p>By default, while converting from *.obj to *.m3d:</p>
     <ul>

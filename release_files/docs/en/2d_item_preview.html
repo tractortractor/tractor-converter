@@ -10,6 +10,7 @@
       <li>Replace value of PATH_TO_GIMP with path to gimp-console executable.</li>
       <li>Replace value of PATH_TO_FFMPEG with path to ffmpeg executable.</li>
     </ul>
+    On Windows some characters in path, "!" for example, will not be treated properly by batch script, so only letters and digits should be used. *.bat scripts are replaced by *.sh scripts in Linux and macOS versions.
   </li>
   <li>Make sure that all source videos and images in PATH_TO_INPUT_VIDEOS folder have 340x255 resolution. Only formats supported by ffmpeg must be used for videos and images.</li>
   <li>Launch modes/2d_item_preview/to_preview_avi.bat.</li>

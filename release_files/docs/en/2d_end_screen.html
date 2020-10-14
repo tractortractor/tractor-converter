@@ -2,7 +2,7 @@
 
 <h3>How to edit *.bmp end screens</h3>
 <ol>
-  <li>Open modes/path_to_vangers_data_dir.bat file in any text editor. Replace value of PATH_TO_VANGERS_DATA_DIR variable with path to Vangers "data" folder. It contains "game.lst" file, "resource" folder and other game resources.</li>
+  <li>Open modes/path_to_vangers_data_dir.bat file in any text editor. Replace value of PATH_TO_VANGERS_DATA_DIR variable with path to Vangers "data" folder. It contains "game.lst" file, "resource" folder and other game resources. On Windows some characters in path, "!" for example, will not be treated properly by batch script, so only letters and digits should be used. *.bat scripts are replaced by *.sh scripts in Linux and macOS versions.</li>
   <li>Launch modes/2d_end_screen/get_tga_screens.bat.</li>
   <li>Now modes/2d_end_screen/intermediate_tga_no_font_palette folder contains *.tga images of end screens. It's time to edit or replace them. See docs/common/2d_end_screen/end_screens.ods. Make sure that all images in this folder are 800x600, 8-bit and not using RLE compression. Last 16 colors in the palette of 256 must not be used. So while converting regular image to 8-bit, use 240 color palette.</li>
   <li>Launch modes/2d_end_screen/add_font_palette.bat.</li>
